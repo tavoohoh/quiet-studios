@@ -28,6 +28,13 @@ Nombre: **Quiet Numbers** (alternativa evaluada: "Diez"). Nunca usar "Number Mat
 
 Un solo target multiplataforma (iPhone, iPad, Mac), compra universal, un bundle ID.
 
+## Comandos
+
+- El `.xcodeproj` se genera desde `project.yml` con XcodeGen: correr `xcodegen generate` tras agregar o mover archivos. No editar el `.pbxproj` a mano.
+- Tests del Core: `cd Packages/QuietNumbersCore && swift test`.
+- UI test en simulador: `xcodebuild test -project QuietNumbers.xcodeproj -scheme QuietNumbers -destination 'platform=iOS Simulator,name=iPhone 17' -only-testing:QuietNumbersUITests`.
+- Argumentos DEBUG: `-startGame` abre una partida directo; `-seedKey <texto>` hace el tablero determinista (`2026-10-25` da el tablero golden de los tests).
+
 ## Arquitectura
 
 Dos capas: el paquete `QuietNumbersCore` (lógica pura y testeable) y la app SwiftUI que lo consume.
