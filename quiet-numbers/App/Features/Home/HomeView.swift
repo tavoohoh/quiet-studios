@@ -207,7 +207,7 @@ private struct DailyCard: View {
                         Image(systemName: "flame")
                     }
                     .font(.headline.monospacedDigit())
-                    .foregroundStyle(.tint)
+                    .foregroundStyle(Color.highlight)
                     .accessibilityLabel(Text("\(app.currentStreak)-day streak"))
                 }
                 Image(systemName: "chevron.forward")

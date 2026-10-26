@@ -1,0 +1,11 @@
+// Copy to Config/Local.xcconfig (ignored by git) to run on your own iPhone with a
+// free Apple Account, then run `xcodegen generate`.
+
+// Team ID: Xcode > Settings > Accounts > your Apple Account > Personal Team.
+DEVELOPMENT_TEAM = ABCDE12345
+
+// Personal teams need a bundle ID that nobody else has registered.
+QN_BUNDLE_ID = com.yourname.quietnumbers
+
+// Personal teams can't use Game Center or iCloud. The app works fully without them.
+QN_ENTITLEMENTS = App/QuietNumbers-Personal.entitlements

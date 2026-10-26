@@ -46,11 +46,9 @@ struct DailyChallengeView: View {
                 CalendarView(month: $month, todayKey: today, records: app.persistence.dailies, onSelect: onPlay)
                     .frame(maxWidth: 420)
 
-                if let next = DailyChallenge.dayKey(today, addingDays: 1).flatMap(DailyChallenge.date(forDayKey:)) {
-                    Text("Next challenge in \(Text(next, style: .relative))")
-                        .font(.footnote)
-                        .foregroundStyle(.secondary)
-                }
+                Text("Next challenge in \(Text(DailyChallenge.nextRollover(after: .now), style: .relative))")
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
             }
             .padding()
             .frame(maxWidth: .infinity)

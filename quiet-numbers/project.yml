@@ -21,13 +21,13 @@ targets:
     sources: [App]
     dependencies:
       - package: QuietNumbersCore
-    entitlements:
-      path: App/QuietNumbers.entitlements
-      properties:
-        com.apple.developer.game-center: true
+    configFiles:
+      Debug: Config/Base.xcconfig
+      Release: Config/Base.xcconfig
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.quietproject.numbers
+        PRODUCT_BUNDLE_IDENTIFIER: $(QN_BUNDLE_ID)
+        CODE_SIGN_ENTITLEMENTS: $(QN_ENTITLEMENTS)
         PRODUCT_NAME: Quiet Numbers
         TARGETED_DEVICE_FAMILY: "1,2"
         GENERATE_INFOPLIST_FILE: YES

@@ -96,7 +96,7 @@ struct BoardView: View {
 }
 
 /// The line between a matched pair. Grows in, then fades out with the ghosts.
-/// Stronger the farther apart the numbers are.
+/// Solid, in the theme's accent; thicker the farther apart the numbers are.
 private struct MatchLineView: View {
     let line: MatchLine
     let size: CGFloat
@@ -106,14 +106,12 @@ private struct MatchLineView: View {
     var body: some View {
         ZStack {
             ForEach(Array(line.segments.enumerated()), id: \.offset) { _, segment in
-                let shape = SegmentShape(segment: segment, scale: size).trim(from: 0, to: progress)
-                // Steel body with a thin bright core reads as metal in any direction.
-                shape.stroke(Color.matchLine, style: StrokeStyle(lineWidth: width, lineCap: .round))
-                shape.stroke(Color.matchLineSheen.opacity(0.7), style: StrokeStyle(lineWidth: width * 0.3, lineCap: .round))
+                SegmentShape(segment: segment, scale: size)
+                    .trim(from: 0, to: progress)
+                    .stroke(.tint, style: StrokeStyle(lineWidth: width, lineCap: .round))
             }
         }
         .opacity(opacity)
-        .shadow(color: line.tier == .dramatic ? Color.matchLine.opacity(0.7) : .clear, radius: 6)
         .allowsHitTesting(false)
         .accessibilityHidden(true)
         .onAppear {
@@ -156,7 +154,7 @@ private struct RowWaveEffect: View {
         GeometryReader { geometry in
             let band = geometry.size.width * 0.45
             LinearGradient(
-                colors: [.clear, Color.matchLine.opacity(0.35), Color.matchLineSheen.opacity(0.6), Color.matchLine.opacity(0.35), .clear],
+                colors: [.clear, Color.accentColor.opacity(0.25), Color.accentColor.opacity(0.45), Color.accentColor.opacity(0.25), .clear],
                 startPoint: .leading,
                 endPoint: .trailing
             )
@@ -187,8 +185,8 @@ private struct RowClearEffect: View {
         let shape = RoundedRectangle(cornerRadius: size * 0.35, style: .continuous).inset(by: 2)
         shape
             .trim(from: 0, to: progress)
-            .stroke(Color.matchLine, style: StrokeStyle(lineWidth: 2, lineCap: .round))
-            .background(shape.fill(Color.matchLine.opacity(0.08 * progress)))
+            .stroke(.tint, style: StrokeStyle(lineWidth: 2, lineCap: .round))
+            .background(shape.fill(.tint.opacity(0.08 * progress)))
             .allowsHitTesting(false)
             .accessibilityHidden(true)
             .onAppear {

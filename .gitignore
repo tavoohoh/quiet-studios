@@ -5,3 +5,4 @@ DerivedData/
 .swiftpm/
 *.xcuserstate
 build/
+quiet-numbers/Config/Local.xcconfig

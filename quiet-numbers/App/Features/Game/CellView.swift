@@ -73,10 +73,10 @@ extension CellView {
         }
     }
 
-    /// Ghosts are faint; numbers added with + are blue so the originals stand out.
+    /// Ghosts are faint; numbers added with + use the highlight color so the originals stand out.
     private var numberStyle: AnyShapeStyle {
         if cell.isCleared { return AnyShapeStyle(.quaternary) }
-        return cell.isAdded ? AnyShapeStyle(Color.addedNumber) : appearance.theme.ink
+        return cell.isAdded ? AnyShapeStyle(Color.highlight) : appearance.theme.ink
     }
 }
 

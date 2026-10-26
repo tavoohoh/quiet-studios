@@ -36,24 +36,14 @@ import Testing
         #expect(GameSession(seed: 1234).board != GameSession(seed: 1235).board)
     }
 
-    @Test func dayKeyUsesUTC() {
-        // 2026-10-25 23:30 in Bogotá (UTC-5) is already 2026-10-26 in UTC.
-        let date = ISO8601DateFormatter().date(from: "2026-10-26T04:30:00Z")!
-        #expect(DailyChallenge.dayKey(for: date) == "2026-10-26")
+    @Test func sameKeySameDailyBoard() {
+        #expect(DailyChallenge.session(forDayKey: "2026-10-25").board == DailyChallenge.session(forDayKey: "2026-10-25").board)
+        #expect(DailyChallenge.session(forDayKey: "2026-10-25").board != DailyChallenge.session(forDayKey: "2026-10-26").board)
     }
 
-    @Test func sameDateSameDailyBoard() {
-        let morning = ISO8601DateFormatter().date(from: "2026-10-25T00:00:01Z")!
-        let night = ISO8601DateFormatter().date(from: "2026-10-25T23:59:59Z")!
-        let tomorrow = ISO8601DateFormatter().date(from: "2026-10-26T00:00:00Z")!
-        #expect(DailyChallenge.session(for: morning).board == DailyChallenge.session(for: night).board)
-        #expect(DailyChallenge.session(for: morning).board != DailyChallenge.session(for: tomorrow).board)
-    }
-
-    /// Golden board for a fixed date. iPhone, iPad and Mac must all produce exactly this.
+    /// Golden board for a fixed day. iPhone, iPad and Mac must all produce exactly this.
     @Test func dailyBoardGolden() {
-        let date = ISO8601DateFormatter().date(from: "2026-10-25T12:00:00Z")!
-        let values = DailyChallenge.session(for: date).board.cells.map(\.value)
+        let values = DailyChallenge.session(forDayKey: "2026-10-25").board.cells.map(\.value)
         #expect(values == Self.golden20261025)
     }
 

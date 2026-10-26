@@ -62,6 +62,7 @@
 		1945F8C8C9CC42DC822995A2 /* CellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellView.swift; sourceTree = "<group>"; };
 		1F24CF5C37A1787DE8516E1F /* Typography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Typography.swift; sourceTree = "<group>"; };
 		212A4F79BAB138C07EAFF774 /* GameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameModel.swift; sourceTree = "<group>"; };
+		22F6C4F6421B81585108D7D6 /* Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Base.xcconfig; sourceTree = "<group>"; };
 		23C8A220045ED805473F40E1 /* DayKeyFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayKeyFormat.swift; sourceTree = "<group>"; };
 		2A2F11A9E3ADE55BDF7FA2D0 /* CollectionUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionUITests.swift; sourceTree = "<group>"; };
 		3764A4EF9834602A85298448 /* AchievementText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementText.swift; sourceTree = "<group>"; };
@@ -74,6 +75,7 @@
 		57DBAC418C43449E8EE90E01 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		631019FDC57409A49740D79C /* QuietNumbersApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuietNumbersApp.swift; sourceTree = "<group>"; };
 		66D7992BC8FB7DE533207505 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		6767AD3F2C7296EC510EF3F8 /* QuietNumbers-Personal.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "QuietNumbers-Personal.entitlements"; sourceTree = "<group>"; };
 		86B72A7C6607184099C42B8B /* QuietNumbersTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = QuietNumbersTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8C1754B3BB39F1EA843608A9 /* GameCenterService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameCenterService.swift; sourceTree = "<group>"; };
 		9194796821A907E01A268433 /* CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionView.swift; sourceTree = "<group>"; };
@@ -155,6 +157,7 @@
 			children = (
 				ED96C220A6D5BCBC9F2597D4 /* App */,
 				B945FCD8200B7816736E0B59 /* AppTests */,
+				B20E50F4095173646D3D4A2B /* Config */,
 				9605778C70DBA0393575ECC7 /* Packages */,
 				0679877058288DD818BCA636 /* UITests */,
 				B3D60B0A1E034BE53DAA3C47 /* Products */,
@@ -198,6 +201,14 @@
 				B529A32088A2D117919279B6 /* QuietNumbersCore */,
 			);
 			path = Packages;
+			sourceTree = "<group>";
+		};
+		B20E50F4095173646D3D4A2B /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				22F6C4F6421B81585108D7D6 /* Base.xcconfig */,
+			);
+			path = Config;
 			sourceTree = "<group>";
 		};
 		B3D60B0A1E034BE53DAA3C47 /* Products */ = {
@@ -258,6 +269,7 @@
 			isa = PBXGroup;
 			children = (
 				D15AA4C99BAE2C8662B34C66 /* AppModel.swift */,
+				6767AD3F2C7296EC510EF3F8 /* QuietNumbers-Personal.entitlements */,
 				B132EA3091340D64A3FED763 /* QuietNumbers.entitlements */,
 				631019FDC57409A49740D79C /* QuietNumbersApp.swift */,
 				6630C8EAC87F06D7B0E77C4F /* DesignSystem */,
@@ -660,13 +672,14 @@
 		};
 		BA21A03B6CDE879FCAC374A2 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 22F6C4F6421B81585108D7D6 /* Base.xcconfig */;
 			buildSettings = {
 				"ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES[sdk=iphone*]" = "AppIcon-Gold";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
-				CODE_SIGN_ENTITLEMENTS = App/QuietNumbers.entitlements;
+				CODE_SIGN_ENTITLEMENTS = "$(QN_ENTITLEMENTS)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				ENABLE_APP_SANDBOX = YES;
@@ -685,7 +698,7 @@
 					"@executable_path/Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.quietproject.numbers;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(QN_BUNDLE_ID)";
 				PRODUCT_NAME = "Quiet Numbers";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
@@ -699,13 +712,14 @@
 		};
 		D992ABB9649DDAABEC900D52 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 22F6C4F6421B81585108D7D6 /* Base.xcconfig */;
 			buildSettings = {
 				"ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES[sdk=iphone*]" = "AppIcon-Gold";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
-				CODE_SIGN_ENTITLEMENTS = App/QuietNumbers.entitlements;
+				CODE_SIGN_ENTITLEMENTS = "$(QN_ENTITLEMENTS)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				ENABLE_APP_SANDBOX = YES;
@@ -724,7 +738,7 @@
 					"@executable_path/Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.quietproject.numbers;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(QN_BUNDLE_ID)";
 				PRODUCT_NAME = "Quiet Numbers";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";

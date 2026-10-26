@@ -1,0 +1,6 @@
+// Signing defaults for the app target. Override them in Config/Local.xcconfig
+// (ignored by git); see Local.xcconfig.example.
+QN_BUNDLE_ID = com.quietproject.numbers
+QN_ENTITLEMENTS = App/QuietNumbers.entitlements
+
+#include? "Local.xcconfig"

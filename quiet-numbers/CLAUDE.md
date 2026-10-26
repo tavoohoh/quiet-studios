@@ -30,6 +30,8 @@ Un solo target multiplataforma (iPhone, iPad, Mac), compra universal, un bundle 
 
 ## Comandos
 
+- **Instalar en un iPhone propio sin cuenta paga:** copiar `Config/Local.xcconfig.example` a `Config/Local.xcconfig` (ignorado por git), poner el Team ID del Personal Team y un bundle ID propio, `xcodegen generate`, y correr desde Xcode con el iPhone conectado. El Personal Team no admite Game Center ni iCloud (el archivo local usa `QuietNumbers-Personal.entitlements`, sin ellos) y el perfil vence a los 7 días.
+
 - El `.xcodeproj` se genera desde `project.yml` con XcodeGen: correr `xcodegen generate` tras agregar o mover archivos. No editar el `.pbxproj` a mano.
 - Tests del Core: `cd Packages/QuietNumbersCore && swift test`.
 - Todos los tests (Core en iOS, app y UI): `xcodebuild test -project QuietNumbers.xcodeproj -scheme QuietNumbers -destination 'platform=iOS Simulator,name=iPhone 17'`.
@@ -110,7 +112,8 @@ Tablero de **9 columnas**; arranca con **27 números (3 filas)** del 1 al 9.
 
 Tablero único por día, igual para todo el mundo, generado en el dispositivo sin servidor.
 
-- **Semilla:** fecha UTC `yyyy-MM-dd` → hash estable (p. ej. FNV-1a). Cambia a las 00:00 UTC.
+- **Semilla:** clave del día `yyyy-MM-dd` → hash estable (FNV-1a).
+- **Cambio de día:** a las **19:00 en la zona horaria del dispositivo** (`DailyChallenge.rolloverHour`); desde esa hora se juega el reto del día siguiente. En Colombia (UTC-5) coincide con las 00:00 UTC. La misma clave da el mismo tablero en todo el mundo, pero cada dispositivo la habilita según su reloj.
 - **PRNG:** propio y determinista (SplitMix64 o Xoshiro256). **Nunca** `SystemRandomNumberGenerator`. Evitar cualquier API cuyo resultado dependa de plataforma (p. ej. `Hasher`, `shuffled()` sin generador propio).
 - **Validación:** si el tablero no cumple el mínimo de parejas, avanzar la semilla de forma determinista hasta obtener uno válido.
 - **Formato:** una sola etapa, mismas reglas y límites. Un solo intento puntuable por día; se puede rejugar sin enviar puntaje.
@@ -120,7 +123,6 @@ Tablero único por día, igual para todo el mundo, generado en el dispositivo si
   - "Completar" un reto = vaciar el tablero. Terminar sin vaciarlo guarda el puntaje (cuenta como intento) pero no suma a la racha.
   - El intento puntuable empieza al tocar "Jugar" por primera vez ese día; si se sale a mitad, se reanuda (sigue puntuando).
   - Repeticiones y días pasados son "Práctica": no se guardan ni cambian el calendario.
-  - Las fechas de los retos se muestran en UTC (en Colombia el reto del día siguiente aparece a las 7 pm).
 - **Test obligatorio:** la misma fecha produce siempre el mismo tablero en iPhone, iPad y Mac.
 
 ## Game Center
@@ -143,7 +145,7 @@ Opcional: sin sesión, el juego funciona completo y los logros se guardan localm
 El código está completo (`GameCenterService`, `LeaderboardsView`, sincronización en `AppModel.syncGameCenter`), pero **no está verificado contra Game Center real**: falta registrar la app. Sin sesión todo funciona y se guarda localmente (verificado con UI test). Pendiente cuando exista el bundle ID:
 
 1. Crear el App ID y activar las capacidades **Game Center** e **iCloud** (iCloud es necesario para `saveGameData`; agregar su entitlement en `project.yml`).
-2. En App Store Connect, crear los leaderboards `daily_challenge` (recurrente, 24 h, inicio 00:00 UTC), `best_score` y `longest_streak` (clásicos), y los logros `first_step`, `clean_slate`, `no_help`, `consistency`, `habit`, `sweeper`, `stage_five`, `centennial`, `night_owl`, `monotone`, con textos en inglés y español.
+2. En App Store Connect, crear los leaderboards `daily_challenge` (recurrente, 24 h, inicio 00:00 UTC = 19:00 en Colombia; en otras zonas la ventana del leaderboard no coincide exactamente con el cambio de reto local), `best_score` y `longest_streak` (clásicos), y los logros `first_step`, `clean_slate`, `no_help`, `consistency`, `habit`, `sweeper`, `stage_five`, `centennial`, `night_owl`, `monotone`, con textos en inglés y español.
 3. Probar con una cuenta sandbox: modo avión → jugar → reconectar → verificar envío.
 
 Decisiones:
@@ -171,7 +173,7 @@ Toda recompensa es cosmética y nunca altera la jugabilidad ni el layout del tab
 Categorías de personalización: tema de color, estilo de ficha, tipografía, efecto al limpiar fila, pack de sonido, ícono de la app. Se eligen en "Colección"; lo bloqueado muestra su condición.
 
 Decisiones de implementación (fase 5):
-- "Monótono" se interpreta como 10 parejas seguidas de números iguales (4-4, 7-7…), no 10 veces el mismo dígito. **Supuesto a confirmar.**
+- "Monótono" se interpreta como 10 parejas seguidas de números iguales (4-4, 7-7…), no 10 veces el mismo dígito. Confirmado.
 - Las opciones por defecto (Papel, Simple, SF Rounded, Contorno, Suave, ícono estándar) están siempre disponibles.
 - Los colores de los temas están en el Asset Catalog (`SlateBackground`, `SandInk`…). Pizarra y Medianoche fuerzan modo oscuro; Arena tiene variante clara y oscura; Papel usa los estilos del sistema.
 - Los sonidos se sintetizan en el dispositivo (AVAudioEngine, sin archivos), categoría `.ambient` (respeta el modo silencio). Sonido y hápticos activados por defecto.
@@ -180,13 +182,18 @@ Decisiones de implementación (fase 5):
 
 ## Estética y UX
 
-- Colores semánticos del sistema, un solo color de acento, animaciones suaves.
+- Colores semánticos del sistema, un primario y un secundario, animaciones suaves.
+- **Paleta** (Asset Catalog, contraste WCAG calculado):
+  - Primario `AccentColor`: azul eléctrico `#0A5CFF` (texto blanco encima 5.3:1) / oscuro `#4D8DFF` (6.6:1 sobre negro). Botones, selección, pistas, línea de unión, borde de fila.
+  - Secundario `Highlight`: ámbar `#B45309` (5.0:1 sobre blanco) / oscuro `#FBBF24` (12.6:1 sobre negro). Números agregados con +, elogios, racha. **Provisional**: alternativas propuestas coral, violeta y menta.
+  - Neutros: los del sistema (fondo, superficie, texto, secundario, fantasma = `quaternary`).
+  - Los temas de la Colección (Pizarra, Arena, Medianoche) reemplazan el primario por su propio acento.
 - Claro/oscuro sigue al sistema. Colores en el Asset Catalog con variantes; **nada de colores fijos en código**.
 - Fondo `systemBackground`; superficies secundarias `secondarySystemBackground`.
 - SF Pro Rounded con `.monospacedDigit()`.
 - Fichas sin bordes, solo el número. Seleccionada: círculo suave del acento. Eliminada: gris muy tenue.
 - Animaciones: pareja válida = línea que crece desde el centro hasta ambos números y luego fade + leve escala a fantasma; inválida = pequeña sacudida; fila limpiada = borde que se dibuja alrededor de la fila y luego colapso suave hacia arriba. Respetar Reduce Motion (sin línea ni trazo).
-- Tres tipos de línea según las celdas eliminadas entre la pareja: sutil (0, delgada y tenue), media (1–3) y dramática (4+, gruesa con brillo; coincide con "¡Desde lejos!"). En lectura continua entre filas, la línea entra desde los bordes del tablero. Color azul metálico (`MatchLine` + `MatchLineSheen`), también en el borde de fila limpiada.
+- Tres tipos de línea según las celdas eliminadas entre la pareja: sutil (0, 2 pt y tenue), media (1–3, 3 pt) y dramática (4+, 4 pt; coincide con "¡Desde lejos!"). Líneas sólidas del color primario, sin borde ni brillo. En lectura continua entre filas, la línea entra desde los bordes del tablero.
 - Ritmo: animaciones rápidas y con algo de rebote (`Animation.quiet` = snappy 0.2 s); el emparejamiento completo dura menos de ~0.6 s y un toque nuevo lo termina al instante.
 - Pista sin parejas: no cobra, muestra "No hay parejas. Prueba +" y hace rebotar el botón +.
 - Racha ("¡N seguidas!"): se reinicia con un intento inválido o al pedir pista; el + no la reinicia.
@@ -216,10 +223,12 @@ Entregables:
 - Política de privacidad corta en inglés y español.
 - Verificar en la documentación de Apple cómo declarar Game Center en la etiqueta de privacidad.
 
+Decisión de la etiqueta: **Data Not Collected**. Investigado (2026-10-25): Apple define "recolectar" como enviar datos fuera del dispositivo de forma que el desarrollador pueda accederlos, y aclara "You are not responsible for disclosing data collected by Apple". La indicación de declarar "Gameplay Content" por partidas guardadas aplica cuando el desarrollador las recibe (servidor propio); aquí van al iCloud del usuario vía GameKit y nunca las vemos. Condición para mantenerla: **no** guardar ni enviar nada leído de Game Center (nombres, amigos, puntajes de otros); los leaderboards solo se muestran en pantalla.
+
 Estado (fase 6):
 - `App/Resources/PrivacyInfo.xcprivacy`: sin tracking, cero tipos de datos recolectados, `UserDefaults` con razón `CA92.1`.
 - Política de privacidad en/es: `docs/privacy-policy.md` (falta definir correo de soporte y URL pública).
-- Etiqueta de privacidad, según [App privacy details](https://developer.apple.com/app-store/app-privacy-details/): "You are not responsible for disclosing data collected by Apple" y "recolectar" = enviar datos fuera del dispositivo de forma que el desarrollador pueda accederlos. Game Center e iCloud los gestiona Apple y no tenemos acceso, por lo que se responde **Data Not Collected**. Riesgo: la misma guía dice "Your app includes game saves… Declare Gameplay Content"; revisarlo al llenar el cuestionario en App Store Connect.
+- Etiqueta de privacidad, según [App privacy details](https://developer.apple.com/app-store/app-privacy-details/): "You are not responsible for disclosing data collected by Apple" y "recolectar" = enviar datos fuera del dispositivo de forma que el desarrollador pueda accederlos. Ver decisión arriba.
 
 ## Fases
 
@@ -251,12 +260,13 @@ Cada fase termina con su criterio de aceptación cumplido antes de pasar a la si
 
 ## Anotaciones de diseño
 
-- **Animación al unir números: no satisface (2026-10-25).** La versión actual (línea que crece desde el centro en 3 niveles, azul metálico, luego fantasma) funciona pero hay que rediseñarla. Retomar antes del pulido final (fase 6).
+- **Animación al unir números: no satisface (2026-10-25).** La versión actual (línea sólida que crece desde el centro en 3 niveles, luego fantasma) funciona pero hay que rediseñarla. Retomar antes del pulido final (fase 6).
 
 ## Preguntas abiertas
 
-- [ ] ¿Limpiar una fila debe devolver un uso de +? Hoy sí (regla del brief) y en la práctica el + casi nunca se agota. Alternativa propuesta: 5 usos fijos por etapa.
-
+- [x] Limpiar una fila devuelve un uso de + (se mantiene la regla del brief para empezar).
+- [x] Color primario: azul eléctrico.
+- [ ] Color secundario (provisional: ámbar).
 - [ ] Nombre final (propuesto: Quiet Numbers).
 - [ ] Versión mínima de iOS/macOS: 18 o 26.
-- [ ] Color de acento del tema por defecto.
+- [ ] Team de Apple Developer (pendiente de crear; bloquea Game Center, TestFlight y App Store).

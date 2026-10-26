@@ -92,7 +92,7 @@ private struct PraiseLabel: View {
             if let praise = model.praise {
                 Text(praise.text)
                     .font(.system(.headline, design: .rounded, weight: .semibold))
-                    .foregroundStyle(.tint)
+                    .foregroundStyle(Color.highlight)
                     .id(praise.id)
                     .transition(.asymmetric(
                         insertion: .opacity.combined(with: .scale(scale: 1.5)),
