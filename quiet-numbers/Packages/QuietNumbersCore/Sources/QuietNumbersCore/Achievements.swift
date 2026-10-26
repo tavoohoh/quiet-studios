@@ -40,6 +40,8 @@ public enum ProgressEvent: Sendable {
     case matched(MatchOutcome)
     /// The player tried a pair that doesn't match.
     case missed
+    /// The player undid this match; its counters are taken back (unlocks stay).
+    case undone(MatchOutcome)
     /// A game reached its end (classic game over, or a daily attempt finished).
     /// `classicScore` is set for classic games, for the best-score leaderboard.
     case gameFinished(classicScore: Int?)
@@ -88,6 +90,11 @@ public struct PlayerProgress: Codable, Hashable, Sendable {
             }
         case .missed:
             break
+        case .undone(let outcome):
+            rowsCleared = max(0, rowsCleared - outcome.clearedRows.count)
+            if outcome.values[0] == outcome.values[1] {
+                equalPairsRun = max(0, equalPairsRun - 1)
+            }
         case .gameFinished(let classicScore):
             gamesFinished += 1
             equalPairsRun = 0

@@ -11,7 +11,7 @@ final class PersistenceUITests: XCTestCase {
         // Classic: change the board, leave, relaunch, continue.
         app.buttons["New Game"].tap()
         app.buttons["Add numbers"].tap()
-        XCTAssertTrue(app.buttons["cell-27"].waitForExistence(timeout: 2))
+        XCTAssertTrue(app.buttons["cell-50"].waitForExistence(timeout: 2))
         let classicCells = app.buttons.matching(identifierPrefix: "cell-").count
 
         // Daily: start today's challenge and change it too.
@@ -29,7 +29,7 @@ final class PersistenceUITests: XCTestCase {
         XCTAssertTrue(dailyCard(app).label.contains("In progress"))
         snapshot(app, "home")
         app.buttons["Continue"].tap()
-        XCTAssertTrue(app.buttons["cell-27"].waitForExistence(timeout: 2))
+        XCTAssertTrue(app.buttons["cell-50"].waitForExistence(timeout: 2))
         XCTAssertEqual(app.buttons.matching(identifierPrefix: "cell-").count, classicCells)
 
         app.navigationBars.buttons.element(boundBy: 0).tap()

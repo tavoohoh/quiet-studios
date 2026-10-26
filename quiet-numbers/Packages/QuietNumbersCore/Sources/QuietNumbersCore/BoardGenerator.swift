@@ -1,5 +1,5 @@
 public enum BoardGenerator {
-    public static let initialCount = 27
+    public static let initialCount = 42
     public static let minimumPairs = 3
 
     /// A fresh board of `initialCount` numbers (1–9) with at least `minimumPairs` valid pairs.

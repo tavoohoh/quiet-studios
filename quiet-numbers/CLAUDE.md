@@ -83,7 +83,7 @@ quiet-numbers/
 
 ## Reglas del juego
 
-Tablero de **9 columnas**; arranca con **27 números (3 filas)** del 1 al 9.
+Tablero de **9 columnas**; arranca con **42 números** del 1 al 9 (4 filas y media; antes 27, se igualó a otros juegos del género). Que un número no tenga pareja al inicio (p. ej. tres 5) es normal: el + duplica todo lo que queda.
 
 **Pareja válida:** dos números iguales (4-4) o que sumen 10 (3-7, 5-5).
 
@@ -95,10 +95,11 @@ Tablero de **9 columnas**; arranca con **27 números (3 filas)** del 1 al 9.
 **Mecánicas:**
 - Celdas eliminadas quedan como "fantasma" (número tenue) hasta que su fila se vacía.
 - Fila vacía: desaparece, el tablero sube y da puntos extra.
-- Botón **+**: copia todos los números restantes, en orden, al final del tablero (regla estándar del género; se evaluó triplicar y se descartó). 5 usos por partida. Limpiar una fila regala 1 uso extra (máximo 5 acumulados). Los números agregados se muestran en azul (`AddedNumber`) para distinguirlos de los originales.
+- Botón **+**: copia todos los números restantes, en orden, al final del tablero (regla estándar del género; se evaluó triplicar y se descartó). **Máximo 5 usos por tablero**; limpiar filas no devuelve usos (cambio del 2026-10-26). Sin parejas ni usos, la partida termina. Los números agregados se muestran en azul (`AddedNumber`) para distinguirlos de los originales.
 - **Pistas:** ilimitadas; resaltan una pareja válida y cuestan 3 puntos (el puntaje nunca baja de 0). Si no hay parejas, no cobran.
 - **Etapas:** vaciar el tablero pasa a la siguiente etapa con tablero nuevo; los usos de + se reinician.
 - **Fin de partida:** no quedan parejas válidas ni usos de +.
+- **Deshacer:** retrocede la última pareja o el último + (un solo paso; no se encadena). No se puede después de vaciar un tablero ni con la partida terminada. No devuelve el costo de pistas ni restaura una racha rota, y descuenta del progreso lo que la jugada había sumado.
 - La generación garantiza **al menos 3 parejas válidas** al inicio.
 
 **Puntaje** (valores iniciales, ajustables — mantenerlos configurables):
@@ -198,8 +199,10 @@ Decisiones de implementación (fase 5):
 - Pista sin parejas: no cobra, muestra "No hay parejas. Prueba +" y hace rebotar el botón +.
 - Racha ("¡N seguidas!"): se reinicia con un intento inválido o al pedir pista; el + no la reinicia.
 - Hápticos (iOS): ligero al seleccionar, medio al emparejar, éxito al limpiar fila.
-- Barra superior: puntaje, etapa, contador de + y costo de la pista. Nada más.
-- Feedback por jugada: "+N" flotante junto al puntaje (acento; costos en gris) y elogios breves centrados en la barra: "¡Desde lejos!" (4+ celdas eliminadas entre la pareja), "¡Doble/Triple fila!", "¡N seguidas!" (cada 5 parejas sin error). Solo texto, no dan puntos.
+- Barra superior: puntaje, etapa (y récord en clásico: "Etapa 2 · Récord 1.234") y los elogios. Nada más.
+- Barra inferior: Deshacer, + (con usos restantes) y Pista (con su costo), al alcance del pulgar.
+- Récord (mejor puntaje clásico) también en Inicio y "¡Nuevo récord!" en el fin de partida.
+- Feedback por jugada: "+N" flotante junto al puntaje (acento; costos en gris) y elogios breves centrados en la barra: "¡Desde lejos!" (4+ celdas eliminadas entre la pareja), "¡Doble/Triple fila!", "¡Ya no hay más 7!" (se eliminó el último de un dígito), "¡N seguidas!" (cada 5 parejas sin error). Solo texto, no dan puntos.
 - Pantallas: Inicio (Continuar, Nueva partida, Reto diario), Juego, Leaderboards, Colección, Ajustes (sonido, hápticos, privacidad).
 - iPad/Mac: tablero centrado con ancho máximo. Mac: ratón, trackpad y atajos de teclado.
 - Accesibilidad: Dynamic Type, VoiceOver por celda ("7, fila 3, columna 2"), contraste suficiente, opción de números más grandes.
@@ -264,7 +267,7 @@ Cada fase termina con su criterio de aceptación cumplido antes de pasar a la si
 
 ## Preguntas abiertas
 
-- [x] Limpiar una fila devuelve un uso de + (se mantiene la regla del brief para empezar).
+- [x] + : máximo 5 por tablero, sin devolución al limpiar filas.
 - [x] Color primario: azul eléctrico.
 - [ ] Color secundario (provisional: ámbar).
 - [ ] Nombre final (propuesto: Quiet Numbers).

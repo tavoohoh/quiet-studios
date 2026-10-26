@@ -79,6 +79,8 @@ final class GameModel {
 
     private var feedbackID = 0
     private var sequence: Task<Void, Never>?
+    /// The last move if it was a match, so undoing it can take its progress back.
+    private var lastOutcome: MatchOutcome?
 
     /// Cleared cells between a pair for it to count as a long shot.
     private static let longShotGap = 4
@@ -101,6 +103,7 @@ final class GameModel {
 
     var canAddNumbers: Bool { session.plusRemaining > 0 && !session.isOver }
     var canUseHint: Bool { !session.isOver }
+    var canUndo: Bool { session.canUndo }
     /// Stuck until the player taps +.
     var needsNumbers: Bool { !session.isOver && !session.hasValidPair }
 
@@ -140,6 +143,7 @@ final class GameModel {
                 : .rowCleared
         )
         onEvent?(.matched(outcome))
+        lastOutcome = outcome
         if session.stage != stage {
             stageBanner = session.stage
         } else if let text = praiseText(for: outcome) {
@@ -152,6 +156,7 @@ final class GameModel {
     func addNumbers() {
         finishSequence()
         guard session.addNumbers() else { return }
+        lastOutcome = nil
         board = session.board
         selectedID = nil
         hintIDs = []
@@ -177,6 +182,20 @@ final class GameModel {
         if hint.cost > 0 {
             showScoreChange(-hint.cost)
         }
+    }
+
+    /// Takes back the last match or + (one step).
+    func undo() {
+        finishSequence()
+        let scoreBefore = session.score
+        guard session.undo() else { return }
+        if let outcome = lastOutcome { onEvent?(.undone(outcome)) }
+        lastOutcome = nil
+        board = session.board
+        selectedID = nil
+        hintIDs = []
+        if session.score != scoreBefore { showScoreChange(session.score - scoreBefore) }
+        feedback.play(.select)
     }
 
     func dismissScoreChange(_ change: ScoreChange) {
@@ -281,6 +300,7 @@ final class GameModel {
         default: break
         }
         if outcome.pair.gap >= Self.longShotGap { return "Long shot!" }
+        if let digit = outcome.clearedDigits.first, !outcome.boardCleared { return "No more \(digit)s!" }
         let streak = session.streak
         if streak > 0, streak.isMultiple(of: Self.streakStep) { return "\(streak) in a row!" }
         return nil

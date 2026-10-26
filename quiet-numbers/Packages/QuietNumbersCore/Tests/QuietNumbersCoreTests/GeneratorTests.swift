@@ -26,7 +26,7 @@ import Testing
     func generatedBoardsHaveMinimumPairs(seed: UInt64) {
         var random = SeededRandom(seed: seed)
         let board = BoardGenerator.makeBoard(using: &random)
-        #expect(board.cells.count == 27)
+        #expect(board.cells.count == BoardGenerator.initialCount)
         #expect(board.cells.allSatisfy { (1...9).contains($0.value) })
         #expect(MatchRules.validPairs(on: board).count >= BoardGenerator.minimumPairs)
     }
@@ -47,5 +47,5 @@ import Testing
         #expect(values == Self.golden20261025)
     }
 
-    static let golden20261025 = [5, 9, 3, 7, 6, 3, 8, 4, 5, 9, 9, 3, 3, 1, 7, 8, 9, 6, 9, 1, 9, 5, 3, 5, 1, 3, 6]
+    static let golden20261025 = [5, 9, 3, 7, 6, 3, 8, 4, 5, 9, 9, 3, 3, 1, 7, 8, 9, 6, 9, 1, 9, 5, 3, 5, 1, 3, 6, 7, 5, 1, 9, 7, 1, 8, 4, 9, 2, 4, 6, 3, 8, 2]
 }

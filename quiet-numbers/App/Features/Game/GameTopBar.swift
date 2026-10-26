@@ -1,13 +1,11 @@
 import QuietNumbersCore
 import SwiftUI
 
-/// Score, stage, and the + and hint buttons, plus brief feedback after each move.
+/// Score and stage, plus brief feedback after each move. Actions live in `GameActionBar`.
 struct GameTopBar: View {
     let model: GameModel
     /// Under the score: stage, or which daily this is.
     let subtitle: Text
-    let onAddNumbers: () -> Void
-    let onHint: () -> Void
 
     @Environment(\.appearance) private var appearance
 
@@ -29,6 +27,33 @@ struct GameTopBar: View {
                     .foregroundStyle(.secondary)
             }
             Spacer()
+        }
+        .overlay(alignment: .trailing) { PraiseLabel(model: model) }
+        .padding(.horizontal)
+        .padding(.vertical, 8)
+    }
+}
+
+/// Undo, + and hint, at the bottom within thumb reach.
+struct GameActionBar: View {
+    let model: GameModel
+    let onUndo: () -> Void
+    let onAddNumbers: () -> Void
+    let onHint: () -> Void
+
+    var body: some View {
+        HStack(spacing: 0) {
+            CounterButton(
+                systemImage: "arrow.uturn.backward",
+                caption: Text("Undo"),
+                label: "Undo",
+                value: Text(verbatim: ""),
+                isHighlighted: false,
+                nudges: 0,
+                action: onUndo
+            )
+            .disabled(!model.canUndo)
+            .keyboardShortcut("z", modifiers: .command)
             CounterButton(
                 systemImage: "plus",
                 caption: Text(model.session.plusRemaining, format: .number),
@@ -52,9 +77,8 @@ struct GameTopBar: View {
             .disabled(!model.canUseHint)
             .keyboardShortcut("h", modifiers: [])
         }
-        .overlay { PraiseLabel(model: model) }
         .padding(.horizontal)
-        .padding(.vertical, 8)
+        .padding(.vertical, 6)
     }
 }
 
@@ -118,6 +142,8 @@ private struct CounterButton: View {
     let nudges: Int
     let action: () -> Void
 
+    @Environment(\.isEnabled) private var isEnabled
+
     var body: some View {
         Button(action: action) {
             VStack(spacing: 2) {
@@ -129,11 +155,12 @@ private struct CounterButton: View {
                     .font(.counter)
                     .contentTransition(.numericText())
             }
-            .frame(width: 52, height: 52)
+            .frame(maxWidth: .infinity, minHeight: 56)
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
         .foregroundStyle(.tint)
+        .opacity(isEnabled ? 1 : 0.35)
         .accessibilityLabel(Text(label))
         .accessibilityValue(value)
     }

@@ -14,6 +14,7 @@ import Testing
             points: 1,
             values: values,
             clearedRows: rows,
+            clearedDigits: [],
             boardCleared: boardCleared,
             clearedWithoutHelp: withoutHelp,
             stage: stage
@@ -80,6 +81,15 @@ import Testing
         for _ in 0..<9 { _ = progress.record(.matched(outcome(values: [6, 6]))) }
         #expect(!progress.unlocked.contains(.monotone))
         #expect(progress.record(.matched(outcome(values: [6, 6]))) == [.monotone])
+    }
+
+    @Test func undoTakesCountersBack() {
+        var progress = PlayerProgress()
+        let match = outcome(values: [4, 4], rows: [0])
+        _ = progress.record(.matched(match))
+        _ = progress.record(.undone(match))
+        #expect(progress.rowsCleared == 0)
+        #expect(progress.equalPairsRun == 0)
     }
 
     @Test func streakAndNightOwl() {

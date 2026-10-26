@@ -147,6 +147,16 @@
         }
       }
     },
+    "Best %@": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Récord %@"
+          }
+        }
+      }
+    },
     "Best score": {
       "localizations": {
         "es": {
@@ -653,6 +663,16 @@
     "New York": {
       "shouldTranslate": false
     },
+    "New best score!": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¡Nuevo récord!"
+          }
+        }
+      }
+    },
     "Next challenge in %@": {
       "localizations": {
         "es": {
@@ -689,6 +709,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Sin ayuda"
+          }
+        }
+      }
+    },
+    "No more %llds!": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¡Ya no hay más %lld!"
           }
         }
       }
@@ -1072,6 +1102,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "¡Triple fila!"
+          }
+        }
+      }
+    },
+    "Undo": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deshacer"
           }
         }
       }

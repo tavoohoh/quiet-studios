@@ -4,6 +4,8 @@ import XCTest
 ///   5 9 3 7 6 3 8 4 5
 ///   9 9 3 3 1 7 8 9 6
 ///   9 1 9 5 3 5 1 3 6
+///   7 5 1 9 7 1 8 4 9
+///   2 4 6 3 8 2
 final class GameplayUITests: XCTestCase {
     @MainActor
     func testMatchingAndAddingNumbers() {
@@ -29,13 +31,21 @@ final class GameplayUITests: XCTestCase {
         app.buttons["cell-10"].tap()
         XCTAssertEqual(score.value as? String, "2")
 
+        // Undo takes back exactly one move.
+        app.buttons["Undo"].tap()
+        XCTAssertEqual(score.value as? String, "1")
+        XCTAssertFalse(app.buttons["Undo"].isEnabled)
+        app.buttons["cell-1"].tap()
+        app.buttons["cell-10"].tap()
+        XCTAssertEqual(score.value as? String, "2")
+
         // Hint costs 3 but the score floors at 0.
         app.buttons["Hint"].tap()
         XCTAssertEqual(score.value as? String, "0")
         snapshot(app, "hint")
 
         app.buttons["Add numbers"].tap()
-        XCTAssertTrue(app.buttons["cell-27"].waitForExistence(timeout: 2))
+        XCTAssertTrue(app.buttons["cell-50"].waitForExistence(timeout: 2))
 
         snapshot(app, "added")
     }

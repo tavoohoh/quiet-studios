@@ -32,7 +32,7 @@ import Testing
         #expect(session == before)
     }
 
-    @Test func emptiedRowCollapsesAndGivesBonus() {
+    @Test func emptiedRowCollapsesAndScoresBonus() {
         var session = GameSession(board: makeBoard([
             [0, 0, 0, 0, 0, 0, 0, 3, 7],
             [2, 1, 2, 1, 2, 1, 2, 1, 2],
@@ -42,17 +42,8 @@ import Testing
         #expect(outcome?.points == 1 + 10)
         #expect(session.board.rowCount == 1)
         #expect(session.board.cells.map(\.value) == [2, 1, 2, 1, 2, 1, 2, 1, 2])
-        #expect(session.plusRemaining == 3)
-    }
-
-    @Test func rowBonusCapsAtMaxPlus() {
-        var session = GameSession(board: makeBoard([
-            [0, 0, 0, 0, 0, 0, 0, 3, 7],
-            [2, 1, 2, 1, 2, 1, 2, 1, 2],
-        ]))
-        let outcome = session.match(at: 7, 8)
-        #expect(outcome != nil)
-        #expect(session.plusRemaining == GameSession.maxPlusUses)
+        // Clearing rows doesn't give + uses back.
+        #expect(session.plusRemaining == 2)
     }
 
     @Test func clearingTwoRowsAtOnce() {
@@ -64,7 +55,7 @@ import Testing
         let outcome = session.match(at: 8, 9)
         #expect(outcome?.clearedRows == [0, 1])
         #expect(session.board.rowCount == 1)
-        #expect(session.plusRemaining == 2)
+        #expect(session.plusRemaining == 0)
     }
 
     @Test func middleRowCollapseKeepsColumns() {
@@ -185,6 +176,66 @@ import Testing
         #expect(MatchRules.pair(on: board, 8, 9)?.route == .readingOrder)
         let straight = makeBoard([[4, 4, 1, 2, 1, 2, 1, 2, 1]])
         #expect(MatchRules.pair(on: straight, 0, 1)?.route == .line)
+    }
+
+    @Test func undoTakesBackTheLastMatch() {
+        var session = GameSession(board: makeBoard([
+            [0, 0, 0, 0, 0, 0, 0, 3, 7],
+            [4, 4, 2, 1, 2, 1, 2, 1, 2],
+        ]))
+        let before = session.board
+        _ = session.match(at: 7, 8)
+        #expect(session.canUndo)
+        let undone = session.undo()
+        #expect(undone)
+        #expect(session.board == before)
+        #expect(session.score == 0)
+        #expect(session.streak == 0)
+        // Only one step back.
+        #expect(!session.canUndo)
+        let undoneAgain = session.undo()
+        #expect(!undoneAgain)
+    }
+
+    @Test func undoTakesBackPlus() {
+        var session = GameSession(board: makeBoard([[1, 2, 1, 2, 1, 2, 1, 2, 1]]))
+        session.addNumbers()
+        let undone = session.undo()
+        #expect(undone)
+        #expect(session.board.cells.count == 9)
+        #expect(session.plusRemaining == GameSession.maxPlusUses)
+    }
+
+    @Test func undoDoesNotRefundHintsOrRestoreBrokenStreaks() {
+        var session = GameSession(board: makeBoard([[4, 4, 3, 3, 1, 2, 1, 2, 1]]), score: 10)
+        _ = session.match(at: 0, 1)
+        #expect(session.score == 11 && session.streak == 1)
+        _ = session.useHint()
+        #expect(session.score == 8)
+        session.undo()
+        #expect(session.score == 7)
+        #expect(session.streak == 0)
+    }
+
+    @Test func noUndoAfterClearingTheBoard() {
+        var session = GameSession(board: makeBoard([[0, 0, 0, 0, 0, 0, 0, 2, 8]]))
+        _ = session.match(at: 7, 8)
+        #expect(session.stage == 2)
+        #expect(!session.canUndo)
+    }
+
+    @Test func noUndoOnceTheGameIsOver() {
+        // After 1-1, nothing pairs: 2|3 meet across the gap, 3 _ 3 is blocked by the 4.
+        var session = GameSession(board: makeBoard([[1, 2, 1, 2, 1, 1, 3, 4, 3]]), plusRemaining: 0)
+        _ = session.match(at: 4, 5)
+        #expect(session.isOver)
+        #expect(!session.canUndo)
+    }
+
+    @Test func reportsDigitsWithNoneLeft() {
+        var session = GameSession(board: makeBoard([[3, 7, 7, 1, 2, 1, 2, 1, 2]]))
+        let outcome = session.match(at: 0, 1)
+        #expect(outcome?.clearedDigits == [3])
     }
 
     @Test func plusMarksAddedCells() {

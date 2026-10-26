@@ -45,6 +45,11 @@ struct HomeView: View {
                 .controlSize(.large)
                 .buttonBorderShape(.capsule)
                 .frame(maxWidth: 360)
+                if app.progress.bestScore > 0 {
+                    Text("Best \(Text(app.progress.bestScore, format: .number))")
+                        .font(.subheadline.monospacedDigit())
+                        .foregroundStyle(.secondary)
+                }
                 Spacer()
                 Spacer()
             }
@@ -133,7 +138,8 @@ private struct ActiveGameView: View {
                 model: game,
                 kind: kind,
                 onNewGame: { app.newClassic() },
-                onSessionChange: { app.sessionChanged() }
+                onSessionChange: { app.sessionChanged() },
+                bestScore: kind == .classic ? app.progress.bestScore : nil
             )
             .id(ObjectIdentifier(game))
             .overlay(alignment: .bottom) {

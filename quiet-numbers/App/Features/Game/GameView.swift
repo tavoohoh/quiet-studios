@@ -8,6 +8,11 @@ struct GameView: View {
     let onNewGame: () -> Void
     /// After every change to the session, to save it.
     let onSessionChange: () -> Void
+    /// Best classic score so far; `nil` for daily challenges.
+    let bestScore: Int?
+
+    /// Best score when this game started, to spot a new record.
+    @State private var startingBest: Int?
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.dismiss) private var dismiss
@@ -19,9 +24,7 @@ struct GameView: View {
         VStack(spacing: 0) {
             GameTopBar(
                 model: model,
-                subtitle: subtitle,
-                onAddNumbers: { animate { model.addNumbers() } },
-                onHint: { animate { model.showHint() } }
+                subtitle: subtitle
             )
             GeometryReader { geometry in
                 let width = min(geometry.size.width - 16, Self.maxBoardWidth)
@@ -31,6 +34,12 @@ struct GameView: View {
                 }
                 .frame(maxWidth: .infinity)
             }
+            GameActionBar(
+                model: model,
+                onUndo: { animate { model.undo() } },
+                onAddNumbers: { animate { model.addNumbers() } },
+                onHint: { animate { model.showHint() } }
+            )
         }
         .frame(maxWidth: Self.maxBoardWidth + 32)
         .frame(maxWidth: .infinity)
@@ -50,6 +59,7 @@ struct GameView: View {
                 GameOverView(
                     session: model.session,
                     kind: kind,
+                    isNewBest: (startingBest ?? 0) > 0 && model.session.score > (startingBest ?? 0),
                     onNewGame: { animate(onNewGame) },
                     onHome: { dismiss() }
                 )
@@ -58,6 +68,7 @@ struct GameView: View {
         }
         .onChange(of: reduceMotion, initial: true) { model.reduceMotion = reduceMotion }
         .onChange(of: model.session) { onSessionChange() }
+        .onAppear { if startingBest == nil { startingBest = bestScore } }
         .toolbar {
             if kind == .classic {
                 ToolbarItem(placement: .primaryAction) {
@@ -77,7 +88,13 @@ struct GameView: View {
 
     private var subtitle: Text {
         switch kind {
-        case .classic: Text("Stage \(model.session.stage)")
+        case .classic:
+            if let best = startingBest ?? bestScore, best > 0 {
+                Text("Stage \(model.session.stage)") + Text(verbatim: " · ")
+                    + Text("Best \(Text(max(best, model.session.score), format: .number))")
+            } else {
+                Text("Stage \(model.session.stage)")
+            }
         case .daily: Text("Daily Challenge")
         case .practice(let dayKey): Text("Practice · \(DayKeyFormat.string(dayKey))")
         }
@@ -105,6 +122,7 @@ private struct StageBanner: View {
 private struct GameOverView: View {
     let session: GameSession
     let kind: GameKind
+    let isNewBest: Bool
     let onNewGame: () -> Void
     let onHome: () -> Void
 
@@ -120,6 +138,11 @@ private struct GameOverView: View {
                     .foregroundStyle(.secondary)
                 Text(session.score, format: .number)
                     .font(.score)
+                if isNewBest {
+                    Text("New best score!")
+                        .font(.headline)
+                        .foregroundStyle(Color.highlight)
+                }
                 if case .practice = kind {
                     Text("Not scored")
                         .font(.subheadline)

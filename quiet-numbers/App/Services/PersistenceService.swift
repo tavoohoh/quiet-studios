@@ -88,9 +88,10 @@ final class PersistenceService {
                     try? FileManager.default.removeItem(atPath: url.path(percentEncoded: false) + suffix)
                 }
             }
-            try? FileManager.default.createDirectory(at: .applicationSupportDirectory, withIntermediateDirectories: true)
             configuration = ModelConfiguration(url: url)
         }
+        // On a fresh install the folder may not exist yet; create it so the store opens cleanly.
+        try? FileManager.default.createDirectory(at: .applicationSupportDirectory, withIntermediateDirectories: true)
         do {
             container = try ModelContainer(
                 for: StoredGame.self, StoredDaily.self, StoredProgress.self,
