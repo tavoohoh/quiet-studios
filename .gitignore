@@ -1,8 +1,37 @@
+# macOS
 .DS_Store
+
+# Xcode
 xcuserdata/
 DerivedData/
-.build/
-.swiftpm/
 *.xcuserstate
 build/
+*.xcresult
+*.xcarchive
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# Swift Package Manager
+.build/
+.swiftpm/
+
+# Local signing config (Team ID, personal bundle ID)
 quiet-numbers/Config/Local.xcconfig
+
+# Signing and App Store Connect credentials: never commit
+*.p8
+*.p12
+*.cer
+*.certSigningRequest
+*.mobileprovision
+*.provisionprofile
+AuthKey_*.p8
+.env
+.env.*
+
+# fastlane outputs
+**/fastlane/report.xml
+**/fastlane/Preview.html
+**/fastlane/test_output/
+**/fastlane/screenshots/screenshots.html
