@@ -2,6 +2,8 @@ import QuietNumbersCore
 import SwiftUI
 
 /// Reads the player's choices and publishes them as `\.appearance`, tint and color scheme.
+/// The theme's ink is applied where numbers are drawn, not app-wide, so system button
+/// styles keep their own label colors.
 /// A choice that isn't unlocked (e.g. restored on a new device) falls back to the default.
 struct AppearanceRoot: ViewModifier {
     @Environment(AppModel.self) private var app
@@ -22,7 +24,6 @@ struct AppearanceRoot: ViewModifier {
                 largerNumbers: largerNumbers
             ))
             .tint(colors.accent)
-            .foregroundStyle(colors.ink)
             .preferredColorScheme(colors.colorScheme)
     }
 

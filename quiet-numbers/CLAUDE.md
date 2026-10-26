@@ -216,6 +216,11 @@ Entregables:
 - Política de privacidad corta en inglés y español.
 - Verificar en la documentación de Apple cómo declarar Game Center en la etiqueta de privacidad.
 
+Estado (fase 6):
+- `App/Resources/PrivacyInfo.xcprivacy`: sin tracking, cero tipos de datos recolectados, `UserDefaults` con razón `CA92.1`.
+- Política de privacidad en/es: `docs/privacy-policy.md` (falta definir correo de soporte y URL pública).
+- Etiqueta de privacidad, según [App privacy details](https://developer.apple.com/app-store/app-privacy-details/): "You are not responsible for disclosing data collected by Apple" y "recolectar" = enviar datos fuera del dispositivo de forma que el desarrollador pueda accederlos. Game Center e iCloud los gestiona Apple y no tenemos acceso, por lo que se responde **Data Not Collected**. Riesgo: la misma guía dice "Your app includes game saves… Declare Gameplay Content"; revisarlo al llenar el cuestionario en App Store Connect.
+
 ## Fases
 
 Cada fase termina con su criterio de aceptación cumplido antes de pasar a la siguiente.
@@ -232,6 +237,17 @@ Cada fase termina con su criterio de aceptación cumplido antes de pasar a la si
    Acepta: cada logro desbloquea su recompensa y se aplica desde Colección.
 6. **Pulido y lanzamiento.** Localización completa, accesibilidad, PrivacyInfo, capturas, TestFlight.
    Acepta: cero textos sin localizar, auditoría de VoiceOver aprobada, build en TestFlight.
+
+## Estado (2026-10-25)
+
+| Fase | Estado |
+|---|---|
+| 1. Motor | ✅ Hecha |
+| 2. Juego jugable | ✅ Hecha (probada en iPhone; Mac compila; iPad sin probar en simulador) |
+| 3. Persistencia y reto diario | ✅ Hecha |
+| 4. Game Center | 🟡 Código completo; falta App ID + App Store Connect para verificarlo |
+| 5. Recompensas y colección | ✅ Hecha |
+| 6. Pulido y lanzamiento | 🟡 Localización auditada (0 textos sin traducir, fallback a inglés verificado), PrivacyInfo, política de privacidad, Dynamic Type en Inicio/Juego. Falta: auditoría de VoiceOver manual, capturas, TestFlight, rediseño de la animación de unión |
 
 ## Anotaciones de diseño
 

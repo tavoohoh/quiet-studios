@@ -21,6 +21,8 @@ struct HomeView: View {
                 Spacer()
                 Text(verbatim: "Quiet Numbers")
                     .font(.system(.largeTitle, design: .rounded, weight: .semibold))
+                    .multilineTextAlignment(.center)
+                    .fixedSize(horizontal: false, vertical: true)
                 VStack(spacing: 12) {
                     DailyCard { path.append(.daily) }
                     if app.hasClassicInProgress {
@@ -196,6 +198,7 @@ private struct DailyCard: View {
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
                 }
+                .fixedSize(horizontal: false, vertical: true)
                 Spacer()
                 if app.currentStreak > 0 {
                     Label {

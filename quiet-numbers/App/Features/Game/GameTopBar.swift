@@ -17,6 +17,7 @@ struct GameTopBar: View {
                 HStack(alignment: .firstTextBaseline, spacing: 8) {
                     Text(model.session.score, format: .number)
                         .font(.score(design: appearance.numberFont.design))
+                        .foregroundStyle(appearance.theme.ink)
                         .contentTransition(.numericText(value: Double(model.session.score)))
                         .accessibilityLabel(Text("Score"))
                         .accessibilityIdentifier("score")

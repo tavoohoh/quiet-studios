@@ -33,6 +33,7 @@
 		B33643C37134BE12E5F58BE0 /* AppearanceRoot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45997456AC4544131F86E156 /* AppearanceRoot.swift */; };
 		C8F42C0267E4DB6F52F5D3B0 /* PersistenceUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0B0675BDEA4B0A15DEB5B9C /* PersistenceUITests.swift */; };
 		CA8D59F009ED6245A35D3EB3 /* CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9194796821A907E01A268433 /* CollectionView.swift */; };
+		DA2540312F92F096DF1016A9 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 57DBAC418C43449E8EE90E01 /* PrivacyInfo.xcprivacy */; };
 		E4F62B961783E757AF92439F /* QuietNumbersApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631019FDC57409A49740D79C /* QuietNumbersApp.swift */; };
 		E763D16DE3F2BD7B5DC82F95 /* BoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C33B49B32F0F2F2AA6714F78 /* BoardView.swift */; };
 		E79894BADD43733A109B5546 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 395784F31889B14D1B911198 /* Localizable.xcstrings */; };
@@ -70,6 +71,7 @@
 		5207218E375E6E70D497DCEB /* QuietNumbers.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = QuietNumbers.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		53C64A3C452C0B00769CC13A /* AppModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModelTests.swift; sourceTree = "<group>"; };
 		571AC2887AA56D2446FF163A /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
+		57DBAC418C43449E8EE90E01 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		631019FDC57409A49740D79C /* QuietNumbersApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuietNumbersApp.swift; sourceTree = "<group>"; };
 		66D7992BC8FB7DE533207505 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		86B72A7C6607184099C42B8B /* QuietNumbersTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = QuietNumbersTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -185,6 +187,7 @@
 				FC76CAE1563A82F982ECB21E /* Assets.xcassets */,
 				FCF8950DD2148C3FE425D9C2 /* InfoPlist.xcstrings */,
 				395784F31889B14D1B911198 /* Localizable.xcstrings */,
+				57DBAC418C43449E8EE90E01 /* PrivacyInfo.xcprivacy */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -374,6 +377,7 @@
 				AEDA50AE1D918285F5991128 /* Assets.xcassets in Resources */,
 				87129F0138E40E6E7DC5D0A8 /* InfoPlist.xcstrings in Resources */,
 				E79894BADD43733A109B5546 /* Localizable.xcstrings in Resources */,
+				DA2540312F92F096DF1016A9 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

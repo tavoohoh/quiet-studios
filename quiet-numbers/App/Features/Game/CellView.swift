@@ -13,11 +13,12 @@ struct CellView: View {
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.appearance) private var appearance
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
     var body: some View {
         Button(action: action) {
             Text(verbatim: "\(cell.value)")
-                .font(.boardNumber(size: size * (appearance.largerNumbers ? 0.62 : 0.5), design: appearance.numberFont.design))
+                .font(.boardNumber(size: size * numberScale, design: appearance.numberFont.design))
                 .foregroundStyle(numberStyle)
                 .scaleEffect(cell.isCleared ? 0.75 : 1)
                 .frame(width: size, height: size)
@@ -51,6 +52,12 @@ struct CellView: View {
 }
 
 extension CellView {
+    /// Board numbers are sized by the cell, not Dynamic Type (9 columns must fit),
+    /// but accessibility text sizes and "Larger numbers" use most of the cell.
+    private var numberScale: CGFloat {
+        appearance.largerNumbers || dynamicTypeSize.isAccessibilitySize ? 0.62 : 0.5
+    }
+
     /// Tile style from the Collection. Ghosts never get a tile.
     @ViewBuilder
     private var tile: some View {
@@ -69,7 +76,7 @@ extension CellView {
     /// Ghosts are faint; numbers added with + are blue so the originals stand out.
     private var numberStyle: AnyShapeStyle {
         if cell.isCleared { return AnyShapeStyle(.quaternary) }
-        return cell.isAdded ? AnyShapeStyle(Color.addedNumber) : AnyShapeStyle(.primary)
+        return cell.isAdded ? AnyShapeStyle(Color.addedNumber) : appearance.theme.ink
     }
 }
 
