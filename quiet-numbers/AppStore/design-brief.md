@@ -1,7 +1,16 @@
 # Brief para Claude Design: Quiet Numbers
 
-Dos encargos: (1) revisar la paleta, sobre todo el color secundario, y (2) diseñar las 11 imágenes de logros de Game Center.
-Adjuntar al pedido: `App/Resources/Assets.xcassets/AppIcon.appiconset/icon-1024.png` y algunas capturas de `AppStore/screenshots/iphone-6.9/` (claro y oscuro: `01-game`, `02-daily`, `04-collection`, `05-theme`).
+Cuatro encargos:
+1. Revisar la paleta, sobre todo el color secundario.
+2. Diseñar las 11 imágenes de logros de Game Center.
+3. Diseñar las imágenes de marketing de la App Store (iPhone y iPad, inglés y español).
+4. Proponer el logo de Quiet Studios y el splash de la app.
+
+Adjuntar al pedido:
+- `App/Resources/Assets.xcassets/AppIcon.appiconset/icon-1024.png` (ícono actual).
+- Las capturas crudas de `AppStore/screenshots/` (iPhone 6.9" y iPad 13", `en` y `es`, claro y oscuro; 5 escenas: `01-game`, `02-daily`, `03-leaderboards`, `04-collection`, `05-theme`).
+- `AppStore/screenshot-captions.md` (titulares propuestos).
+- `fastlane/metadata/en-US/description.txt` y `es-MX/description.txt` (mensaje y tono).
 
 ## Contexto
 
@@ -59,3 +68,46 @@ Qué pedimos:
 Los íconos SF Symbols que usa hoy la app para cada logro (referencia, no obligatorios): `figure.walk`, `square.dashed`, `hand.raised.slash`, `calendar`, `calendar.badge.checkmark`, `wind`, `5.circle`, `rosette`, `moon.stars`, `equal.circle`, `minus.circle`.
 
 **Entrega:** PNG 1024×1024 nombrados con el ID (`first_step.png`…). Se guardarán en `AppStore/game-center/`.
+
+## 3. Imágenes de la App Store
+
+Las capturas actuales son pantallas crudas: genéricas y nada marketeras. Queremos imágenes que vendan la idea de un juego **tranquilo y honesto**, coherentes con la paleta final y con el tono de la descripción.
+
+- **Mensajes, en este orden** (titulares de partida en `screenshot-captions.md`, se pueden reescribir):
+  1. **Sin anuncios. Nunca.** / *No ads. Ever.* (obligatorio y primero; es lo que nos diferencia).
+  2. Reto diario: el mismo tablero para todos, racha.
+  3. Game Center opcional: leaderboards con amigos.
+  4. Recompensas que se ganan, nunca se compran.
+  5. Sin recolectar datos / temas.
+  Proponer si conviene una sexta (p. ej. cómo se juega: "iguales o que sumen 10") o cambiar el orden.
+- **Tamaños** (vertical, PNG o JPEG sin transparencia):
+  - iPhone 6.9": **1320×2868**.
+  - iPad 13": **2064×2752**.
+  - Apple escala estas a los tamaños menores; no hacen falta otras.
+- **Idiomas:** inglés y español (un solo set en español sirve para México y España). El idioma de la barra de estado no importa; lo que importa es el texto.
+- **Libertad visual:** fondo de color, captura dentro o fuera del marco del dispositivo, recortes ampliados del tablero, composiciones que crucen dos imágenes seguidas, etc. Que se lea en la miniatura de los resultados de búsqueda (las 3 primeras imágenes son las que se ven).
+- **Restricciones de Apple:** mostrar la app real (se pueden usar las capturas tal cual o recortes); no imitar la interfaz de iOS ni usar marcas de Apple fuera de lo permitido; nada de precios ni "gratis" engañoso.
+- Sin nombres, marcas ni estética de otros juegos del género.
+- **Entrega:** archivos nombrados `<dispositivo>-<idioma>-<NN>.png` (p. ej. `iphone-es-01.png`), más el archivo fuente editable si es posible, para poder actualizar textos.
+
+## 4. Logo de Quiet Studios y splash
+
+**Logo del estudio.** Quiet Studios hace apps y juegos que respetan la atención y la privacidad: tranquilos, minimalistas, sin ruido. La primera app es Quiet Numbers y vendrán otras (cada una con identidad propia), así que el logo tiene que funcionar para toda la familia.
+
+- **Variantes:**
+  - Símbolo + logotipo horizontal.
+  - Solo símbolo.
+  - Solo logotipo.
+- **Fondos:** que funcione en claro y en oscuro, y en un solo color.
+- **Tamaños:** que se lea en tamaño muy pequeño (favicon de 32 px) y en el splash.
+- **Entrega:** SVG y PNG @1x/@2x/@3x, más el color o colores exactos.
+- **Dónde se usará:** splash de la app, página web (`docs/index.html`), avatar de GitHub y redes, pie de las páginas.
+
+**Splash de Quiet Numbers.** Hoy, al abrir la app, aparece ~1,5 s "Quiet Studios" con un punto azul sobre el fondo del sistema y se desvanece hacia Inicio (un toque lo salta).
+
+- Proponer cómo debería verse con el logo nuevo, en claro y oscuro.
+- **Movimiento:** cómo entra y cómo sale. Animación simple que se pueda hacer en SwiftUI (opacidad, escala, trazo que se dibuja, etc.), con una alternativa estática para Reducir movimiento.
+- **Duración:** máximo ~1,5 s; tiene que sentirse tranquilo, no hacer esperar.
+- **Limitación:** el launch screen del sistema (lo que se ve antes de que cargue la app) solo admite un color de fondo y una imagen fija. El splash animado viene después y tiene que empalmar sin salto visual.
+- **Opcional:** si al diseñar el logo surge una propuesta de ícono para Quiet Numbers, bienvenida.
+
