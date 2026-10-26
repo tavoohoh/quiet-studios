@@ -22,8 +22,31 @@ import Testing
 
     @Test func firstGameUnlocksFirstStep() {
         var progress = PlayerProgress()
-        #expect(progress.record(.gameFinished) == [.firstStep])
-        #expect(progress.record(.gameFinished).isEmpty)
+        #expect(progress.record(.gameFinished(classicScore: nil)) == [.firstStep])
+        #expect(progress.record(.gameFinished(classicScore: nil)).isEmpty)
+    }
+
+    @Test func bestScoreTracksClassicGamesOnly() {
+        var progress = PlayerProgress()
+        _ = progress.record(.gameFinished(classicScore: 320))
+        _ = progress.record(.gameFinished(classicScore: 150))
+        _ = progress.record(.gameFinished(classicScore: nil))
+        #expect(progress.bestScore == 320)
+    }
+
+    @Test func mergeKeepsEverythingEarnedOnEitherDevice() {
+        var phone = PlayerProgress()
+        _ = phone.record(.gameFinished(classicScore: 500))
+        _ = phone.record(.matched(outcome(rows: [0, 1, 2])))
+        var mac = PlayerProgress()
+        _ = mac.record(.matched(outcome(boardCleared: true, withoutHelp: true, stage: 2)))
+        _ = mac.record(.gameFinished(classicScore: 900))
+
+        let merged = phone.merged(with: mac)
+        #expect(merged.unlocked == [.firstStep, .cleanSlate, .noHelp])
+        #expect(merged.bestScore == 900)
+        #expect(merged.rowsCleared == 3)
+        #expect(merged == mac.merged(with: phone))
     }
 
     @Test func clearingBoardWithoutHelpUnlocksBoth() {

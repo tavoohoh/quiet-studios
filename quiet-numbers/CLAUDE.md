@@ -138,6 +138,19 @@ Opcional: sin sesión, el juego funciona completo y los logros se guardan localm
 - Partidas guardadas: `saveGameData` / `fetchSavedGames` (iCloud del usuario). SwiftData es siempre la fuente principal. Conflictos: `resolveConflictingSavedGames` conservando el estado con más progreso.
 - Challenges (iOS 26+): evaluar integración con el reto diario y la app Games.
 
+### Estado de la integración (fase 4)
+
+El código está completo (`GameCenterService`, `LeaderboardsView`, sincronización en `AppModel.syncGameCenter`), pero **no está verificado contra Game Center real**: falta registrar la app. Sin sesión todo funciona y se guarda localmente (verificado con UI test). Pendiente cuando exista el bundle ID:
+
+1. Crear el App ID y activar las capacidades **Game Center** e **iCloud** (iCloud es necesario para `saveGameData`; agregar su entitlement en `project.yml`).
+2. En App Store Connect, crear los leaderboards `daily_challenge` (recurrente, 24 h, inicio 00:00 UTC), `best_score` y `longest_streak` (clásicos), y los logros `first_step`, `clean_slate`, `no_help`, `consistency`, `habit`, `sweeper`, `stage_five`, `centennial`, `night_owl`, `monotone`, con textos en inglés y español.
+3. Probar con una cuenta sandbox: modo avión → jugar → reconectar → verificar envío.
+
+Decisiones:
+- No se fuerza el inicio de sesión (no se presenta la pantalla de login de Game Center); el jugador inicia sesión desde Ajustes del sistema. `GKAccessPoint` solo en Inicio y con sesión.
+- Partidas guardadas: se guarda un `Snapshot` (progreso + resultados diarios). Los conflictos se resuelven **fusionando** (unión de logros, máximo de cada contador, mejor resultado por día), lo que siempre conserva el mayor progreso. La partida clásica en curso no se sincroniza.
+- macOS: `ENABLE_OUTGOING_NETWORK_CONNECTIONS` solo porque GameKit lo necesita dentro del sandbox; la app no hace llamadas propias.
+
 ## Logros y recompensas
 
 Toda recompensa es cosmética y nunca altera la jugabilidad ni el layout del tablero. Los desbloqueos se calculan y guardan localmente.

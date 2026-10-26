@@ -16,12 +16,15 @@
 		3CC92E0B77008BB80B4A299A /* GameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212A4F79BAB138C07EAFF774 /* GameModel.swift */; };
 		43E88AE9810B80FD897EFF08 /* GameTopBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8D9147C86ED9A3911F7A558 /* GameTopBar.swift */; };
 		4FEBF4CDF576A9ADE24F5480 /* CollectionUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2F11A9E3ADE55BDF7FA2D0 /* CollectionUITests.swift */; };
+		519B949BF3219F0AFF0D1BE0 /* GameCenterService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C1754B3BB39F1EA843608A9 /* GameCenterService.swift */; };
 		5554FEE65B821D820A7D6CB5 /* DayKeyFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23C8A220045ED805473F40E1 /* DayKeyFormat.swift */; };
+		5970D45FBD88ACC4289A804A /* LeaderboardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAFD2AEC805CEB315AE9C1A9 /* LeaderboardsView.swift */; };
 		62356E8F3C696A26E37DDC38 /* CellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1945F8C8C9CC42DC822995A2 /* CellView.swift */; };
 		6BF43A5E0C5928A2C4530C17 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D7992BC8FB7DE533207505 /* HomeView.swift */; };
 		7285EE1FA7F38A9D5CD2EB39 /* GameplayUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA9DDB21A2D6D9A16F979F4 /* GameplayUITests.swift */; };
 		757679F41159E358229E3201 /* QuietNumbersCore in Frameworks */ = {isa = PBXBuildFile; productRef = 7BE46ECC0AC3158A352BE22A /* QuietNumbersCore */; };
 		86A107AEE1484BD9F324B52D /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E88C14A830CC99167EB0AE /* SettingsView.swift */; };
+		87129F0138E40E6E7DC5D0A8 /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = FCF8950DD2148C3FE425D9C2 /* InfoPlist.xcstrings */; };
 		94EE4038B4231F54FE822E0C /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D15AA4C99BAE2C8662B34C66 /* AppModel.swift */; };
 		94FB3710A69027408DFEBCAB /* AchievementText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3764A4EF9834602A85298448 /* AchievementText.swift */; };
 		A0C6754BBB6665903EB0C79A /* Rewards.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3D83326830FBDF44307316 /* Rewards.swift */; };
@@ -70,12 +73,15 @@
 		631019FDC57409A49740D79C /* QuietNumbersApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuietNumbersApp.swift; sourceTree = "<group>"; };
 		66D7992BC8FB7DE533207505 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		86B72A7C6607184099C42B8B /* QuietNumbersTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = QuietNumbersTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		8C1754B3BB39F1EA843608A9 /* GameCenterService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameCenterService.swift; sourceTree = "<group>"; };
 		9194796821A907E01A268433 /* CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionView.swift; sourceTree = "<group>"; };
 		93E88C14A830CC99167EB0AE /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		9ADB0BD18C8BA1112788571E /* QuietNumbersUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = QuietNumbersUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A8D9147C86ED9A3911F7A558 /* GameTopBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameTopBar.swift; sourceTree = "<group>"; };
+		AAFD2AEC805CEB315AE9C1A9 /* LeaderboardsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderboardsView.swift; sourceTree = "<group>"; };
 		ABA9DDB21A2D6D9A16F979F4 /* GameplayUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameplayUITests.swift; sourceTree = "<group>"; };
 		B0B0675BDEA4B0A15DEB5B9C /* PersistenceUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceUITests.swift; sourceTree = "<group>"; };
+		B132EA3091340D64A3FED763 /* QuietNumbers.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = QuietNumbers.entitlements; sourceTree = "<group>"; };
 		B529A32088A2D117919279B6 /* QuietNumbersCore */ = {isa = PBXFileReference; lastKnownFileType = folder; name = QuietNumbersCore; path = Packages/QuietNumbersCore; sourceTree = SOURCE_ROOT; };
 		BF81F57210C7B0D19E1D747E /* SoundService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundService.swift; sourceTree = "<group>"; };
 		C33B49B32F0F2F2AA6714F78 /* BoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardView.swift; sourceTree = "<group>"; };
@@ -83,6 +89,7 @@
 		D15AA4C99BAE2C8662B34C66 /* AppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModel.swift; sourceTree = "<group>"; };
 		DE40B331BB5C56022D43490D /* HapticsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticsService.swift; sourceTree = "<group>"; };
 		FC76CAE1563A82F982ECB21E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		FCF8950DD2148C3FE425D9C2 /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
 		FF3D9D0DAEED6E7CD8DA283B /* PersistenceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -123,6 +130,7 @@
 				D20D0A0FB5D6F655C37F4DCB /* DailyChallenge */,
 				8D800F68626F473A646C1B74 /* Game */,
 				044ECDE25B449BC9452DE93B /* Home */,
+				768757C93D80A868FC169B4D /* Leaderboards */,
 				D0B567DBFC833C0E7224B7FB /* Settings */,
 			);
 			path = Features;
@@ -151,6 +159,14 @@
 			);
 			sourceTree = "<group>";
 		};
+		768757C93D80A868FC169B4D /* Leaderboards */ = {
+			isa = PBXGroup;
+			children = (
+				AAFD2AEC805CEB315AE9C1A9 /* LeaderboardsView.swift */,
+			);
+			path = Leaderboards;
+			sourceTree = "<group>";
+		};
 		8D800F68626F473A646C1B74 /* Game */ = {
 			isa = PBXGroup;
 			children = (
@@ -167,6 +183,7 @@
 			isa = PBXGroup;
 			children = (
 				FC76CAE1563A82F982ECB21E /* Assets.xcassets */,
+				FCF8950DD2148C3FE425D9C2 /* InfoPlist.xcstrings */,
 				395784F31889B14D1B911198 /* Localizable.xcstrings */,
 			);
 			path = Resources;
@@ -209,6 +226,7 @@
 		C699F7267315219D023E62A5 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				8C1754B3BB39F1EA843608A9 /* GameCenterService.swift */,
 				DE40B331BB5C56022D43490D /* HapticsService.swift */,
 				FF3D9D0DAEED6E7CD8DA283B /* PersistenceService.swift */,
 				BF81F57210C7B0D19E1D747E /* SoundService.swift */,
@@ -237,6 +255,7 @@
 			isa = PBXGroup;
 			children = (
 				D15AA4C99BAE2C8662B34C66 /* AppModel.swift */,
+				B132EA3091340D64A3FED763 /* QuietNumbers.entitlements */,
 				631019FDC57409A49740D79C /* QuietNumbersApp.swift */,
 				6630C8EAC87F06D7B0E77C4F /* DesignSystem */,
 				2272BB89D00C2BBBA1AA2CE5 /* Features */,
@@ -353,6 +372,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AEDA50AE1D918285F5991128 /* Assets.xcassets in Resources */,
+				87129F0138E40E6E7DC5D0A8 /* InfoPlist.xcstrings in Resources */,
 				E79894BADD43733A109B5546 /* Localizable.xcstrings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -373,11 +393,13 @@
 				CA8D59F009ED6245A35D3EB3 /* CollectionView.swift in Sources */,
 				AE09418FE17CF8B80C9985F2 /* DailyChallengeView.swift in Sources */,
 				5554FEE65B821D820A7D6CB5 /* DayKeyFormat.swift in Sources */,
+				519B949BF3219F0AFF0D1BE0 /* GameCenterService.swift in Sources */,
 				3CC92E0B77008BB80B4A299A /* GameModel.swift in Sources */,
 				43E88AE9810B80FD897EFF08 /* GameTopBar.swift in Sources */,
 				053BB0365C625243135874E4 /* GameView.swift in Sources */,
 				1A6220A4BF47AFBE8F7D9CEF /* HapticsService.swift in Sources */,
 				6BF43A5E0C5928A2C4530C17 /* HomeView.swift in Sources */,
+				5970D45FBD88ACC4289A804A /* LeaderboardsView.swift in Sources */,
 				119422CC4A4C765B14A95825 /* PersistenceService.swift in Sources */,
 				E4F62B961783E757AF92439F /* QuietNumbersApp.swift in Sources */,
 				A0C6754BBB6665903EB0C79A /* Rewards.swift in Sources */,
@@ -640,14 +662,17 @@
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
+				CODE_SIGN_ENTITLEMENTS = App/QuietNumbers.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
+				"ENABLE_OUTGOING_NETWORK_CONNECTIONS[sdk=macosx*]" = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "Quiet Numbers";
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.puzzle-games";
+				INFOPLIST_KEY_NSGKFriendListUsageDescription = "Show your Game Center friends on Quiet Numbers leaderboards.";
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
@@ -676,14 +701,17 @@
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
+				CODE_SIGN_ENTITLEMENTS = App/QuietNumbers.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
+				"ENABLE_OUTGOING_NETWORK_CONNECTIONS[sdk=macosx*]" = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "Quiet Numbers";
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.puzzle-games";
+				INFOPLIST_KEY_NSGKFriendListUsageDescription = "Show your Game Center friends on Quiet Numbers leaderboards.";
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;

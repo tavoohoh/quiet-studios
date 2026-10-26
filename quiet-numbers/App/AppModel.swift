@@ -16,6 +16,7 @@ enum GameKind: Equatable {
 @Observable
 final class AppModel {
     let persistence: PersistenceService
+    let gameCenter: GameCenterService
     private(set) var activeGame: GameModel?
     private(set) var activeKind: GameKind?
     /// Cached so views update when games are saved or finished.
@@ -26,8 +27,9 @@ final class AppModel {
     /// Newly unlocked achievements waiting to be announced, oldest first.
     private(set) var pendingUnlocks: [Achievement] = []
 
-    init(persistence: PersistenceService) {
+    init(persistence: PersistenceService, gameCenter: GameCenterService = GameCenterService()) {
         self.persistence = persistence
+        self.gameCenter = gameCenter
         progress = persistence.loadProgress()
         #if DEBUG
         if ProcessInfo.processInfo.arguments.contains("-unlockAll") {
@@ -35,6 +37,7 @@ final class AppModel {
         }
         #endif
         refreshSavedGames()
+        gameCenter.onAuthenticated = { [weak self] in self?.syncGameCenter() }
     }
 
     // MARK: Achievements
@@ -43,6 +46,34 @@ final class AppModel {
         let unlocked = progress.record(event)
         persistence.saveProgress(progress)
         pendingUnlocks += unlocked
+        if !unlocked.isEmpty {
+            let progress = progress
+            Task { await gameCenter.report(progress) }
+        }
+    }
+
+    // MARK: Game Center
+
+    /// On sign-in: pull what other devices saved, merge it into local data, then push everything.
+    func syncGameCenter() {
+        Task {
+            if let remote = await gameCenter.fetchSnapshot() {
+                progress = progress.merged(with: remote.progress)
+                persistence.saveProgress(progress)
+                persistence.mergeDailies(remote.dailies)
+            }
+            await pushToGameCenter()
+        }
+    }
+
+    private func pushToGameCenter() async {
+        await gameCenter.report(progress)
+        await gameCenter.submit(progress.bestScore, to: .bestScore)
+        await gameCenter.submit(longestStreak, to: .longestStreak)
+        if let today = persistence.dailies[todayKey], today.isFinished {
+            await gameCenter.submit(today.score, to: .daily)
+        }
+        await gameCenter.save(.init(progress: progress, dailies: persistence.dailies))
     }
 
     func dismissUnlock(_ achievement: Achievement) {
@@ -126,8 +157,9 @@ final class AppModel {
         case .practice:
             break
         }
-        record(.gameFinished)
+        record(.gameFinished(classicScore: kind == .classic ? session.score : nil))
         refreshSavedGames()
+        Task { await pushToGameCenter() }
     }
 
     private func refreshSavedGames() {

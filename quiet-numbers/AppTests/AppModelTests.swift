@@ -75,7 +75,7 @@ import Testing
     @Test func unlocksAreAnnouncedAndPersisted() {
         let persistence = PersistenceService(store: .inMemory)
         let app = AppModel(persistence: persistence)
-        app.record(.gameFinished)
+        app.record(.gameFinished(classicScore: nil))
         #expect(app.pendingUnlocks == [.firstStep])
         app.dismissUnlock(.firstStep)
         #expect(app.pendingUnlocks.isEmpty)
@@ -97,5 +97,31 @@ import Testing
         #expect(ThemeChoice.paper.isUnlocked(in: progress))
         #expect(ThemeChoice.slate.isUnlocked(in: progress))
         #expect(!ThemeChoice.midnight.isUnlocked(in: progress))
+    }
+}
+
+@MainActor
+@Suite struct SyncMergeTests {
+    @Test func betterDailyResultWins() {
+        let started = DailyRecord(score: 0, isFinished: false, isCompleted: false)
+        let played = DailyRecord(score: 80, isFinished: true, isCompleted: false)
+        let completed = DailyRecord(score: 40, isFinished: true, isCompleted: true)
+        #expect(played.better(than: started) == played)
+        #expect(played.better(than: completed) == completed)
+        #expect(completed.better(than: DailyRecord(score: 60, isFinished: true, isCompleted: true)).score == 60)
+    }
+
+    @Test func remoteDailiesMergeIntoLocalStore() {
+        let persistence = PersistenceService(store: .inMemory)
+        persistence.finishDaily("2026-10-20", score: 30, isCompleted: false)
+        persistence.finishDaily("2026-10-21", score: 90, isCompleted: true)
+        persistence.mergeDailies([
+            "2026-10-20": DailyRecord(score: 70, isFinished: true, isCompleted: true),
+            "2026-10-21": DailyRecord(score: 10, isFinished: true, isCompleted: false),
+            "2026-10-22": DailyRecord(score: 55, isFinished: true, isCompleted: true),
+        ])
+        #expect(persistence.dailies["2026-10-20"]?.score == 70)
+        #expect(persistence.dailies["2026-10-21"]?.score == 90)
+        #expect(persistence.completedDays == ["2026-10-20", "2026-10-21", "2026-10-22"])
     }
 }

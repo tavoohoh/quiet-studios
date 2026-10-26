@@ -1,0 +1,25 @@
+{
+  "sourceLanguage": "en",
+  "strings": {
+    "CFBundleDisplayName": {
+      "shouldTranslate": false
+    },
+    "NSGKFriendListUsageDescription": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show your Game Center friends on Quiet Numbers leaderboards."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Muestra a tus amigos de Game Center en los leaderboards de Quiet Numbers."
+          }
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}

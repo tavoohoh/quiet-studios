@@ -21,6 +21,10 @@ targets:
     sources: [App]
     dependencies:
       - package: QuietNumbersCore
+    entitlements:
+      path: App/QuietNumbers.entitlements
+      properties:
+        com.apple.developer.game-center: true
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.quietproject.numbers
@@ -28,6 +32,9 @@ targets:
         TARGETED_DEVICE_FAMILY: "1,2"
         GENERATE_INFOPLIST_FILE: YES
         INFOPLIST_KEY_CFBundleDisplayName: Quiet Numbers
+        INFOPLIST_KEY_NSGKFriendListUsageDescription: Show your Game Center friends on Quiet Numbers leaderboards.
+        # GameKit needs outgoing connections inside the Mac sandbox. The app itself makes none.
+        "ENABLE_OUTGOING_NETWORK_CONNECTIONS[sdk=macosx*]": YES
         INFOPLIST_KEY_LSApplicationCategoryType: public.app-category.puzzle-games
         INFOPLIST_KEY_ITSAppUsesNonExemptEncryption: NO
         INFOPLIST_KEY_UILaunchScreen_Generation: YES

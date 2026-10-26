@@ -147,6 +147,16 @@
         }
       }
     },
+    "Best score": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mejor puntaje"
+          }
+        }
+      }
+    },
     "Best streak": {
       "localizations": {
         "es": {
@@ -173,6 +183,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Reto completado"
+          }
+        }
+      }
+    },
+    "Check your connection and try again.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Revisa tu conexión e inténtalo de nuevo."
           }
         }
       }
@@ -367,6 +387,16 @@
         }
       }
     },
+    "Couldn't load": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No se pudo cargar"
+          }
+        }
+      }
+    },
     "Current streak": {
       "localizations": {
         "es": {
@@ -437,6 +467,36 @@
         }
       }
     },
+    "Friends": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Amigos"
+          }
+        }
+      }
+    },
+    "Game Center": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Game Center"
+          }
+        }
+      }
+    },
+    "Global": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Global"
+          }
+        }
+      }
+    },
     "Gold": {
       "localizations": {
         "es": {
@@ -503,6 +563,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Números más grandes"
+          }
+        }
+      }
+    },
+    "Leaderboard": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Leaderboard"
+          }
+        }
+      }
+    },
+    "Leaderboards": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Leaderboards"
           }
         }
       }
@@ -633,6 +713,16 @@
         }
       }
     },
+    "No scores yet": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aún no hay puntajes"
+          }
+        }
+      }
+    },
     "Not scored": {
       "localizations": {
         "es": {
@@ -719,6 +809,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Jugado · %@"
+          }
+        }
+      }
+    },
+    "Players": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jugadores"
           }
         }
       }
@@ -836,6 +936,16 @@
         }
       }
     },
+    "Sign in to Game Center in Settings to see leaderboards. Your progress is saved on this device either way.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Inicia sesión en Game Center desde Ajustes para ver los leaderboards. Tu progreso se guarda en este dispositivo de todas formas."
+          }
+        }
+      }
+    },
     "Slate": {
       "localizations": {
         "es": {
@@ -896,6 +1006,16 @@
         }
       }
     },
+    "Streak": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Racha"
+          }
+        }
+      }
+    },
     "Sweeper": {
       "localizations": {
         "es": {
@@ -922,6 +1042,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Fichas"
+          }
+        }
+      }
+    },
+    "Today": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hoy"
           }
         }
       }

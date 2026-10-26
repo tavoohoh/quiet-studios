@@ -32,6 +32,17 @@ final class CollectionUITests: XCTestCase {
         app.buttons["SF Rounded"].tap()
     }
 
+    /// Signed out of Game Center, leaderboards explain how to sign in instead of failing.
+    @MainActor
+    func testLeaderboardsSignedOut() {
+        let app = XCUIApplication()
+        app.launchArguments = ["-uiTesting", "-resetStore"]
+        app.launch()
+        app.buttons["Leaderboards"].tap()
+        XCTAssertTrue(app.staticTexts["Game Center"].waitForExistence(timeout: 3))
+        snapshot(app, "leaderboards-signed-out")
+    }
+
     @MainActor
     private func snapshot(_ app: XCUIApplication, _ name: String) {
         let shot = XCTAttachment(screenshot: app.screenshot())

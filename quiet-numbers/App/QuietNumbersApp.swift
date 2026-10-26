@@ -9,6 +9,7 @@ struct QuietNumbersApp: App {
             HomeView()
                 .modifier(AppearanceRoot())
                 .environment(app)
+                .task { app.gameCenter.authenticate() }
         }
         #if os(macOS)
         .defaultSize(width: 520, height: 760)

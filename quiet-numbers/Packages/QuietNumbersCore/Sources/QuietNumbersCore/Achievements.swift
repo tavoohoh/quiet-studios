@@ -41,7 +41,8 @@ public enum ProgressEvent: Sendable {
     /// The player tried a pair that doesn't match.
     case missed
     /// A game reached its end (classic game over, or a daily attempt finished).
-    case gameFinished
+    /// `classicScore` is set for classic games, for the best-score leaderboard.
+    case gameFinished(classicScore: Int?)
     /// A daily challenge was completed (board cleared) on its own day.
     case dailyCompleted(currentStreak: Int, localHour: Int)
 }
@@ -58,6 +59,8 @@ public struct PlayerProgress: Codable, Hashable, Sendable {
     /// Equal-number pairs in a row, in the current game.
     public private(set) var equalPairsRun = 0
     public private(set) var bestEqualPairsRun = 0
+    /// Best final score in classic mode.
+    public private(set) var bestScore = 0
 
     public init() {}
 
@@ -85,9 +88,10 @@ public struct PlayerProgress: Codable, Hashable, Sendable {
             }
         case .missed:
             break
-        case .gameFinished:
+        case .gameFinished(let classicScore):
             gamesFinished += 1
             equalPairsRun = 0
+            if let classicScore { bestScore = max(bestScore, classicScore) }
         case .dailyCompleted(let streak, let hour):
             dailiesCompleted += 1
             bestStreak = max(bestStreak, streak)
@@ -95,6 +99,22 @@ public struct PlayerProgress: Codable, Hashable, Sendable {
         }
         hits += Achievement.allCases.filter { count(for: $0) >= $0.target }
         return unlock(hits)
+    }
+
+    /// Combines progress from two devices (Game Center saved games): every counter keeps
+    /// its highest value and achievements are the union, so nothing earned is ever lost.
+    public func merged(with other: PlayerProgress) -> PlayerProgress {
+        var result = self
+        result.unlocked.formUnion(other.unlocked)
+        result.gamesFinished = max(gamesFinished, other.gamesFinished)
+        result.boardsCleared = max(boardsCleared, other.boardsCleared)
+        result.rowsCleared = max(rowsCleared, other.rowsCleared)
+        result.highestStage = max(highestStage, other.highestStage)
+        result.dailiesCompleted = max(dailiesCompleted, other.dailiesCompleted)
+        result.bestStreak = max(bestStreak, other.bestStreak)
+        result.bestEqualPairsRun = max(bestEqualPairsRun, other.bestEqualPairsRun)
+        result.bestScore = max(bestScore, other.bestScore)
+        return result
     }
 
     /// Progress towards an achievement, 0...1 (for Game Center's percentage).

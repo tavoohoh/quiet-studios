@@ -45,7 +45,7 @@ final class StoredProgress {
 }
 
 /// Read-only snapshot of a daily attempt for the UI.
-struct DailyRecord: Equatable {
+struct DailyRecord: Equatable, Codable {
     let score: Int
     let isFinished: Bool
     let isCompleted: Bool
@@ -150,6 +150,23 @@ final class PersistenceService {
         stored.isFinished = true
         stored.isCompleted = isCompleted
         stored.finishedAt = .now
+        save()
+        reloadDailies()
+    }
+
+    /// Adds daily results from another device, keeping the better result per day.
+    func mergeDailies(_ remote: [String: DailyRecord]) {
+        for (day, record) in remote {
+            if let local = dailies[day], local.better(than: record) == local { continue }
+            let stored = storedDaily(day) ?? {
+                let new = StoredDaily(dayKey: day)
+                context.insert(new)
+                return new
+            }()
+            stored.score = record.score
+            stored.isFinished = record.isFinished
+            stored.isCompleted = record.isCompleted
+        }
         save()
         reloadDailies()
     }

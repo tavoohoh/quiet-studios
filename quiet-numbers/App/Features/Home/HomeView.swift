@@ -1,3 +1,4 @@
+import GameKit
 import QuietNumbersCore
 import SwiftUI
 
@@ -7,6 +8,7 @@ struct HomeView: View {
         case daily
         case collection
         case settings
+        case leaderboards
     }
 
     @Environment(AppModel.self) private var app
@@ -60,9 +62,18 @@ struct HomeView: View {
                     CollectionView()
                 case .settings:
                     SettingsView()
+                case .leaderboards:
+                    LeaderboardsView()
                 }
             }
+            .onChange(of: app.gameCenter.isAuthenticated, initial: true) { updateAccessPoint() }
+            .onChange(of: path) { updateAccessPoint() }
             .toolbar {
+                ToolbarItem(placement: .primaryAction) {
+                    NavigationLink(value: Route.leaderboards) {
+                        Label("Leaderboards", systemImage: "trophy")
+                    }
+                }
                 ToolbarItem(placement: .primaryAction) {
                     NavigationLink(value: Route.collection) {
                         Label("Collection", systemImage: "square.grid.2x2")
@@ -78,6 +89,12 @@ struct HomeView: View {
         #if DEBUG
         .onAppear(perform: startDebugGameIfRequested)
         #endif
+    }
+
+    /// Game Center's access point, only on Home and only when signed in.
+    private func updateAccessPoint() {
+        GKAccessPoint.shared.location = .topLeading
+        GKAccessPoint.shared.isActive = app.gameCenter.isAuthenticated && path.isEmpty
     }
 
     #if DEBUG
