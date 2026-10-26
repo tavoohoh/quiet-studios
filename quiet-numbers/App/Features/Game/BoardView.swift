@@ -33,6 +33,12 @@ struct BoardView: View {
                                 .transition(.asymmetric(insertion: .identity, removal: .opacity))
                         }
                     }
+                    .overlay(alignment: .topLeading) {
+                        ForEach(model.pops) { pop in
+                            PopView(size: size)
+                                .position(x: pop.center.x * size, y: pop.center.y * size)
+                        }
+                    }
                     Color.clear.frame(height: size).id(Self.bottomID)
                 }
                 .padding(.vertical, 8)
@@ -130,6 +136,88 @@ private struct MatchLineView: View {
 
     private var opacity: Double {
         line.tier == .subtle ? 0.6 : 1
+    }
+}
+
+/// A matched number bursting: a ring grows past the cell (`maxRing` × its side),
+/// turns into an asterisk whose rays fly outwards, and fades.
+private struct PopView: View {
+    let size: CGFloat
+
+    @State private var started = false
+
+    private static let maxRing: CGFloat = 1.5
+    private static let rays = 8
+
+    private struct Values {
+        var ring: CGFloat = 0.3
+        var ringOpacity: Double = 1
+        var burst: CGFloat = 0
+        var burstOpacity: Double = 0
+    }
+
+    var body: some View {
+        let duration = Pop.duration
+        let grow = duration * 0.4
+        Color.clear
+            .frame(width: size * Self.maxRing * 1.4, height: size * Self.maxRing * 1.4)
+            .keyframeAnimator(initialValue: Values(), trigger: started) { content, values in
+                content.overlay {
+                    Circle()
+                        .stroke(.tint, lineWidth: 2)
+                        .frame(width: size * values.ring, height: size * values.ring)
+                        .opacity(values.ringOpacity)
+                    AsteriskShape(rays: Self.rays, progress: values.burst)
+                        .stroke(.tint, style: StrokeStyle(lineWidth: 2, lineCap: .round))
+                        .frame(width: size * Self.maxRing, height: size * Self.maxRing)
+                        .opacity(values.burstOpacity)
+                }
+            } keyframes: { _ in
+                KeyframeTrack(\.ring) {
+                    CubicKeyframe(Self.maxRing, duration: grow)
+                }
+                KeyframeTrack(\.ringOpacity) {
+                    LinearKeyframe(1, duration: grow)
+                    LinearKeyframe(0, duration: duration * 0.1)
+                }
+                KeyframeTrack(\.burst) {
+                    LinearKeyframe(0, duration: grow)
+                    CubicKeyframe(1, duration: duration - grow)
+                }
+                KeyframeTrack(\.burstOpacity) {
+                    LinearKeyframe(0, duration: grow)
+                    LinearKeyframe(1, duration: duration * 0.05)
+                    LinearKeyframe(0, duration: duration * 0.55)
+                }
+            }
+            .allowsHitTesting(false)
+            .accessibilityHidden(true)
+            .onAppear { started = true }
+    }
+}
+
+/// Rays around the center, moving outwards and shortening as `progress` goes 0 → 1.
+private struct AsteriskShape: Shape {
+    let rays: Int
+    var progress: CGFloat
+
+    var animatableData: CGFloat {
+        get { progress }
+        set { progress = newValue }
+    }
+
+    func path(in rect: CGRect) -> Path {
+        let radius = min(rect.width, rect.height) / 2
+        let inner = radius * (0.55 + 0.45 * progress)
+        let outer = radius * (0.95 + 0.25 * progress)
+        var path = Path()
+        for ray in 0..<rays {
+            let angle = Double(ray) / Double(rays) * 2 * .pi
+            let direction = CGPoint(x: cos(angle), y: sin(angle))
+            path.move(to: CGPoint(x: rect.midX + direction.x * inner, y: rect.midY + direction.y * inner))
+            path.addLine(to: CGPoint(x: rect.midX + direction.x * outer, y: rect.midY + direction.y * outer))
+        }
+        return path
     }
 }
 

@@ -1,11 +1,11 @@
 import XCTest
 
 /// Plays a few moves on a known board. `-seedKey 2026-10-25` produces:
-///   5 9 3 7 6 3 8 4 5
-///   9 9 3 3 1 7 8 9 6
-///   9 1 9 5 3 5 1 3 6
-///   7 5 1 9 7 1 8 4 9
-///   2 4 6 3 8 2
+///   8 4 3 4 9 8 5 1 1
+///   1 1 8 4 6 4 3 5 7
+///   9 1 2 7 9 6 9 8 9
+///   4 1 4 1 4 6 6 4 4
+///   7 2 4 7 9 9
 final class GameplayUITests: XCTestCase {
     @MainActor
     func testMatchingAndAddingNumbers() {
@@ -16,27 +16,27 @@ final class GameplayUITests: XCTestCase {
         let score = app.staticTexts["score"]
         XCTAssertTrue(score.waitForExistence(timeout: 5))
 
-        // 3 + 7, adjacent.
-        app.buttons["cell-2"].tap()
-        app.buttons["cell-3"].tap()
+        // 1 and 1, adjacent.
+        app.buttons["cell-7"].tap()
+        app.buttons["cell-8"].tap()
         XCTAssertEqual(score.value as? String, "1")
         snapshot(app, "match")
 
-        // 5 and 9: invalid, selection moves to the 9.
+        // 8 and 4: invalid, selection moves to the 4.
         app.buttons["cell-0"].tap()
-        app.buttons["cell-1"].tap()
+        app.buttons["cell-3"].tap()
         XCTAssertEqual(score.value as? String, "1")
 
-        // 9 above 9, vertical.
-        app.buttons["cell-10"].tap()
+        // 4 above 4, vertical.
+        app.buttons["cell-12"].tap()
         XCTAssertEqual(score.value as? String, "2")
 
         // Undo takes back exactly one move.
         app.buttons["Undo"].tap()
         XCTAssertEqual(score.value as? String, "1")
         XCTAssertFalse(app.buttons["Undo"].isEnabled)
-        app.buttons["cell-1"].tap()
-        app.buttons["cell-10"].tap()
+        app.buttons["cell-3"].tap()
+        app.buttons["cell-12"].tap()
         XCTAssertEqual(score.value as? String, "2")
 
         // Hint costs 3 but the score floors at 0.
@@ -88,6 +88,10 @@ final class EffectsUITests: XCTestCase {
         app.buttons["cell-0"].tap()
         app.buttons["cell-8"].tap()
         snapshot(app, "line-dramatic")
+        usleep(700_000)
+        snapshot(app, "pop")
+        usleep(1_200_000)
+        snapshot(app, "points-and-praise")
         sleep(2)
         snapshot(app, "row-effect")
         sleep(4)

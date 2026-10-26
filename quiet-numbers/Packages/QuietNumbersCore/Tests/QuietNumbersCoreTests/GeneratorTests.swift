@@ -29,6 +29,14 @@ import Testing
         #expect(board.cells.count == BoardGenerator.initialCount)
         #expect(board.cells.allSatisfy { (1...9).contains($0.value) })
         #expect(MatchRules.validPairs(on: board).count >= BoardGenerator.minimumPairs)
+        #expect(BoardGenerator.isPairable(board.cells.map(\.value)))
+    }
+
+    @Test func pairableNeedsEveryFamilyEven() {
+        #expect(BoardGenerator.isPairable([5, 5, 1, 9, 2, 2]))
+        #expect(!BoardGenerator.isPairable([5, 5, 5, 1, 9, 2]))
+        #expect(!BoardGenerator.isPairable([1, 2]))
+        #expect(BoardGenerator.isPairable([]))
     }
 
     @Test func sameSeedSameBoard() {
@@ -47,5 +55,5 @@ import Testing
         #expect(values == Self.golden20261025)
     }
 
-    static let golden20261025 = [5, 9, 3, 7, 6, 3, 8, 4, 5, 9, 9, 3, 3, 1, 7, 8, 9, 6, 9, 1, 9, 5, 3, 5, 1, 3, 6, 7, 5, 1, 9, 7, 1, 8, 4, 9, 2, 4, 6, 3, 8, 2]
+    static let golden20261025 = [8, 4, 3, 4, 9, 8, 5, 1, 1, 1, 1, 8, 4, 6, 4, 3, 5, 7, 9, 1, 2, 7, 9, 6, 9, 8, 9, 4, 1, 4, 1, 4, 6, 6, 4, 4, 7, 2, 4, 7, 9, 9]
 }

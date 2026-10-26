@@ -100,7 +100,7 @@ Tablero de **9 columnas**; arranca con **42 números** del 1 al 9 (4 filas y med
 - **Etapas:** vaciar el tablero pasa a la siguiente etapa con tablero nuevo; los usos de + se reinician.
 - **Fin de partida:** no quedan parejas válidas ni usos de +.
 - **Deshacer:** retrocede la última pareja o el último + (un solo paso; no se encadena). No se puede después de vaciar un tablero ni con la partida terminada. No devuelve el costo de pistas ni restaura una racha rota, y descuenta del progreso lo que la jugada había sumado.
-- La generación garantiza **al menos 3 parejas válidas** al inicio.
+- La generación garantiza **al menos 3 parejas válidas** al inicio y que cada familia ({1,9}, {2,8}, {3,7}, {4,6}, {5}) tenga cantidad par, para que "Sin ayuda" sea posible en principio (condición necesaria, no suficiente: la posición aún puede dejar un número aislado).
 
 **Puntaje** (valores iniciales, ajustables — mantenerlos configurables):
 - Pareja adyacente: 1
@@ -193,16 +193,16 @@ Decisiones de implementación (fase 5):
 - Fondo `systemBackground`; superficies secundarias `secondarySystemBackground`.
 - SF Pro Rounded con `.monospacedDigit()`.
 - Fichas sin bordes, solo el número. Seleccionada: círculo suave del acento. Eliminada: gris muy tenue.
-- Animaciones: pareja válida = línea que crece desde el centro hasta ambos números y luego fade + leve escala a fantasma; inválida = pequeña sacudida; fila limpiada = borde que se dibuja alrededor de la fila y luego colapso suave hacia arriba. Respetar Reduce Motion (sin línea ni trazo).
+- Animaciones: pareja válida = línea que crece desde el centro de la unión; al llegar, cada número hace **pop** (un anillo crece hasta 1,5× la celda, se convierte en un asterisco de 8 rayos que sale hacia afuera y se desvanece) y queda como fantasma; luego el "+N" aparece en el centro de la pantalla y vuela hasta junto al puntaje, que se actualiza al llegar; inválida = pequeña sacudida; fila limpiada = borde que se dibuja alrededor de la fila y luego colapso suave hacia arriba. Respetar Reduce Motion (sin línea ni trazo).
 - Tres tipos de línea según las celdas eliminadas entre la pareja: sutil (0, 2 pt y tenue), media (1–3, 3 pt) y dramática (4+, 4 pt; coincide con "¡Desde lejos!"). Líneas sólidas del color primario, sin borde ni brillo. En lectura continua entre filas, la línea entra desde los bordes del tablero.
 - Ritmo: animaciones rápidas y con algo de rebote (`Animation.quiet` = snappy 0.2 s); el emparejamiento completo dura menos de ~0.6 s y un toque nuevo lo termina al instante.
 - Pista sin parejas: no cobra, muestra "No hay parejas. Prueba +" y hace rebotar el botón +.
 - Racha ("¡N seguidas!"): se reinicia con un intento inválido o al pedir pista; el + no la reinicia.
 - Hápticos (iOS): ligero al seleccionar, medio al emparejar, éxito al limpiar fila.
-- Barra superior: puntaje, etapa (y récord en clásico: "Etapa 2 · Récord 1.234") y los elogios. Nada más.
+- Barra superior: puntaje y etapa (y récord en clásico, siempre visible aunque sea 0: "Etapa 2 · Récord 1.234"). Nada más.
 - Barra inferior: Deshacer, + (con usos restantes) y Pista (con su costo), al alcance del pulgar.
 - Récord (mejor puntaje clásico) también en Inicio y "¡Nuevo récord!" en el fin de partida.
-- Feedback por jugada: "+N" flotante junto al puntaje (acento; costos en gris) y elogios breves centrados en la barra: "¡Desde lejos!" (4+ celdas eliminadas entre la pareja), "¡Doble/Triple fila!", "¡Ya no hay más 7!" (se eliminó el último de un dígito), "¡N seguidas!" (cada 5 parejas sin error). Solo texto, no dan puntos.
+- Feedback por jugada: "+N" que vuela desde el centro al puntaje (costos de pista y deshacer: en gris junto al puntaje; con Reduce Motion todo junto al puntaje) y elogios en una burbuja que aparece en el centro (debajo del +N) y sube al centro de la barra superior: "¡Desde lejos!" (4+ celdas eliminadas entre la pareja), "¡Doble/Triple fila!", "¡Ya no hay más 7!" (se eliminó el último de un dígito), "¡N seguidas!" (cada 5 parejas sin error). Solo texto, no dan puntos.
 - Pantallas: Inicio (Continuar, Nueva partida, Reto diario), Juego, Leaderboards, Colección, Ajustes (sonido, hápticos, privacidad).
 - iPad/Mac: tablero centrado con ancho máximo. Mac: ratón, trackpad y atajos de teclado.
 - Accesibilidad: Dynamic Type, VoiceOver por celda ("7, fila 3, columna 2"), contraste suficiente, opción de números más grandes.
@@ -263,7 +263,7 @@ Cada fase termina con su criterio de aceptación cumplido antes de pasar a la si
 
 ## Anotaciones de diseño
 
-- **Animación al unir números: no satisface (2026-10-25).** La versión actual (línea sólida que crece desde el centro en 3 niveles, luego fantasma) funciona pero hay que rediseñarla. Retomar antes del pulido final (fase 6).
+- **Animación al unir números: rediseñada (2026-10-26)** con línea → pop/asterisco → +N volando al puntaje (`PopView` en `BoardView`, `GameFeedbackOverlay`). Pendiente la validación del usuario en el dispositivo.
 
 ## Preguntas abiertas
 

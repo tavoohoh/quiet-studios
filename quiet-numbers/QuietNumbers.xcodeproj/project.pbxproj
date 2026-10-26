@@ -27,6 +27,7 @@
 		87129F0138E40E6E7DC5D0A8 /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = FCF8950DD2148C3FE425D9C2 /* InfoPlist.xcstrings */; };
 		94EE4038B4231F54FE822E0C /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D15AA4C99BAE2C8662B34C66 /* AppModel.swift */; };
 		94FB3710A69027408DFEBCAB /* AchievementText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3764A4EF9834602A85298448 /* AchievementText.swift */; };
+		A081CD27457E9094A16F0720 /* GameFeedbackOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7834A8EC56EFA32E9296F517 /* GameFeedbackOverlay.swift */; };
 		A0C6754BBB6665903EB0C79A /* Rewards.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3D83326830FBDF44307316 /* Rewards.swift */; };
 		AE09418FE17CF8B80C9985F2 /* DailyChallengeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A94485656D17DA81C15D259 /* DailyChallengeView.swift */; };
 		AEDA50AE1D918285F5991128 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FC76CAE1563A82F982ECB21E /* Assets.xcassets */; };
@@ -76,6 +77,7 @@
 		631019FDC57409A49740D79C /* QuietNumbersApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuietNumbersApp.swift; sourceTree = "<group>"; };
 		66D7992BC8FB7DE533207505 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		6767AD3F2C7296EC510EF3F8 /* QuietNumbers-Personal.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "QuietNumbers-Personal.entitlements"; sourceTree = "<group>"; };
+		7834A8EC56EFA32E9296F517 /* GameFeedbackOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameFeedbackOverlay.swift; sourceTree = "<group>"; };
 		86B72A7C6607184099C42B8B /* QuietNumbersTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = QuietNumbersTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8C1754B3BB39F1EA843608A9 /* GameCenterService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameCenterService.swift; sourceTree = "<group>"; };
 		9194796821A907E01A268433 /* CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionView.swift; sourceTree = "<group>"; };
@@ -177,6 +179,7 @@
 			children = (
 				C33B49B32F0F2F2AA6714F78 /* BoardView.swift */,
 				1945F8C8C9CC42DC822995A2 /* CellView.swift */,
+				7834A8EC56EFA32E9296F517 /* GameFeedbackOverlay.swift */,
 				212A4F79BAB138C07EAFF774 /* GameModel.swift */,
 				A8D9147C86ED9A3911F7A558 /* GameTopBar.swift */,
 				06E7798637C0A4A6CDA4DBB2 /* GameView.swift */,
@@ -410,6 +413,7 @@
 				AE09418FE17CF8B80C9985F2 /* DailyChallengeView.swift in Sources */,
 				5554FEE65B821D820A7D6CB5 /* DayKeyFormat.swift in Sources */,
 				519B949BF3219F0AFF0D1BE0 /* GameCenterService.swift in Sources */,
+				A081CD27457E9094A16F0720 /* GameFeedbackOverlay.swift in Sources */,
 				3CC92E0B77008BB80B4A299A /* GameModel.swift in Sources */,
 				43E88AE9810B80FD897EFF08 /* GameTopBar.swift in Sources */,
 				053BB0365C625243135874E4 /* GameView.swift in Sources */,

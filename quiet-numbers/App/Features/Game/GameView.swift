@@ -44,6 +44,9 @@ struct GameView: View {
         .frame(maxWidth: Self.maxBoardWidth + 32)
         .frame(maxWidth: .infinity)
         .background(appearance.theme.background)
+        .overlayPreferenceValue(ScoreAnchorKey.self) { anchor in
+            GameFeedbackOverlay(model: model, scoreAnchor: anchor)
+        }
         .overlay {
             if let stage = model.stageBanner {
                 StageBanner(stage: stage)
@@ -89,12 +92,8 @@ struct GameView: View {
     private var subtitle: Text {
         switch kind {
         case .classic:
-            if let best = startingBest ?? bestScore, best > 0 {
-                Text("Stage \(model.session.stage)") + Text(verbatim: " · ")
-                    + Text("Best \(Text(max(best, model.session.score), format: .number))")
-            } else {
-                Text("Stage \(model.session.stage)")
-            }
+            Text("Stage \(model.session.stage)") + Text(verbatim: " · ")
+                + Text("Best \(Text(max(startingBest ?? bestScore ?? 0, model.displayedScore), format: .number))")
         case .daily: Text("Daily Challenge")
         case .practice(let dayKey): Text("Practice · \(DayKeyFormat.string(dayKey))")
         }

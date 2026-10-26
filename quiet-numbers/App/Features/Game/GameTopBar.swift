@@ -1,7 +1,7 @@
 import QuietNumbersCore
 import SwiftUI
 
-/// Score and stage, plus brief feedback after each move. Actions live in `GameActionBar`.
+/// Score and stage. Actions live in `GameActionBar`; praise and flying points in `GameFeedbackOverlay`.
 struct GameTopBar: View {
     let model: GameModel
     /// Under the score: stage, or which daily this is.
@@ -13,10 +13,11 @@ struct GameTopBar: View {
         HStack(alignment: .center, spacing: 12) {
             VStack(alignment: .leading, spacing: 2) {
                 HStack(alignment: .firstTextBaseline, spacing: 8) {
-                    Text(model.session.score, format: .number)
+                    Text(model.displayedScore, format: .number)
                         .font(.score(design: appearance.numberFont.design))
                         .foregroundStyle(appearance.theme.ink)
-                        .contentTransition(.numericText(value: Double(model.session.score)))
+                        .contentTransition(.numericText(value: Double(model.displayedScore)))
+                        .anchorPreference(key: ScoreAnchorKey.self, value: .trailing) { $0 }
                         .accessibilityLabel(Text("Score"))
                         .accessibilityIdentifier("score")
                         .accessibilityValue(Text(model.session.score, format: .number))
@@ -28,7 +29,6 @@ struct GameTopBar: View {
             }
             Spacer()
         }
-        .overlay(alignment: .trailing) { PraiseLabel(model: model) }
         .padding(.horizontal)
         .padding(.vertical, 8)
     }
@@ -104,32 +104,6 @@ private struct ScoreChangeLabel: View {
                     .accessibilityHidden(true)
             }
         }
-    }
-}
-
-/// "Long shot!", "Double row!"… centered in the bar for a moment.
-private struct PraiseLabel: View {
-    let model: GameModel
-
-    var body: some View {
-        ZStack {
-            if let praise = model.praise {
-                Text(praise.text)
-                    .font(.system(.headline, design: .rounded, weight: .semibold))
-                    .foregroundStyle(Color.highlight)
-                    .id(praise.id)
-                    .transition(.asymmetric(
-                        insertion: .opacity.combined(with: .scale(scale: 1.5)),
-                        removal: .opacity.combined(with: .offset(y: -10))
-                    ))
-                    .task(id: praise.id) {
-                        AccessibilityNotification.Announcement(String(localized: praise.text)).post()
-                        try? await Task.sleep(for: .seconds(1.3))
-                        withAnimation(.quiet) { model.dismissPraise(praise) }
-                    }
-            }
-        }
-        .allowsHitTesting(false)
     }
 }
 
