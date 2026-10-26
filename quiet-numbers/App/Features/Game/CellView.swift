@@ -17,7 +17,7 @@ struct CellView: View {
         Button(action: action) {
             Text(verbatim: "\(cell.value)")
                 .font(.boardNumber(size: size * 0.5))
-                .foregroundStyle(cell.isCleared ? AnyShapeStyle(.quaternary) : AnyShapeStyle(.primary))
+                .foregroundStyle(numberStyle)
                 .scaleEffect(cell.isCleared ? 0.85 : 1)
                 .frame(width: size, height: size)
                 .background {
@@ -45,6 +45,14 @@ struct CellView: View {
         .accessibilityValue(cell.isCleared ? Text("Cleared") : Text(verbatim: ""))
         .accessibilityAddTraits(isSelected ? .isSelected : [])
         .accessibilityIdentifier("cell-\(row * Board.columns + column)")
+    }
+}
+
+extension CellView {
+    /// Ghosts are faint; numbers added with + use the accent so the originals stand out.
+    private var numberStyle: AnyShapeStyle {
+        if cell.isCleared { return AnyShapeStyle(.quaternary) }
+        return cell.isAdded ? AnyShapeStyle(.tint) : AnyShapeStyle(.primary)
     }
 }
 

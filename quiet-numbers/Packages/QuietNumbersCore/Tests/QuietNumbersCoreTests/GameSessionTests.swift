@@ -107,7 +107,6 @@ import Testing
         #expect(outcome?.points == 1 + 10 + 150)
         #expect(session.stage == 2)
         #expect(session.plusRemaining == GameSession.maxPlusUses)
-        #expect(session.hintsRemaining == GameSession.initialHints + 1)
         #expect(session.board.cells.count == BoardGenerator.initialCount)
     }
 
@@ -127,19 +126,43 @@ import Testing
         #expect(session.stage == 1)
     }
 
-    @Test func hintReturnsValidPairAndSpendsOne() throws {
-        var session = GameSession(board: makeBoard([[1, 2, 3, 3, 1, 2, 1, 2, 1]]))
-        let hint = session.useHint()
-        let pair = try #require(hint)
-        #expect(MatchRules.pair(on: session.board, pair.first, pair.second) != nil)
-        #expect(session.hintsRemaining == GameSession.initialHints - 1)
+    @Test func hintReturnsValidPairAndCostsPoints() throws {
+        var session = GameSession(board: makeBoard([[1, 2, 3, 3, 1, 2, 1, 2, 1]]), score: 25)
+        let result = session.useHint()
+        let hint = try #require(result)
+        #expect(MatchRules.pair(on: session.board, hint.pair.first, hint.pair.second) != nil)
+        #expect(hint.cost == 3)
+        #expect(session.score == 22)
+        #expect(session.hintsUsedThisStage == 1)
     }
 
-    @Test func hintIsNotSpentWithoutPairs() {
-        var session = GameSession(board: makeBoard([[1, 2, 1, 2, 1, 2, 1, 2, 1]]))
+    @Test func hintNeverTakesScoreBelowZero() throws {
+        var session = GameSession(board: makeBoard([[1, 2, 3, 3, 1, 2, 1, 2, 1]]), score: 2)
+        let result = session.useHint()
+        let hint = try #require(result)
+        #expect(hint.cost == 2)
+        #expect(session.score == 0)
+    }
+
+    @Test func hintIsFreeWithoutPairs() {
+        var session = GameSession(board: makeBoard([[1, 2, 1, 2, 1, 2, 1, 2, 1]]), score: 30)
         let hint = session.useHint()
-        #expect(hint == nil)
-        #expect(session.hintsRemaining == GameSession.initialHints)
+        #expect(hint?.pair == nil)
+        #expect(session.score == 30)
+        #expect(session.hintsUsedThisStage == 0)
+    }
+
+    @Test func pairReportsGap() {
+        var session = GameSession(board: makeBoard([[6, 0, 0, 0, 4, 1, 2, 1, 2]]))
+        let outcome = session.match(at: 0, 4)
+        #expect(outcome?.pair.gap == 3)
+    }
+
+    @Test func plusMarksAddedCells() {
+        var session = GameSession(board: makeBoard([[1, 2, 1, 2, 1, 2, 1, 2, 1]]))
+        session.addNumbers()
+        #expect(session.board.cells.prefix(9).allSatisfy { !$0.isAdded })
+        #expect(session.board.cells.dropFirst(9).allSatisfy { $0.isAdded })
     }
 
     @Test func sessionRoundTripsThroughCodable() throws {

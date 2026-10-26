@@ -3,11 +3,14 @@ public struct Cell: Identifiable, Codable, Hashable, Sendable {
     public let id: Int
     public let value: Int
     public var isCleared: Bool
+    /// Added with +, as opposed to the stage's original numbers.
+    public let isAdded: Bool
 
-    public init(id: Int, value: Int, isCleared: Bool = false) {
+    public init(id: Int, value: Int, isCleared: Bool = false, isAdded: Bool = false) {
         self.id = id
         self.value = value
         self.isCleared = isCleared
+        self.isAdded = isAdded
     }
 }
 
@@ -44,7 +47,7 @@ public struct Board: Codable, Hashable, Sendable {
     /// Appends `values` as new cells at the end of the strip.
     mutating func append(_ values: [Int]) {
         for value in values {
-            cells.append(Cell(id: nextID, value: value))
+            cells.append(Cell(id: nextID, value: value, isAdded: true))
             nextID += 1
         }
     }

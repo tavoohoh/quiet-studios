@@ -92,8 +92,8 @@ Tablero de **9 columnas**; arranca con **27 números (3 filas)** del 1 al 9.
 **Mecánicas:**
 - Celdas eliminadas quedan como "fantasma" (número tenue) hasta que su fila se vacía.
 - Fila vacía: desaparece, el tablero sube y da puntos extra.
-- Botón **+**: copia todos los números restantes, en orden, al final del tablero. 5 usos por partida. Limpiar una fila regala 1 uso extra (máximo 5 acumulados).
-- **Pistas:** resaltan una pareja válida. 3 por partida; limpiar el tablero regala 1 extra.
+- Botón **+**: copia todos los números restantes, en orden, al final del tablero (regla estándar del género; se evaluó triplicar y se descartó). 5 usos por partida. Limpiar una fila regala 1 uso extra (máximo 5 acumulados). Los números agregados se muestran en el color de acento para distinguirlos de los originales.
+- **Pistas:** ilimitadas; resaltan una pareja válida y cuestan 3 puntos (el puntaje nunca baja de 0). Si no hay parejas, no cobran.
 - **Etapas:** vaciar el tablero pasa a la siguiente etapa con tablero nuevo; los usos de + se reinician.
 - **Fin de partida:** no quedan parejas válidas ni usos de +.
 - La generación garantiza **al menos 3 parejas válidas** al inicio.
@@ -103,6 +103,7 @@ Tablero de **9 columnas**; arranca con **27 números (3 filas)** del 1 al 9.
 - Pareja con eliminadas entre medio: 4
 - Fila limpiada: 10
 - Tablero limpiado: 150 × número de etapa
+- Pista: −3
 
 ## Reto diario
 
@@ -159,7 +160,8 @@ Categorías de personalización: tema de color, estilo de ficha, tipografía, ef
 - Fichas sin bordes, solo el número. Seleccionada: círculo suave del acento. Eliminada: gris muy tenue.
 - Animaciones: pareja válida = fade + leve escala; inválida = pequeña sacudida; fila limpiada = colapso suave hacia arriba. Respetar Reduce Motion.
 - Hápticos (iOS): ligero al seleccionar, medio al emparejar, éxito al limpiar fila.
-- Barra superior: puntaje, etapa, contador de + y de pistas. Nada más.
+- Barra superior: puntaje, etapa, contador de + y costo de la pista. Nada más.
+- Feedback por jugada: "+N" flotante junto al puntaje (acento; costos en gris) y elogios breves centrados en la barra: "¡Desde lejos!" (4+ celdas eliminadas entre la pareja), "¡Doble/Triple fila!", "¡N seguidas!" (cada 5 parejas sin error). Solo texto, no dan puntos.
 - Pantallas: Inicio (Continuar, Nueva partida, Reto diario), Juego, Leaderboards, Colección, Ajustes (sonido, hápticos, privacidad).
 - iPad/Mac: tablero centrado con ancho máximo. Mac: ratón, trackpad y atajos de teclado.
 - Accesibilidad: Dynamic Type, VoiceOver por celda ("7, fila 3, columna 2"), contraste suficiente, opción de números más grandes.

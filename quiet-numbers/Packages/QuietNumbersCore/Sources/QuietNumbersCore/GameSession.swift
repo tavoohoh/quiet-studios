@@ -4,6 +4,8 @@ public struct Scoring: Codable, Hashable, Sendable {
     public var acrossClearedPair = 4
     public var rowCleared = 10
     public var boardClearedPerStage = 150
+    /// Hints are unlimited but cost points. The score never drops below zero.
+    public var hintCost = 3
 
     public static let standard = Scoring()
 
@@ -30,10 +32,9 @@ public struct MatchOutcome: Equatable, Sendable {
     public let boardCleared: Bool
 }
 
-/// A full game: board, score, stages and the + and hint budgets.
+/// A full game: board, score, stages and the + budget.
 public struct GameSession: Codable, Hashable, Sendable {
     public static let maxPlusUses = 5
-    public static let initialHints = 3
 
     public let mode: GameMode
     public let scoring: Scoring
@@ -41,7 +42,8 @@ public struct GameSession: Codable, Hashable, Sendable {
     public private(set) var score = 0
     public private(set) var stage = 1
     public private(set) var plusRemaining = maxPlusUses
-    public private(set) var hintsRemaining = initialHints
+    /// Hints used in the current stage (for "no help" achievements).
+    public private(set) var hintsUsedThisStage = 0
     /// Daily challenge only: the board was cleared.
     public private(set) var isCompleted = false
     private var random: SeededRandom
@@ -77,7 +79,6 @@ public struct GameSession: Codable, Hashable, Sendable {
         let boardCleared = board.isEmpty
         if boardCleared {
             points += scoring.boardClearedPerStage * stage
-            hintsRemaining += 1
         }
         score += points
         if boardCleared { advanceStage() }
@@ -94,11 +95,14 @@ public struct GameSession: Codable, Hashable, Sendable {
         return true
     }
 
-    /// Spends a hint and returns a valid pair. Doesn't spend it if there's no pair to show.
-    public mutating func useHint() -> Pair? {
-        guard hintsRemaining > 0, let pair = MatchRules.validPairs(on: board).first else { return nil }
-        hintsRemaining -= 1
-        return pair
+    /// Returns a valid pair and charges `scoring.hintCost`.
+    /// Free (and `nil`) when there's no pair to show.
+    public mutating func useHint() -> (pair: Pair, cost: Int)? {
+        guard !isOver, let pair = MatchRules.validPairs(on: board).first else { return nil }
+        let cost = min(score, scoring.hintCost)
+        score -= cost
+        hintsUsedThisStage += 1
+        return (pair, cost)
     }
 
     private mutating func advanceStage() {
@@ -108,6 +112,7 @@ public struct GameSession: Codable, Hashable, Sendable {
         case .classic:
             stage += 1
             plusRemaining = Self.maxPlusUses
+            hintsUsedThisStage = 0
             board = BoardGenerator.makeBoard(using: &random)
         }
     }
@@ -115,10 +120,11 @@ public struct GameSession: Codable, Hashable, Sendable {
 
 extension GameSession {
     /// Test hook: start from a hand-made board.
-    init(board: Board, mode: GameMode = .classic, seed: UInt64 = 0, plusRemaining: Int = maxPlusUses, stage: Int = 1) {
+    init(board: Board, mode: GameMode = .classic, seed: UInt64 = 0, plusRemaining: Int = maxPlusUses, stage: Int = 1, score: Int = 0) {
         self.init(mode: mode, seed: seed)
         self.board = board
         self.plusRemaining = plusRemaining
         self.stage = stage
+        self.score = score
     }
 }
