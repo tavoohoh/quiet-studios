@@ -35,6 +35,10 @@ final class AppModel {
         if ProcessInfo.processInfo.arguments.contains("-unlockAll") {
             progress = PlayerProgress(unlocked: Set(Achievement.allCases))
         }
+        if DemoData.isActive {
+            progress = DemoData.progress
+            DemoData.seed(persistence)
+        }
         #endif
         refreshSavedGames()
         gameCenter.onAuthenticated = { [weak self] in self?.syncGameCenter() }
@@ -99,7 +103,7 @@ final class AppModel {
 
     // MARK: Daily
 
-    var todayKey: String { DailyChallenge.dayKey(for: .now) }
+    var todayKey: String { DailyChallenge.dayKey(for: AppClock.now) }
 
     var currentStreak: Int { Streaks.current(completed: persistence.completedDays, today: todayKey) }
     var longestStreak: Int { Streaks.longest(completed: persistence.completedDays) }
@@ -154,7 +158,7 @@ final class AppModel {
             persistence.finishDaily(dayKey, score: session.score, isCompleted: session.isCompleted)
             persistence.deleteGame(.daily)
             if session.isCompleted {
-                let hour = Calendar.current.component(.hour, from: .now)
+                let hour = Calendar.current.component(.hour, from: AppClock.now)
                 record(.dailyCompleted(currentStreak: currentStreak, localHour: hour))
             }
         case .practice:

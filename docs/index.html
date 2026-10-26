@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Quiet Studios</title>
+  <meta name="description" content="Calm, honest apps and games for Apple devices.">
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: #ffffff;
+      --surface: #f2f2f7;
+      --ink: #1c1c1e;
+      --muted: #6c6c70;
+      --accent: #0a5cff;
+      --line: #e5e5ea;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #000000;
+        --surface: #1c1c1e;
+        --ink: #f2f2f7;
+        --muted: #a1a1a6;
+        --accent: #4d8dff;
+        --line: #2c2c2e;
+      }
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font: 17px/1.55 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      -webkit-text-size-adjust: 100%;
+    }
+    main { max-width: 640px; margin: 0 auto; padding: 48px 20px 64px; }
+    header { margin-bottom: 40px; }
+    h1, h2, h3 { font-family: ui-rounded, -apple-system, BlinkMacSystemFont, sans-serif; line-height: 1.2; }
+    h1 { font-size: 34px; margin: 0 0 8px; }
+    h2 { font-size: 24px; margin: 48px 0 12px; }
+    h3 { font-size: 18px; margin: 28px 0 6px; }
+    p, li { color: var(--ink); }
+    .muted { color: var(--muted); }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    nav { display: flex; flex-wrap: wrap; gap: 16px; font-size: 15px; }
+    .lang { font-size: 15px; color: var(--muted); margin: 0 0 24px; }
+    section + section { border-top: 1px solid var(--line); margin-top: 48px; }
+    .card { background: var(--surface); border-radius: 18px; padding: 20px 22px; margin: 20px 0; }
+    .card ul { margin: 0; padding-left: 20px; }
+    footer { margin-top: 56px; font-size: 14px; color: var(--muted); }
+  </style>
+</head>
+<body>
+  <main>
+
+    <header>
+      <h1>Quiet Studios</h1>
+      <p class="muted">Calm, honest apps and games. No ads, no purchases, no data collected.<br>
+      Apps y juegos tranquilos y honestos. Sin anuncios, sin compras, sin recolectar datos.</p>
+    </header>
+    <div class="card">
+      <p style="margin:0"><a href="quiet-numbers/"><strong>Quiet Numbers</strong></a><br>
+      <span class="muted">Number puzzle · Puzzle de números</span></p>
+    </div>
+    <footer>
+      <p>Quiet Studios</p>
+    </footer>
+  </main>
+</body>
+</html>

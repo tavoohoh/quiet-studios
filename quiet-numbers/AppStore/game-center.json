@@ -1,0 +1,325 @@
+{
+  "achievements": [
+    {
+      "id": "first_step",
+      "codeCase": "Achievement.firstStep",
+      "points": 10,
+      "hidden": false,
+      "achievableMoreThanOnce": false,
+      "reward": {
+        "en": "Paper theme (default)",
+        "es": "Tema Papel (por defecto)"
+      },
+      "name": {
+        "en": "First Step",
+        "es": "Primer paso"
+      },
+      "preEarnedDescription": {
+        "en": "Finish your first game.",
+        "es": "Termina tu primera partida."
+      },
+      "earnedDescription": {
+        "en": "You finished your first game.",
+        "es": "Terminaste tu primera partida."
+      },
+      "image": "TODO: 512×512 or 1024×1024 PNG"
+    },
+    {
+      "id": "clean_slate",
+      "codeCase": "Achievement.cleanSlate",
+      "points": 30,
+      "hidden": false,
+      "achievableMoreThanOnce": false,
+      "reward": {
+        "en": "Circle tiles",
+        "es": "Fichas: círculo"
+      },
+      "name": {
+        "en": "Clean Slate",
+        "es": "Tabla rasa"
+      },
+      "preEarnedDescription": {
+        "en": "Clear a whole board.",
+        "es": "Limpia un tablero completo."
+      },
+      "earnedDescription": {
+        "en": "You cleared a whole board.",
+        "es": "Limpiaste un tablero completo."
+      },
+      "image": "TODO: 512×512 or 1024×1024 PNG"
+    },
+    {
+      "id": "no_help",
+      "codeCase": "Achievement.noHelp",
+      "points": 50,
+      "hidden": false,
+      "achievableMoreThanOnce": false,
+      "reward": {
+        "en": "Slate theme",
+        "es": "Tema Pizarra"
+      },
+      "name": {
+        "en": "No Help",
+        "es": "Sin ayuda"
+      },
+      "preEarnedDescription": {
+        "en": "Finish a game without using hints.",
+        "es": "Termina una partida sin usar pistas."
+      },
+      "earnedDescription": {
+        "en": "You finished a game without a single hint.",
+        "es": "Terminaste una partida sin usar ni una pista."
+      },
+      "image": "TODO: 512×512 or 1024×1024 PNG"
+    },
+    {
+      "id": "consistency",
+      "codeCase": "Achievement.consistency",
+      "points": 80,
+      "hidden": false,
+      "achievableMoreThanOnce": false,
+      "reward": {
+        "en": "Sand theme",
+        "es": "Tema Arena"
+      },
+      "name": {
+        "en": "Consistency",
+        "es": "Constancia"
+      },
+      "preEarnedDescription": {
+        "en": "Complete 7 daily challenges in a row.",
+        "es": "Completa 7 retos diarios seguidos."
+      },
+      "earnedDescription": {
+        "en": "You completed 7 daily challenges in a row.",
+        "es": "Completaste 7 retos diarios seguidos."
+      },
+      "image": "TODO: 512×512 or 1024×1024 PNG"
+    },
+    {
+      "id": "habit",
+      "codeCase": "Achievement.habit",
+      "points": 100,
+      "hidden": false,
+      "achievableMoreThanOnce": false,
+      "reward": {
+        "en": "New York typeface (serif)",
+        "es": "Tipografía New York (serif)"
+      },
+      "name": {
+        "en": "Habit",
+        "es": "Hábito"
+      },
+      "preEarnedDescription": {
+        "en": "Complete 30 daily challenges in a row.",
+        "es": "Completa 30 retos diarios seguidos."
+      },
+      "earnedDescription": {
+        "en": "You completed 30 daily challenges in a row.",
+        "es": "Completaste 30 retos diarios seguidos."
+      },
+      "image": "TODO: 512×512 or 1024×1024 PNG"
+    },
+    {
+      "id": "sweeper",
+      "codeCase": "Achievement.sweeper",
+      "points": 60,
+      "hidden": false,
+      "achievableMoreThanOnce": false,
+      "reward": {
+        "en": "Wave row-clear effect",
+        "es": "Efecto de limpieza: ola"
+      },
+      "name": {
+        "en": "Sweeper",
+        "es": "Barrendero"
+      },
+      "preEarnedDescription": {
+        "en": "Clear 100 rows.",
+        "es": "Limpia 100 filas."
+      },
+      "earnedDescription": {
+        "en": "You cleared 100 rows.",
+        "es": "Limpiaste 100 filas."
+      },
+      "image": "TODO: 512×512 or 1024×1024 PNG"
+    },
+    {
+      "id": "stage_five",
+      "codeCase": "Achievement.stageFive",
+      "points": 70,
+      "hidden": false,
+      "achievableMoreThanOnce": false,
+      "reward": {
+        "en": "Outline tiles",
+        "es": "Fichas: contorno"
+      },
+      "name": {
+        "en": "Stage 5",
+        "es": "Etapa 5"
+      },
+      "preEarnedDescription": {
+        "en": "Reach stage 5 in one game.",
+        "es": "Llega a la etapa 5 en una partida."
+      },
+      "earnedDescription": {
+        "en": "You reached stage 5 in one game.",
+        "es": "Llegaste a la etapa 5 en una partida."
+      },
+      "image": "TODO: 512×512 or 1024×1024 PNG"
+    },
+    {
+      "id": "centennial",
+      "codeCase": "Achievement.centennial",
+      "points": 100,
+      "hidden": false,
+      "achievableMoreThanOnce": false,
+      "reward": {
+        "en": "Gold app icon (iPhone and iPad)",
+        "es": "Ícono dorado (iPhone y iPad)"
+      },
+      "name": {
+        "en": "Centennial",
+        "es": "Centenario"
+      },
+      "preEarnedDescription": {
+        "en": "Complete 100 daily challenges.",
+        "es": "Completa 100 retos diarios."
+      },
+      "earnedDescription": {
+        "en": "You completed 100 daily challenges.",
+        "es": "Completaste 100 retos diarios."
+      },
+      "image": "TODO: 512×512 or 1024×1024 PNG"
+    },
+    {
+      "id": "night_owl",
+      "codeCase": "Achievement.nightOwl",
+      "points": 40,
+      "hidden": true,
+      "achievableMoreThanOnce": false,
+      "reward": {
+        "en": "Midnight theme",
+        "es": "Tema Medianoche"
+      },
+      "name": {
+        "en": "Night Owl",
+        "es": "Noctámbulo"
+      },
+      "preEarnedDescription": {
+        "en": "Complete a daily challenge between midnight and 4 a.m.",
+        "es": "Completa un reto diario entre la medianoche y las 4 a. m."
+      },
+      "earnedDescription": {
+        "en": "You completed a daily challenge in the small hours.",
+        "es": "Completaste un reto diario de madrugada."
+      },
+      "image": "TODO: 512×512 or 1024×1024 PNG"
+    },
+    {
+      "id": "monotone",
+      "codeCase": "Achievement.monotone",
+      "points": 60,
+      "hidden": true,
+      "achievableMoreThanOnce": false,
+      "reward": {
+        "en": "Marimba sound pack",
+        "es": "Pack de sonido: marimba"
+      },
+      "name": {
+        "en": "Monotone",
+        "es": "Monótono"
+      },
+      "preEarnedDescription": {
+        "en": "Make 10 pairs of equal numbers in a row.",
+        "es": "Haz 10 parejas de números iguales seguidas."
+      },
+      "earnedDescription": {
+        "en": "You made 10 pairs of equal numbers in a row.",
+        "es": "Hiciste 10 parejas de números iguales seguidas."
+      },
+      "image": "TODO: 512×512 or 1024×1024 PNG"
+    },
+    {
+      "id": "in_the_red",
+      "codeCase": "Achievement.inTheRed",
+      "points": 20,
+      "hidden": true,
+      "achievableMoreThanOnce": false,
+      "reward": {
+        "en": "Ember theme",
+        "es": "Tema Brasa"
+      },
+      "name": {
+        "en": "In the Red",
+        "es": "Números rojos"
+      },
+      "preEarnedDescription": {
+        "en": "Take your score below zero.",
+        "es": "Lleva tu puntaje por debajo de cero."
+      },
+      "earnedDescription": {
+        "en": "Your score went below zero. It happens.",
+        "es": "Tu puntaje bajó de cero. Pasa."
+      },
+      "image": "TODO: 512×512 or 1024×1024 PNG"
+    }
+  ],
+  "totalPoints": 620,
+  "leaderboards": [
+    {
+      "id": "daily_challenge",
+      "codeCase": "GameCenterService.Leaderboard.daily",
+      "type": "recurring",
+      "recurrence": "Every 1 day, starting at 00:00 UTC (19:00 in Colombia)",
+      "name": {
+        "en": "Daily Challenge",
+        "es": "Reto diario"
+      },
+      "scoreFormat": "Integer",
+      "formatSuffix": {
+        "en": " points",
+        "es": " puntos"
+      },
+      "sortOrder": "High to Low",
+      "scoreSubmission": "Best score",
+      "source": "Today's scored daily attempt (AppModel.pushToGameCenter)"
+    },
+    {
+      "id": "best_score",
+      "codeCase": "GameCenterService.Leaderboard.bestScore",
+      "type": "classic",
+      "recurrence": null,
+      "name": {
+        "en": "Best Score",
+        "es": "Mejor puntaje"
+      },
+      "scoreFormat": "Integer",
+      "formatSuffix": {
+        "en": " points",
+        "es": " puntos"
+      },
+      "sortOrder": "High to Low",
+      "scoreSubmission": "Best score",
+      "source": "PlayerProgress.bestScore (classic games, including abandoned ones)"
+    },
+    {
+      "id": "longest_streak",
+      "codeCase": "GameCenterService.Leaderboard.longestStreak",
+      "type": "classic",
+      "recurrence": null,
+      "name": {
+        "en": "Longest Streak",
+        "es": "Racha más larga"
+      },
+      "scoreFormat": "Integer",
+      "formatSuffix": {
+        "en": " days",
+        "es": " días"
+      },
+      "sortOrder": "High to Low",
+      "scoreSubmission": "Best score",
+      "source": "Longest run of completed daily challenges (AppModel.longestStreak)"
+    }
+  ]
+}

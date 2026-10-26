@@ -1,0 +1,37 @@
+# Game Center: Quiet Numbers
+
+Configuración para App Store Connect. La fuente de los IDs es el código: `Achievement.gameCenterID` en `App/Services/GameCenterService.swift` y `GameCenterService.Leaderboard`. El JSON equivalente está en `game-center.json`; `scripts/check-game-center.py` verifica que coincidan con el código.
+
+## Logros (11, 620 / 1000 puntos)
+
+Ninguno se puede ganar más de una vez. Cada uno necesita una imagen de 512×512 o 1024×1024 (pendiente).
+
+| ID | Caso en el código | Puntos | Oculto | Nombre (en / es) | Descripción antes de ganarlo (en / es) | Descripción al ganarlo (en / es) | Recompensa |
+|---|---|---:|---|---|---|---|---|
+| `first_step` | `firstStep` | 10 | No | First Step / Primer paso | Finish your first game. / Termina tu primera partida. | You finished your first game. / Terminaste tu primera partida. | Tema Papel (por defecto) |
+| `clean_slate` | `cleanSlate` | 30 | No | Clean Slate / Tabla rasa | Clear a whole board. / Limpia un tablero completo. | You cleared a whole board. / Limpiaste un tablero completo. | Fichas: círculo |
+| `no_help` | `noHelp` | 50 | No | No Help / Sin ayuda | Finish a game without using hints. / Termina una partida sin usar pistas. | You finished a game without a single hint. / Terminaste una partida sin usar ni una pista. | Tema Pizarra |
+| `consistency` | `consistency` | 80 | No | Consistency / Constancia | Complete 7 daily challenges in a row. / Completa 7 retos diarios seguidos. | You completed 7 daily challenges in a row. / Completaste 7 retos diarios seguidos. | Tema Arena |
+| `habit` | `habit` | 100 | No | Habit / Hábito | Complete 30 daily challenges in a row. / Completa 30 retos diarios seguidos. | You completed 30 daily challenges in a row. / Completaste 30 retos diarios seguidos. | Tipografía New York (serif) |
+| `sweeper` | `sweeper` | 60 | No | Sweeper / Barrendero | Clear 100 rows. / Limpia 100 filas. | You cleared 100 rows. / Limpiaste 100 filas. | Efecto de limpieza: ola |
+| `stage_five` | `stageFive` | 70 | No | Stage 5 / Etapa 5 | Reach stage 5 in one game. / Llega a la etapa 5 en una partida. | You reached stage 5 in one game. / Llegaste a la etapa 5 en una partida. | Fichas: contorno |
+| `centennial` | `centennial` | 100 | No | Centennial / Centenario | Complete 100 daily challenges. / Completa 100 retos diarios. | You completed 100 daily challenges. / Completaste 100 retos diarios. | Ícono dorado (iPhone y iPad) |
+| `night_owl` | `nightOwl` | 40 | Sí | Night Owl / Noctámbulo | Complete a daily challenge between midnight and 4 a.m. / Completa un reto diario entre la medianoche y las 4 a. m. | You completed a daily challenge in the small hours. / Completaste un reto diario de madrugada. | Tema Medianoche |
+| `monotone` | `monotone` | 60 | Sí | Monotone / Monótono | Make 10 pairs of equal numbers in a row. / Haz 10 parejas de números iguales seguidas. | You made 10 pairs of equal numbers in a row. / Hiciste 10 parejas de números iguales seguidas. | Pack de sonido: marimba |
+| `in_the_red` | `inTheRed` | 20 | Sí | In the Red / Números rojos | Take your score below zero. / Lleva tu puntaje por debajo de cero. | Your score went below zero. It happens. / Tu puntaje bajó de cero. Pasa. | Tema Brasa |
+
+Ocultos: Noctámbulo, Monótono y Números rojos son sorpresas; el resto son metas visibles.
+
+## Leaderboards
+
+| ID | Caso en el código | Nombre (en / es) | Tipo | Formato | Sufijo (en / es) | Orden | Envío | Qué se envía |
+|---|---|---|---|---|---|---|---|---|
+| `daily_challenge` | `daily` | Daily Challenge / Reto diario | Recurrente (Every 1 day, starting at 00:00 UTC (19:00 in Colombia)) | Entero | " points" / " puntos" | Mayor a menor | Mejor puntaje | Today's scored daily attempt (AppModel.pushToGameCenter) |
+| `best_score` | `bestScore` | Best Score / Mejor puntaje | Clásico | Entero | " points" / " puntos" | Mayor a menor | Mejor puntaje | PlayerProgress.bestScore (classic games, including abandoned ones) |
+| `longest_streak` | `longestStreak` | Longest Streak / Racha más larga | Clásico | Entero | " days" / " días" | Mayor a menor | Mejor puntaje | Longest run of completed daily challenges (AppModel.longestStreak) |
+
+## Notas
+
+- `GameCenterService.submit` ignora puntajes ≤ 0: un reto diario terminado en negativo no aparece en `daily_challenge`.
+- `daily_challenge` reinicia a las 00:00 UTC; el reto local cambia a las 19:00 de cada dispositivo. Solo coinciden en UTC-5 (Colombia).
+- Las partidas guardadas (`saveGameData`) necesitan la capacidad iCloud en el App ID y su entitlement en `project.yml` (pendiente).

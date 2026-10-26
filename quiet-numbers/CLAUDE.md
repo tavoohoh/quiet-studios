@@ -35,8 +35,10 @@ Un solo target multiplataforma (iPhone, iPad, Mac), compra universal, un bundle 
 - El `.xcodeproj` se genera desde `project.yml` con XcodeGen: correr `xcodegen generate` tras agregar o mover archivos. No editar el `.pbxproj` a mano.
 - Tests del Core: `cd Packages/QuietNumbersCore && swift test`.
 - Todos los tests (Core en iOS, app y UI): `xcodebuild test -project QuietNumbers.xcodeproj -scheme QuietNumbers -destination 'platform=iOS Simulator,name=iPhone 17'`.
+- Capturas de la App Store: `scripts/screenshots.sh [iphone] [ipad] [mac]` (esquema `Screenshots`, target `QuietNumbersScreenshots`) → `AppStore/screenshots/<dispositivo>/<idioma>/<apariencia>/`. Mac aún no funciona: el test no ve la ventana.
+- Metadatos: `fastlane/metadata/{en-US,es-MX,es-ES}`; validar con `scripts/validate-metadata.py`. Game Center: `AppStore/game-center.{md,json}`; verificar IDs con `scripts/check-game-center.py`.
 - UI test en simulador: `xcodebuild test -project QuietNumbers.xcodeproj -scheme QuietNumbers -destination 'platform=iOS Simulator,name=iPhone 17' -only-testing:QuietNumbersUITests`.
-- Argumentos DEBUG: `-startGame` abre una partida directo; `-seedKey <texto>` hace el tablero determinista (`2026-10-25` da el tablero golden de los tests); `-boardValues 5,3,7,…` arranca con números exactos; `-slowEffects` pone los efectos en cámara lenta (×6) para inspeccionarlos. `-startGame` usa almacenamiento en memoria; `-uiTesting` usa un archivo propio (`UITests.store`) que `-resetStore` borra, para no tocar los datos reales. `-unlockAll` desbloquea todos los logros (QA y capturas).
+- Argumentos DEBUG: `-demo` carga el estado fijo de las capturas (`App/Debug/DemoData.swift`: 14-nov-2026 10:00, partida a medias, racha de 8, leaderboards de ejemplo; en memoria); `-startGame` abre una partida directo; `-seedKey <texto>` hace el tablero determinista (`2026-10-25` da el tablero golden de los tests); `-boardValues 5,3,7,…` arranca con números exactos; `-slowEffects` pone los efectos en cámara lenta (×6) para inspeccionarlos. `-startGame` usa almacenamiento en memoria; `-uiTesting` usa un archivo propio (`UITests.store`) que `-resetStore` borra, para no tocar los datos reales. `-unlockAll` desbloquea todos los logros (QA y capturas).
 
 ## Arquitectura
 
@@ -232,7 +234,7 @@ Decisión de la etiqueta: **Data Not Collected**. Investigado (2026-10-25): Appl
 
 Estado (fase 6):
 - `App/Resources/PrivacyInfo.xcprivacy`: sin tracking, cero tipos de datos recolectados, `UserDefaults` con razón `CA92.1`.
-- Política de privacidad en/es: `docs/privacy-policy.md` (falta definir correo de soporte y URL pública).
+- Política de privacidad, soporte y página de la app en/es: `../docs/quiet-numbers/` (GitHub Pages desde `/docs` en la raíz del repo; falta el correo de soporte y activar Pages).
 - Etiqueta de privacidad, según [App privacy details](https://developer.apple.com/app-store/app-privacy-details/): "You are not responsible for disclosing data collected by Apple" y "recolectar" = enviar datos fuera del dispositivo de forma que el desarrollador pueda accederlos. Ver decisión arriba.
 
 ## Fases

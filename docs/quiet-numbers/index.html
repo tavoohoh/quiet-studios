@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Quiet Numbers</title>
+  <meta name="description" content="A calm, honest number puzzle. No ads, no purchases, no data collected.">
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: #ffffff;
+      --surface: #f2f2f7;
+      --ink: #1c1c1e;
+      --muted: #6c6c70;
+      --accent: #0a5cff;
+      --line: #e5e5ea;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #000000;
+        --surface: #1c1c1e;
+        --ink: #f2f2f7;
+        --muted: #a1a1a6;
+        --accent: #4d8dff;
+        --line: #2c2c2e;
+      }
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font: 17px/1.55 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      -webkit-text-size-adjust: 100%;
+    }
+    main { max-width: 640px; margin: 0 auto; padding: 48px 20px 64px; }
+    header { margin-bottom: 40px; }
+    h1, h2, h3 { font-family: ui-rounded, -apple-system, BlinkMacSystemFont, sans-serif; line-height: 1.2; }
+    h1 { font-size: 34px; margin: 0 0 8px; }
+    h2 { font-size: 24px; margin: 48px 0 12px; }
+    h3 { font-size: 18px; margin: 28px 0 6px; }
+    p, li { color: var(--ink); }
+    .muted { color: var(--muted); }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    nav { display: flex; flex-wrap: wrap; gap: 16px; font-size: 15px; }
+    .lang { font-size: 15px; color: var(--muted); margin: 0 0 24px; }
+    section + section { border-top: 1px solid var(--line); margin-top: 48px; }
+    .card { background: var(--surface); border-radius: 18px; padding: 20px 22px; margin: 20px 0; }
+    .card ul { margin: 0; padding-left: 20px; }
+    footer { margin-top: 56px; font-size: 14px; color: var(--muted); }
+  </style>
+</head>
+<body>
+  <main>
+
+    <header>
+      <nav>
+        <a href="./">Quiet Numbers</a>
+        <a href="privacy.html">Privacy · Privacidad</a>
+        <a href="support.html">Support · Soporte</a>
+      </nav>
+    </header>
+    <p class="lang"><a href="#en">English</a> · <a href="#es">Español</a></p>
+
+    <section id="en" lang="en">
+      <h1>Quiet Numbers</h1>
+      <p class="muted">A calm, honest number puzzle for iPhone, iPad and Mac.</p>
+      <p>Clear the board by pairing numbers that are equal or add up to ten. Pairs can be neighbours, sit on the same line across cleared cells, or follow on from the end of one row to the start of the next. Run out of pairs and + copies what's left to the end of the board.</p>
+      <div class="card">
+        <ul>
+          <li>No ads. No purchases. No subscriptions.</li>
+          <li>No data collected: no accounts, no analytics, no tracking.</li>
+          <li>A new daily challenge, the same board for everyone.</li>
+          <li>Game Center leaderboards and achievements, if you want them.</li>
+          <li>Works fully offline.</li>
+          <li>Themes and styles earned by playing, never sold.</li>
+        </ul>
+      </div>
+      <p class="muted">Coming soon to the App Store.</p>
+    </section>
+
+    <section id="es" lang="es">
+      <h1>Quiet Numbers</h1>
+      <p class="muted">Un puzzle de números tranquilo y honesto para iPhone, iPad y Mac.</p>
+      <p>Vacía el tablero emparejando números iguales o que sumen diez. Las parejas pueden estar juntas, en la misma línea con casillas vacías entre ellas, o seguir del final de una fila al inicio de la siguiente. Si te quedas sin parejas, + copia lo que queda al final del tablero.</p>
+      <div class="card">
+        <ul>
+          <li>Sin anuncios. Sin compras. Sin suscripciones.</li>
+          <li>No recolecta datos: sin cuentas, sin analytics, sin rastreo.</li>
+          <li>Un reto diario nuevo, el mismo tablero para todos.</li>
+          <li>Leaderboards y logros de Game Center, si los quieres.</li>
+          <li>Funciona completamente sin conexión.</li>
+          <li>Temas y estilos que se ganan jugando, nunca se venden.</li>
+        </ul>
+      </div>
+      <p class="muted">Muy pronto en la App Store.</p>
+    </section>
+    <footer>
+      <p>Quiet Numbers · Quiet Studios</p>
+    </footer>
+  </main>
+</body>
+</html>

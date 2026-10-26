@@ -92,7 +92,7 @@ struct CalendarView: View {
     }
 
     private var isCurrentMonth: Bool {
-        calendar.isDate(month, equalTo: .now, toGranularity: .month)
+        calendar.isDate(month, equalTo: AppClock.now, toGranularity: .month)
     }
 
     private func shiftMonth(by value: Int) {

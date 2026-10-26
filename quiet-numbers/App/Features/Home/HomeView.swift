@@ -25,6 +25,7 @@ struct HomeView: View {
                     .fixedSize(horizontal: false, vertical: true)
                 VStack(spacing: 12) {
                     DailyCard { path.append(.daily) }
+                        .accessibilityIdentifier("daily")
                     if app.hasClassicInProgress {
                         Button {
                             app.continueClassic()
@@ -33,6 +34,7 @@ struct HomeView: View {
                             Text("Continue").frame(maxWidth: .infinity)
                         }
                         .buttonStyle(.borderedProminent)
+                        .accessibilityIdentifier("continue")
                     }
                     Button {
                         app.newClassic()
@@ -80,11 +82,13 @@ struct HomeView: View {
                     NavigationLink(value: Route.leaderboards) {
                         Label("Leaderboards", systemImage: "trophy")
                     }
+                    .accessibilityIdentifier("leaderboards")
                 }
                 ToolbarItem(placement: .primaryAction) {
                     NavigationLink(value: Route.collection) {
                         Label("Collection", systemImage: "square.grid.2x2")
                     }
+                    .accessibilityIdentifier("collection")
                 }
                 ToolbarItem(placement: .primaryAction) {
                     NavigationLink(value: Route.settings) {

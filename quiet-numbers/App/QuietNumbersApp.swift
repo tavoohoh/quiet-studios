@@ -20,15 +20,25 @@ struct QuietNumbersApp: App {
             }
         }
         #if os(macOS)
-        .defaultSize(width: 520, height: 760)
+        .defaultSize(Self.windowSize)
         #endif
     }
+
+    #if os(macOS)
+    /// Demo launches (screenshots) open at 1280×800, the Mac App Store's 16:10 size.
+    private static var windowSize: CGSize {
+        #if DEBUG
+        if DemoData.isActive { return CGSize(width: 1280, height: 800) }
+        #endif
+        return CGSize(width: 520, height: 760)
+    }
+    #endif
 
     /// Debug launches go straight in, so UI tests aren't held up.
     private static var wantsSplash: Bool {
         #if DEBUG
         let arguments = ProcessInfo.processInfo.arguments
-        return !arguments.contains("-startGame") && !arguments.contains("-uiTesting")
+        return !arguments.contains("-startGame") && !arguments.contains("-uiTesting") && !arguments.contains("-demo")
         #else
         return true
         #endif
@@ -40,7 +50,7 @@ struct QuietNumbersApp: App {
     private static var store: PersistenceService.Store {
         #if DEBUG
         let arguments = ProcessInfo.processInfo.arguments
-        if arguments.contains("-startGame") { return .inMemory }
+        if arguments.contains("-startGame") || arguments.contains("-demo") { return .inMemory }
         if arguments.contains("-uiTesting") { return .named("UITests", reset: arguments.contains("-resetStore")) }
         #endif
         return .standard

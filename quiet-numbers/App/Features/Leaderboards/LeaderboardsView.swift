@@ -36,12 +36,12 @@ struct LeaderboardsView: View {
         .frame(maxWidth: .infinity)
         .background(appearance.theme.background)
         .navigationTitle(Text("Leaderboards"))
-        .task(id: "\(board.rawValue)-\(friendsOnly)-\(app.gameCenter.isAuthenticated)") { await load() }
+        .task(id: "\(board.rawValue)-\(friendsOnly)-\(isSignedIn)") { await load() }
     }
 
     @ViewBuilder
     private var content: some View {
-        if !app.gameCenter.isAuthenticated {
+        if !isSignedIn {
             ContentUnavailableView {
                 Label("Game Center", systemImage: "person.crop.circle")
             } description: {
@@ -76,7 +76,21 @@ struct LeaderboardsView: View {
         }
     }
 
+    private var isSignedIn: Bool {
+        #if DEBUG
+        if DemoData.isActive { return true }
+        #endif
+        return app.gameCenter.isAuthenticated
+    }
+
     private func load() async {
+        #if DEBUG
+        if DemoData.isActive {
+            let demo = DemoData.leaderboard(board)
+            state = .loaded(local: demo.local, top: demo.top)
+            return
+        }
+        #endif
         guard app.gameCenter.isAuthenticated else { return }
         state = .loading
         do {

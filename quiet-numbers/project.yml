@@ -72,7 +72,24 @@ targets:
       base:
         GENERATE_INFOPLIST_FILE: YES
         PRODUCT_BUNDLE_IDENTIFIER: com.quietproject.numbers.uitests
+  QuietNumbersScreenshots:
+    type: bundle.ui-testing
+    supportedDestinations: [iOS, macOS]
+    sources: [Screenshots]
+    dependencies:
+      - target: QuietNumbers
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
+        PRODUCT_BUNDLE_IDENTIFIER: com.quietproject.numbers.screenshots
 schemes:
+  Screenshots:
+    build:
+      targets:
+        QuietNumbers: all
+    test:
+      targets:
+        - QuietNumbersScreenshots
   QuietNumbers:
     build:
       targets:

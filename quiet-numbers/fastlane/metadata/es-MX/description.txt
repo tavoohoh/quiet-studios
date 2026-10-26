@@ -1,0 +1,29 @@
+Quiet Numbers es un puzzle de números tranquilo y honesto. Sin anuncios. Sin compras. Sin recolectar datos. Solo tú y el tablero.
+
+CÓMO SE JUEGA
+Empareja números iguales (4 y 4) o que sumen diez (3 y 7). Una pareja puede estar junta en cualquier dirección, en la misma línea con solo casillas vacías entre ellas, o ir del final de una fila al inicio de la siguiente. Vacía una fila y desaparece. ¿Sin parejas? Toca + para copiar los números que quedan al final del tablero, hasta cinco veces por tablero. Vacía el tablero para pasar a la siguiente etapa.
+
+UN RETO NUEVO CADA DÍA
+Un tablero al día, el mismo para todos. Mantén tu racha y repasa en el calendario los días que has jugado. ¿Te perdiste uno? Juega los últimos 30 días como práctica.
+
+JUEGA A TU RITMO
+• Pistas ilimitadas, por unos pocos puntos.
+• Deshaz tu última jugada.
+• Sin cronómetros, sin energía, sin vidas.
+• Funciona completamente sin conexión.
+
+RECOMPENSAS QUE SE GANAN, NUNCA SE COMPRAN
+Los logros desbloquean temas, estilos de ficha, una tipografía serif, un efecto al limpiar filas, un pack de sonidos y un ícono alternativo. Todo es cosmético: el juego es igual para todos.
+
+GAME CENTER, SI LO QUIERES
+Leaderboards del reto diario, mejor puntaje y racha, con amigos y con el mundo, además de logros. Tu progreso te acompaña en tus dispositivos a través de tu propio iCloud. ¿Prefieres no iniciar sesión? Todo funciona igual.
+
+RESPETUOSO POR DISEÑO
+• Sin anuncios, sin compras dentro de la app, sin suscripciones.
+• Sin cuentas, sin analytics, sin rastreo, sin SDKs de terceros.
+• Tus partidas se quedan en tu dispositivo.
+
+IPHONE, IPAD Y MAC
+Gratis en iPhone, iPad y Mac, con atajos de teclado en Mac. Compatible con modo oscuro, texto dinámico, VoiceOver y reducir movimiento.
+
+Quiet Numbers es de Quiet Studios: apps que respetan tu atención y tu privacidad.

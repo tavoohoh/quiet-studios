@@ -7,7 +7,7 @@ struct DailyChallengeView: View {
 
     @Environment(AppModel.self) private var app
     @Environment(\.appearance) private var appearance
-    @State private var month = Date.now
+    @State private var month = AppClock.now
 
     var body: some View {
         let today = app.todayKey
@@ -46,7 +46,7 @@ struct DailyChallengeView: View {
                 CalendarView(month: $month, todayKey: today, records: app.persistence.dailies, onSelect: onPlay)
                     .frame(maxWidth: 420)
 
-                Text("Next challenge in \(Text(DailyChallenge.nextRollover(after: .now), style: .relative))")
+                Text("Next challenge in \(countdown)")
                     .font(.footnote)
                     .foregroundStyle(.secondary)
             }
@@ -58,6 +58,18 @@ struct DailyChallengeView: View {
         #if os(iOS)
         .navigationBarTitleDisplayMode(.inline)
         #endif
+    }
+
+    /// Live relative time; frozen in demo launches so screenshots don't depend on the clock.
+    private var countdown: Text {
+        let next = DailyChallenge.nextRollover(after: AppClock.now)
+        #if DEBUG
+        if DemoData.isActive {
+            let left = Duration.seconds(next.timeIntervalSince(AppClock.now))
+            return Text(left.formatted(.units(allowed: [.hours, .minutes], width: .abbreviated)))
+        }
+        #endif
+        return Text(next, style: .relative)
     }
 
     private func status(for dayKey: String) -> Text {

@@ -11,9 +11,12 @@
 		119422CC4A4C765B14A95825 /* PersistenceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3D9D0DAEED6E7CD8DA283B /* PersistenceService.swift */; };
 		199C20D362693CDF6837DCD6 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571AC2887AA56D2446FF163A /* CalendarView.swift */; };
 		1A6220A4BF47AFBE8F7D9CEF /* HapticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE40B331BB5C56022D43490D /* HapticsService.swift */; };
+		24EDA44D775CF8726B5F4747 /* DemoData.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE78A2F66517ED0214D8D09 /* DemoData.swift */; };
 		2570D98627055F191E8A2D96 /* Typography.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F24CF5C37A1787DE8516E1F /* Typography.swift */; };
 		26BD520F2CBABE86324C4B0A /* SoundService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF81F57210C7B0D19E1D747E /* SoundService.swift */; };
 		3CC92E0B77008BB80B4A299A /* GameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212A4F79BAB138C07EAFF774 /* GameModel.swift */; };
+		3DEAAB4C2D25066BDE8B2CCE /* ScreenshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C219A3C9F0EBBD5008E22FA5 /* ScreenshotTests.swift */; };
+		4270BCE41D1DE3C65FE0DF16 /* AppClock.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF453855A9BBD21832512C8D /* AppClock.swift */; };
 		43E88AE9810B80FD897EFF08 /* GameTopBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8D9147C86ED9A3911F7A558 /* GameTopBar.swift */; };
 		4FEBF4CDF576A9ADE24F5480 /* CollectionUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2F11A9E3ADE55BDF7FA2D0 /* CollectionUITests.swift */; };
 		519B949BF3219F0AFF0D1BE0 /* GameCenterService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C1754B3BB39F1EA843608A9 /* GameCenterService.swift */; };
@@ -57,6 +60,13 @@
 			remoteGlobalIDString = 6DB6EF7024B0E5261EE06AE3;
 			remoteInfo = QuietNumbers;
 		};
+		EDF3D7A931934AA09E4FFE44 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B5A2CB8615613521CE64BA9A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6DB6EF7024B0E5261EE06AE3;
+			remoteInfo = QuietNumbers;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -92,10 +102,14 @@
 		B132EA3091340D64A3FED763 /* QuietNumbers.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = QuietNumbers.entitlements; sourceTree = "<group>"; };
 		B529A32088A2D117919279B6 /* QuietNumbersCore */ = {isa = PBXFileReference; lastKnownFileType = folder; name = QuietNumbersCore; path = Packages/QuietNumbersCore; sourceTree = SOURCE_ROOT; };
 		BF81F57210C7B0D19E1D747E /* SoundService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundService.swift; sourceTree = "<group>"; };
+		C219A3C9F0EBBD5008E22FA5 /* ScreenshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenshotTests.swift; sourceTree = "<group>"; };
 		C33B49B32F0F2F2AA6714F78 /* BoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardView.swift; sourceTree = "<group>"; };
 		CA3D83326830FBDF44307316 /* Rewards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rewards.swift; sourceTree = "<group>"; };
 		D15AA4C99BAE2C8662B34C66 /* AppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModel.swift; sourceTree = "<group>"; };
 		DE40B331BB5C56022D43490D /* HapticsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticsService.swift; sourceTree = "<group>"; };
+		DEE78A2F66517ED0214D8D09 /* DemoData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoData.swift; sourceTree = "<group>"; };
+		EBDBE501E9033575A750824A /* QuietNumbersScreenshots.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = QuietNumbersScreenshots.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		EF453855A9BBD21832512C8D /* AppClock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppClock.swift; sourceTree = "<group>"; };
 		FC76CAE1563A82F982ECB21E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FCF8950DD2148C3FE425D9C2 /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
 		FF3D9D0DAEED6E7CD8DA283B /* PersistenceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceService.swift; sourceTree = "<group>"; };
@@ -145,6 +159,14 @@
 			path = Features;
 			sourceTree = "<group>";
 		};
+		518700CE3B09772D0CC2CD3E /* Screenshots */ = {
+			isa = PBXGroup;
+			children = (
+				C219A3C9F0EBBD5008E22FA5 /* ScreenshotTests.swift */,
+			);
+			path = Screenshots;
+			sourceTree = "<group>";
+		};
 		6630C8EAC87F06D7B0E77C4F /* DesignSystem */ = {
 			isa = PBXGroup;
 			children = (
@@ -164,6 +186,7 @@
 				B945FCD8200B7816736E0B59 /* AppTests */,
 				B20E50F4095173646D3D4A2B /* Config */,
 				9605778C70DBA0393575ECC7 /* Packages */,
+				518700CE3B09772D0CC2CD3E /* Screenshots */,
 				0679877058288DD818BCA636 /* UITests */,
 				B3D60B0A1E034BE53DAA3C47 /* Products */,
 			);
@@ -221,6 +244,7 @@
 			isa = PBXGroup;
 			children = (
 				5207218E375E6E70D497DCEB /* QuietNumbers.app */,
+				EBDBE501E9033575A750824A /* QuietNumbersScreenshots.xctest */,
 				86B72A7C6607184099C42B8B /* QuietNumbersTests.xctest */,
 				9ADB0BD18C8BA1112788571E /* QuietNumbersUITests.xctest */,
 			);
@@ -254,6 +278,7 @@
 		C699F7267315219D023E62A5 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				EF453855A9BBD21832512C8D /* AppClock.swift */,
 				8C1754B3BB39F1EA843608A9 /* GameCenterService.swift */,
 				DE40B331BB5C56022D43490D /* HapticsService.swift */,
 				FF3D9D0DAEED6E7CD8DA283B /* PersistenceService.swift */,
@@ -286,12 +311,21 @@
 				6767AD3F2C7296EC510EF3F8 /* QuietNumbers-Personal.entitlements */,
 				B132EA3091340D64A3FED763 /* QuietNumbers.entitlements */,
 				631019FDC57409A49740D79C /* QuietNumbersApp.swift */,
+				F65B5BB51BE9B80FD1E0EA99 /* Debug */,
 				6630C8EAC87F06D7B0E77C4F /* DesignSystem */,
 				2272BB89D00C2BBBA1AA2CE5 /* Features */,
 				94DABC5853EFF60CD7A8B537 /* Resources */,
 				C699F7267315219D023E62A5 /* Services */,
 			);
 			path = App;
+			sourceTree = "<group>";
+		};
+		F65B5BB51BE9B80FD1E0EA99 /* Debug */ = {
+			isa = PBXGroup;
+			children = (
+				DEE78A2F66517ED0214D8D09 /* DemoData.swift */,
+			);
+			path = Debug;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -333,6 +367,24 @@
 			productReference = 9ADB0BD18C8BA1112788571E /* QuietNumbersUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		3A492C0E1D07F23CFF0B47B0 /* QuietNumbersScreenshots */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7087926139C6946333180E60 /* Build configuration list for PBXNativeTarget "QuietNumbersScreenshots" */;
+			buildPhases = (
+				607D6D9832D499735D20FC64 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				EDC8AF66FD7705D90F7AFF09 /* PBXTargetDependency */,
+			);
+			name = QuietNumbersScreenshots;
+			packageProductDependencies = (
+			);
+			productName = QuietNumbersScreenshots;
+			productReference = EBDBE501E9033575A750824A /* QuietNumbersScreenshots.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		6DB6EF7024B0E5261EE06AE3 /* QuietNumbers */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4104FE5CCDDE4D07A322605A /* Build configuration list for PBXNativeTarget "QuietNumbers" */;
@@ -365,6 +417,9 @@
 					1809ADE75B1F2ACED9B86F31 = {
 						TestTargetID = 6DB6EF7024B0E5261EE06AE3;
 					};
+					3A492C0E1D07F23CFF0B47B0 = {
+						TestTargetID = 6DB6EF7024B0E5261EE06AE3;
+					};
 					6DB6EF7024B0E5261EE06AE3 = {
 						ProvisioningStyle = Automatic;
 					};
@@ -389,6 +444,7 @@
 			projectRoot = "";
 			targets = (
 				6DB6EF7024B0E5261EE06AE3 /* QuietNumbers */,
+				3A492C0E1D07F23CFF0B47B0 /* QuietNumbersScreenshots */,
 				114A0F5F2B4220CD027B28F6 /* QuietNumbersTests */,
 				1809ADE75B1F2ACED9B86F31 /* QuietNumbersUITests */,
 			);
@@ -415,6 +471,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				94FB3710A69027408DFEBCAB /* AchievementText.swift in Sources */,
+				4270BCE41D1DE3C65FE0DF16 /* AppClock.swift in Sources */,
 				94EE4038B4231F54FE822E0C /* AppModel.swift in Sources */,
 				B33643C37134BE12E5F58BE0 /* AppearanceRoot.swift in Sources */,
 				E763D16DE3F2BD7B5DC82F95 /* BoardView.swift in Sources */,
@@ -423,6 +480,7 @@
 				CA8D59F009ED6245A35D3EB3 /* CollectionView.swift in Sources */,
 				AE09418FE17CF8B80C9985F2 /* DailyChallengeView.swift in Sources */,
 				5554FEE65B821D820A7D6CB5 /* DayKeyFormat.swift in Sources */,
+				24EDA44D775CF8726B5F4747 /* DemoData.swift in Sources */,
 				519B949BF3219F0AFF0D1BE0 /* GameCenterService.swift in Sources */,
 				A081CD27457E9094A16F0720 /* GameFeedbackOverlay.swift in Sources */,
 				3CC92E0B77008BB80B4A299A /* GameModel.swift in Sources */,
@@ -438,6 +496,14 @@
 				26BD520F2CBABE86324C4B0A /* SoundService.swift in Sources */,
 				CEC9495919BAC770906D2E8A /* SplashView.swift in Sources */,
 				2570D98627055F191E8A2D96 /* Typography.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		607D6D9832D499735D20FC64 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3DEAAB4C2D25066BDE8B2CCE /* ScreenshotTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -471,6 +537,11 @@
 			isa = PBXTargetDependency;
 			target = 6DB6EF7024B0E5261EE06AE3 /* QuietNumbers */;
 			targetProxy = ECC05A8BF358F11631891910 /* PBXContainerItemProxy */;
+		};
+		EDC8AF66FD7705D90F7AFF09 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6DB6EF7024B0E5261EE06AE3 /* QuietNumbers */;
+			targetProxy = EDF3D7A931934AA09E4FFE44 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -583,6 +654,27 @@
 				SWIFT_VERSION = 6.0;
 			};
 			name = Debug;
+		};
+		4D8350229DEE1571495EFF1D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.quietproject.numbers.screenshots;
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = QuietNumbers;
+			};
+			name = Release;
 		};
 		696DF045E9877CB2BCE7682A /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -726,6 +818,27 @@
 			};
 			name = Debug;
 		};
+		CF20050D0AB07D87C05B1A52 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.quietproject.numbers.screenshots;
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = QuietNumbers;
+			};
+			name = Debug;
+		};
 		D992ABB9649DDAABEC900D52 /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 22F6C4F6421B81585108D7D6 /* Base.xcconfig */;
@@ -792,6 +905,15 @@
 			buildConfigurations = (
 				BA21A03B6CDE879FCAC374A2 /* Debug */,
 				D992ABB9649DDAABEC900D52 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		7087926139C6946333180E60 /* Build configuration list for PBXNativeTarget "QuietNumbersScreenshots" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CF20050D0AB07D87C05B1A52 /* Debug */,
+				4D8350229DEE1571495EFF1D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
