@@ -107,12 +107,42 @@
         }
       }
     },
+    "Achievement unlocked": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Logro desbloqueado"
+          }
+        }
+      }
+    },
+    "Achievements": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Logros"
+          }
+        }
+      }
+    },
     "Add numbers": {
       "localizations": {
         "es": {
           "stringUnit": {
             "state": "translated",
             "value": "Agregar números"
+          }
+        }
+      }
+    },
+    "App icon": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ícono de la app"
           }
         }
       }
@@ -127,6 +157,16 @@
         }
       }
     },
+    "Centennial": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Centenario"
+          }
+        }
+      }
+    },
     "Challenge complete": {
       "localizations": {
         "es": {
@@ -137,12 +177,112 @@
         }
       }
     },
+    "Circle": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Círculo"
+          }
+        }
+      }
+    },
+    "Clean Slate": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tabla rasa"
+          }
+        }
+      }
+    },
+    "Clear 100 rows.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Limpia 100 filas."
+          }
+        }
+      }
+    },
+    "Clear a board without + or hints.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Limpia un tablero sin usar + ni pistas."
+          }
+        }
+      }
+    },
+    "Clear a whole board.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Limpia un tablero completo."
+          }
+        }
+      }
+    },
     "Cleared": {
       "localizations": {
         "es": {
           "stringUnit": {
             "state": "translated",
             "value": "Eliminada"
+          }
+        }
+      }
+    },
+    "Collection": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Colección"
+          }
+        }
+      }
+    },
+    "Complete 100 daily challenges.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Completa 100 retos diarios."
+          }
+        }
+      }
+    },
+    "Complete 30 daily challenges in a row.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Completa 30 retos diarios seguidos."
+          }
+        }
+      }
+    },
+    "Complete 7 daily challenges in a row.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Completa 7 retos diarios seguidos."
+          }
+        }
+      }
+    },
+    "Complete a daily challenge between midnight and 4 a.m.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Completa un reto diario entre la medianoche y las 4 a. m."
           }
         }
       }
@@ -163,6 +303,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Completado · %@"
+          }
+        }
+      }
+    },
+    "Consistency": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Constancia"
           }
         }
       }
@@ -267,6 +417,56 @@
         }
       }
     },
+    "Finish your first game.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Termina tu primera partida."
+          }
+        }
+      }
+    },
+    "First Step": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Primer paso"
+          }
+        }
+      }
+    },
+    "Gold": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dorado"
+          }
+        }
+      }
+    },
+    "Habit": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hábito"
+          }
+        }
+      }
+    },
+    "Haptics": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hápticos"
+          }
+        }
+      }
+    },
     "Hint": {
       "localizations": {
         "es": {
@@ -297,6 +497,16 @@
         }
       }
     },
+    "Larger numbers": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Números más grandes"
+          }
+        }
+      }
+    },
     "Long shot!": {
       "localizations": {
         "es": {
@@ -307,12 +517,45 @@
         }
       }
     },
+    "Make 10 pairs of equal numbers in a row.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Haz 10 parejas de números iguales seguidas."
+          }
+        }
+      }
+    },
+    "Marimba": {
+      "shouldTranslate": false
+    },
     "Menu": {
       "localizations": {
         "es": {
           "stringUnit": {
             "state": "translated",
             "value": "Menú"
+          }
+        }
+      }
+    },
+    "Midnight": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Medianoche"
+          }
+        }
+      }
+    },
+    "Monotone": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Monótono"
           }
         }
       }
@@ -326,6 +569,9 @@
           }
         }
       }
+    },
+    "New York": {
+      "shouldTranslate": false
     },
     "Next challenge in %@": {
       "localizations": {
@@ -343,6 +589,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Mes siguiente"
+          }
+        }
+      }
+    },
+    "Night Owl": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Noctámbulo"
+          }
+        }
+      }
+    },
+    "No Help": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sin ayuda"
           }
         }
       }
@@ -373,6 +639,46 @@
           "stringUnit": {
             "state": "translated",
             "value": "Sin puntaje"
+          }
+        }
+      }
+    },
+    "Numbers": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Números"
+          }
+        }
+      }
+    },
+    "Outline": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Contorno"
+          }
+        }
+      }
+    },
+    "Paper": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Papel"
+          }
+        }
+      }
+    },
+    "Plain": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Simple"
           }
         }
       }
@@ -437,6 +743,36 @@
         }
       }
     },
+    "Privacy": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Privacidad"
+          }
+        }
+      }
+    },
+    "Quiet Numbers doesn't collect any data. Your games, streaks and achievements stay on this device. If you sign in to Game Center, your scores and achievements are shared with Apple's Game Center.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quiet Numbers no recolecta ningún dato. Tus partidas, rachas y logros se quedan en este dispositivo. Si inicias sesión en Game Center, tus puntajes y logros se comparten con Game Center de Apple."
+          }
+        }
+      }
+    },
+    "Reach stage 5 in one game.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Llega a la etapa 5 en una partida."
+          }
+        }
+      }
+    },
     "Replays don't count toward your score.": {
       "localizations": {
         "es": {
@@ -447,12 +783,35 @@
         }
       }
     },
+    "Row clear": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Al limpiar fila"
+          }
+        }
+      }
+    },
+    "SF Rounded": {
+      "shouldTranslate": false
+    },
     "Same board for everyone, today only.": {
       "localizations": {
         "es": {
           "stringUnit": {
             "state": "translated",
             "value": "El mismo tablero para todos, solo por hoy."
+          }
+        }
+      }
+    },
+    "Sand": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Arena"
           }
         }
       }
@@ -467,12 +826,102 @@
         }
       }
     },
+    "Settings": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ajustes"
+          }
+        }
+      }
+    },
+    "Slate": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pizarra"
+          }
+        }
+      }
+    },
+    "Soft": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Suave"
+          }
+        }
+      }
+    },
+    "Sound": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sonido"
+          }
+        }
+      }
+    },
     "Stage %lld": {
       "localizations": {
         "es": {
           "stringUnit": {
             "state": "translated",
             "value": "Etapa %lld"
+          }
+        }
+      }
+    },
+    "Stage 5": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Etapa 5"
+          }
+        }
+      }
+    },
+    "Standard": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Estándar"
+          }
+        }
+      }
+    },
+    "Sweeper": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Barrendero"
+          }
+        }
+      }
+    },
+    "Theme": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tema"
+          }
+        }
+      }
+    },
+    "Tiles": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fichas"
           }
         }
       }
@@ -493,6 +942,36 @@
           "stringUnit": {
             "state": "translated",
             "value": "¡Triple fila!"
+          }
+        }
+      }
+    },
+    "Unlocked": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Desbloqueado"
+          }
+        }
+      }
+    },
+    "Version": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Versión"
+          }
+        }
+      }
+    },
+    "Wave": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ola"
           }
         }
       }

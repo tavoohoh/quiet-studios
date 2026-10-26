@@ -22,10 +22,31 @@ final class AppModel {
     private(set) var hasClassicInProgress = false
     /// Day of the scored daily attempt that's still open.
     private(set) var openDailyKey: String?
+    private(set) var progress: PlayerProgress
+    /// Newly unlocked achievements waiting to be announced, oldest first.
+    private(set) var pendingUnlocks: [Achievement] = []
 
     init(persistence: PersistenceService) {
         self.persistence = persistence
+        progress = persistence.loadProgress()
+        #if DEBUG
+        if ProcessInfo.processInfo.arguments.contains("-unlockAll") {
+            progress = PlayerProgress(unlocked: Set(Achievement.allCases))
+        }
+        #endif
         refreshSavedGames()
+    }
+
+    // MARK: Achievements
+
+    func record(_ event: ProgressEvent) {
+        let unlocked = progress.record(event)
+        persistence.saveProgress(progress)
+        pendingUnlocks += unlocked
+    }
+
+    func dismissUnlock(_ achievement: Achievement) {
+        pendingUnlocks.removeAll { $0 == achievement }
     }
 
     // MARK: Classic
@@ -86,6 +107,7 @@ final class AppModel {
     }
 
     func start(_ model: GameModel, as kind: GameKind) {
+        model.onEvent = { [weak self] event in self?.record(event) }
         activeGame = model
         activeKind = kind
     }
@@ -97,9 +119,14 @@ final class AppModel {
         case .daily(let dayKey):
             persistence.finishDaily(dayKey, score: session.score, isCompleted: session.isCompleted)
             persistence.deleteGame(.daily)
+            if session.isCompleted {
+                let hour = Calendar.current.component(.hour, from: .now)
+                record(.dailyCompleted(currentStreak: currentStreak, localHour: hour))
+            }
         case .practice:
             break
         }
+        record(.gameFinished)
         refreshSavedGames()
     }
 

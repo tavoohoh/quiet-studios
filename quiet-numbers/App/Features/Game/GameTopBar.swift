@@ -9,12 +9,14 @@ struct GameTopBar: View {
     let onAddNumbers: () -> Void
     let onHint: () -> Void
 
+    @Environment(\.appearance) private var appearance
+
     var body: some View {
         HStack(alignment: .center, spacing: 12) {
             VStack(alignment: .leading, spacing: 2) {
                 HStack(alignment: .firstTextBaseline, spacing: 8) {
                     Text(model.session.score, format: .number)
-                        .font(.score)
+                        .font(.score(design: appearance.numberFont.design))
                         .contentTransition(.numericText(value: Double(model.session.score)))
                         .accessibilityLabel(Text("Score"))
                         .accessibilityIdentifier("score")

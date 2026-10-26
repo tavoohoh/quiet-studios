@@ -5,9 +5,12 @@ struct HomeView: View {
     enum Route: Hashable {
         case game
         case daily
+        case collection
+        case settings
     }
 
     @Environment(AppModel.self) private var app
+    @Environment(\.appearance) private var appearance
     @State private var path: [Route] = []
 
     var body: some View {
@@ -43,7 +46,7 @@ struct HomeView: View {
             }
             .padding()
             .frame(maxWidth: .infinity)
-            .background(.background)
+            .background(appearance.theme.background)
             .navigationDestination(for: Route.self) { route in
                 switch route {
                 case .game:
@@ -52,6 +55,22 @@ struct HomeView: View {
                     DailyChallengeView { dayKey in
                         app.playDaily(dayKey)
                         path.append(.game)
+                    }
+                case .collection:
+                    CollectionView()
+                case .settings:
+                    SettingsView()
+                }
+            }
+            .toolbar {
+                ToolbarItem(placement: .primaryAction) {
+                    NavigationLink(value: Route.collection) {
+                        Label("Collection", systemImage: "square.grid.2x2")
+                    }
+                }
+                ToolbarItem(placement: .primaryAction) {
+                    NavigationLink(value: Route.settings) {
+                        Label("Settings", systemImage: "gearshape")
                     }
                 }
             }
@@ -98,6 +117,48 @@ private struct ActiveGameView: View {
                 onSessionChange: { app.sessionChanged() }
             )
             .id(ObjectIdentifier(game))
+            .overlay(alignment: .bottom) {
+                if let achievement = app.pendingUnlocks.first {
+                    UnlockBanner(achievement: achievement)
+                        .id(achievement)
+                        .transition(.move(edge: .bottom).combined(with: .opacity))
+                        .task(id: achievement) {
+                            try? await Task.sleep(for: .seconds(2.5))
+                            withAnimation(.quiet) { app.dismissUnlock(achievement) }
+                        }
+                }
+            }
+            .animation(.quiet, value: app.pendingUnlocks)
+        }
+    }
+}
+
+/// "Achievement unlocked" toast during play.
+private struct UnlockBanner: View {
+    let achievement: Achievement
+    @Environment(\.appearance) private var appearance
+
+    var body: some View {
+        HStack(spacing: 12) {
+            Image(systemName: achievement.systemImage)
+                .font(.title3)
+                .foregroundStyle(.tint)
+            VStack(alignment: .leading, spacing: 2) {
+                Text("Achievement unlocked")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                Text(achievement.title)
+                    .font(.headline)
+            }
+        }
+        .padding(.horizontal, 20)
+        .padding(.vertical, 12)
+        .background(appearance.theme.surface, in: Capsule())
+        .shadow(color: .black.opacity(0.12), radius: 12, y: 4)
+        .padding(.bottom, 24)
+        .accessibilityElement(children: .combine)
+        .onAppear {
+            AccessibilityNotification.Announcement(String(localized: "Achievement unlocked")).post()
         }
     }
 }
@@ -105,6 +166,7 @@ private struct ActiveGameView: View {
 /// Today's challenge and the streak, as the first thing on Home.
 private struct DailyCard: View {
     @Environment(AppModel.self) private var app
+    @Environment(\.appearance) private var appearance
     let action: () -> Void
 
     var body: some View {
@@ -134,7 +196,7 @@ private struct DailyCard: View {
             }
             .padding(.horizontal, 20)
             .padding(.vertical, 14)
-            .background(.background.secondary, in: RoundedRectangle(cornerRadius: 20, style: .continuous))
+            .background(appearance.theme.surface, in: RoundedRectangle(cornerRadius: 20, style: .continuous))
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)

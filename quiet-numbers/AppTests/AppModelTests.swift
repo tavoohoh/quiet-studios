@@ -69,3 +69,33 @@ import Testing
         #expect(app.activeGame?.session == saved)
     }
 }
+
+@MainActor
+@Suite struct AchievementWiringTests {
+    @Test func unlocksAreAnnouncedAndPersisted() {
+        let persistence = PersistenceService(store: .inMemory)
+        let app = AppModel(persistence: persistence)
+        app.record(.gameFinished)
+        #expect(app.pendingUnlocks == [.firstStep])
+        app.dismissUnlock(.firstStep)
+        #expect(app.pendingUnlocks.isEmpty)
+        #expect(AppModel(persistence: persistence).progress.unlocked == [.firstStep])
+    }
+
+    @Test func gameEventsReachProgress() {
+        let app = AppModel(persistence: PersistenceService(store: .inMemory))
+        let model = GameModel(session: GameSession(values: [4, 4, 1, 2, 1, 2, 1, 2, 1], seed: 0))
+        app.start(model, as: .practice(dayKey: app.todayKey))
+        model.tap(model.session.board.cells[0])
+        model.tap(model.session.board.cells[1])
+        #expect(model.session.score == 1)
+        #expect(app.progress.equalPairsRun == 1)
+    }
+
+    @Test func lockedRewardsNeedTheirAchievement() {
+        let progress = PlayerProgress(unlocked: [.noHelp])
+        #expect(ThemeChoice.paper.isUnlocked(in: progress))
+        #expect(ThemeChoice.slate.isUnlocked(in: progress))
+        #expect(!ThemeChoice.midnight.isUnlocked(in: progress))
+    }
+}

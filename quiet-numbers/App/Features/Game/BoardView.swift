@@ -8,6 +8,8 @@ struct BoardView: View {
     let size: CGFloat
     let onTap: (Cell) -> Void
 
+    @Environment(\.appearance) private var appearance
+
     private static let bottomID = "bottom"
 
     var body: some View {
@@ -77,7 +79,10 @@ struct BoardView: View {
             .frame(width: size * CGFloat(Board.columns))
             .overlay {
                 if model.flashingRows.contains(firstID) {
-                    RowClearEffect(size: size)
+                    switch appearance.clearEffect {
+                    case .outline: RowClearEffect(size: size)
+                    case .wave: RowWaveEffect()
+                    }
                 }
             }
             .id(firstID)
@@ -139,6 +144,35 @@ private struct SegmentShape: Shape {
         path.move(to: CGPoint(x: segment.from.x * scale, y: segment.from.y * scale))
         path.addLine(to: CGPoint(x: segment.to.x * scale, y: segment.to.y * scale))
         return path
+    }
+}
+
+/// Collection reward: a band of light sweeps across the row.
+private struct RowWaveEffect: View {
+    @State private var offset: CGFloat = 0
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
+    var body: some View {
+        GeometryReader { geometry in
+            let band = geometry.size.width * 0.45
+            LinearGradient(
+                colors: [.clear, Color.matchLine.opacity(0.35), Color.matchLineSheen.opacity(0.6), Color.matchLine.opacity(0.35), .clear],
+                startPoint: .leading,
+                endPoint: .trailing
+            )
+            .frame(width: band)
+            .offset(x: offset * (geometry.size.width + band) - band)
+        }
+        .clipShape(Capsule())
+        .allowsHitTesting(false)
+        .accessibilityHidden(true)
+        .onAppear {
+            if reduceMotion {
+                offset = 0.5
+            } else {
+                withAnimation(.easeInOut(duration: 0.24 * EffectTiming.scale)) { offset = 1 }
+            }
+        }
     }
 }
 

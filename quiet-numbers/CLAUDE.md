@@ -34,7 +34,7 @@ Un solo target multiplataforma (iPhone, iPad, Mac), compra universal, un bundle 
 - Tests del Core: `cd Packages/QuietNumbersCore && swift test`.
 - Todos los tests (Core en iOS, app y UI): `xcodebuild test -project QuietNumbers.xcodeproj -scheme QuietNumbers -destination 'platform=iOS Simulator,name=iPhone 17'`.
 - UI test en simulador: `xcodebuild test -project QuietNumbers.xcodeproj -scheme QuietNumbers -destination 'platform=iOS Simulator,name=iPhone 17' -only-testing:QuietNumbersUITests`.
-- Argumentos DEBUG: `-startGame` abre una partida directo; `-seedKey <texto>` hace el tablero determinista (`2026-10-25` da el tablero golden de los tests); `-boardValues 5,3,7,…` arranca con números exactos; `-slowEffects` pone los efectos en cámara lenta (×6) para inspeccionarlos. `-startGame` usa almacenamiento en memoria; `-uiTesting` usa un archivo propio (`UITests.store`) que `-resetStore` borra, para no tocar los datos reales.
+- Argumentos DEBUG: `-startGame` abre una partida directo; `-seedKey <texto>` hace el tablero determinista (`2026-10-25` da el tablero golden de los tests); `-boardValues 5,3,7,…` arranca con números exactos; `-slowEffects` pone los efectos en cámara lenta (×6) para inspeccionarlos. `-startGame` usa almacenamiento en memoria; `-uiTesting` usa un archivo propio (`UITests.store`) que `-resetStore` borra, para no tocar los datos reales. `-unlockAll` desbloquea todos los logros (QA y capturas).
 
 ## Arquitectura
 
@@ -156,6 +156,14 @@ Toda recompensa es cosmética y nunca altera la jugabilidad ni el layout del tab
 | Monótono | 10 parejas seguidas del mismo número | Pack de sonido: marimba |
 
 Categorías de personalización: tema de color, estilo de ficha, tipografía, efecto al limpiar fila, pack de sonido, ícono de la app. Se eligen en "Colección"; lo bloqueado muestra su condición.
+
+Decisiones de implementación (fase 5):
+- "Monótono" se interpreta como 10 parejas seguidas de números iguales (4-4, 7-7…), no 10 veces el mismo dígito. **Supuesto a confirmar.**
+- Las opciones por defecto (Papel, Simple, SF Rounded, Contorno, Suave, ícono estándar) están siempre disponibles.
+- Los colores de los temas están en el Asset Catalog (`SlateBackground`, `SandInk`…). Pizarra y Medianoche fuerzan modo oscuro; Arena tiene variante clara y oscura; Papel usa los estilos del sistema.
+- Los sonidos se sintetizan en el dispositivo (AVAudioEngine, sin archivos), categoría `.ambient` (respeta el modo silencio). Sonido y hápticos activados por defecto.
+- El ícono dorado es solo iOS (macOS no soporta íconos alternativos).
+- Preferencias en `UserDefaults` (`@AppStorage`); progreso y logros en SwiftData (`StoredProgress`). Las partidas de práctica también cuentan para logros de juego.
 
 ## Estética y UX
 

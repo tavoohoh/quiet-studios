@@ -12,10 +12,7 @@ final class HapticsService {
         case rowCleared
     }
 
-    var isEnabled = true
-
     func play(_ event: Event) {
-        guard isEnabled else { return }
         #if os(iOS)
         switch event {
         case .select:

@@ -12,14 +12,16 @@ struct CellView: View {
     let action: () -> Void
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.appearance) private var appearance
 
     var body: some View {
         Button(action: action) {
             Text(verbatim: "\(cell.value)")
-                .font(.boardNumber(size: size * 0.5))
+                .font(.boardNumber(size: size * (appearance.largerNumbers ? 0.62 : 0.5), design: appearance.numberFont.design))
                 .foregroundStyle(numberStyle)
                 .scaleEffect(cell.isCleared ? 0.75 : 1)
                 .frame(width: size, height: size)
+                .background { tile }
                 .background {
                     if isSelected {
                         Circle()
@@ -49,6 +51,21 @@ struct CellView: View {
 }
 
 extension CellView {
+    /// Tile style from the Collection. Ghosts never get a tile.
+    @ViewBuilder
+    private var tile: some View {
+        if !cell.isCleared {
+            switch appearance.tileStyle {
+            case .plain:
+                EmptyView()
+            case .circle:
+                Circle().fill(.primary.opacity(0.07)).padding(size * 0.08)
+            case .outline:
+                Circle().strokeBorder(.primary.opacity(0.25), lineWidth: 1).padding(size * 0.1)
+            }
+        }
+    }
+
     /// Ghosts are faint; numbers added with + are blue so the originals stand out.
     private var numberStyle: AnyShapeStyle {
         if cell.isCleared { return AnyShapeStyle(.quaternary) }

@@ -6,6 +6,7 @@ struct DailyChallengeView: View {
     let onPlay: (String) -> Void
 
     @Environment(AppModel.self) private var app
+    @Environment(\.appearance) private var appearance
     @State private var month = Date.now
 
     var body: some View {
@@ -54,7 +55,7 @@ struct DailyChallengeView: View {
             .padding()
             .frame(maxWidth: .infinity)
         }
-        .background(.background)
+        .background(appearance.theme.background)
         .navigationTitle(Text("Daily Challenge"))
         #if os(iOS)
         .navigationBarTitleDisplayMode(.inline)

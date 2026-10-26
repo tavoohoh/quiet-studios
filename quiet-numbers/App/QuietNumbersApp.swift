@@ -7,6 +7,7 @@ struct QuietNumbersApp: App {
     var body: some Scene {
         WindowGroup {
             HomeView()
+                .modifier(AppearanceRoot())
                 .environment(app)
         }
         #if os(macOS)

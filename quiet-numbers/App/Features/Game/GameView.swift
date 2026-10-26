@@ -11,6 +11,7 @@ struct GameView: View {
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.appearance) private var appearance
 
     private static let maxBoardWidth: CGFloat = 540
 
@@ -33,7 +34,7 @@ struct GameView: View {
         }
         .frame(maxWidth: Self.maxBoardWidth + 32)
         .frame(maxWidth: .infinity)
-        .background(.background)
+        .background(appearance.theme.background)
         .overlay {
             if let stage = model.stageBanner {
                 StageBanner(stage: stage)
@@ -107,6 +108,8 @@ private struct GameOverView: View {
     let onNewGame: () -> Void
     let onHome: () -> Void
 
+    @Environment(\.appearance) private var appearance
+
     var body: some View {
         VStack(spacing: 20) {
             Text(session.isCompleted ? "Challenge complete" : "No moves left")
@@ -145,7 +148,7 @@ private struct GameOverView: View {
         }
         .padding(28)
         .frame(maxWidth: 320)
-        .background(.background.secondary, in: RoundedRectangle(cornerRadius: 28, style: .continuous))
+        .background(appearance.theme.surface, in: RoundedRectangle(cornerRadius: 28, style: .continuous))
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(.black.opacity(0.15))
     }

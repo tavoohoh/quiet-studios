@@ -74,6 +74,8 @@ final class GameModel {
     private(set) var plusNudges = 0
     /// Set by the view; skips the line and shortens the sequence.
     var reduceMotion = false
+    /// Gameplay events for achievements.
+    var onEvent: ((ProgressEvent) -> Void)?
 
     private var feedbackID = 0
     private var sequence: Task<Void, Never>?
@@ -89,12 +91,12 @@ final class GameModel {
     /// Distance from a cell's center where the line stops, so it doesn't cover the number.
     private static let lineInset = 0.3
 
-    private let haptics: HapticsService
+    private let feedback: FeedbackService
 
-    init(session: GameSession = GameSession(seed: .random(in: .min ... .max)), haptics: HapticsService = HapticsService()) {
+    init(session: GameSession = GameSession(seed: .random(in: .min ... .max)), feedback: FeedbackService = .shared) {
         self.session = session
         self.board = session.board
-        self.haptics = haptics
+        self.feedback = feedback
     }
 
     var canAddNumbers: Bool { session.plusRemaining > 0 && !session.isOver }
@@ -123,7 +125,8 @@ final class GameModel {
             shakes[selectedID, default: 0] += 1
             shakes[cell.id, default: 0] += 1
             session.registerMiss()
-            haptics.play(.invalid)
+            onEvent?(.missed)
+            feedback.play(.invalid)
             select(cell.id)
             return
         }
@@ -131,7 +134,12 @@ final class GameModel {
         self.selectedID = nil
         hintIDs = []
         showScoreChange(outcome.points)
-        haptics.play(outcome.clearedRows.isEmpty ? .match : .rowCleared)
+        feedback.play(
+            outcome.boardCleared ? .boardCleared
+                : outcome.clearedRows.isEmpty ? .match(longShot: outcome.pair.gap >= Self.longShotGap)
+                : .rowCleared
+        )
+        onEvent?(.matched(outcome))
         if session.stage != stage {
             stageBanner = session.stage
         } else if let text = praiseText(for: outcome) {
@@ -148,7 +156,7 @@ final class GameModel {
         selectedID = nil
         hintIDs = []
         additions += 1
-        haptics.play(.select)
+        feedback.play(.select)
     }
 
     /// Highlights a valid pair, for a few points.
@@ -159,7 +167,7 @@ final class GameModel {
                 plusNudges += 1
                 feedbackID += 1
                 praise = Praise(id: feedbackID, text: "No pairs. Try +")
-                haptics.play(.select)
+                feedback.play(.select)
             }
             return
         }
@@ -280,6 +288,6 @@ final class GameModel {
 
     private func select(_ id: Int) {
         selectedID = id
-        haptics.play(.select)
+        feedback.play(.select)
     }
 }

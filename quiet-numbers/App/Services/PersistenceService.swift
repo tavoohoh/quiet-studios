@@ -34,6 +34,16 @@ final class StoredDaily {
     }
 }
 
+/// Lifetime progress (`PlayerProgress`), stored as one encoded record.
+@Model
+final class StoredProgress {
+    var data: Data
+
+    init(data: Data) {
+        self.data = data
+    }
+}
+
 /// Read-only snapshot of a daily attempt for the UI.
 struct DailyRecord: Equatable {
     let score: Int
@@ -82,7 +92,10 @@ final class PersistenceService {
             configuration = ModelConfiguration(url: url)
         }
         do {
-            container = try ModelContainer(for: StoredGame.self, StoredDaily.self, configurations: configuration)
+            container = try ModelContainer(
+                for: StoredGame.self, StoredDaily.self, StoredProgress.self,
+                configurations: configuration
+            )
         } catch {
             fatalError("Couldn't open the local store: \(error)")
         }
@@ -141,7 +154,28 @@ final class PersistenceService {
         reloadDailies()
     }
 
+    // MARK: Progress
+
+    func loadProgress() -> PlayerProgress {
+        guard let stored = storedProgress else { return PlayerProgress() }
+        return (try? JSONDecoder().decode(PlayerProgress.self, from: stored.data)) ?? PlayerProgress()
+    }
+
+    func saveProgress(_ progress: PlayerProgress) {
+        guard let data = try? JSONEncoder().encode(progress) else { return }
+        if let stored = storedProgress {
+            stored.data = data
+        } else {
+            context.insert(StoredProgress(data: data))
+        }
+        save()
+    }
+
     // MARK: Private
+
+    private var storedProgress: StoredProgress? {
+        try? context.fetch(FetchDescriptor<StoredProgress>()).first
+    }
 
     private func storedGame(_ slot: Slot) -> StoredGame? {
         let key = slot.rawValue

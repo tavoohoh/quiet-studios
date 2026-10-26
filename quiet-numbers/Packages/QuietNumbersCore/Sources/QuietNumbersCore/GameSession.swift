@@ -27,9 +27,15 @@ public enum GameMode: Codable, Hashable, Sendable {
 public struct MatchOutcome: Equatable, Sendable {
     public let pair: Pair
     public let points: Int
+    /// The two numbers, in board order.
+    public let values: [Int]
     /// Rows removed, as row indices before removal.
     public let clearedRows: [Int]
     public let boardCleared: Bool
+    /// The board was cleared without + or hints in that stage.
+    public let clearedWithoutHelp: Bool
+    /// Stage after this match (the next one if the board was cleared in classic).
+    public let stage: Int
 }
 
 /// A full game: board, score, stages and the + budget.
@@ -44,6 +50,8 @@ public struct GameSession: Codable, Hashable, Sendable {
     public private(set) var plusRemaining = maxPlusUses
     /// Hints used in the current stage (for "no help" achievements).
     public private(set) var hintsUsedThisStage = 0
+    /// + uses in the current stage.
+    public private(set) var plusUsedThisStage = 0
     /// Valid matches in a row. A miss or a hint resets it; + doesn't.
     public private(set) var streak = 0
     /// Daily challenge only: the board was cleared.
@@ -77,6 +85,7 @@ public struct GameSession: Codable, Hashable, Sendable {
     public mutating func match(at a: Int, _ b: Int) -> MatchOutcome? {
         guard !isOver, let pair = MatchRules.pair(on: board, a, b) else { return nil }
 
+        let values = [board.cells[pair.first].value, board.cells[pair.second].value]
         board.clear(at: pair.first)
         board.clear(at: pair.second)
         var points = scoring.points(for: pair.connection)
@@ -86,6 +95,7 @@ public struct GameSession: Codable, Hashable, Sendable {
         plusRemaining = min(Self.maxPlusUses, plusRemaining + rows.count)
 
         let boardCleared = board.isEmpty
+        let withoutHelp = boardCleared && hintsUsedThisStage == 0 && plusUsedThisStage == 0
         if boardCleared {
             points += scoring.boardClearedPerStage * stage
         }
@@ -93,7 +103,15 @@ public struct GameSession: Codable, Hashable, Sendable {
         streak += 1
         if boardCleared { advanceStage() }
 
-        return MatchOutcome(pair: pair, points: points, clearedRows: rows, boardCleared: boardCleared)
+        return MatchOutcome(
+            pair: pair,
+            points: points,
+            values: values,
+            clearedRows: rows,
+            boardCleared: boardCleared,
+            clearedWithoutHelp: withoutHelp,
+            stage: stage
+        )
     }
 
     /// Copies every remaining number, in order, to the end of the board.
@@ -101,6 +119,7 @@ public struct GameSession: Codable, Hashable, Sendable {
     public mutating func addNumbers() -> Bool {
         guard plusRemaining > 0, !isOver else { return false }
         plusRemaining -= 1
+        plusUsedThisStage += 1
         board.append(board.activeValues)
         return true
     }
@@ -129,6 +148,7 @@ public struct GameSession: Codable, Hashable, Sendable {
             stage += 1
             plusRemaining = Self.maxPlusUses
             hintsUsedThisStage = 0
+            plusUsedThisStage = 0
             board = BoardGenerator.makeBoard(using: &random)
         }
     }
