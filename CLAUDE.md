@@ -1,5 +1,7 @@
 # The Quiet Project
 
+Nombre del estudio (marca visible en las apps, p. ej. el splash): **Quiet Studios**.
+
 Estudio que construye, con ayuda de AI, apps y juegos para la App Store. Cada app parte de una mecánica conocida y no patentada (2048, Number Match, idle/incremental donde las tareas generan moneda del juego para mejorar y facilitar las siguientes tareas, etc.) y la reinterpreta con identidad propia.
 
 ## Filosofía de la familia Quiet

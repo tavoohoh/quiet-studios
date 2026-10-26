@@ -152,6 +152,7 @@ extension Achievement {
         case .firstStep: "first_step"
         case .cleanSlate: "clean_slate"
         case .noHelp: "no_help"
+        case .inTheRed: "in_the_red"
         case .consistency: "consistency"
         case .habit: "habit"
         case .sweeper: "sweeper"

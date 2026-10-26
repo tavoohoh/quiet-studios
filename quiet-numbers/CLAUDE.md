@@ -96,7 +96,7 @@ Tablero de **9 columnas**; arranca con **42 números** del 1 al 9 (4 filas y med
 - Celdas eliminadas quedan como "fantasma" (número tenue) hasta que su fila se vacía.
 - Fila vacía: desaparece, el tablero sube y da puntos extra.
 - Botón **+**: copia todos los números restantes, en orden, al final del tablero (regla estándar del género; se evaluó triplicar y se descartó). **Máximo 5 usos por tablero**; limpiar filas no devuelve usos (cambio del 2026-10-26). Sin parejas ni usos, la partida termina. Los números agregados se muestran en azul (`AddedNumber`) para distinguirlos de los originales.
-- **Pistas:** ilimitadas; resaltan una pareja válida y cuestan 3 puntos (el puntaje nunca baja de 0). Si no hay parejas, no cobran.
+- **Pistas:** ilimitadas; resaltan una pareja válida y cuestan 3 puntos, **aunque el puntaje quede negativo** (cambio del 2026-10-26; da el logro "Números rojos"). Si no hay parejas, no cobran.
 - **Etapas:** vaciar el tablero pasa a la siguiente etapa con tablero nuevo; los usos de + se reinician.
 - **Fin de partida:** no quedan parejas válidas ni usos de +.
 - **Deshacer:** retrocede la última pareja o el último + (un solo paso; no se encadena). No se puede después de vaciar un tablero ni con la partida terminada. No devuelve el costo de pistas ni restaura una racha rota, y descuenta del progreso lo que la jugada había sumado.
@@ -146,7 +146,7 @@ Opcional: sin sesión, el juego funciona completo y los logros se guardan localm
 El código está completo (`GameCenterService`, `LeaderboardsView`, sincronización en `AppModel.syncGameCenter`), pero **no está verificado contra Game Center real**: falta registrar la app. Sin sesión todo funciona y se guarda localmente (verificado con UI test). Pendiente cuando exista el bundle ID:
 
 1. Crear el App ID y activar las capacidades **Game Center** e **iCloud** (iCloud es necesario para `saveGameData`; agregar su entitlement en `project.yml`).
-2. En App Store Connect, crear los leaderboards `daily_challenge` (recurrente, 24 h, inicio 00:00 UTC = 19:00 en Colombia; en otras zonas la ventana del leaderboard no coincide exactamente con el cambio de reto local), `best_score` y `longest_streak` (clásicos), y los logros `first_step`, `clean_slate`, `no_help`, `consistency`, `habit`, `sweeper`, `stage_five`, `centennial`, `night_owl`, `monotone`, con textos en inglés y español.
+2. En App Store Connect, crear los leaderboards `daily_challenge` (recurrente, 24 h, inicio 00:00 UTC = 19:00 en Colombia; en otras zonas la ventana del leaderboard no coincide exactamente con el cambio de reto local), `best_score` y `longest_streak` (clásicos), y los logros `first_step`, `clean_slate`, `no_help`, `in_the_red`, `consistency`, `habit`, `sweeper`, `stage_five`, `centennial`, `night_owl`, `monotone`, con textos en inglés y español.
 3. Probar con una cuenta sandbox: modo avión → jugar → reconectar → verificar envío.
 
 Decisiones:
@@ -162,7 +162,7 @@ Toda recompensa es cosmética y nunca altera la jugabilidad ni el layout del tab
 |---|---|---|
 | Primer paso | Completar la primera partida | Tema Papel (por defecto) |
 | Tabla rasa | Limpiar un tablero completo | Ficha: círculo |
-| Sin ayuda | Limpiar un tablero sin + ni pistas | Tema Pizarra |
+| Sin ayuda | Terminar una partida sin usar pistas (el + sí vale) | Tema Pizarra |
 | Constancia | Racha de 7 retos diarios | Tema Arena |
 | Hábito | Racha de 30 retos diarios | Tipografía New York (serif) |
 | Barrendero | Limpiar 100 filas en total | Efecto de limpieza: ola |
@@ -170,6 +170,7 @@ Toda recompensa es cosmética y nunca altera la jugabilidad ni el layout del tab
 | Centenario | Completar 100 retos diarios | Ícono alternativo dorado |
 | Noctámbulo | Completar un reto entre 00:00 y 04:00 | Tema Medianoche |
 | Monótono | 10 parejas seguidas del mismo número | Pack de sonido: marimba |
+| Números rojos | Llevar el puntaje por debajo de cero | Tema Brasa (oscuro, acento coral) |
 
 Categorías de personalización: tema de color, estilo de ficha, tipografía, efecto al limpiar fila, pack de sonido, ícono de la app. Se eligen en "Colección"; lo bloqueado muestra su condición.
 
@@ -201,7 +202,8 @@ Decisiones de implementación (fase 5):
 - Hápticos (iOS): ligero al seleccionar, medio al emparejar, éxito al limpiar fila.
 - Barra superior: puntaje y etapa (y récord en clásico, siempre visible aunque sea 0: "Etapa 2 · Récord 1.234"). Nada más.
 - Barra inferior: Deshacer, + (con usos restantes) y Pista (con su costo), al alcance del pulgar.
-- Récord (mejor puntaje clásico) también en Inicio y "¡Nuevo récord!" en el fin de partida.
+- Récord (mejor puntaje clásico) también en Inicio y "¡Nuevo récord!" en el fin de partida. Una partida clásica abandonada con "Nueva partida" también cuenta para el récord (sin contar como partida terminada).
+- Splash al abrir: "Quiet Studios" (marca, sin traducir) ~1,5 s sobre el fondo del launch screen; un toque lo salta. Se omite con `-startGame`/`-uiTesting`.
 - Feedback por jugada: "+N" que vuela desde el centro al puntaje (costos de pista y deshacer: en gris junto al puntaje; con Reduce Motion todo junto al puntaje) y elogios en una burbuja que aparece en el centro (debajo del +N) y sube al centro de la barra superior: "¡Desde lejos!" (4+ celdas eliminadas entre la pareja), "¡Doble/Triple fila!", "¡Ya no hay más 7!" (se eliminó el último de un dígito), "¡N seguidas!" (cada 5 parejas sin error). Solo texto, no dan puntos.
 - Pantallas: Inicio (Continuar, Nueva partida, Reto diario), Juego, Leaderboards, Colección, Ajustes (sonido, hápticos, privacidad).
 - iPad/Mac: tablero centrado con ancho máximo. Mac: ratón, trackpad y atajos de teclado.

@@ -237,16 +237,6 @@
         }
       }
     },
-    "Clear a board without + or hints.": {
-      "localizations": {
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Limpia un tablero sin usar + ni pistas."
-          }
-        }
-      }
-    },
     "Clear a whole board.": {
       "localizations": {
         "es": {
@@ -447,12 +437,32 @@
         }
       }
     },
+    "Ember": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Brasa"
+          }
+        }
+      }
+    },
     "Final score": {
       "localizations": {
         "es": {
           "stringUnit": {
             "state": "translated",
             "value": "Puntaje final"
+          }
+        }
+      }
+    },
+    "Finish a game without using hints.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Termina una partida sin usar pistas."
           }
         }
       }
@@ -563,6 +573,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "En curso"
+          }
+        }
+      }
+    },
+    "In the Red": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Números rojos"
           }
         }
       }
@@ -1052,6 +1072,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Barrendero"
+          }
+        }
+      }
+    },
+    "Take your score below zero.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lleva tu puntaje por debajo de cero."
           }
         }
       }

@@ -14,7 +14,7 @@ extension Reward {
 }
 
 enum ThemeChoice: String, Reward {
-    case paper, slate, sand, midnight
+    case paper, slate, sand, midnight, ember
 
     var title: LocalizedStringResource {
         switch self {
@@ -22,6 +22,7 @@ enum ThemeChoice: String, Reward {
         case .slate: "Slate"
         case .sand: "Sand"
         case .midnight: "Midnight"
+        case .ember: "Ember"
         }
     }
 
@@ -31,6 +32,7 @@ enum ThemeChoice: String, Reward {
         case .slate: .noHelp
         case .sand: .consistency
         case .midnight: .nightOwl
+        case .ember: .inTheRed
         }
     }
 
@@ -53,6 +55,9 @@ enum ThemeChoice: String, Reward {
         case .midnight:
             Theme(background: .init(Color.midnightBackground), surface: .init(Color.midnightSurface),
                   ink: .init(Color.midnightInk), accent: .midnightAccent, colorScheme: .dark)
+        case .ember:
+            Theme(background: .init(Color.emberBackground), surface: .init(Color.emberSurface),
+                  ink: .init(Color.emberInk), accent: .emberAccent, colorScheme: .dark)
         }
     }
 }

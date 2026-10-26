@@ -211,9 +211,8 @@ final class GameModel {
         let cells = session.board.cells
         hintIDs = [cells[hint.pair.first].id, cells[hint.pair.second].id]
         selectedID = nil
-        if hint.cost > 0 {
-            showScoreChange(-hint.cost)
-        }
+        showScoreChange(-hint.cost)
+        onEvent?(.hintUsed(scoreAfter: session.score))
     }
 
     /// Takes back the last match or + (one step).

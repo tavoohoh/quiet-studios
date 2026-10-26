@@ -4,7 +4,7 @@ public enum Achievement: String, CaseIterable, Codable, Sendable {
     case firstStep
     /// Clear a whole board.
     case cleanSlate
-    /// Clear a board without + or hints.
+    /// Finish a game without using any hint (+ is fine).
     case noHelp
     /// 7-day daily streak.
     case consistency
@@ -20,6 +20,8 @@ public enum Achievement: String, CaseIterable, Codable, Sendable {
     case nightOwl
     /// 10 pairs of equal numbers in a row (4-4, 7-7…).
     case monotone
+    /// Take the score below zero with hints.
+    case inTheRed
 
     /// Amount needed for counted achievements; 1 for one-off ones.
     public var target: Int {
@@ -30,7 +32,7 @@ public enum Achievement: String, CaseIterable, Codable, Sendable {
         case .stageFive: 5
         case .centennial: 100
         case .monotone: 10
-        case .firstStep, .cleanSlate, .noHelp, .nightOwl: 1
+        case .firstStep, .cleanSlate, .noHelp, .nightOwl, .inTheRed: 1
         }
     }
 }
@@ -40,11 +42,15 @@ public enum ProgressEvent: Sendable {
     case matched(MatchOutcome)
     /// The player tried a pair that doesn't match.
     case missed
+    /// A hint was charged, leaving the score at `scoreAfter`.
+    case hintUsed(scoreAfter: Int)
     /// The player undid this match; its counters are taken back (unlocks stay).
     case undone(MatchOutcome)
     /// A game reached its end (classic game over, or a daily attempt finished).
     /// `classicScore` is set for classic games, for the best-score leaderboard.
-    case gameFinished(classicScore: Int?)
+    case gameFinished(classicScore: Int?, hintsUsed: Int)
+    /// A classic game was replaced by a new one before it ended; its score still counts as a best.
+    case classicAbandoned(score: Int)
     /// A daily challenge was completed (board cleared) on its own day.
     case dailyCompleted(currentStreak: Int, localHour: Int)
 }
@@ -84,21 +90,24 @@ public struct PlayerProgress: Codable, Hashable, Sendable {
             } else {
                 equalPairsRun = 0
             }
-            if outcome.boardCleared {
-                boardsCleared += 1
-                if outcome.clearedWithoutHelp { hits.append(.noHelp) }
-            }
+            if outcome.boardCleared { boardsCleared += 1 }
         case .missed:
             break
+        case .hintUsed(let score):
+            if score < 0 { hits.append(.inTheRed) }
         case .undone(let outcome):
             rowsCleared = max(0, rowsCleared - outcome.clearedRows.count)
             if outcome.values[0] == outcome.values[1] {
                 equalPairsRun = max(0, equalPairsRun - 1)
             }
-        case .gameFinished(let classicScore):
+        case .gameFinished(let classicScore, let hintsUsed):
             gamesFinished += 1
             equalPairsRun = 0
             if let classicScore { bestScore = max(bestScore, classicScore) }
+            if hintsUsed == 0 { hits.append(.noHelp) }
+        case .classicAbandoned(let score):
+            equalPairsRun = 0
+            bestScore = max(bestScore, score)
         case .dailyCompleted(let streak, let hour):
             dailiesCompleted += 1
             bestStreak = max(bestStreak, streak)
@@ -140,7 +149,7 @@ public struct PlayerProgress: Codable, Hashable, Sendable {
         case .stageFive: highestStage
         case .centennial: dailiesCompleted
         case .monotone: bestEqualPairsRun
-        case .noHelp, .nightOwl: 0
+        case .noHelp, .nightOwl, .inTheRed: 0
         }
     }
 

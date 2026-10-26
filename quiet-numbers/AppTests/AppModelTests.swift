@@ -75,7 +75,7 @@ import Testing
     @Test func unlocksAreAnnouncedAndPersisted() {
         let persistence = PersistenceService(store: .inMemory)
         let app = AppModel(persistence: persistence)
-        app.record(.gameFinished(classicScore: nil))
+        app.record(.gameFinished(classicScore: nil, hintsUsed: 1))
         #expect(app.pendingUnlocks == [.firstStep])
         app.dismissUnlock(.firstStep)
         #expect(app.pendingUnlocks.isEmpty)
@@ -90,6 +90,22 @@ import Testing
         model.tap(model.session.board.cells[1])
         #expect(model.session.score == 1)
         #expect(app.progress.equalPairsRun == 1)
+    }
+
+    @Test func newGameKeepsTheAbandonedScoreAsBest() throws {
+        let persistence = PersistenceService(store: .inMemory)
+        let app = AppModel(persistence: persistence)
+        app.newClassic()
+        let first = try #require(app.activeGame)
+        var session = first.session
+        while session.score < 5, let pair = MatchRules.validPairs(on: session.board).first {
+            _ = session.match(at: pair.first, pair.second)
+        }
+        persistence.saveGame(session, in: .classic)
+        app.newClassic()
+        #expect(app.progress.bestScore == session.score)
+        #expect(app.progress.bestScore > 0)
+        #expect(app.progress.gamesFinished == 0)
     }
 
     @Test func lockedRewardsNeedTheirAchievement() {

@@ -15,6 +15,7 @@ extension Achievement {
         case .centennial: "Centennial"
         case .nightOwl: "Night Owl"
         case .monotone: "Monotone"
+        case .inTheRed: "In the Red"
         }
     }
 
@@ -22,7 +23,7 @@ extension Achievement {
         switch self {
         case .firstStep: "Finish your first game."
         case .cleanSlate: "Clear a whole board."
-        case .noHelp: "Clear a board without + or hints."
+        case .noHelp: "Finish a game without using hints."
         case .consistency: "Complete 7 daily challenges in a row."
         case .habit: "Complete 30 daily challenges in a row."
         case .sweeper: "Clear 100 rows."
@@ -30,6 +31,7 @@ extension Achievement {
         case .centennial: "Complete 100 daily challenges."
         case .nightOwl: "Complete a daily challenge between midnight and 4 a.m."
         case .monotone: "Make 10 pairs of equal numbers in a row."
+        case .inTheRed: "Take your score below zero."
         }
     }
 
@@ -45,6 +47,7 @@ extension Achievement {
         case .centennial: "rosette"
         case .nightOwl: "moon.stars"
         case .monotone: "equal.circle"
+        case .inTheRed: "minus.circle"
         }
     }
 }

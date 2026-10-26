@@ -88,6 +88,9 @@ final class AppModel {
     }
 
     func newClassic() {
+        if let abandoned = persistence.loadGame(.classic), !abandoned.isOver {
+            record(.classicAbandoned(score: abandoned.score))
+        }
         let model = GameModel()
         persistence.saveGame(model.session, in: .classic)
         hasClassicInProgress = true
@@ -157,7 +160,7 @@ final class AppModel {
         case .practice:
             break
         }
-        record(.gameFinished(classicScore: kind == .classic ? session.score : nil))
+        record(.gameFinished(classicScore: kind == .classic ? session.score : nil, hintsUsed: session.hintsUsed))
         refreshSavedGames()
         Task { await pushToGameCenter() }
     }

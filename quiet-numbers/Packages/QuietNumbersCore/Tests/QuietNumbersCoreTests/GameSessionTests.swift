@@ -124,15 +124,15 @@ import Testing
         #expect(MatchRules.pair(on: session.board, hint.pair.first, hint.pair.second) != nil)
         #expect(hint.cost == 3)
         #expect(session.score == 22)
-        #expect(session.hintsUsedThisStage == 1)
+        #expect(session.hintsUsed == 1)
     }
 
-    @Test func hintNeverTakesScoreBelowZero() throws {
+    @Test func hintCanTakeScoreBelowZero() throws {
         var session = GameSession(board: makeBoard([[1, 2, 3, 3, 1, 2, 1, 2, 1]]), score: 2)
         let result = session.useHint()
         let hint = try #require(result)
-        #expect(hint.cost == 2)
-        #expect(session.score == 0)
+        #expect(hint.cost == 3)
+        #expect(session.score == -1)
     }
 
     @Test func hintIsFreeWithoutPairs() {
@@ -140,7 +140,7 @@ import Testing
         let hint = session.useHint()
         #expect(hint?.pair == nil)
         #expect(session.score == 30)
-        #expect(session.hintsUsedThisStage == 0)
+        #expect(session.hintsUsed == 0)
     }
 
     @Test func pairReportsGap() {
