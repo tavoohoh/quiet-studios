@@ -6,24 +6,27 @@
   <meta name="color-scheme" content="light dark">
   <title>Quiet Studios</title>
   <meta name="description" content="Calm, honest apps and games for Apple devices.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2048%2048%22%3E%3Ccircle%20cx%3D%2221%22%20cy%3D%2222%22%20r%3D%2214%22%20fill%3D%22none%22%20stroke%3D%22%230E6B78%22%20stroke-width%3D%225%22/%3E%3Cline%20x1%3D%2231%22%20y1%3D%2238%22%20x2%3D%2243%22%20y2%3D%2238%22%20stroke%3D%22%23B9472F%22%20stroke-width%3D%225%22%20stroke-linecap%3D%22round%22/%3E%3C/svg%3E">
   <style>
     :root {
       color-scheme: light dark;
-      --bg: #ffffff;
-      --surface: #f2f2f7;
-      --ink: #1c1c1e;
-      --muted: #6c6c70;
-      --accent: #0a5cff;
-      --line: #e5e5ea;
+      --bg: #f3f7f8;
+      --surface: #ffffff;
+      --ink: #16201f;
+      --muted: #5e6f72;
+      --accent: #0e6b78;
+      --line: #e3eaec;
+      --coral: #b9472f;
     }
     @media (prefers-color-scheme: dark) {
       :root {
-        --bg: #000000;
-        --surface: #1c1c1e;
-        --ink: #f2f2f7;
-        --muted: #a1a1a6;
-        --accent: #4d8dff;
-        --line: #2c2c2e;
+        --bg: #0f1a1d;
+        --surface: #172629;
+        --ink: #e8f1f2;
+        --muted: #8a9da0;
+        --accent: #5bc2cf;
+        --line: #263a3e;
+        --coral: #ff9a85;
       }
     }
     * { box-sizing: border-box; }
@@ -49,6 +52,7 @@
     section + section { border-top: 1px solid var(--line); margin-top: 48px; }
     .card { background: var(--surface); border-radius: 18px; padding: 20px 22px; margin: 20px 0; }
     .card ul { margin: 0; padding-left: 20px; }
+    .mark { display: block; margin-bottom: 16px; }
     footer { margin-top: 56px; font-size: 14px; color: var(--muted); }
   </style>
 </head>
@@ -56,6 +60,7 @@
   <main>
 
     <header>
+      <svg class="mark" width="48" height="48" viewBox="0 0 48 48" aria-hidden="true"><circle cx="21" cy="22" r="14" fill="none" stroke="var(--accent)" stroke-width="5"/><line x1="31" y1="38" x2="43" y2="38" stroke="var(--coral)" stroke-width="5" stroke-linecap="round"/></svg>
       <h1>Quiet Studios</h1>
       <p class="muted">Calm, honest apps and games. No ads, no purchases, no data collected.<br>
       Apps y juegos tranquilos y honestos. Sin anuncios, sin compras, sin recolectar datos.</p>

@@ -2,8 +2,13 @@ import SwiftUI
 
 @main
 struct QuietNumbersApp: App {
-    @State private var app = AppModel(persistence: PersistenceService(store: Self.store))
+    @State private var app: AppModel
     @State private var showsSplash = Self.wantsSplash
+
+    init() {
+        ThemeChoice.migrateSavedChoice()
+        _app = State(initialValue: AppModel(persistence: PersistenceService(store: Self.store)))
+    }
 
     var body: some Scene {
         WindowGroup {
@@ -13,9 +18,13 @@ struct QuietNumbersApp: App {
                     .environment(app)
                     .task { app.gameCenter.authenticate() }
                 if showsSplash {
-                    SplashView { withAnimation(.easeOut(duration: 0.35)) { showsSplash = false } }
-                        .transition(.opacity)
-                        .zIndex(1)
+                    SplashView {
+                        // Reduce Motion cuts straight to Home.
+                        let animation: Animation? = UIAccessibility.isReduceMotionEnabled ? nil : .easeInOut(duration: 0.25)
+                        withAnimation(animation) { showsSplash = false }
+                    }
+                    .transition(.opacity)
+                    .zIndex(1)
                 }
             }
         }

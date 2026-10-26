@@ -107,6 +107,26 @@
         }
       }
     },
+    "A hint shows a pair for 3 points.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Una pista te muestra una pareja por 3 puntos."
+          }
+        }
+      }
+    },
+    "Account": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cuenta"
+          }
+        }
+      }
+    },
     "Achievement unlocked": {
       "localizations": {
         "es": {
@@ -137,6 +157,16 @@
         }
       }
     },
+    "Always available for low vision.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Siempre disponible para baja visión."
+          }
+        }
+      }
+    },
     "App icon": {
       "localizations": {
         "es": {
@@ -147,12 +177,22 @@
         }
       }
     },
+    "Back": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Atrás"
+          }
+        }
+      }
+    },
     "Best %@": {
       "localizations": {
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Récord %@"
+            "value": "Mejor %@"
           }
         }
       }
@@ -233,6 +273,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Limpia 100 filas."
+          }
+        }
+      }
+    },
+    "Clear a row for 10 points, and the whole board to reach the next stage.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vacía una fila y ganas 10 puntos; vacía el tablero y pasas a la siguiente etapa."
           }
         }
       }
@@ -347,6 +397,16 @@
         }
       }
     },
+    "Continue · Stage %lld": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Continuar · Etapa %lld"
+          }
+        }
+      }
+    },
     "Costs %lld points": {
       "localizations": {
         "en": {
@@ -397,16 +457,6 @@
         }
       }
     },
-    "Current streak": {
-      "localizations": {
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Racha actual"
-          }
-        }
-      }
-    },
     "Daily Challenge": {
       "localizations": {
         "es": {
@@ -443,16 +493,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "¡Doble fila!"
-          }
-        }
-      }
-    },
-    "Ember": {
-      "localizations": {
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Brasa"
           }
         }
       }
@@ -517,6 +557,16 @@
         }
       }
     },
+    "Games": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Partidas"
+          }
+        }
+      }
+    },
     "Global": {
       "localizations": {
         "es": {
@@ -552,7 +602,17 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Hápticos"
+            "value": "Vibración"
+          }
+        }
+      }
+    },
+    "High contrast": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alto contraste"
           }
         }
       }
@@ -577,6 +637,16 @@
         }
       }
     },
+    "How to play": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cómo jugar"
+          }
+        }
+      }
+    },
     "In progress": {
       "localizations": {
         "es": {
@@ -597,22 +667,22 @@
         }
       }
     },
+    "Indigo & Peach": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Índigo y durazno"
+          }
+        }
+      }
+    },
     "Larger numbers": {
       "localizations": {
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Números más grandes"
-          }
-        }
-      }
-    },
-    "Leaderboard": {
-      "localizations": {
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Leaderboard"
+            "value": "Números grandes"
           }
         }
       }
@@ -622,7 +692,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Leaderboards"
+            "value": "Clasificaciones"
           }
         }
       }
@@ -632,7 +702,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "¡Desde lejos!"
+            "value": "¡Tiro largo!"
           }
         }
       }
@@ -650,22 +720,22 @@
     "Marimba": {
       "shouldTranslate": false
     },
+    "Match two equal numbers, or two that add up to 10.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Junta dos números iguales o dos que sumen 10."
+          }
+        }
+      }
+    },
     "Menu": {
       "localizations": {
         "es": {
           "stringUnit": {
             "state": "translated",
             "value": "Menú"
-          }
-        }
-      }
-    },
-    "Midnight": {
-      "localizations": {
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Medianoche"
           }
         }
       }
@@ -783,12 +853,32 @@
         }
       }
     },
+    "Not played yet": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aún no lo juegas"
+          }
+        }
+      }
+    },
     "Not scored": {
       "localizations": {
         "es": {
           "stringUnit": {
             "state": "translated",
             "value": "Sin puntaje"
+          }
+        }
+      }
+    },
+    "Not signed in": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sin sesión iniciada"
           }
         }
       }
@@ -803,22 +893,32 @@
         }
       }
     },
+    "Open Settings": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Abrir Ajustes"
+          }
+        }
+      }
+    },
+    "Out of pairs? Tap + to copy the numbers left to the end of the board. You get 5 per board.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Sin parejas? Toca + para copiar los números que quedan al final del tablero. Tienes 5 por tablero."
+          }
+        }
+      }
+    },
     "Outline": {
       "localizations": {
         "es": {
           "stringUnit": {
             "state": "translated",
             "value": "Contorno"
-          }
-        }
-      }
-    },
-    "Paper": {
-      "localizations": {
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Papel"
           }
         }
       }
@@ -853,6 +953,16 @@
         }
       }
     },
+    "Play with friends": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Juega con amigos"
+          }
+        }
+      }
+    },
     "Played": {
       "localizations": {
         "es": {
@@ -869,16 +979,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Jugado · %@"
-          }
-        }
-      }
-    },
-    "Players": {
-      "localizations": {
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Jugadores"
           }
         }
       }
@@ -938,7 +1038,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Las repeticiones no suman puntaje."
+            "value": "Las repeticiones no suman a tu puntaje."
           }
         }
       }
@@ -978,7 +1078,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Al limpiar fila"
+            "value": "Fila completa"
           }
         }
       }
@@ -986,22 +1086,22 @@
     "SF Rounded": {
       "shouldTranslate": false
     },
-    "Same board for everyone, today only.": {
+    "Sage & Coral": {
       "localizations": {
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "El mismo tablero para todos, solo por hoy."
+            "value": "Salvia y coral"
           }
         }
       }
     },
-    "Sand": {
+    "Sage & Sand": {
       "localizations": {
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Arena"
+            "value": "Salvia y arena"
           }
         }
       }
@@ -1012,6 +1112,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Puntaje"
+          }
+        }
+      }
+    },
+    "Scores from Game Center · updated just now": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Puntajes de Game Center · actualizado hace un momento"
           }
         }
       }
@@ -1031,17 +1141,17 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Inicia sesión en Game Center desde Ajustes para ver los leaderboards. Tu progreso se guarda en este dispositivo de todas formas."
+            "value": "Inicia sesión en Game Center desde Ajustes para ver las clasificaciones. Tu progreso se guarda en este dispositivo de todas formas."
           }
         }
       }
     },
-    "Slate": {
+    "Signed in as %@": {
       "localizations": {
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Pizarra"
+            "value": "Sesión iniciada como %@"
           }
         }
       }
@@ -1126,12 +1236,32 @@
         }
       }
     },
+    "Teal & Coral": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Petróleo y coral"
+          }
+        }
+      }
+    },
     "Theme": {
       "localizations": {
         "es": {
           "stringUnit": {
             "state": "translated",
             "value": "Tema"
+          }
+        }
+      }
+    },
+    "They can touch, or be in a straight line (across, down or diagonal) with only cleared cells between them. The last number of a row also connects to the first of the next.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pueden estar juntos o en línea recta (horizontal, vertical o diagonal) con solo casillas vacías en medio. El último número de una fila también conecta con el primero de la siguiente."
           }
         }
       }
@@ -1152,16 +1282,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Hoy"
-          }
-        }
-      }
-    },
-    "Today's board is ready": {
-      "localizations": {
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "El tablero de hoy está listo"
           }
         }
       }
@@ -1216,12 +1336,32 @@
         }
       }
     },
+    "Your 5-minute break.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tu pausa de 5 minutos."
+          }
+        }
+      }
+    },
     "Your games, daily challenge results, streaks, achievements and unlocked rewards will be deleted on this device and in iCloud. Scores already on Game Center leaderboards stay there. This can't be undone.": {
       "localizations": {
         "es": {
           "stringUnit": {
             "state": "translated",
             "value": "Se borrarán tus partidas, resultados del reto diario, rachas, logros y recompensas desbloqueadas en este dispositivo y en iCloud. Los puntajes que ya están en los leaderboards de Game Center se quedan ahí. No se puede deshacer."
+          }
+        }
+      }
+    },
+    "Your stats": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tus estadísticas"
           }
         }
       }

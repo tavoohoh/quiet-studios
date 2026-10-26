@@ -5,37 +5,33 @@ struct CellView: View {
     let cell: Cell
     let row: Int
     let column: Int
-    let size: CGFloat
+    let size: CGSize
     let isSelected: Bool
+    /// Part of an invalid pair: ringed in the accent color for a moment.
+    let isMissed: Bool
     let isHinted: Bool
     let shakes: Int
+    /// Set for numbers just added with +: they scale and fade in after this delay.
+    let entranceDelay: Double?
     let action: () -> Void
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.appearance) private var appearance
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+    @State private var hasEntered = false
 
     var body: some View {
         Button(action: action) {
             Text(verbatim: "\(cell.value)")
-                .font(.boardNumber(size: size * numberScale, design: appearance.numberFont.design))
-                .foregroundStyle(numberStyle)
-                .scaleEffect(cell.isCleared ? 0.75 : 1)
-                .frame(width: size, height: size)
+                .font(.boardNumber(size: size.height * numberScale, design: appearance.numberFont.design))
+                .foregroundStyle(numberColor)
+                .underline(cell.isAdded && !cell.isCleared && appearance.theme.isHighContrast, color: appearance.theme.accent)
+                .frame(width: size.width, height: size.height)
                 .background { tile }
-                .background {
-                    if isSelected {
-                        Circle()
-                            .fill(.tint.opacity(0.22))
-                            .padding(size * 0.08)
-                            .transition(.opacity.combined(with: .scale(scale: 0.6)))
-                    }
-                }
+                .background { ring }
                 .overlay {
                     if isHinted {
-                        Circle()
-                            .strokeBorder(.tint, lineWidth: 2)
-                            .padding(size * 0.08)
+                        HintRing(diameter: ringDiameter)
                             .transition(.opacity)
                     }
                 }
@@ -44,6 +40,13 @@ struct CellView: View {
         .buttonStyle(.plain)
         .disabled(cell.isCleared)
         .modifier(ShakeEffect(shakes: reduceMotion ? 0 : CGFloat(shakes)))
+        .animation(.linear(duration: 0.24 * EffectTiming.scale), value: shakes)
+        .scaleEffect(hasEntered || entranceDelay == nil || reduceMotion ? 1 : 0.8)
+        .opacity(hasEntered || entranceDelay == nil ? 1 : 0)
+        .onAppear {
+            guard let entranceDelay, !hasEntered else { return }
+            withAnimation(.easeOut(duration: 0.16 * EffectTiming.scale).delay(entranceDelay)) { hasEntered = true }
+        }
         .accessibilityLabel(Text("\(cell.value), row \(row + 1), column \(column + 1)"))
         .accessibilityValue(cell.isCleared ? Text("Cleared") : Text(verbatim: ""))
         .accessibilityAddTraits(isSelected ? .isSelected : [])
@@ -52,10 +55,27 @@ struct CellView: View {
 }
 
 extension CellView {
-    /// Board numbers are sized by the cell, not Dynamic Type (9 columns must fit),
-    /// but accessibility text sizes and "Larger numbers" use most of the cell.
+    /// Board numbers are sized by the row, not Dynamic Type (9 columns must fit):
+    /// 27 pt on a 46 pt row, 32 pt on the 52 pt row of "Larger numbers".
     private var numberScale: CGFloat {
-        appearance.largerNumbers || dynamicTypeSize.isAccessibilitySize ? 0.62 : 0.5
+        appearance.largerNumbers || dynamicTypeSize.isAccessibilitySize ? 32 / 52 : 27 / 46
+    }
+
+    /// 40 pt on a 46 pt row.
+    private var ringDiameter: CGFloat { size.height * 40 / 46 }
+
+    /// Selection (primary) or a missed pair (accent): a 2 pt ring over a 14% fill.
+    @ViewBuilder
+    private var ring: some View {
+        if isSelected || isMissed {
+            let color = isMissed ? appearance.theme.accent : appearance.theme.primary
+            Circle()
+                .fill(color.opacity(0.14))
+                .strokeBorder(color, lineWidth: 2)
+                .frame(width: ringDiameter, height: ringDiameter)
+                .transition(reduceMotion ? .opacity : .opacity.combined(with: .scale(scale: 0.6)))
+                .animation(.spring(response: 0.3, dampingFraction: 0.7), value: isSelected)
+        }
     }
 
     /// Tile style from the Collection. Ghosts never get a tile.
@@ -66,21 +86,49 @@ extension CellView {
             case .plain:
                 EmptyView()
             case .circle:
-                Circle().fill(.primary.opacity(0.07)).padding(size * 0.08)
+                Circle().fill(appearance.theme.ink.opacity(0.07)).frame(width: ringDiameter, height: ringDiameter)
             case .outline:
-                Circle().strokeBorder(.primary.opacity(0.25), lineWidth: 1).padding(size * 0.1)
+                Circle().strokeBorder(appearance.theme.ink.opacity(0.25), lineWidth: 1)
+                    .frame(width: ringDiameter - 4, height: ringDiameter - 4)
             }
         }
     }
 
-    /// Ghosts are faint; numbers added with + use the highlight color so the originals stand out.
-    private var numberStyle: AnyShapeStyle {
-        if cell.isCleared { return AnyShapeStyle(.quaternary) }
-        return cell.isAdded ? AnyShapeStyle(Color.highlight) : appearance.theme.ink
+    /// Ghosts stay faintly visible; numbers added with + use the accent so the originals stand out.
+    private var numberColor: Color {
+        if cell.isCleared { return appearance.theme.ghost }
+        if isMissed { return appearance.theme.accent }
+        if isSelected { return appearance.theme.primary }
+        return cell.isAdded ? appearance.theme.accent : appearance.theme.ink
     }
 }
 
-/// Small horizontal shake. Animating `shakes` from n to n + 1 plays one shake.
+/// Dashed ring on a hinted pair; blinks twice, then stays.
+private struct HintRing: View {
+    let diameter: CGFloat
+
+    @Environment(\.appearance) private var appearance
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @State private var blinks = 0
+
+    var body: some View {
+        Circle()
+            .strokeBorder(appearance.theme.primary, style: StrokeStyle(lineWidth: 2, dash: [4, 3]))
+            .frame(width: diameter, height: diameter)
+            .keyframeAnimator(initialValue: 1.0, trigger: blinks) { content, opacity in
+                content.opacity(opacity)
+            } keyframes: { _ in
+                let half = 0.25 * EffectTiming.scale
+                LinearKeyframe(0.2, duration: half)
+                LinearKeyframe(1, duration: half)
+                LinearKeyframe(0.2, duration: half)
+                LinearKeyframe(1, duration: half)
+            }
+            .onAppear { if !reduceMotion { blinks += 1 } }
+    }
+}
+
+/// Small horizontal shake: ±4 pt, three times. Animating `shakes` from n to n + 1 plays one.
 struct ShakeEffect: GeometryEffect {
     var shakes: CGFloat
 
@@ -90,6 +138,6 @@ struct ShakeEffect: GeometryEffect {
     }
 
     func effectValue(size: CGSize) -> ProjectionTransform {
-        ProjectionTransform(CGAffineTransform(translationX: 6 * sin(shakes * .pi * 6), y: 0))
+        ProjectionTransform(CGAffineTransform(translationX: 4 * sin(shakes * .pi * 6), y: 0))
     }
 }

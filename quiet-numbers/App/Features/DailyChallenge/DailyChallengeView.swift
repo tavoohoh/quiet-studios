@@ -9,54 +9,55 @@ struct DailyChallengeView: View {
     @Environment(\.appearance) private var appearance
     @Environment(\.horizontalSizeClass) private var sizeClass
     @State private var month = AppClock.now
+    /// Today's place among Game Center friends, when signed in.
+    @State private var friendsRank: Int?
 
     var body: some View {
         let today = app.todayKey
         ScrollView {
-            VStack(spacing: 28) {
+            VStack(spacing: 12) {
+                TodayCard(
+                    date: Text(DayKeyFormat.weekdayString(today)),
+                    status: status(for: today),
+                    playTitle: playTitle(for: today),
+                    showsReplayNote: !app.isScored(today),
+                    streak: app.currentStreak,
+                    bestStreak: app.longestStreak,
+                    friendsRank: friendsRank,
+                    onPlay: { onPlay(today) }
+                )
+
                 VStack(spacing: 6) {
-                    Text(DayKeyFormat.string(today, date: .long))
-                        .font(.system(.title2, design: .rounded, weight: .semibold))
-                    status(for: today)
+                    CalendarView(month: $month, todayKey: today, records: app.persistence.dailies, onSelect: onPlay)
+                    Text("Next challenge in \(countdown)")
                         .font(.subheadline)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(appearance.theme.muted)
+                        .padding(.top, 4)
+                        .padding(.bottom, 2)
                 }
-
-                HStack(spacing: 32) {
-                    StatView(value: app.currentStreak, label: "Current streak")
-                    StatView(value: app.longestStreak, label: "Best streak")
-                }
-
-                VStack(spacing: 8) {
-                    Button {
-                        onPlay(today)
-                    } label: {
-                        Text(playTitle(for: today)).frame(maxWidth: .infinity)
-                    }
-                    .buttonStyle(.borderedProminent)
-                    .controlSize(.large)
-                    .buttonBorderShape(.capsule)
-                    if !app.isScored(today) {
-                        Text("Replays don't count toward your score.")
-                            .font(.footnote)
-                            .foregroundStyle(.secondary)
-                    }
-                }
-                .frame(maxWidth: Layout.buttons(sizeClass))
-
-                CalendarView(month: $month, todayKey: today, records: app.persistence.dailies, onSelect: onPlay)
-                    .frame(maxWidth: Layout.calendar(sizeClass))
-
-                Text("Next challenge in \(countdown)")
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
+                .padding(.horizontal, 12)
+                .padding(.top, 14)
+                .padding(.bottom, 10)
+                .background { SurfaceShape(shape: RoundedRectangle(cornerRadius: 26, style: .continuous)) }
             }
-            .padding()
+            .padding(.horizontal, 20)
+            .padding(.vertical, 12)
+            .frame(maxWidth: Layout.calendar(sizeClass) + 40)
             .frame(maxWidth: .infinity)
         }
-        .background(appearance.theme.background)
-        .navigationTitle(Text("Daily Challenge"))
-        .navigationBarTitleDisplayMode(.inline)
+        .screen(Text("Daily Challenge"))
+        .task(id: app.gameCenter.isAuthenticated) { await loadFriendsRank() }
+    }
+
+    private func loadFriendsRank() async {
+        #if DEBUG
+        if DemoData.isActive {
+            friendsRank = 3
+            return
+        }
+        #endif
+        guard app.gameCenter.isAuthenticated else { return friendsRank = nil }
+        friendsRank = try? await app.gameCenter.entries(for: .daily, friendsOnly: true).local?.rank
     }
 
     /// Live relative time; frozen in demo launches so screenshots don't depend on the clock.
@@ -73,7 +74,7 @@ struct DailyChallengeView: View {
 
     private func status(for dayKey: String) -> Text {
         if app.isDailyInProgress(dayKey) { return Text("In progress") }
-        guard let record = app.persistence.dailies[dayKey] else { return Text("Same board for everyone, today only.") }
+        guard let record = app.persistence.dailies[dayKey] else { return Text("Not played yet") }
         let score = Text(record.score, format: .number)
         return record.isCompleted ? Text("Completed · \(score)") : Text("Played · \(score)")
     }
@@ -84,18 +85,99 @@ struct DailyChallengeView: View {
     }
 }
 
-private struct StatView: View {
-    let value: Int
-    let label: LocalizedStringKey
+/// Today in `primary`: date, status, the play button and three small stats.
+private struct TodayCard: View {
+    let date: Text
+    let status: Text
+    let playTitle: LocalizedStringKey
+    let showsReplayNote: Bool
+    let streak: Int
+    let bestStreak: Int
+    let friendsRank: Int?
+    let onPlay: () -> Void
+
+    @Environment(\.appearance) private var appearance
 
     var body: some View {
-        VStack(spacing: 2) {
-            Text(value, format: .number)
-                .font(.system(.title, design: .rounded, weight: .semibold).monospacedDigit())
-            Text(label)
-                .font(.caption)
-                .foregroundStyle(.secondary)
+        let onPrimary = appearance.theme.onPrimary
+        VStack(alignment: .leading, spacing: 14) {
+            ViewThatFits(in: .horizontal) {
+                HStack(spacing: 10) {
+                    heading
+                    Spacer(minLength: 0)
+                    playButton
+                }
+                VStack(alignment: .leading, spacing: 12) {
+                    heading
+                    playButton
+                }
+            }
+            HStack(spacing: 8) {
+                StatTile(label: "Streak", showsFlame: true) { Text(streak, format: .number) }
+                StatTile(label: "Best streak") { Text(bestStreak, format: .number) }
+                StatTile(label: "Friends") {
+                    if let friendsRank { Text(verbatim: "#") + Text(friendsRank, format: .number) } else { Text(verbatim: "–") }
+                }
+            }
+            if showsReplayNote {
+                Text("Replays don't count toward your score.")
+                    .font(.footnote)
+                    .foregroundStyle(onPrimary.opacity(0.85))
+            }
         }
+        .padding(18)
+        .background(appearance.theme.primary, in: RoundedRectangle(cornerRadius: 26, style: .continuous))
+    }
+
+    private var heading: some View {
+        VStack(alignment: .leading, spacing: 2) {
+            date
+                .font(.subheadline)
+                .foregroundStyle(appearance.theme.onPrimary.opacity(0.85))
+            status
+                .font(.system(.title3, design: .rounded, weight: .heavy))
+                .foregroundStyle(appearance.theme.onPrimary)
+        }
+        .accessibilityElement(children: .combine)
+    }
+
+    private var playButton: some View {
+        Button(playTitle, action: onPlay)
+            .buttonStyle(AccentButtonStyle())
+    }
+}
+
+private struct StatTile<Value: View>: View {
+    let label: LocalizedStringKey
+    var showsFlame = false
+    @ViewBuilder let value: Value
+
+    @Environment(\.appearance) private var appearance
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 2) {
+            HStack(spacing: 4) {
+                if showsFlame {
+                    Image(systemName: "flame.fill")
+                        .font(.subheadline)
+                        .foregroundStyle(appearance.theme.onPrimary.opacity(0.85))
+                }
+                value
+                    .font(.stat)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.6)
+            }
+            Text(label)
+                .font(.footnote)
+                .lineLimit(1)
+                .minimumScaleFactor(0.8)
+                .opacity(0.85)
+        }
+        .foregroundStyle(appearance.theme.onPrimary)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(.horizontal, 12)
+        .padding(.vertical, 10)
+        .background(appearance.theme.onPrimary.opacity(0.12), in: RoundedRectangle(cornerRadius: 16, style: .continuous))
         .accessibilityElement(children: .combine)
     }
 }

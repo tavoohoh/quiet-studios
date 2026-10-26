@@ -7,8 +7,8 @@
       "hidden": false,
       "achievableMoreThanOnce": false,
       "reward": {
-        "en": "Paper theme (default)",
-        "es": "Tema Papel (por defecto)"
+        "en": "Teal & Coral theme (default)",
+        "es": "Tema Petróleo y coral (por defecto)"
       },
       "name": {
         "en": "First Step",
@@ -22,7 +22,7 @@
         "en": "You finished your first game.",
         "es": "Terminaste tu primera partida."
       },
-      "image": "TODO: 512×512 or 1024×1024 PNG"
+      "image": "AppStore/achievements/first_step.png"
     },
     {
       "id": "clean_slate",
@@ -46,7 +46,7 @@
         "en": "You cleared a whole board.",
         "es": "Limpiaste un tablero completo."
       },
-      "image": "TODO: 512×512 or 1024×1024 PNG"
+      "image": "AppStore/achievements/clean_slate.png"
     },
     {
       "id": "no_help",
@@ -55,8 +55,8 @@
       "hidden": false,
       "achievableMoreThanOnce": false,
       "reward": {
-        "en": "Slate theme",
-        "es": "Tema Pizarra"
+        "en": "Sage & Sand theme",
+        "es": "Tema Salvia y arena"
       },
       "name": {
         "en": "No Help",
@@ -70,7 +70,7 @@
         "en": "You finished a game without a single hint.",
         "es": "Terminaste una partida sin usar ni una pista."
       },
-      "image": "TODO: 512×512 or 1024×1024 PNG"
+      "image": "AppStore/achievements/no_help.png"
     },
     {
       "id": "consistency",
@@ -79,8 +79,8 @@
       "hidden": false,
       "achievableMoreThanOnce": false,
       "reward": {
-        "en": "Sand theme",
-        "es": "Tema Arena"
+        "en": "Indigo & Peach theme",
+        "es": "Tema Índigo y durazno"
       },
       "name": {
         "en": "Consistency",
@@ -94,7 +94,7 @@
         "en": "You completed 7 daily challenges in a row.",
         "es": "Completaste 7 retos diarios seguidos."
       },
-      "image": "TODO: 512×512 or 1024×1024 PNG"
+      "image": "AppStore/achievements/consistency.png"
     },
     {
       "id": "habit",
@@ -118,7 +118,7 @@
         "en": "You completed 30 daily challenges in a row.",
         "es": "Completaste 30 retos diarios seguidos."
       },
-      "image": "TODO: 512×512 or 1024×1024 PNG"
+      "image": "AppStore/achievements/habit.png"
     },
     {
       "id": "sweeper",
@@ -142,7 +142,7 @@
         "en": "You cleared 100 rows.",
         "es": "Limpiaste 100 filas."
       },
-      "image": "TODO: 512×512 or 1024×1024 PNG"
+      "image": "AppStore/achievements/sweeper.png"
     },
     {
       "id": "stage_five",
@@ -166,7 +166,7 @@
         "en": "You reached stage 5 in one game.",
         "es": "Llegaste a la etapa 5 en una partida."
       },
-      "image": "TODO: 512×512 or 1024×1024 PNG"
+      "image": "AppStore/achievements/stage_five.png"
     },
     {
       "id": "centennial",
@@ -190,7 +190,7 @@
         "en": "You completed 100 daily challenges.",
         "es": "Completaste 100 retos diarios."
       },
-      "image": "TODO: 512×512 or 1024×1024 PNG"
+      "image": "AppStore/achievements/centennial.png"
     },
     {
       "id": "night_owl",
@@ -199,8 +199,8 @@
       "hidden": true,
       "achievableMoreThanOnce": false,
       "reward": {
-        "en": "Midnight theme",
-        "es": "Tema Medianoche"
+        "en": "Sage & Coral theme",
+        "es": "Tema Salvia y coral"
       },
       "name": {
         "en": "Night Owl",
@@ -214,7 +214,7 @@
         "en": "You completed a daily challenge in the small hours.",
         "es": "Completaste un reto diario de madrugada."
       },
-      "image": "TODO: 512×512 or 1024×1024 PNG"
+      "image": "AppStore/achievements/night_owl.png"
     },
     {
       "id": "monotone",
@@ -238,7 +238,7 @@
         "en": "You made 10 pairs of equal numbers in a row.",
         "es": "Hiciste 10 parejas de números iguales seguidas."
       },
-      "image": "TODO: 512×512 or 1024×1024 PNG"
+      "image": "AppStore/achievements/monotone.png"
     },
     {
       "id": "in_the_red",
@@ -247,8 +247,8 @@
       "hidden": true,
       "achievableMoreThanOnce": false,
       "reward": {
-        "en": "Ember theme",
-        "es": "Tema Brasa"
+        "en": "None for now",
+        "es": "Ninguna por ahora"
       },
       "name": {
         "en": "In the Red",
@@ -262,7 +262,7 @@
         "en": "Your score went below zero. It happens.",
         "es": "Tu puntaje bajó de cero. Pasa."
       },
-      "image": "TODO: 512×512 or 1024×1024 PNG"
+      "image": "AppStore/achievements/in_the_red.png"
     }
   ],
   "totalPoints": 620,

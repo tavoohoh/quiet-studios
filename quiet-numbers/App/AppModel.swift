@@ -19,8 +19,9 @@ final class AppModel {
     let gameCenter: GameCenterService
     private(set) var activeGame: GameModel?
     private(set) var activeKind: GameKind?
-    /// Cached so views update when games are saved or finished.
-    private(set) var hasClassicInProgress = false
+    /// Stage of the saved classic game, if one is in progress. Cached so views update
+    /// when games are saved or finished.
+    private(set) var classicStage: Int?
     /// Day of the scored daily attempt that's still open.
     private(set) var openDailyKey: String?
     private(set) var progress: PlayerProgress
@@ -121,9 +122,11 @@ final class AppModel {
         }
         let model = GameModel()
         persistence.saveGame(model.session, in: .classic)
-        hasClassicInProgress = true
+        classicStage = model.session.stage
         start(model, as: .classic)
     }
+
+    var hasClassicInProgress: Bool { classicStage != nil }
 
     // MARK: Daily
 
@@ -161,7 +164,9 @@ final class AppModel {
     func sessionChanged() {
         guard let game = activeGame, let kind = activeKind else { return }
         switch kind {
-        case .classic: persistence.saveGame(game.session, in: .classic)
+        case .classic:
+            persistence.saveGame(game.session, in: .classic)
+            classicStage = game.session.stage
         case .daily: persistence.saveGame(game.session, in: .daily)
         case .practice: break
         }
@@ -194,7 +199,7 @@ final class AppModel {
     }
 
     private func refreshSavedGames() {
-        hasClassicInProgress = persistence.loadGame(.classic).map { !$0.isOver } ?? false
+        classicStage = persistence.loadGame(.classic).flatMap { $0.isOver ? nil : $0.stage }
         if let daily = persistence.loadGame(.daily), !daily.isOver, case .daily(let key) = daily.mode {
             openDailyKey = key
         } else {

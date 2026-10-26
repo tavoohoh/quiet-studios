@@ -3,15 +3,18 @@ import SwiftUI
 extension Font {
     /// Numbers on the board: SF Pro Rounded, fixed-width digits so the grid lines up.
     static func boardNumber(size: CGFloat, design: Font.Design = .rounded) -> Font {
-        .system(size: size, weight: .medium, design: design).monospacedDigit()
+        .system(size: size, weight: .regular, design: design).monospacedDigit()
     }
 
-    static func score(design: Font.Design = .rounded) -> Font {
-        .system(.largeTitle, design: design, weight: .semibold).monospacedDigit()
+    /// The game's score, 44 pt at the default text size.
+    static func score(size: CGFloat = 44, design: Font.Design = .rounded) -> Font {
+        .system(size: size, weight: .heavy, design: design).monospacedDigit()
     }
 
     static let score = score()
-    static let counter = Font.system(.subheadline, design: .rounded, weight: .medium).monospacedDigit()
+    static let counter = Font.system(.subheadline, weight: .medium).monospacedDigit()
+    /// Values in stat tiles ("2,480", "8").
+    static let stat = Font.system(.title2, design: .rounded, weight: .heavy).monospacedDigit()
 }
 
 extension Animation {

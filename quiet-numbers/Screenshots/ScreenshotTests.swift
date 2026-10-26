@@ -38,7 +38,7 @@ final class ScreenshotTests: XCTestCase {
         app.terminate()
 
         // 5. The same game with an unlocked theme.
-        let themed = launch(extra: ["-theme", "midnight"])
+        let themed = launch(extra: ["-theme", "indigoPeach"])
         tap(themed.buttons["continue"])
         XCTAssertTrue(themed.staticTexts["score"].waitForExistence(timeout: 5))
         capture(themed, "05-theme")
@@ -62,7 +62,7 @@ final class ScreenshotTests: XCTestCase {
 
     @MainActor
     private func goBack(_ app: XCUIApplication) {
-        app.navigationBars.buttons.element(boundBy: 0).tap()
+        app.buttons["back"].tap()
         sleep(1)
     }
 

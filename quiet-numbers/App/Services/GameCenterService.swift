@@ -1,5 +1,6 @@
 @preconcurrency import GameKit
 import QuietNumbersCore
+import UIKit
 
 /// Optional Game Center layer. Everything works signed out; local data is the source
 /// of truth and is pushed here when the player is authenticated.
@@ -31,6 +32,10 @@ final class GameCenterService {
     }
 
     private(set) var isAuthenticated = false
+    /// The signed-in player's name, for Settings. Shown only, never stored.
+    private(set) var playerName: String?
+    /// GameKit's sign-in screen, kept until the player asks for it (never shown unprompted).
+    private var signInController: UIViewController?
     /// Called each time the player becomes authenticated, to sync pending data.
     var onAuthenticated: (() -> Void)?
 
@@ -39,15 +44,33 @@ final class GameCenterService {
     /// Non-blocking: the game is fully playable while this runs or if it fails.
     /// Sign-in isn't forced on the player; they can sign in from system Settings.
     func authenticate() {
-        GKLocalPlayer.local.authenticateHandler = { [weak self] _, _ in
+        GKLocalPlayer.local.authenticateHandler = { [weak self] controller, _ in
             Task { @MainActor in
                 guard let self else { return }
                 let authenticated = GKLocalPlayer.local.isAuthenticated
                 let becameAuthenticated = authenticated && !self.isAuthenticated
                 self.isAuthenticated = authenticated
+                self.playerName = authenticated ? GKLocalPlayer.local.displayName : nil
+                self.signInController = authenticated ? nil : controller
                 if becameAuthenticated { self.onAuthenticated?() }
             }
         }
+    }
+
+    /// From "Open Settings" or the Game Center row: GameKit's sign-in if it offered one,
+    /// otherwise the app's page in Settings.
+    func signIn() {
+        let scene = UIApplication.shared.connectedScenes.first { $0.activationState == .foregroundActive } as? UIWindowScene
+        if let controller = signInController, let root = scene?.keyWindow?.rootViewController {
+            root.present(controller, animated: true)
+        } else if let url = URL(string: UIApplication.openSettingsURLString) {
+            UIApplication.shared.open(url)
+        }
+    }
+
+    /// Game Center's own dashboard (achievements, friends, profile).
+    func showDashboard() {
+        GKAccessPoint.shared.trigger(state: .dashboard) {}
     }
 
     // MARK: Achievements and scores

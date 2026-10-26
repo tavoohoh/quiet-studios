@@ -14,51 +14,53 @@ extension Reward {
 }
 
 enum ThemeChoice: String, Reward {
-    case paper, slate, sand, midnight, ember
+    case tealCoral, sageSand, indigoPeach, sageCoral, highContrast
 
     var title: LocalizedStringResource {
         switch self {
-        case .paper: "Paper"
-        case .slate: "Slate"
-        case .sand: "Sand"
-        case .midnight: "Midnight"
-        case .ember: "Ember"
+        case .tealCoral: "Teal & Coral"
+        case .sageSand: "Sage & Sand"
+        case .indigoPeach: "Indigo & Peach"
+        case .sageCoral: "Sage & Coral"
+        case .highContrast: "High contrast"
         }
     }
 
+    /// High contrast is an accessibility option, so it's never locked.
     var unlockedBy: Achievement? {
         switch self {
-        case .paper: nil
-        case .slate: .noHelp
-        case .sand: .consistency
-        case .midnight: .nightOwl
-        case .ember: .inTheRed
+        case .tealCoral, .highContrast: nil
+        case .sageSand: .noHelp
+        case .indigoPeach: .consistency
+        case .sageCoral: .nightOwl
         }
     }
 
+    /// Shown instead of an unlock condition.
+    var note: LocalizedStringResource? {
+        self == .highContrast ? "Always available for low vision." : nil
+    }
+
+    /// Teal & Coral follows the system; the others have a single mode of their own.
     var theme: Theme {
         switch self {
-        case .paper:
-            Theme(
-                background: AnyShapeStyle(.background),
-                surface: AnyShapeStyle(.background.secondary),
-                ink: AnyShapeStyle(.primary),
-                accent: .accentColor,
-                colorScheme: nil
-            )
-        case .slate:
-            Theme(background: .init(Color.slateBackground), surface: .init(Color.slateSurface),
-                  ink: .init(Color.slateInk), accent: .slateAccent, colorScheme: .dark)
-        case .sand:
-            Theme(background: .init(Color.sandBackground), surface: .init(Color.sandSurface),
-                  ink: .init(Color.sandInk), accent: .sandAccent, colorScheme: nil)
-        case .midnight:
-            Theme(background: .init(Color.midnightBackground), surface: .init(Color.midnightSurface),
-                  ink: .init(Color.midnightInk), accent: .midnightAccent, colorScheme: .dark)
-        case .ember:
-            Theme(background: .init(Color.emberBackground), surface: .init(Color.emberSurface),
-                  ink: .init(Color.emberInk), accent: .emberAccent, colorScheme: .dark)
+        case .tealCoral: Theme(assetPrefix: "TealCoral", colorScheme: nil)
+        case .sageSand: Theme(assetPrefix: "SageSand", colorScheme: .light)
+        case .indigoPeach: Theme(assetPrefix: "IndigoPeach", colorScheme: .dark)
+        case .sageCoral: Theme(assetPrefix: "SageCoral", colorScheme: .light)
+        case .highContrast: Theme(assetPrefix: "HighContrast", colorScheme: .light, isHighContrast: true)
         }
+    }
+
+    /// Ids saved before the 2026 redesign, mapped to the theme that took their place
+    /// (same unlock, except Ember: its slot went to the always-available High contrast).
+    private static let legacyIDs: [String: ThemeChoice] = [
+        "paper": .tealCoral, "slate": .sageSand, "sand": .indigoPeach, "midnight": .sageCoral, "ember": .highContrast,
+    ]
+
+    static func migrateSavedChoice(in defaults: UserDefaults = .standard) {
+        guard let saved = defaults.string(forKey: PreferenceKey.theme), let theme = legacyIDs[saved] else { return }
+        defaults.set(theme.rawValue, forKey: PreferenceKey.theme)
     }
 }
 
@@ -139,19 +141,54 @@ enum AppIconChoice: String, Reward {
     var iconName: String? { self == .gold ? "AppIcon-Gold" : nil }
 }
 
-/// Colors for a theme. Paper uses the system's semantic styles.
+/// Colors for a theme, by role. Values live in the asset catalog (`scripts/theme-colors.py`).
 struct Theme {
-    let background: AnyShapeStyle
-    let surface: AnyShapeStyle
-    let ink: AnyShapeStyle
+    /// Screen background.
+    let background: Color
+    /// Cards, list rows, round buttons.
+    let surface: Color
+    /// Secondary buttons, segment tracks, switches when off.
+    let surface2: Color
+    /// Text and board numbers.
+    let ink: Color
+    /// Secondary text.
+    let muted: Color
+    /// Main buttons, selection, bar icons.
+    let primary: Color
+    /// Text on `primary`.
+    let onPrimary: Color
+    /// Numbers added with +, streaks, praise.
     let accent: Color
-    /// Dark-only themes force dark mode so system controls match.
+    /// Cleared numbers, still faintly visible.
+    let ghost: Color
+    let separator: Color
+    /// Single-mode themes force their scheme so system controls match.
     let colorScheme: ColorScheme?
+    /// Surfaces get a border and added numbers are underlined, so nothing depends on color alone.
+    let isHighContrast: Bool
+
+    init(assetPrefix prefix: String, colorScheme: ColorScheme?, isHighContrast: Bool = false) {
+        background = Color("\(prefix)Background")
+        surface = Color("\(prefix)Surface")
+        surface2 = Color("\(prefix)Surface2")
+        ink = Color("\(prefix)Ink")
+        muted = Color("\(prefix)Muted")
+        primary = Color("\(prefix)Primary")
+        onPrimary = Color("\(prefix)OnPrimary")
+        accent = Color("\(prefix)Accent")
+        ghost = Color("\(prefix)Ghost")
+        separator = Color("\(prefix)Separator")
+        self.colorScheme = colorScheme
+        self.isHighContrast = isHighContrast
+    }
+
+    /// Text on `accent` (the background reads well on every theme's accent).
+    var onAccent: Color { background }
 }
 
 /// The player's chosen cosmetics, read by every screen.
 struct Appearance {
-    var theme: Theme = ThemeChoice.paper.theme
+    var theme: Theme = ThemeChoice.tealCoral.theme
     var tileStyle: TileStyle = .plain
     var numberFont: NumberFont = .rounded
     var clearEffect: ClearEffect = .outline

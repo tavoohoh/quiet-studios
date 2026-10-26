@@ -8,4 +8,10 @@ enum DayKeyFormat {
         guard let day = DailyChallenge.date(forDayKey: dayKey) else { return dayKey }
         return day.formatted(Date.FormatStyle(date: date, time: .omitted, timeZone: .gmt))
     }
+
+    /// "Monday, October 26": weekday and date, no year.
+    static func weekdayString(_ dayKey: String) -> String {
+        guard let day = DailyChallenge.date(forDayKey: dayKey) else { return dayKey }
+        return day.formatted(Date.FormatStyle(timeZone: .gmt).weekday(.wide).month(.wide).day())
+    }
 }

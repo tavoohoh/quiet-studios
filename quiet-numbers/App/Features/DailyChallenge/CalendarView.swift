@@ -1,58 +1,72 @@
 import QuietNumbersCore
 import SwiftUI
 
-/// Month grid of daily challenges. Completed days are filled, played ones outlined.
-/// Days within the replay window can be tapped to play them unscored.
+/// Month grid of daily challenges. Completed days are filled, played ones outlined, and
+/// days completed in a row are joined by a band (within a week). Days within the replay
+/// window can be tapped to play them unscored.
 struct CalendarView: View {
     @Binding var month: Date
     let todayKey: String
     let records: [String: DailyRecord]
     let onSelect: (String) -> Void
 
+    @Environment(\.appearance) private var appearance
+    @Environment(\.horizontalSizeClass) private var sizeClass
+
     private let calendar = Calendar.current
-    private let columns = Array(repeating: GridItem(.flexible(), spacing: 4), count: 7)
+    private let columns = Array(repeating: GridItem(.flexible(), spacing: 0), count: 7)
 
     var body: some View {
-        VStack(spacing: 12) {
+        VStack(spacing: 8) {
             HStack {
                 Button {
                     shiftMonth(by: -1)
                 } label: {
                     Image(systemName: "chevron.backward")
+                        .frame(width: 44, height: 44)
                 }
+                .foregroundStyle(appearance.theme.primary)
                 .accessibilityLabel(Text("Previous month"))
                 Spacer()
                 Text(month, format: .dateTime.month(.wide).year())
                     .font(.headline)
+                    .foregroundStyle(appearance.theme.ink)
                 Spacer()
                 Button {
                     shiftMonth(by: 1)
                 } label: {
                     Image(systemName: "chevron.forward")
+                        .frame(width: 44, height: 44)
                 }
+                .foregroundStyle(isCurrentMonth ? appearance.theme.ghost : appearance.theme.primary)
                 .disabled(isCurrentMonth)
                 .accessibilityLabel(Text("Next month"))
             }
-            .buttonStyle(.borderless)
+            .font(.subheadline.weight(.bold))
+            .buttonStyle(.plain)
 
-            LazyVGrid(columns: columns, spacing: 6) {
+            LazyVGrid(columns: columns, spacing: 0) {
                 // One ForEach with distinct ids: sibling ForEach ids collide inside a grid.
                 ForEach(items, id: \.self) { item in
                     switch item {
                     case .weekday(let index):
                         Text(weekdaySymbols[index])
-                            .font(.caption2.weight(.semibold))
-                            .foregroundStyle(.secondary)
+                            .font(.footnote.weight(.semibold))
+                            .foregroundStyle(appearance.theme.muted)
                             .frame(maxWidth: .infinity)
+                            .padding(.bottom, 6)
                     case .blank:
                         Color.clear.frame(height: 1)
                     case .day(let day):
+                        let column = (leadingBlanks + day - 1) % 7
                         DayCell(
                             day: day,
                             dayKey: dayKey(for: day),
                             todayKey: todayKey,
                             record: records[dayKey(for: day)],
                             isPlayable: isPlayable(dayKey(for: day)),
+                            joinsPrevious: column != 0 && isCompleted(day) && isCompleted(day - 1),
+                            joinsNext: column != 6 && isCompleted(day) && isCompleted(day + 1),
                             onSelect: onSelect
                         )
                     }
@@ -107,6 +121,10 @@ struct CalendarView: View {
         return String(format: "%04d-%02d-%02d", parts.year!, parts.month!, day)
     }
 
+    private func isCompleted(_ day: Int) -> Bool {
+        days.contains(day) && records[dayKey(for: day)]?.isCompleted == true
+    }
+
     private func isPlayable(_ key: String) -> Bool {
         guard let oldest = DailyChallenge.dayKey(todayKey, addingDays: -DailyChallenge.replayWindow) else { return false }
         return key <= todayKey && key >= oldest
@@ -119,29 +137,42 @@ private struct DayCell: View {
     let todayKey: String
     let record: DailyRecord?
     let isPlayable: Bool
+    /// Completed, like the day before (or after) in the same week: the band reaches it.
+    let joinsPrevious: Bool
+    let joinsNext: Bool
     let onSelect: (String) -> Void
 
     @Environment(\.horizontalSizeClass) private var sizeClass
+    @Environment(\.appearance) private var appearance
 
     var body: some View {
         let isRegular = sizeClass == .regular
+        let height: CGFloat = isRegular ? 56 : 42
+        let circle = height - 6
         Button {
             onSelect(dayKey)
         } label: {
             Text(day, format: .number)
-                .font(.system(isRegular ? .title3 : .callout, design: .rounded, weight: dayKey == todayKey ? .bold : .regular).monospacedDigit())
+                .font(.system(isRegular ? .title3 : .callout, design: .rounded, weight: record?.isCompleted == true || isToday ? .bold : .regular).monospacedDigit())
                 .foregroundStyle(foreground)
-                .frame(maxWidth: .infinity)
-                .frame(height: isRegular ? 52 : 36)
+                .frame(width: circle, height: circle)
                 .background {
                     if record?.isCompleted == true {
-                        Circle().fill(.tint)
+                        Circle().fill(appearance.theme.primary)
                     } else if record?.isFinished == true {
-                        Circle().strokeBorder(.tint, lineWidth: 1.5)
-                    } else if dayKey == todayKey {
-                        Circle().strokeBorder(.tint.opacity(0.4), style: StrokeStyle(lineWidth: 1.5, dash: [3, 3]))
+                        Circle().strokeBorder(appearance.theme.primary, lineWidth: 1.5)
                     }
                 }
+                .overlay {
+                    if isToday {
+                        Circle()
+                            .strokeBorder(appearance.theme.accent, lineWidth: 2)
+                            .padding(-4)
+                    }
+                }
+                .frame(maxWidth: .infinity)
+                .frame(height: height)
+                .background { band(height: circle) }
                 .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
@@ -150,10 +181,28 @@ private struct DayCell: View {
         .accessibilityValue(accessibilityStatus)
     }
 
-    private var foreground: AnyShapeStyle {
-        if record?.isCompleted == true { return AnyShapeStyle(.background) }
-        if dayKey == todayKey { return AnyShapeStyle(.tint) }
-        return isPlayable ? AnyShapeStyle(.primary) : AnyShapeStyle(.tertiary)
+    private var isToday: Bool { dayKey == todayKey }
+
+    /// 20% `primary` behind the circles, from this day's center to the neighbor it joins.
+    @ViewBuilder
+    private func band(height: CGFloat) -> some View {
+        if joinsPrevious || joinsNext {
+            GeometryReader { geometry in
+                let mid = geometry.size.width / 2
+                let start = joinsPrevious ? 0 : mid
+                let end = joinsNext ? geometry.size.width : mid
+                Rectangle()
+                    .fill(appearance.theme.primary.opacity(0.2))
+                    .frame(width: end - start, height: height)
+                    .offset(x: start, y: (geometry.size.height - height) / 2)
+            }
+        }
+    }
+
+    private var foreground: Color {
+        if record?.isCompleted == true { return appearance.theme.onPrimary }
+        if isToday { return appearance.theme.accent }
+        return isPlayable ? appearance.theme.ink : appearance.theme.muted.opacity(0.6)
     }
 
     private var accessibilityStatus: Text {

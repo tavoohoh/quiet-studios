@@ -18,6 +18,7 @@ struct GameView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.appearance) private var appearance
     @Environment(\.horizontalSizeClass) private var sizeClass
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
     var body: some View {
         VStack(spacing: 0) {
@@ -26,13 +27,12 @@ struct GameView: View {
                 subtitle: subtitle
             )
             GeometryReader { geometry in
-                let width = min(geometry.size.width - 16, Layout.boardWidth(sizeClass))
-                let size = (width / CGFloat(Board.columns)).rounded(.down)
-                BoardView(model: model, size: size) { cell in
+                BoardView(model: model, cell: cellSize(for: geometry.size.width)) { cell in
                     animate { model.tap(cell) }
                 }
                 .frame(maxWidth: .infinity)
             }
+            .padding(.top, 20)
             GameActionBar(
                 model: model,
                 onUndo: { animate { model.undo() } },
@@ -40,11 +40,18 @@ struct GameView: View {
                 onHint: { animate { model.showHint() } }
             )
         }
-        .frame(maxWidth: Layout.boardWidth(sizeClass) + 32)
+        .frame(maxWidth: Layout.boardWidth(sizeClass) + 48)
         .frame(maxWidth: .infinity)
-        .background(appearance.theme.background)
-        .overlayPreferenceValue(ScoreAnchorKey.self) { anchor in
-            GameFeedbackOverlay(model: model, scoreAnchor: anchor)
+        .screen {
+            if kind == .classic {
+                Menu {
+                    Button("New Game", systemImage: "arrow.counterclockwise") { animate(onNewGame) }
+                        .keyboardShortcut("n")
+                } label: {
+                    RoundIconLabel(systemImage: "ellipsis", tint: appearance.theme.primary)
+                }
+                .accessibilityLabel(Text("Menu"))
+            }
         }
         .overlay {
             if let stage = model.stageBanner {
@@ -71,19 +78,15 @@ struct GameView: View {
         .onChange(of: reduceMotion, initial: true) { model.reduceMotion = reduceMotion }
         .onChange(of: model.session) { onSessionChange() }
         .onAppear { if startingBest == nil { startingBest = bestScore } }
-        .toolbar {
-            if kind == .classic {
-                ToolbarItem(placement: .primaryAction) {
-                    Menu {
-                        Button("New Game", systemImage: "arrow.counterclockwise") { animate(onNewGame) }
-                            .keyboardShortcut("n")
-                    } label: {
-                        Label("Menu", systemImage: "ellipsis.circle")
-                    }
-                }
-            }
-        }
-        .navigationBarTitleDisplayMode(.inline)
+    }
+
+    /// 9 columns across the screen less 24 pt margins; rows 46 pt tall (52 with larger
+    /// numbers), or square cells when the board is wide (iPad).
+    private func cellSize(for width: CGFloat) -> CGSize {
+        let boardWidth = min(width - 48, Layout.boardWidth(sizeClass))
+        let cellWidth = (boardWidth / CGFloat(Board.columns)).rounded(.down)
+        let rowHeight: CGFloat = appearance.largerNumbers || dynamicTypeSize.isAccessibilitySize ? 52 : 46
+        return CGSize(width: cellWidth, height: max(rowHeight, cellWidth))
     }
 
     private var subtitle: Text {
@@ -105,12 +108,16 @@ struct GameView: View {
 private struct StageBanner: View {
     let stage: Int
 
+    @Environment(\.appearance) private var appearance
+
     var body: some View {
         Text("Stage \(stage)")
-            .font(.system(.title, design: .rounded, weight: .semibold))
+            .font(.system(.title, design: .rounded, weight: .heavy))
+            .foregroundStyle(appearance.theme.ink)
             .padding(.horizontal, 28)
             .padding(.vertical, 14)
-            .background(.regularMaterial, in: Capsule())
+            .background { SurfaceShape(shape: Capsule()) }
+            .shadow(color: .black.opacity(0.12), radius: 12, y: 4)
             .accessibilityAddTraits(.isStaticText)
     }
 }
@@ -127,48 +134,42 @@ private struct GameOverView: View {
     var body: some View {
         VStack(spacing: 20) {
             Text(session.isCompleted ? "Challenge complete" : "No moves left")
-                .font(.system(.title2, design: .rounded, weight: .semibold))
+                .font(.system(.title2, design: .rounded, weight: .heavy))
+                .foregroundStyle(appearance.theme.ink)
             VStack(spacing: 4) {
                 Text("Final score")
                     .font(.subheadline)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(appearance.theme.muted)
                 Text(session.score, format: .number)
                     .font(.score)
+                    .foregroundStyle(appearance.theme.ink)
                 if isNewBest {
-                    Text("New best score!")
-                        .font(.headline)
-                        .foregroundStyle(Color.highlight)
+                    Toast(text: Text("New best score!"))
+                        .padding(.top, 4)
                 }
                 if case .practice = kind {
                     Text("Not scored")
                         .font(.subheadline)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(appearance.theme.muted)
                 }
             }
             VStack(spacing: 10) {
                 if kind == .classic {
-                    Button(action: onNewGame) {
-                        Text("New Game").frame(maxWidth: .infinity)
-                    }
-                    .buttonStyle(.borderedProminent)
-                    Button(action: onHome) {
-                        Text("Home").frame(maxWidth: .infinity)
-                    }
-                    .buttonStyle(.bordered)
+                    Button("New Game", action: onNewGame)
+                        .buttonStyle(CapsuleButtonStyle())
+                    Button("Home", action: onHome)
+                        .buttonStyle(CapsuleButtonStyle(isProminent: false))
                 } else {
-                    Button(action: onHome) {
-                        Text("Done").frame(maxWidth: .infinity)
-                    }
-                    .buttonStyle(.borderedProminent)
+                    Button("Done", action: onHome)
+                        .buttonStyle(CapsuleButtonStyle())
                 }
             }
-            .controlSize(.large)
-            .buttonBorderShape(.capsule)
         }
-        .padding(28)
-        .frame(maxWidth: 320)
-        .background(appearance.theme.surface, in: RoundedRectangle(cornerRadius: 28, style: .continuous))
+        .padding(24)
+        .frame(maxWidth: 340)
+        .background { SurfaceShape(shape: RoundedRectangle(cornerRadius: 28, style: .continuous)) }
+        .shadow(color: .black.opacity(0.15), radius: 24, y: 8)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(.black.opacity(0.15))
+        .background(.black.opacity(0.2))
     }
 }

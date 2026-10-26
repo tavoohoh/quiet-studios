@@ -5,7 +5,8 @@ import SwiftUI
 /// so that id stays stable while the board collapses and grows.
 struct BoardView: View {
     let model: GameModel
-    let size: CGFloat
+    /// One cell: a ninth of the board's width, by the row height.
+    let cell: CGSize
     let onTap: (Cell) -> Void
 
     @Environment(\.appearance) private var appearance
@@ -25,21 +26,25 @@ struct BoardView: View {
                                 ))
                         }
                     }
-                    .frame(width: size * CGFloat(Board.columns), alignment: .top)
+                    .frame(width: cell.width * CGFloat(Board.columns), alignment: .top)
                     .background(alignment: .topLeading) {
                         if let line = model.matchLine {
-                            MatchLineView(line: line, size: size)
+                            MatchLineView(line: line, cell: cell)
                                 .id(line.id)
                                 .transition(.asymmetric(insertion: .identity, removal: .opacity))
                         }
                     }
                     .overlay(alignment: .topLeading) {
                         ForEach(model.pops) { pop in
-                            PopView(size: size)
-                                .position(x: pop.center.x * size, y: pop.center.y * size)
+                            PopView(pop: pop, scale: cell.height / 46)
+                                .position(x: pop.center.x * cell.width, y: pop.center.y * cell.height)
+                        }
+                        if let points = model.floatingPoints {
+                            FloatingPointsView(points: points, cell: cell) { model.dismissFloatingPoints(points) }
+                                .id(points.id)
                         }
                     }
-                    Color.clear.frame(height: size).id(Self.bottomID)
+                    Color.clear.frame(height: cell.height).id(Self.bottomID)
                 }
                 .padding(.vertical, 8)
             }
@@ -72,27 +77,35 @@ struct BoardView: View {
                         cell: cell,
                         row: index / Board.columns,
                         column: index % Board.columns,
-                        size: size,
+                        size: self.cell,
                         isSelected: model.selectedID == cell.id || model.connectingIDs.contains(cell.id),
+                        isMissed: model.missIDs.contains(cell.id),
                         isHinted: model.hintIDs.contains(cell.id),
                         shakes: model.shakes[cell.id] ?? 0,
+                        entranceDelay: entranceDelay(for: cell),
                         action: { onTap(cell) }
                     )
                     .transition(.opacity)
                 }
                 Spacer(minLength: 0)
             }
-            .frame(width: size * CGFloat(Board.columns))
+            .frame(width: self.cell.width * CGFloat(Board.columns))
             .overlay {
                 if model.flashingRows.contains(firstID) {
                     switch appearance.clearEffect {
-                    case .outline: RowClearEffect(size: size)
+                    case .outline: RowClearEffect(height: self.cell.height)
                     case .wave: RowWaveEffect()
                     }
                 }
             }
             .id(firstID)
         }
+    }
+
+    /// Numbers from the last + come in one by one: 25 ms apart, all within 1.2 s.
+    private func entranceDelay(for cell: Cell) -> Double? {
+        guard let first = model.addedFromID, cell.id >= first else { return nil }
+        return min(Double(cell.id - first) * 0.025, 1.2 - 0.16) * EffectTiming.scale
     }
 
     private func rowID(containing ids: Set<Int>) -> Int? {
@@ -105,24 +118,25 @@ struct BoardView: View {
 /// Solid, in the theme's accent; thicker the farther apart the numbers are.
 private struct MatchLineView: View {
     let line: MatchLine
-    let size: CGFloat
+    let cell: CGSize
+
+    @Environment(\.appearance) private var appearance
 
     @State private var progress: CGFloat = 0
 
     var body: some View {
         ZStack {
             ForEach(Array(line.segments.enumerated()), id: \.offset) { _, segment in
-                SegmentShape(segment: segment, scale: size)
+                SegmentShape(segment: segment, scale: cell)
                     .trim(from: 0, to: progress)
-                    .stroke(.tint, style: StrokeStyle(lineWidth: width, lineCap: .round))
+                    .stroke(appearance.theme.primary, style: StrokeStyle(lineWidth: width, lineCap: .round))
             }
         }
         .opacity(opacity)
         .allowsHitTesting(false)
         .accessibilityHidden(true)
         .onAppear {
-            // Fast start, hard stop.
-            withAnimation(.timingCurve(0.2, 0.9, 0.3, 1, duration: line.tier.drawDuration)) { progress = 1 }
+            withAnimation(.easeOut(duration: line.tier.drawDuration)) { progress = 1 }
         }
     }
 
@@ -139,64 +153,33 @@ private struct MatchLineView: View {
     }
 }
 
-/// A matched number bursting: a ring grows past the cell (`maxRing` × its side),
-/// turns into an asterisk whose rays fly outwards, and fades.
+/// A matched number bursting: 8 rays move out from 15 to 25 pt and fade
+/// (accent for a long shot, primary otherwise).
 private struct PopView: View {
-    let size: CGFloat
+    let pop: Pop
+    /// 1 at the 46 pt row height.
+    let scale: CGFloat
 
-    @State private var started = false
+    @Environment(\.appearance) private var appearance
+    @State private var progress: CGFloat = 0
 
-    private static let maxRing: CGFloat = 1.5
     private static let rays = 8
 
-    private struct Values {
-        var ring: CGFloat = 0.3
-        var ringOpacity: Double = 1
-        var burst: CGFloat = 0
-        var burstOpacity: Double = 0
-    }
-
     var body: some View {
-        let duration = Pop.duration
-        let grow = duration * 0.4
-        Color.clear
-            .frame(width: size * Self.maxRing * 1.4, height: size * Self.maxRing * 1.4)
-            .keyframeAnimator(initialValue: Values(), trigger: started) { content, values in
-                content.overlay {
-                    Circle()
-                        .stroke(.tint, lineWidth: 2)
-                        .frame(width: size * values.ring, height: size * values.ring)
-                        .opacity(values.ringOpacity)
-                    AsteriskShape(rays: Self.rays, progress: values.burst)
-                        .stroke(.tint, style: StrokeStyle(lineWidth: 2, lineCap: .round))
-                        .frame(width: size * Self.maxRing, height: size * Self.maxRing)
-                        .opacity(values.burstOpacity)
-                }
-            } keyframes: { _ in
-                KeyframeTrack(\.ring) {
-                    CubicKeyframe(Self.maxRing, duration: grow)
-                }
-                KeyframeTrack(\.ringOpacity) {
-                    LinearKeyframe(1, duration: grow)
-                    LinearKeyframe(0, duration: duration * 0.1)
-                }
-                KeyframeTrack(\.burst) {
-                    LinearKeyframe(0, duration: grow)
-                    CubicKeyframe(1, duration: duration - grow)
-                }
-                KeyframeTrack(\.burstOpacity) {
-                    LinearKeyframe(0, duration: grow)
-                    LinearKeyframe(1, duration: duration * 0.05)
-                    LinearKeyframe(0, duration: duration * 0.55)
-                }
-            }
+        AsteriskShape(rays: Self.rays, progress: progress)
+            .stroke(pop.isLongShot ? appearance.theme.accent : appearance.theme.primary,
+                    style: StrokeStyle(lineWidth: 2.5 * scale, lineCap: .round))
+            .frame(width: 54 * scale, height: 54 * scale)
+            .opacity(1 - progress)
             .allowsHitTesting(false)
             .accessibilityHidden(true)
-            .onAppear { started = true }
+            .onAppear {
+                withAnimation(.easeOut(duration: Pop.duration)) { progress = 1 }
+            }
     }
 }
 
-/// Rays around the center, moving outwards and shortening as `progress` goes 0 → 1.
+/// Rays around the center, 10 pt long (at 54 pt across), moving outwards as `progress` goes 0 → 1.
 private struct AsteriskShape: Shape {
     let rays: Int
     var progress: CGFloat
@@ -207,9 +190,9 @@ private struct AsteriskShape: Shape {
     }
 
     func path(in rect: CGRect) -> Path {
-        let radius = min(rect.width, rect.height) / 2
-        let inner = radius * (0.55 + 0.45 * progress)
-        let outer = radius * (0.95 + 0.25 * progress)
+        let unit = min(rect.width, rect.height) / 54
+        let inner = (15 + 10 * progress - 5) * unit
+        let outer = inner + 10 * unit
         var path = Path()
         for ray in 0..<rays {
             let angle = Double(ray) / Double(rays) * 2 * .pi
@@ -223,12 +206,12 @@ private struct AsteriskShape: Shape {
 
 private struct SegmentShape: Shape {
     let segment: MatchLine.Segment
-    let scale: CGFloat
+    let scale: CGSize
 
     func path(in rect: CGRect) -> Path {
         var path = Path()
-        path.move(to: CGPoint(x: segment.from.x * scale, y: segment.from.y * scale))
-        path.addLine(to: CGPoint(x: segment.to.x * scale, y: segment.to.y * scale))
+        path.move(to: CGPoint(x: segment.from.x * scale.width, y: segment.from.y * scale.height))
+        path.addLine(to: CGPoint(x: segment.to.x * scale.width, y: segment.to.y * scale.height))
         return path
     }
 }
@@ -237,12 +220,13 @@ private struct SegmentShape: Shape {
 private struct RowWaveEffect: View {
     @State private var offset: CGFloat = 0
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.appearance) private var appearance
 
     var body: some View {
         GeometryReader { geometry in
             let band = geometry.size.width * 0.45
             LinearGradient(
-                colors: [.clear, Color.accentColor.opacity(0.25), Color.accentColor.opacity(0.45), Color.accentColor.opacity(0.25), .clear],
+                colors: [.clear, appearance.theme.primary.opacity(0.25), appearance.theme.primary.opacity(0.45), appearance.theme.primary.opacity(0.25), .clear],
                 startPoint: .leading,
                 endPoint: .trailing
             )
@@ -256,32 +240,33 @@ private struct RowWaveEffect: View {
             if reduceMotion {
                 offset = 0.5
             } else {
-                withAnimation(.easeInOut(duration: 0.24 * EffectTiming.scale)) { offset = 1 }
+                withAnimation(.easeInOut(duration: 0.15 * EffectTiming.scale)) { offset = 1 }
             }
         }
     }
 }
 
-/// Default row-clear effect: an outline that draws itself around the row.
+/// Default row-clear effect: the row lights up while an outline draws itself around it.
 private struct RowClearEffect: View {
-    let size: CGFloat
+    let height: CGFloat
 
     @State private var progress: CGFloat = 0
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.appearance) private var appearance
 
     var body: some View {
-        let shape = RoundedRectangle(cornerRadius: size * 0.35, style: .continuous).inset(by: 2)
+        let shape = RoundedRectangle(cornerRadius: height * 0.35, style: .continuous).inset(by: 2)
         shape
             .trim(from: 0, to: progress)
-            .stroke(.tint, style: StrokeStyle(lineWidth: 2, lineCap: .round))
-            .background(shape.fill(.tint.opacity(0.08 * progress)))
+            .stroke(appearance.theme.primary, style: StrokeStyle(lineWidth: 2, lineCap: .round))
+            .background(shape.fill(appearance.theme.primary.opacity(0.14 * progress)))
             .allowsHitTesting(false)
             .accessibilityHidden(true)
             .onAppear {
                 if reduceMotion {
                     progress = 1
                 } else {
-                    withAnimation(.easeOut(duration: 0.22 * EffectTiming.scale)) { progress = 1 }
+                    withAnimation(.easeOut(duration: 0.15 * EffectTiming.scale)) { progress = 1 }
                 }
             }
     }

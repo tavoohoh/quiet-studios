@@ -15,7 +15,7 @@ final class PersistenceUITests: XCTestCase {
         let classicCells = app.buttons.matching(identifierPrefix: "cell-").count
 
         // Daily: start today's challenge and change it too.
-        app.navigationBars.buttons.element(boundBy: 0).tap()
+        app.buttons["back"].tap()
         dailyCard(app).tap()
         app.buttons["Play"].tap()
         XCTAssertTrue(app.staticTexts["Daily Challenge"].waitForExistence(timeout: 2))
@@ -28,11 +28,11 @@ final class PersistenceUITests: XCTestCase {
 
         XCTAssertTrue(dailyCard(app).label.contains("In progress"))
         snapshot(app, "home")
-        app.buttons["Continue"].tap()
+        app.buttons["continue"].tap()
         XCTAssertTrue(app.buttons["cell-50"].waitForExistence(timeout: 2))
         XCTAssertEqual(app.buttons.matching(identifierPrefix: "cell-").count, classicCells)
 
-        app.navigationBars.buttons.element(boundBy: 0).tap()
+        app.buttons["back"].tap()
         dailyCard(app).tap()
         snapshot(app, "daily")
         app.buttons["Continue"].tap()

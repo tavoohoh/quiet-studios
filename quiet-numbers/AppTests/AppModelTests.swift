@@ -115,7 +115,7 @@ import Testing
         app.record(.gameFinished(classicScore: 300, hintsUsed: 0))
         app.newClassic()
         persistence.finishDaily("2026-10-20", score: 120, isCompleted: true)
-        UserDefaults.standard.set(ThemeChoice.slate.rawValue, forKey: PreferenceKey.theme)
+        UserDefaults.standard.set(ThemeChoice.sageSand.rawValue, forKey: PreferenceKey.theme)
 
         app.resetProgress()
 
@@ -132,9 +132,22 @@ import Testing
 
     @Test func lockedRewardsNeedTheirAchievement() {
         let progress = PlayerProgress(unlocked: [.noHelp])
-        #expect(ThemeChoice.paper.isUnlocked(in: progress))
-        #expect(ThemeChoice.slate.isUnlocked(in: progress))
-        #expect(!ThemeChoice.midnight.isUnlocked(in: progress))
+        #expect(ThemeChoice.tealCoral.isUnlocked(in: progress))
+        #expect(ThemeChoice.sageSand.isUnlocked(in: progress))
+        #expect(!ThemeChoice.sageCoral.isUnlocked(in: progress))
+        #expect(ThemeChoice.highContrast.isUnlocked(in: PlayerProgress()))
+    }
+
+    @Test func legacyThemeIDsMigrate() {
+        let defaults = UserDefaults(suiteName: "legacyThemeIDsMigrate")!
+        for (old, new) in [("paper", ThemeChoice.tealCoral), ("midnight", .sageCoral), ("ember", .highContrast)] {
+            defaults.set(old, forKey: PreferenceKey.theme)
+            ThemeChoice.migrateSavedChoice(in: defaults)
+            #expect(defaults.string(forKey: PreferenceKey.theme) == new.rawValue)
+        }
+        ThemeChoice.migrateSavedChoice(in: defaults)
+        #expect(defaults.string(forKey: PreferenceKey.theme) == ThemeChoice.highContrast.rawValue)
+        defaults.removePersistentDomain(forName: "legacyThemeIDsMigrate")
     }
 }
 

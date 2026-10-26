@@ -35,3 +35,6 @@ AuthKey_*.p8
 **/fastlane/Preview.html
 **/fastlane/test_output/
 **/fastlane/screenshots/screenshots.html
+
+# Python
+__pycache__/

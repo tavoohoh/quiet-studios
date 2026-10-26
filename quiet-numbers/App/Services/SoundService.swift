@@ -101,9 +101,9 @@ final class FeedbackService {
         if defaults.object(forKey: PreferenceKey.hapticsEnabled) as? Bool ?? true {
             switch event {
             case .select: haptics.play(.select)
-            case .match: haptics.play(.match)
+            case .match(let longShot): haptics.play(longShot ? .success : .match)
             case .invalid: haptics.play(.invalid)
-            case .rowCleared, .boardCleared: haptics.play(.rowCleared)
+            case .rowCleared, .boardCleared: haptics.play(.success)
             }
         }
         if defaults.object(forKey: PreferenceKey.soundEnabled) as? Bool ?? true {

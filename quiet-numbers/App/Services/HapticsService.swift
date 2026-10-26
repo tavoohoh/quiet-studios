@@ -6,20 +6,21 @@ final class HapticsService {
     enum Event {
         case select
         case match
+        /// Also a long shot and a cleared row.
+        case success
         case invalid
-        case rowCleared
     }
 
     func play(_ event: Event) {
         switch event {
         case .select:
-            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+            UISelectionFeedbackGenerator().selectionChanged()
         case .match:
             UIImpactFeedbackGenerator(style: .medium).impactOccurred()
-        case .invalid:
-            UIImpactFeedbackGenerator(style: .rigid).impactOccurred(intensity: 0.5)
-        case .rowCleared:
+        case .success:
             UINotificationFeedbackGenerator().notificationOccurred(.success)
+        case .invalid:
+            UINotificationFeedbackGenerator().notificationOccurred(.error)
         }
     }
 }

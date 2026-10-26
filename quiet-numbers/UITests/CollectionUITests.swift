@@ -9,25 +9,25 @@ final class CollectionUITests: XCTestCase {
         app.launch()
 
         app.buttons["Collection"].tap()
-        app.buttons["Midnight"].tap()
+        app.buttons["Sage & Coral"].tap()
         app.buttons["Circle"].tap()
         app.buttons["New York"].tap()
-        XCTAssertTrue(app.buttons["Midnight"].isSelected)
+        XCTAssertTrue(app.buttons["Sage & Coral"].isSelected)
         snapshot(app, "collection")
 
-        app.navigationBars.buttons.element(boundBy: 0).tap()
+        app.buttons["back"].tap()
         app.buttons["New Game"].tap()
         XCTAssertTrue(app.buttons["cell-0"].waitForExistence(timeout: 2))
-        snapshot(app, "game-midnight")
+        snapshot(app, "game-sage-coral")
 
-        app.navigationBars.buttons.element(boundBy: 0).tap()
+        app.buttons["back"].tap()
         app.buttons["Settings"].tap()
         snapshot(app, "settings")
 
         // Leave the simulator as it was.
-        app.navigationBars.buttons.element(boundBy: 0).tap()
+        app.buttons["back"].tap()
         app.buttons["Collection"].tap()
-        app.buttons["Paper"].tap()
+        app.buttons["Teal & Coral"].tap()
         app.buttons["Plain"].tap()
         app.buttons["SF Rounded"].tap()
     }
@@ -39,7 +39,7 @@ final class CollectionUITests: XCTestCase {
         app.launchArguments = ["-uiTesting", "-resetStore"]
         app.launch()
         app.buttons["Leaderboards"].tap()
-        XCTAssertTrue(app.staticTexts["Game Center"].waitForExistence(timeout: 3))
+        XCTAssertTrue(app.staticTexts["Play with friends"].waitForExistence(timeout: 3))
         snapshot(app, "leaderboards-signed-out")
     }
 

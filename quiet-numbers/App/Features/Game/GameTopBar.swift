@@ -1,23 +1,24 @@
 import QuietNumbersCore
 import SwiftUI
 
-/// Score and stage. Actions live in `GameActionBar`; praise and flying points in `GameFeedbackOverlay`.
+/// Score and stage, with praise as a toast on the right. Actions live in `GameActionBar`;
+/// points rise from the pair on the board (`FloatingPointsView`).
 struct GameTopBar: View {
     let model: GameModel
-    /// Under the score: stage, or which daily this is.
+    /// Under the score: stage and best, or which daily this is.
     let subtitle: Text
 
     @Environment(\.appearance) private var appearance
+    @ScaledMetric(relativeTo: .largeTitle) private var scoreSize: CGFloat = 44
 
     var body: some View {
-        HStack(alignment: .center, spacing: 12) {
-            VStack(alignment: .leading, spacing: 2) {
+        HStack(alignment: .bottom, spacing: 12) {
+            VStack(alignment: .leading, spacing: 4) {
                 HStack(alignment: .firstTextBaseline, spacing: 8) {
                     Text(model.displayedScore, format: .number)
-                        .font(.score(design: appearance.numberFont.design))
+                        .font(.score(size: min(scoreSize, 60), design: appearance.numberFont.design))
                         .foregroundStyle(appearance.theme.ink)
                         .contentTransition(.numericText(value: Double(model.displayedScore)))
-                        .anchorPreference(key: ScoreAnchorKey.self, value: .trailing) { $0 }
                         .accessibilityLabel(Text("Score"))
                         .accessibilityIdentifier("score")
                         .accessibilityValue(Text(model.session.score, format: .number))
@@ -25,12 +26,19 @@ struct GameTopBar: View {
                 }
                 subtitle
                     .font(.counter)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(appearance.theme.muted)
             }
-            Spacer()
+            Spacer(minLength: 0)
+            ZStack {
+                if let praise = model.praise {
+                    PraiseToast(praise: praise) { model.dismissPraise(praise) }
+                        .id(praise.id)
+                }
+            }
+            .padding(.bottom, 6)
         }
-        .padding(.horizontal)
-        .padding(.vertical, 8)
+        .padding(.horizontal, 24)
+        .padding(.top, 14)
     }
 }
 
@@ -77,21 +85,23 @@ struct GameActionBar: View {
             .disabled(!model.canUseHint)
             .keyboardShortcut("h", modifiers: [])
         }
-        .padding(.horizontal)
+        .padding(.horizontal, 24)
         .padding(.vertical, 6)
     }
 }
 
-/// "+4" in the accent color (or "-3" muted) that rises and fades next to the score.
+/// "-3" (hints) or undone points next to the score; with Reduce Motion, match points too.
 private struct ScoreChangeLabel: View {
     let model: GameModel
+
+    @Environment(\.appearance) private var appearance
 
     var body: some View {
         ZStack {
             if let change = model.scoreChange {
                 Text(change.amount, format: .number.sign(strategy: .always()))
                     .font(.system(.title3, design: .rounded, weight: .semibold).monospacedDigit())
-                    .foregroundStyle(change.amount > 0 ? AnyShapeStyle(.tint) : AnyShapeStyle(.secondary))
+                    .foregroundStyle(change.amount > 0 ? appearance.theme.primary : appearance.theme.muted)
                     .id(change.id)
                     .transition(.asymmetric(
                         insertion: .opacity.combined(with: .offset(y: 14)).combined(with: .scale(scale: 1.4)),
@@ -117,12 +127,13 @@ private struct CounterButton: View {
     let action: () -> Void
 
     @Environment(\.isEnabled) private var isEnabled
+    @Environment(\.appearance) private var appearance
 
     var body: some View {
         Button(action: action) {
-            VStack(spacing: 2) {
+            VStack(spacing: 4) {
                 Image(systemName: systemImage)
-                    .font(.title3.weight(.medium))
+                    .font(.system(size: 26, weight: .medium))
                     .symbolEffect(.pulse, options: .repeating, isActive: isHighlighted)
                     .symbolEffect(.bounce, options: .repeat(2), value: nudges)
                 caption
@@ -133,7 +144,7 @@ private struct CounterButton: View {
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
-        .foregroundStyle(.tint)
+        .foregroundStyle(appearance.theme.primary)
         .opacity(isEnabled ? 1 : 0.35)
         .accessibilityLabel(Text(label))
         .accessibilityValue(value)

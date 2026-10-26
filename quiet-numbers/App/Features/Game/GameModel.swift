@@ -9,28 +9,33 @@ struct ScoreChange: Equatable {
     let amount: Int
 }
 
-/// Points from a match, flying from the middle of the screen to the score.
-struct ScoreFlight: Equatable {
+/// Points from a match: "+4" rises from the middle of the pair and fades.
+struct FloatingPoints: Equatable, Identifiable {
     let id: Int
     let amount: Int
-    /// Waits for the line and the pops first.
+    /// Midpoint of the pair, in cell units.
+    let center: CGPoint
+    /// Waits for the line first.
     let delay: Double
+
+    static let duration = 0.6 * EffectTiming.scale
 }
 
-/// Short encouragement after a notable move: a bubble in the middle that rises to the top.
+/// Short encouragement after a notable move, as a toast next to the score.
 struct Praise: Equatable {
     let id: Int
     let text: LocalizedStringResource
     var delay: Double = 0
 }
 
-/// A matched number bursting: a ring that grows, then turns into an asterisk.
+/// A matched number bursting into 8 rays (in the accent color for a long shot).
 struct Pop: Equatable, Identifiable {
     let id: Int
     /// Cell center, in cell units.
     let center: CGPoint
+    let isLongShot: Bool
 
-    static let duration = 0.3 * EffectTiming.scale
+    static let duration = 0.26 * EffectTiming.scale
 }
 
 /// The line drawn between a matched pair, in cell units (1 = one cell side).
@@ -43,14 +48,7 @@ struct MatchLine: Equatable {
         /// A long shot.
         case dramatic
 
-        var drawDuration: Double {
-            let base = switch self {
-            case .subtle: 0.08
-            case .medium: 0.12
-            case .dramatic: 0.22
-            }
-            return base * EffectTiming.scale
-        }
+        var drawDuration: Double { 0.12 * EffectTiming.scale }
     }
 
     /// Drawn from `from` towards `to`.
@@ -82,16 +80,20 @@ final class GameModel {
     private(set) var flashingRows: Set<Int> = []
     /// Bumped per cell on an invalid pair; drives the shake animation.
     private(set) var shakes: [Int: Int] = [:]
+    /// The two cells of an invalid pair, ringed in the accent color for a moment.
+    private(set) var missIDs: Set<Int> = []
+    /// First cell added by the last +, so new numbers can come in one by one.
+    private(set) var addedFromID: Int?
     /// Stage reached after clearing a board, shown briefly as a banner.
     var stageBanner: Int?
     /// Bumped on every +, so the board can scroll to the new numbers.
     private(set) var additions = 0
     /// Next to the score: hint costs and undos (and every change under Reduce Motion).
     private(set) var scoreChange: ScoreChange?
-    private(set) var scoreFlight: ScoreFlight?
+    private(set) var floatingPoints: FloatingPoints?
     /// Bursts playing on the matched cells.
     private(set) var pops: [Pop] = []
-    /// Points still in flight; the score shown waits for them to land.
+    /// Points of the match playing out; the score shown counts them in after the line.
     private var pendingPoints = 0
     private(set) var praise: Praise?
     /// Bumped when a hint finds nothing and + is the way out; bounces the + button.
@@ -103,6 +105,7 @@ final class GameModel {
 
     private var feedbackID = 0
     private var sequence: Task<Void, Never>?
+    private var missTask: Task<Void, Never>?
     /// The last move if it was a match, so undoing it can take its progress back.
     private var lastOutcome: MatchOutcome?
 
@@ -110,8 +113,9 @@ final class GameModel {
     private static let longShotGap = 4
     /// Every this many matches in a row earns a praise.
     private static let streakStep = 5
-    /// How long a cleared row shows its effect before collapsing.
-    private static let rowEffectDuration = 0.26 * EffectTiming.scale
+    /// How long a cleared row shows its effect before collapsing, and the collapse itself.
+    private static let rowEffectDuration = 0.15 * EffectTiming.scale
+    private static let rowCollapse = Animation.easeInOut(duration: 0.28 * EffectTiming.scale)
     /// Distance from a cell's center where the line stops, so it doesn't cover the number.
     private static let lineInset = 0.3
 
@@ -148,28 +152,27 @@ final class GameModel {
         let before = session.board
         let stage = session.stage
         guard let outcome = session.match(cellID: selectedID, cell.id) else {
-            shakes[selectedID, default: 0] += 1
-            shakes[cell.id, default: 0] += 1
-            session.registerMiss()
-            onEvent?(.missed)
-            feedback.play(.invalid)
-            select(cell.id)
+            miss(selectedID, cell.id)
             return
         }
 
         self.selectedID = nil
         hintIDs = []
-        let effectsDelay = reduceMotion ? 0 : Self.tier(for: outcome.pair).drawDuration + Pop.duration * 0.5
+        let effectsDelay = reduceMotion ? 0 : Self.tier(for: outcome.pair).drawDuration
         if reduceMotion {
             showScoreChange(outcome.points)
         } else {
             feedbackID += 1
             pendingPoints = outcome.points
-            scoreFlight = ScoreFlight(id: feedbackID, amount: outcome.points, delay: effectsDelay)
+            let a = Self.center(of: outcome.pair.first), b = Self.center(of: outcome.pair.second)
+            floatingPoints = FloatingPoints(
+                id: feedbackID, amount: outcome.points,
+                center: CGPoint(x: (a.x + b.x) / 2, y: (a.y + b.y) / 2), delay: effectsDelay
+            )
         }
         feedback.play(
             outcome.boardCleared ? .boardCleared
-                : outcome.clearedRows.isEmpty ? .match(longShot: outcome.pair.gap >= Self.longShotGap)
+                : outcome.clearedRows.isEmpty ? .match(longShot: Self.isLongShot(outcome.pair))
                 : .rowCleared
         )
         onEvent?(.matched(outcome))
@@ -185,9 +188,10 @@ final class GameModel {
 
     func addNumbers() {
         finishSequence()
+        let firstNewID = session.board.cells.count
         guard session.addNumbers() else { return }
-        pendingPoints = 0
         lastOutcome = nil
+        addedFromID = session.board.cells.indices.contains(firstNewID) ? session.board.cells[firstNewID].id : nil
         board = session.board
         selectedID = nil
         hintIDs = []
@@ -207,18 +211,17 @@ final class GameModel {
             }
             return
         }
-        pendingPoints = 0
         let cells = session.board.cells
         hintIDs = [cells[hint.pair.first].id, cells[hint.pair.second].id]
         selectedID = nil
         showScoreChange(-hint.cost)
+        feedback.play(.select)
         onEvent?(.hintUsed(scoreAfter: session.score))
     }
 
     /// Takes back the last match or + (one step).
     func undo() {
         finishSequence()
-        pendingPoints = 0
         let scoreBefore = session.score
         guard session.undo() else { return }
         if let outcome = lastOutcome { onEvent?(.undone(outcome)) }
@@ -234,12 +237,8 @@ final class GameModel {
         if scoreChange == change { scoreChange = nil }
     }
 
-    /// The flight reached the score: count its points in.
-    func land(_ flight: ScoreFlight) {
-        if scoreFlight == flight {
-            scoreFlight = nil
-            pendingPoints = 0
-        }
+    func dismissFloatingPoints(_ shown: FloatingPoints) {
+        if floatingPoints == shown { floatingPoints = nil }
     }
 
     func dismissPraise(_ shown: Praise) {
@@ -265,26 +264,29 @@ final class GameModel {
                 try? await Task.sleep(for: .seconds(line.tier.drawDuration))
             }
             guard let self, !Task.isCancelled else { return }
-            withAnimation(.quiet) {
+            // The pair fades to ghosts while the score counts the points in.
+            withAnimation(.easeOut(duration: (self.reduceMotion ? 0.15 : 0.2) * EffectTiming.scale)) {
                 self.board = ghosted
                 self.connectingIDs = []
                 self.matchLine = nil
             }
+            withAnimation(.easeOut(duration: 0.3 * EffectTiming.scale)) { self.pendingPoints = 0 }
             if !self.reduceMotion {
+                let isLongShot = Self.isLongShot(pair)
                 self.pops = [pair.first, pair.second].map { index in
                     self.feedbackID += 1
-                    return Pop(id: self.feedbackID, center: Self.center(of: index))
+                    return Pop(id: self.feedbackID, center: Self.center(of: index), isLongShot: isLongShot)
                 }
                 try? await Task.sleep(for: .seconds(Pop.duration))
                 guard !Task.isCancelled else { return }
                 self.pops = []
             }
             if !rowIDs.isEmpty {
-                withAnimation(.quiet) { self.flashingRows = rowIDs }
+                withAnimation(.easeOut(duration: Self.rowEffectDuration)) { self.flashingRows = rowIDs }
                 try? await Task.sleep(for: .seconds(Self.rowEffectDuration))
                 guard !Task.isCancelled else { return }
             }
-            withAnimation(.quiet) { self.finishSequence() }
+            withAnimation(rowIDs.isEmpty ? .quiet : Self.rowCollapse) { self.finishSequence() }
         }
     }
 
@@ -297,6 +299,7 @@ final class GameModel {
         flashingRows = []
         matchLine = nil
         pops = []
+        pendingPoints = 0
     }
 
     private static func center(of index: Int) -> CGPoint {
@@ -332,6 +335,9 @@ final class GameModel {
         return MatchLine(id: feedbackID, tier: Self.tier(for: pair), segments: segments)
     }
 
+    /// Four or more cleared cells in between: the line, rays and "Long shot!" get louder.
+    private static func isLongShot(_ pair: Pair) -> Bool { pair.gap >= longShotGap }
+
     private static func tier(for pair: Pair) -> MatchLine.Tier {
         switch pair.gap {
         case 0: .subtle
@@ -353,11 +359,28 @@ final class GameModel {
         case 2: return "Double row!"
         default: break
         }
-        if outcome.pair.gap >= Self.longShotGap { return "Long shot!" }
+        if Self.isLongShot(outcome.pair) { return "Long shot!" }
         if let digit = outcome.clearedDigits.first, !outcome.boardCleared { return "No more \(digit)s!" }
         let streak = session.streak
         if streak > 0, streak.isMultiple(of: Self.streakStep) { return "\(streak) in a row!" }
         return nil
+    }
+
+    /// Not a pair: both rings turn to the accent and shake, then the tapped number stays selected.
+    private func miss(_ firstID: Int, _ secondID: Int) {
+        shakes[firstID, default: 0] += 1
+        shakes[secondID, default: 0] += 1
+        missIDs = [firstID, secondID]
+        selectedID = secondID
+        session.registerMiss()
+        onEvent?(.missed)
+        feedback.play(.invalid)
+        missTask?.cancel()
+        missTask = Task { [weak self] in
+            try? await Task.sleep(for: .seconds(0.24 * EffectTiming.scale))
+            guard let self, !Task.isCancelled else { return }
+            withAnimation(.easeOut(duration: 0.15 * EffectTiming.scale)) { self.missIDs = [] }
+        }
     }
 
     private func select(_ id: Int) {

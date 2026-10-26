@@ -36,6 +36,7 @@ Un solo target iOS (iPhone y iPad); en Mac con Apple silicon se ofrece la app de
 - Tests del Core: `cd Packages/QuietNumbersCore && swift test`.
 - Todos los tests (Core en iOS, app y UI): `xcodebuild test -project QuietNumbers.xcodeproj -scheme QuietNumbers -destination 'platform=iOS Simulator,name=iPhone 17'`.
 - Capturas de la App Store: `scripts/screenshots.sh [iphone] [ipad]` (esquema `Screenshots`, target `QuietNumbersScreenshots`) → `AppStore/screenshots/<iphone-6.9|ipad-13>/<en|es>/<light|dark>/`. Solo iPhone y iPad (decisión: sin capturas de Mac); el español sirve para es-MX y es-ES.
+- Arte: `scripts/render-artwork.py` genera desde SVG el ícono (claro, oscuro, tinted y Gold), el lockup del splash (`SplashLockup`, también en la launch screen) y las insignias de Game Center (`AppStore/achievements/<id>.png`, 1024 sin alfa). `scripts/theme-colors.py` escribe los colorsets de los temas (`Assets.xcassets/Themes`, `AccentColor`, `LaunchBackground`) y falla si un texto queda bajo 4,5:1. Los valores vienen del canvas "Quiet Numbers · Diseño" (página 6, brief para Claude Code).
 - Metadatos: `fastlane/metadata/{en-US,es-MX,es-ES}`; validar con `scripts/validate-metadata.py`. Game Center: `AppStore/game-center.{md,json}`; verificar IDs con `scripts/check-game-center.py`.
 - UI test en simulador: `xcodebuild test -project QuietNumbers.xcodeproj -scheme QuietNumbers -destination 'platform=iOS Simulator,name=iPhone 17' -only-testing:QuietNumbersUITests`.
 - Argumentos DEBUG: `-demo` carga el estado fijo de las capturas (`App/Debug/DemoData.swift`: 14-nov-2026 10:00, partida a medias, racha de 8, leaderboards de ejemplo; en memoria); `-startGame` abre una partida directo; `-seedKey <texto>` hace el tablero determinista (`2026-10-25` da el tablero golden de los tests); `-boardValues 5,3,7,…` arranca con números exactos; `-slowEffects` pone los efectos en cámara lenta (×6) para inspeccionarlos. `-startGame` usa almacenamiento en memoria; `-uiTesting` usa un archivo propio (`UITests.store`) que `-resetStore` borra, para no tocar los datos reales. `-unlockAll` desbloquea todos los logros (QA y capturas).
@@ -97,7 +98,7 @@ Tablero de **9 columnas**; arranca con **42 números** del 1 al 9 (4 filas y med
 **Mecánicas:**
 - Celdas eliminadas quedan como "fantasma" (número tenue) hasta que su fila se vacía.
 - Fila vacía: desaparece, el tablero sube y da puntos extra.
-- Botón **+**: copia todos los números restantes, en orden, al final del tablero (regla estándar del género; se evaluó triplicar y se descartó). **Máximo 5 usos por tablero**; limpiar filas no devuelve usos (cambio del 2026-10-26). Sin parejas ni usos, la partida termina. Los números agregados se muestran en azul (`AddedNumber`) para distinguirlos de los originales.
+- Botón **+**: copia todos los números restantes, en orden, al final del tablero (regla estándar del género; se evaluó triplicar y se descartó). **Máximo 5 usos por tablero**; limpiar filas no devuelve usos (cambio del 2026-10-26). Sin parejas ni usos, la partida termina. Los números agregados se muestran en el acento coral del tema para distinguirlos de los originales.
 - **Pistas:** ilimitadas; resaltan una pareja válida y cuestan 3 puntos, **aunque el puntaje quede negativo** (cambio del 2026-10-26; da el logro "Números rojos"). Si no hay parejas, no cobran.
 - **Etapas:** vaciar el tablero pasa a la siguiente etapa con tablero nuevo; los usos de + se reinician.
 - **Fin de partida:** no quedan parejas válidas ni usos de +.
@@ -164,52 +165,50 @@ Toda recompensa es cosmética y nunca altera la jugabilidad ni el layout del tab
 
 | Logro | Condición | Recompensa |
 |---|---|---|
-| Primer paso | Completar la primera partida | Tema Papel (por defecto) |
+| Primer paso | Completar la primera partida | Tema Petróleo y coral (por defecto) |
 | Tabla rasa | Limpiar un tablero completo | Ficha: círculo |
-| Sin ayuda | Terminar una partida sin usar pistas (el + sí vale) | Tema Pizarra |
-| Constancia | Racha de 7 retos diarios | Tema Arena |
+| Sin ayuda | Terminar una partida sin usar pistas (el + sí vale) | Tema Salvia y arena |
+| Constancia | Racha de 7 retos diarios | Tema Índigo y durazno |
 | Hábito | Racha de 30 retos diarios | Tipografía New York (serif) |
 | Barrendero | Limpiar 100 filas en total | Efecto de limpieza: ola |
 | Etapa 5 | Llegar a la etapa 5 en una partida | Ficha: contorno |
 | Centenario | Completar 100 retos diarios | Ícono alternativo dorado |
-| Noctámbulo | Completar un reto entre 00:00 y 04:00 | Tema Medianoche |
+| Noctámbulo | Completar un reto entre 00:00 y 04:00 | Tema Salvia y coral |
 | Monótono | 10 parejas seguidas del mismo número | Pack de sonido: marimba |
-| Números rojos | Llevar el puntaje por debajo de cero | Tema Brasa (oscuro, acento coral) |
+| Números rojos | Llevar el puntaje por debajo de cero | Ninguna por ahora (decisión 2026-10-26) |
+
+El tema **Alto contraste** (accesibilidad) está siempre disponible, sin logro.
 
 Categorías de personalización: tema de color, estilo de ficha, tipografía, efecto al limpiar fila, pack de sonido, ícono de la app. Se eligen en "Colección"; lo bloqueado muestra su condición.
 
 Decisiones de implementación (fase 5):
 - "Monótono" se interpreta como 10 parejas seguidas de números iguales (4-4, 7-7…), no 10 veces el mismo dígito. Confirmado.
-- Las opciones por defecto (Papel, Simple, SF Rounded, Contorno, Suave, ícono estándar) están siempre disponibles.
-- Los colores de los temas están en el Asset Catalog (`SlateBackground`, `SandInk`…). Pizarra y Medianoche fuerzan modo oscuro; Arena tiene variante clara y oscura; Papel usa los estilos del sistema.
+- Las opciones por defecto (Petróleo y coral, Simple, SF Rounded, Contorno, Suave, ícono estándar) están siempre disponibles.
+- Rediseño 2026-10-26: los temas viejos se reemplazaron conservando el desbloqueo (Papel → Petróleo y coral, Pizarra → Salvia y arena, Arena → Índigo y durazno, Medianoche → Salvia y coral, Brasa → Alto contraste). La preferencia guardada se migra al arrancar (`ThemeChoice.migrateSavedChoice`).
+- Colores por rol (`Theme`: background, surface, surface2, ink, muted, primary, onPrimary, accent, ghost, separator) en el Asset Catalog (`TealCoralPrimary`, `SageSandInk`…). Solo Petróleo y coral tiene claro y oscuro y sigue al sistema; Salvia y arena, Salvia y coral y Alto contraste son solo claros, Índigo y durazno solo oscuro, y fuerzan ese esquema. Alto contraste además pone borde de 2 pt a las superficies y subraya los números agregados.
 - Los sonidos se sintetizan en el dispositivo (AVAudioEngine, sin archivos), categoría `.ambient` (respeta el modo silencio). Sonido y hápticos activados por defecto.
 - El ícono dorado funciona en iPhone y iPad (en Mac, la app de iPad no cambia de ícono).
 - Preferencias en `UserDefaults` (`@AppStorage`); progreso y logros en SwiftData (`StoredProgress`). Las partidas de práctica también cuentan para logros de juego.
 
 ## Estética y UX
 
-- Colores semánticos del sistema, un primario y un secundario, animaciones suaves.
-- **Paleta** (Asset Catalog, contraste WCAG calculado):
-  - Primario `AccentColor`: azul eléctrico `#0A5CFF` (texto blanco encima 5.3:1) / oscuro `#4D8DFF` (6.6:1 sobre negro). Botones, selección, pistas, línea de unión, borde de fila.
-  - Secundario `Highlight`: ámbar `#B45309` (5.0:1 sobre blanco) / oscuro `#FBBF24` (12.6:1 sobre negro). Números agregados con +, elogios, racha. **Provisional**: alternativas propuestas coral, violeta y menta.
-  - Neutros: los del sistema (fondo, superficie, texto, secundario, fantasma = `quaternary`).
-  - Los temas de la Colección (Pizarra, Arena, Medianoche) reemplazan el primario por su propio acento.
-- Claro/oscuro sigue al sistema. Colores en el Asset Catalog con variantes; **nada de colores fijos en código**.
-- Fondo `systemBackground`; superficies secundarias `secondarySystemBackground`.
+- Diseño cerrado en el canvas "Quiet Numbers · Diseño" (Claude Design, 2026-10-26); la página 6 es el brief con todos los valores.
+- **Paleta principal Petróleo y coral** (tema por defecto, claro y oscuro): primario `#0E6B78` / `#5BC2CF` (botones, selección, línea de unión, iconos), acento coral `#B9472F` / `#FF9A85` (números agregados con +, racha, elogios, rayos del tiro largo), fondo `#F3F7F8` / `#0F1A1D` (nunca blanco puro salvo Alto contraste). Ajustes por contraste frente al brief: primario de Salvia y arena `#387454` (era `#3E7A5A`) y surface2 de Salvia y coral `#EFEAE0` (era `#EDE7DC`).
+- Nada de colores fijos en vistas: todo sale de `appearance.theme`. Componentes en `DesignSystem/Components.swift` (botón cápsula de 56 pt, tarjetas, segmentos, secciones agrupadas, switch, toast, encabezado con botón redondo de volver; la barra de navegación del sistema va oculta).
 - SF Pro Rounded con `.monospacedDigit()`.
-- Fichas sin bordes, solo el número. Seleccionada: círculo suave del acento. Eliminada: gris muy tenue.
-- Animaciones: pareja válida = línea que crece desde el centro de la unión; al llegar, cada número hace **pop** (un anillo crece hasta 1,5× la celda, se convierte en un asterisco de 8 rayos que sale hacia afuera y se desvanece) y queda como fantasma; luego el "+N" aparece en el centro de la pantalla y vuela hasta junto al puntaje, que se actualiza al llegar; inválida = pequeña sacudida; fila limpiada = borde que se dibuja alrededor de la fila y luego colapso suave hacia arriba. Respetar Reduce Motion (sin línea ni trazo).
-- Tres tipos de línea según las celdas eliminadas entre la pareja: sutil (0, 2 pt y tenue), media (1–3, 3 pt) y dramática (4+, 4 pt; coincide con "¡Desde lejos!"). Líneas sólidas del color primario, sin borde ni brillo. En lectura continua entre filas, la línea entra desde los bordes del tablero.
-- Ritmo: animaciones rápidas y con algo de rebote (`Animation.quiet` = snappy 0.2 s); el emparejamiento completo dura menos de ~0.6 s y un toque nuevo lo termina al instante.
+- Tablero: celdas de (ancho − 48) / 9 × 46 pt (52 con "Números más grandes"; cuadradas en iPad), números de 27 pt (32). Fichas sin bordes, solo el número. Seleccionada: anillo de 40 pt, trazo 2 pt del primario sobre 14 % de relleno. Eliminada: `ghost`.
+- Animaciones (brief, sección 7; nada bloquea el siguiente toque): selección = anillo 0,6→1 con spring; pareja válida = línea de 120 ms; al llegar, cada número estalla en 8 rayos (15→25 pt, 260 ms; coral en tiro largo) y queda como fantasma; "+N" sale del punto medio de la pareja, sube 24 pt y se desvanece (600 ms) mientras el puntaje cuenta; inválida = ambos anillos en coral y sacudida de ±4 pt ×3 (240 ms); pista = anillo punteado que parpadea 2 veces; fila completa = se ilumina y colapsa en 280 ms; + = los números entran uno a uno (160 ms, 25 ms entre cada uno, máx. 1,2 s). Reduce Motion: sin rayos, flotantes ni sacudida; el par se funde en 150 ms.
+- Tres grosores de línea según las celdas eliminadas entre la pareja: sutil (0), media (1–3) y dramática (4+, coincide con "¡Tiro largo!"). En lectura continua entre filas, la línea entra desde los bordes del tablero.
+- Ritmo: `Animation.quiet` = snappy 0.2 s para el resto; un toque nuevo termina la jugada en curso al instante.
 - Pista sin parejas: no cobra, muestra "No hay parejas. Prueba +" y hace rebotar el botón +.
 - Racha ("¡N seguidas!"): se reinicia con un intento inválido o al pedir pista; el + no la reinicia.
-- Hápticos (iOS): ligero al seleccionar, medio al emparejar, éxito al limpiar fila.
-- Barra superior: puntaje y etapa (y récord en clásico, siempre visible aunque sea 0: "Etapa 2 · Récord 1.234"). Nada más.
+- Hápticos (iOS): selección al seleccionar y al pedir pista, medio al emparejar, éxito en tiro largo y al limpiar fila, error en pareja inválida.
+- Barra superior: volver y menú (redondos); debajo, puntaje de 44 pt y "Etapa 2 · Mejor 1.234" (récord siempre visible en clásico, aunque sea 0), con los elogios como toast a la derecha.
 - Barra inferior: Deshacer, + (con usos restantes) y Pista (con su costo), al alcance del pulgar.
-- Récord (mejor puntaje clásico) también en Inicio y "¡Nuevo récord!" en el fin de partida. Una partida clásica abandonada con "Nueva partida" también cuenta para el récord (sin contar como partida terminada).
-- Splash al abrir: "Quiet Studios" (marca, sin traducir) ~1,5 s sobre el fondo del launch screen; un toque lo salta. Se omite con `-startGame`/`-uiTesting`.
-- Feedback por jugada: "+N" que vuela desde el centro al puntaje (costos de pista y deshacer: en gris junto al puntaje; con Reduce Motion todo junto al puntaje) y elogios en una burbuja que aparece en el centro (debajo del +N) y sube al centro de la barra superior: "¡Desde lejos!" (4+ celdas eliminadas entre la pareja), "¡Doble/Triple fila!", "¡Ya no hay más 7!" (se eliminó el último de un dígito), "¡N seguidas!" (cada 5 parejas sin error). Solo texto, no dan puntos.
-- Pantallas: Inicio (Continuar, Nueva partida, Reto diario), Juego, Leaderboards, Colección, Ajustes (sonido, hápticos, privacidad).
+- Récord (mejor puntaje clásico) también en Inicio ("Tus estadísticas": mejor puntaje, mejor racha y partidas, totales que ya se guardan) y "¡Nuevo récord!" en el fin de partida. Una partida clásica abandonada con "Nueva partida" también cuenta para el récord (sin contar como partida terminada).
+- Splash al abrir: lockup "quiet studios" (Q en pausa + nombre en minúsculas, marca sin traducir). La launch screen (`UILaunchScreen` en project.yml) muestra la misma imagen sobre `LaunchBackground`; el splash se queda 1,2 s y hace crossfade de 250 ms al Inicio (corte directo con Reduce Motion). Un toque lo salta. Se omite con `-startGame`/`-uiTesting`/`-demo`.
+- Feedback por jugada: "+N" desde la pareja (costos de pista y deshacer: en gris junto al puntaje; con Reduce Motion todo junto al puntaje) y elogios en un toast junto al puntaje (entra en 180 ms, queda 1,2 s): "¡Tiro largo!" (4+ celdas eliminadas entre la pareja), "¡Doble/Triple fila!", "¡Ya no hay más 7!" (se eliminó el último de un dígito), "¡N seguidas!" (cada 5 parejas sin error). Solo texto, no dan puntos. El juego no tiene combos.
+- Pantallas: Inicio (ícono, "Tu pausa de 5 minutos.", reto diario con racha, "Continuar · Etapa N", Nueva partida, estadísticas; Clasificaciones, Colección y Ajustes en una cápsula arriba a la derecha), Juego, Reto diario (tarjeta del día en primario con racha, mejor racha y puesto entre amigos; calendario con bandas entre días seguidos), Clasificaciones (medallas, avatar con inicial, fila propia resaltada; sin Game Center, filas esqueleto y botón que abre el inicio de sesión de Game Center si GameKit lo ofrece, o Ajustes), Colección, Ajustes (Juego, Cuenta con Game Center y Cómo jugar, Privacidad, Restablecer progreso, Versión).
 - Responsivo por size class (`DesignSystem/Layout.swift`): en regular (iPad) el tablero crece hasta 760 pt, el calendario y los botones se agrandan, y listas/formularios usan una columna centrada de 680 pt (`readableColumn()`). Teclado (⌘Z, +, h) en iPad con teclado y en Mac.
 - Accesibilidad: Dynamic Type, VoiceOver por celda ("7, fila 3, columna 2"), contraste suficiente, opción de números más grandes.
 
@@ -269,13 +268,13 @@ Cada fase termina con su criterio de aceptación cumplido antes de pasar a la si
 
 ## Anotaciones de diseño
 
-- **Animación al unir números: rediseñada (2026-10-26)** con línea → pop/asterisco → +N volando al puntaje (`PopView` en `BoardView`, `GameFeedbackOverlay`). Pendiente la validación del usuario en el dispositivo.
+- **Rediseño visual (2026-10-26, rama `design/teal-coral`)** según el brief del canvas: temas, ícono, splash, pantallas y animaciones. Pendiente la revisión del usuario en el dispositivo.
 
 ## Preguntas abiertas
 
 - [x] + : máximo 5 por tablero, sin devolución al limpiar filas.
-- [x] Color primario: azul eléctrico.
-- [ ] Color secundario (provisional: ámbar; no convence). Revisión pedida a Claude Design: `AppStore/design-brief.md`.
+- [x] Color primario: petróleo (reemplazó al azul eléctrico).
+- [x] Paleta: Petróleo y coral (diseño cerrado con Claude Design el 2026-10-26, canvas "Quiet Numbers · Diseño").
 - [x] Nombre final: **Quiet Numbers**; estudio **Quiet Studios**. Búsqueda (2026-10-26): ninguna app con esos nombres en la App Store; existen quietnumbers.com (plantillas financieras) y quietstudios.com (estudio de arquitectura/diseño), rubros distintos. No se hizo búsqueda formal de marcas (USPTO / SIC).
 - [x] Versión mínima: iOS/iPadOS 18.
 - [ ] Team de Apple Developer (pendiente de crear; bloquea Game Center, TestFlight y App Store).

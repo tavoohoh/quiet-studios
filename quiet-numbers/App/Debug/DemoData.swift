@@ -53,13 +53,14 @@ enum DemoData {
 
     static func leaderboard(_ board: GameCenterService.Leaderboard) -> (local: GameCenterService.Entry?, top: [GameCenterService.Entry]) {
         let scores: [Int] = switch board {
-        case .daily: [412, 398, 377, 361, 340, 333, 318, 296, 281, 270]
+        case .daily: [412, 398, 377, 361, 340, 336, 333, 318, 296, 281]
         case .bestScore: [6_120, 5_480, 4_905, 4_210, 3_870, 3_215, 2_990, 2_480, 2_310, 1_995]
         case .longestStreak: [212, 148, 96, 71, 64, 40, 33, 21, 12, 9]
         }
         let local = board == .bestScore ? 7 : board == .longestStreak ? 9 : 3
-        var names = ["mara.k", "nine_lives", "Tomás R.", "kenji", "Ana P.", "pixelfox", "lu", "Sam O.", "deltawave"]
-        names.insert("quiet.player", at: local)
+        // Same players as the App Store images (canvas page 3).
+        var names = ["juli", "tatita12", "vale", "juanca", "cori16", "eliasb", "mariadelsea", "aleja", "nova47"]
+        names.insert("guss", at: local)
         let top = zip(names.indices, scores).map { index, score in
             GameCenterService.Entry(
                 id: "demo-\(index)", rank: index + 1, name: names[index],
