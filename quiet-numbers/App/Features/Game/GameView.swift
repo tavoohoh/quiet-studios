@@ -17,8 +17,7 @@ struct GameView: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.dismiss) private var dismiss
     @Environment(\.appearance) private var appearance
-
-    private static let maxBoardWidth: CGFloat = 540
+    @Environment(\.horizontalSizeClass) private var sizeClass
 
     var body: some View {
         VStack(spacing: 0) {
@@ -27,7 +26,7 @@ struct GameView: View {
                 subtitle: subtitle
             )
             GeometryReader { geometry in
-                let width = min(geometry.size.width - 16, Self.maxBoardWidth)
+                let width = min(geometry.size.width - 16, Layout.boardWidth(sizeClass))
                 let size = (width / CGFloat(Board.columns)).rounded(.down)
                 BoardView(model: model, size: size) { cell in
                     animate { model.tap(cell) }
@@ -41,7 +40,7 @@ struct GameView: View {
                 onHint: { animate { model.showHint() } }
             )
         }
-        .frame(maxWidth: Self.maxBoardWidth + 32)
+        .frame(maxWidth: Layout.boardWidth(sizeClass) + 32)
         .frame(maxWidth: .infinity)
         .background(appearance.theme.background)
         .overlayPreferenceValue(ScoreAnchorKey.self) { anchor in
@@ -84,9 +83,7 @@ struct GameView: View {
                 }
             }
         }
-        #if os(iOS)
         .navigationBarTitleDisplayMode(.inline)
-        #endif
     }
 
     private var subtitle: Text {

@@ -41,9 +41,7 @@ final class SoundService {
 
     private func configureIfNeeded() -> Bool {
         if isConfigured { return engine.isRunning || (try? engine.start()) != nil }
-        #if os(iOS)
         try? AVAudioSession.sharedInstance().setCategory(.ambient)
-        #endif
         engine.attach(player)
         engine.connect(player, to: engine.mainMixerNode, format: format)
         isConfigured = true

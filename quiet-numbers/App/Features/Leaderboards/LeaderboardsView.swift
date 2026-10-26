@@ -4,6 +4,7 @@ import SwiftUI
 struct LeaderboardsView: View {
     @Environment(AppModel.self) private var app
     @Environment(\.appearance) private var appearance
+    @Environment(\.horizontalSizeClass) private var sizeClass
     @State private var board = GameCenterService.Leaderboard.daily
     @State private var friendsOnly = false
     @State private var state = LoadState.loading
@@ -32,7 +33,7 @@ struct LeaderboardsView: View {
                 .frame(maxHeight: .infinity, alignment: .top)
         }
         .padding()
-        .frame(maxWidth: 560)
+        .frame(maxWidth: Layout.column(sizeClass))
         .frame(maxWidth: .infinity)
         .background(appearance.theme.background)
         .navigationTitle(Text("Leaderboards"))

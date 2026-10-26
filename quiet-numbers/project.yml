@@ -4,7 +4,6 @@ options:
   developmentLanguage: en
   deploymentTarget:
     iOS: "18.0"
-    macOS: "15.0"
 packages:
   QuietNumbersCore:
     path: Packages/QuietNumbersCore
@@ -17,7 +16,8 @@ settings:
 targets:
   QuietNumbers:
     type: application
-    supportedDestinations: [iOS, macOS]
+    # iPhone and iPad; Apple silicon Macs run the iPad app ("Designed for iPad").
+    supportedDestinations: [iOS]
     sources: [App]
     dependencies:
       - package: QuietNumbersCore
@@ -33,8 +33,6 @@ targets:
         GENERATE_INFOPLIST_FILE: YES
         INFOPLIST_KEY_CFBundleDisplayName: Quiet Numbers
         INFOPLIST_KEY_NSGKFriendListUsageDescription: Show your Game Center friends on Quiet Numbers leaderboards.
-        # GameKit needs outgoing connections inside the Mac sandbox. The app itself makes none.
-        "ENABLE_OUTGOING_NETWORK_CONNECTIONS[sdk=macosx*]": YES
         INFOPLIST_KEY_LSApplicationCategoryType: public.app-category.puzzle-games
         INFOPLIST_KEY_ITSAppUsesNonExemptEncryption: NO
         INFOPLIST_KEY_UILaunchScreen_Generation: YES
@@ -43,12 +41,12 @@ targets:
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
         ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS: YES
-        "ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES[sdk=iphone*]": AppIcon-Gold
+        ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES: AppIcon-Gold
         ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS: NO
         LOCALIZATION_PREFERS_STRING_CATALOGS: YES
         SWIFT_EMIT_LOC_STRINGS: YES
-        ENABLE_APP_SANDBOX: YES
-        ENABLE_HARDENED_RUNTIME: YES
+        SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD: YES
+        SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD: NO
         CODE_SIGN_STYLE: Automatic
   QuietNumbersTests:
     type: bundle.unit-test

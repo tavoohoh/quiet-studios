@@ -19,14 +19,14 @@ Nombre: **Quiet Numbers** (alternativa evaluada: "Diez"). Nunca usar "Number Mat
 |---|---|
 | UI | SwiftUI nativo. Sin SpriteKit. |
 | Lenguaje | Swift 6, strict concurrency. |
-| Sistemas mínimos | iOS 18 / iPadOS 18 / macOS 15 (pendiente; subir a 26 si se usan Challenges de Game Center). |
+| Sistemas mínimos | iOS 18 / iPadOS 18 (decidido 2026-10-26: más dispositivos). En Mac corre la versión de iPad ("Designed for iPad", Apple silicon). |
 | Persistencia | SwiftData (fuente principal de verdad). |
 | Online | GameKit únicamente. |
 | Tests | Swift Testing para la lógica del juego. |
 | Dependencias externas | Ninguna. |
 | Estado | `@Observable`; sin frameworks de arquitectura externos. |
 
-Un solo target multiplataforma (iPhone, iPad, Mac), compra universal, un bundle ID.
+Un solo target iOS (iPhone y iPad); en Mac con Apple silicon se ofrece la app de iPad (decisión 2026-10-26: sin versión nativa de macOS ni capturas de Mac). Un bundle ID.
 
 ## Comandos
 
@@ -35,7 +35,7 @@ Un solo target multiplataforma (iPhone, iPad, Mac), compra universal, un bundle 
 - El `.xcodeproj` se genera desde `project.yml` con XcodeGen: correr `xcodegen generate` tras agregar o mover archivos. No editar el `.pbxproj` a mano.
 - Tests del Core: `cd Packages/QuietNumbersCore && swift test`.
 - Todos los tests (Core en iOS, app y UI): `xcodebuild test -project QuietNumbers.xcodeproj -scheme QuietNumbers -destination 'platform=iOS Simulator,name=iPhone 17'`.
-- Capturas de la App Store: `scripts/screenshots.sh [iphone] [ipad] [mac]` (esquema `Screenshots`, target `QuietNumbersScreenshots`) → `AppStore/screenshots/<iphone-6.9|ipad-13>/<en|es>/<light|dark>/`. Solo iPhone y iPad (decisión: sin capturas de Mac); el español sirve para es-MX y es-ES.
+- Capturas de la App Store: `scripts/screenshots.sh [iphone] [ipad]` (esquema `Screenshots`, target `QuietNumbersScreenshots`) → `AppStore/screenshots/<iphone-6.9|ipad-13>/<en|es>/<light|dark>/`. Solo iPhone y iPad (decisión: sin capturas de Mac); el español sirve para es-MX y es-ES.
 - Metadatos: `fastlane/metadata/{en-US,es-MX,es-ES}`; validar con `scripts/validate-metadata.py`. Game Center: `AppStore/game-center.{md,json}`; verificar IDs con `scripts/check-game-center.py`.
 - UI test en simulador: `xcodebuild test -project QuietNumbers.xcodeproj -scheme QuietNumbers -destination 'platform=iOS Simulator,name=iPhone 17' -only-testing:QuietNumbersUITests`.
 - Argumentos DEBUG: `-demo` carga el estado fijo de las capturas (`App/Debug/DemoData.swift`: 14-nov-2026 10:00, partida a medias, racha de 8, leaderboards de ejemplo; en memoria); `-startGame` abre una partida directo; `-seedKey <texto>` hace el tablero determinista (`2026-10-25` da el tablero golden de los tests); `-boardValues 5,3,7,…` arranca con números exactos; `-slowEffects` pone los efectos en cámara lenta (×6) para inspeccionarlos. `-startGame` usa almacenamiento en memoria; `-uiTesting` usa un archivo propio (`UITests.store`) que `-resetStore` borra, para no tocar los datos reales. `-unlockAll` desbloquea todos los logros (QA y capturas).
@@ -126,7 +126,7 @@ Tablero único por día, igual para todo el mundo, generado en el dispositivo si
   - "Completar" un reto = vaciar el tablero. Terminar sin vaciarlo guarda el puntaje (cuenta como intento) pero no suma a la racha.
   - El intento puntuable empieza al tocar "Jugar" por primera vez ese día; si se sale a mitad, se reanuda (sigue puntuando).
   - Repeticiones y días pasados son "Práctica": no se guardan ni cambian el calendario.
-- **Test obligatorio:** la misma fecha produce siempre el mismo tablero en iPhone, iPad y Mac.
+- **Test obligatorio:** la misma fecha produce siempre el mismo tablero en todos los dispositivos.
 
 ## Game Center
 
@@ -157,7 +157,6 @@ Decisiones:
 - **Restablecer progreso** (Ajustes): borra partidas, retos, rachas, logros y recompensas en local, el guardado de iCloud y los logros de Game Center (`resetAchievements`). Sin sesión, queda pendiente (`pendingCloudReset`) y se hace al iniciar sesión, antes de sincronizar. Los puntajes de leaderboards no se pueden retirar; otros dispositivos conservan su copia local.
 - `daily_challenge` guarda el puntaje **más reciente** (también 0 o negativo); `best_score` y `longest_streak` solo valores > 0.
 - Partidas guardadas: se guarda un `Snapshot` (progreso + resultados diarios). Los conflictos se resuelven **fusionando** (unión de logros, máximo de cada contador, mejor resultado por día), lo que siempre conserva el mayor progreso. La partida clásica en curso no se sincroniza.
-- macOS: `ENABLE_OUTGOING_NETWORK_CONNECTIONS` solo porque GameKit lo necesita dentro del sandbox; la app no hace llamadas propias.
 
 ## Logros y recompensas
 
@@ -184,7 +183,7 @@ Decisiones de implementación (fase 5):
 - Las opciones por defecto (Papel, Simple, SF Rounded, Contorno, Suave, ícono estándar) están siempre disponibles.
 - Los colores de los temas están en el Asset Catalog (`SlateBackground`, `SandInk`…). Pizarra y Medianoche fuerzan modo oscuro; Arena tiene variante clara y oscura; Papel usa los estilos del sistema.
 - Los sonidos se sintetizan en el dispositivo (AVAudioEngine, sin archivos), categoría `.ambient` (respeta el modo silencio). Sonido y hápticos activados por defecto.
-- El ícono dorado es solo iOS (macOS no soporta íconos alternativos).
+- El ícono dorado funciona en iPhone y iPad (en Mac, la app de iPad no cambia de ícono).
 - Preferencias en `UserDefaults` (`@AppStorage`); progreso y logros en SwiftData (`StoredProgress`). Las partidas de práctica también cuentan para logros de juego.
 
 ## Estética y UX
@@ -211,7 +210,7 @@ Decisiones de implementación (fase 5):
 - Splash al abrir: "Quiet Studios" (marca, sin traducir) ~1,5 s sobre el fondo del launch screen; un toque lo salta. Se omite con `-startGame`/`-uiTesting`.
 - Feedback por jugada: "+N" que vuela desde el centro al puntaje (costos de pista y deshacer: en gris junto al puntaje; con Reduce Motion todo junto al puntaje) y elogios en una burbuja que aparece en el centro (debajo del +N) y sube al centro de la barra superior: "¡Desde lejos!" (4+ celdas eliminadas entre la pareja), "¡Doble/Triple fila!", "¡Ya no hay más 7!" (se eliminó el último de un dígito), "¡N seguidas!" (cada 5 parejas sin error). Solo texto, no dan puntos.
 - Pantallas: Inicio (Continuar, Nueva partida, Reto diario), Juego, Leaderboards, Colección, Ajustes (sonido, hápticos, privacidad).
-- iPad/Mac: tablero centrado con ancho máximo. Mac: ratón, trackpad y atajos de teclado.
+- Responsivo por size class (`DesignSystem/Layout.swift`): en regular (iPad) el tablero crece hasta 760 pt, el calendario y los botones se agrandan, y listas/formularios usan una columna centrada de 680 pt (`readableColumn()`). Teclado (⌘Z, +, h) en iPad con teclado y en Mac.
 - Accesibilidad: Dynamic Type, VoiceOver por celda ("7, fila 3, columna 2"), contraste suficiente, opción de números más grandes.
 
 ## Localización
@@ -247,7 +246,7 @@ Cada fase termina con su criterio de aceptación cumplido antes de pasar a la si
 1. **Motor del juego (Core).** Tablero, parejas y conexiones, +, pistas, puntaje, etapas, PRNG con semilla.
    Acepta: tests cubren las 3 conexiones, filas vacías, fin de partida y determinismo del generador.
 2. **Juego jugable.** Pantalla de juego, selección, animaciones, hápticos, claro/oscuro.
-   Acepta: una partida completa se juega en iPhone, iPad y Mac.
+   Acepta: una partida completa se juega en iPhone y iPad.
 3. **Persistencia y reto diario.** SwiftData, continuar partida, reto diario, racha, calendario.
    Acepta: cerrar y volver mantiene el estado; la misma fecha genera el mismo reto en los 3 dispositivos.
 4. **Game Center.** Autenticación, logros, 3 leaderboards (global y amigos), partidas guardadas.
@@ -262,7 +261,7 @@ Cada fase termina con su criterio de aceptación cumplido antes de pasar a la si
 | Fase | Estado |
 |---|---|
 | 1. Motor | ✅ Hecha |
-| 2. Juego jugable | ✅ Hecha (probada en iPhone; Mac compila; iPad sin probar en simulador) |
+| 2. Juego jugable | ✅ Hecha (probada en iPhone real; iPad en simulador con layout responsivo) |
 | 3. Persistencia y reto diario | ✅ Hecha |
 | 4. Game Center | 🟡 Código completo; falta App ID + App Store Connect para verificarlo |
 | 5. Recompensas y colección | ✅ Hecha |
@@ -276,7 +275,7 @@ Cada fase termina con su criterio de aceptación cumplido antes de pasar a la si
 
 - [x] + : máximo 5 por tablero, sin devolución al limpiar filas.
 - [x] Color primario: azul eléctrico.
-- [ ] Color secundario (provisional: ámbar).
-- [ ] Nombre final (propuesto: Quiet Numbers).
-- [ ] Versión mínima de iOS/macOS: 18 o 26.
+- [ ] Color secundario (provisional: ámbar; no convence). Revisión pedida a Claude Design: `AppStore/design-brief.md`.
+- [x] Nombre final: **Quiet Numbers**; estudio **Quiet Studios**. Búsqueda (2026-10-26): ninguna app con esos nombres en la App Store; existen quietnumbers.com (plantillas financieras) y quietstudios.com (estudio de arquitectura/diseño), rubros distintos. No se hizo búsqueda formal de marcas (USPTO / SIC).
+- [x] Versión mínima: iOS/iPadOS 18.
 - [ ] Team de Apple Developer (pendiente de crear; bloquea Game Center, TestFlight y App Store).

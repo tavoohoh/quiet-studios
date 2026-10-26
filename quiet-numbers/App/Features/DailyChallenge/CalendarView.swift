@@ -121,15 +121,18 @@ private struct DayCell: View {
     let isPlayable: Bool
     let onSelect: (String) -> Void
 
+    @Environment(\.horizontalSizeClass) private var sizeClass
+
     var body: some View {
+        let isRegular = sizeClass == .regular
         Button {
             onSelect(dayKey)
         } label: {
             Text(day, format: .number)
-                .font(.system(.callout, design: .rounded, weight: dayKey == todayKey ? .bold : .regular).monospacedDigit())
+                .font(.system(isRegular ? .title3 : .callout, design: .rounded, weight: dayKey == todayKey ? .bold : .regular).monospacedDigit())
                 .foregroundStyle(foreground)
                 .frame(maxWidth: .infinity)
-                .frame(height: 36)
+                .frame(height: isRegular ? 52 : 36)
                 .background {
                     if record?.isCompleted == true {
                         Circle().fill(.tint)

@@ -13,6 +13,7 @@ struct HomeView: View {
 
     @Environment(AppModel.self) private var app
     @Environment(\.appearance) private var appearance
+    @Environment(\.horizontalSizeClass) private var sizeClass
     @State private var path: [Route] = []
 
     var body: some View {
@@ -46,7 +47,7 @@ struct HomeView: View {
                 }
                 .controlSize(.large)
                 .buttonBorderShape(.capsule)
-                .frame(maxWidth: 360)
+                .frame(maxWidth: Layout.buttons(sizeClass))
                 if app.progress.bestScore > 0 {
                     Text("Best \(Text(app.progress.bestScore, format: .number))")
                         .font(.subheadline.monospacedDigit())

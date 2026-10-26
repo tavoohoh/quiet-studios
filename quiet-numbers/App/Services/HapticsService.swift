@@ -1,8 +1,6 @@
-#if canImport(UIKit)
 import UIKit
-#endif
 
-/// Haptic feedback for game events. No-op where haptics aren't available (Mac).
+/// Haptic feedback for game events. No-op where the hardware has none (most iPads, Mac).
 @MainActor
 final class HapticsService {
     enum Event {
@@ -13,7 +11,6 @@ final class HapticsService {
     }
 
     func play(_ event: Event) {
-        #if os(iOS)
         switch event {
         case .select:
             UIImpactFeedbackGenerator(style: .light).impactOccurred()
@@ -24,6 +21,5 @@ final class HapticsService {
         case .rowCleared:
             UINotificationFeedbackGenerator().notificationOccurred(.success)
         }
-        #endif
     }
 }

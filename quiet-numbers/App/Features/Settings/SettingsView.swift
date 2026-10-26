@@ -12,9 +12,7 @@ struct SettingsView: View {
         Form {
             Section {
                 Toggle("Sound", isOn: $soundEnabled)
-                #if os(iOS)
                 Toggle("Haptics", isOn: $hapticsEnabled)
-                #endif
                 Toggle("Larger numbers", isOn: $largerNumbers)
             }
             .listRowBackground(Rectangle().fill(appearance.theme.surface))
@@ -41,6 +39,7 @@ struct SettingsView: View {
         }
         .formStyle(.grouped)
         .scrollContentBackground(.hidden)
+        .readableColumn()
         .background(appearance.theme.background)
         .navigationTitle(Text("Settings"))
         .confirmationDialog("Reset all progress?", isPresented: $confirmsReset, titleVisibility: .visible) {
@@ -52,12 +51,10 @@ struct SettingsView: View {
 
     private func reset() {
         app.resetProgress()
-        #if os(iOS)
         // The gold icon is a reward too.
         if UIApplication.shared.alternateIconName != nil {
             UIApplication.shared.setAlternateIconName(nil)
         }
-        #endif
     }
 
     private static var version: String {

@@ -19,10 +19,8 @@ struct CollectionView: View {
             RewardSection(title: "Numbers", selection: $numberFont, progress: app.progress)
             RewardSection(title: "Row clear", selection: $clearEffect, progress: app.progress)
             RewardSection(title: "Sound", selection: $soundPack, progress: app.progress)
-            #if os(iOS)
             RewardSection(title: "App icon", selection: $appIcon, progress: app.progress)
                 .onChange(of: appIcon) { setAppIcon(appIcon) }
-            #endif
             Section("Achievements") {
                 ForEach(Achievement.allCases, id: \.self) { achievement in
                     AchievementRow(achievement: achievement, progress: app.progress.progress(of: achievement))
@@ -30,18 +28,17 @@ struct CollectionView: View {
             }
         }
         .scrollContentBackground(.hidden)
+        .readableColumn()
         .background(appearance.theme.background)
         .navigationTitle(Text("Collection"))
     }
 
-    #if os(iOS)
     private func setAppIcon(_ choice: AppIconChoice) {
         guard UIApplication.shared.supportsAlternateIcons,
               UIApplication.shared.alternateIconName != choice.iconName
         else { return }
         UIApplication.shared.setAlternateIconName(choice.iconName)
     }
-    #endif
 }
 
 private struct RewardSection<R: Reward>: View {

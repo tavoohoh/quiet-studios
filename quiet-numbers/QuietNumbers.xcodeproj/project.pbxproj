@@ -11,6 +11,7 @@
 		119422CC4A4C765B14A95825 /* PersistenceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3D9D0DAEED6E7CD8DA283B /* PersistenceService.swift */; };
 		199C20D362693CDF6837DCD6 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571AC2887AA56D2446FF163A /* CalendarView.swift */; };
 		1A6220A4BF47AFBE8F7D9CEF /* HapticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE40B331BB5C56022D43490D /* HapticsService.swift */; };
+		22A872E7DEBDD550391484A4 /* Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630EEE295069B81DE9BFF117 /* Layout.swift */; };
 		24EDA44D775CF8726B5F4747 /* DemoData.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE78A2F66517ED0214D8D09 /* DemoData.swift */; };
 		2570D98627055F191E8A2D96 /* Typography.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F24CF5C37A1787DE8516E1F /* Typography.swift */; };
 		26BD520F2CBABE86324C4B0A /* SoundService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF81F57210C7B0D19E1D747E /* SoundService.swift */; };
@@ -86,6 +87,7 @@
 		53C64A3C452C0B00769CC13A /* AppModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModelTests.swift; sourceTree = "<group>"; };
 		571AC2887AA56D2446FF163A /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		57DBAC418C43449E8EE90E01 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		630EEE295069B81DE9BFF117 /* Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Layout.swift; sourceTree = "<group>"; };
 		631019FDC57409A49740D79C /* QuietNumbersApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuietNumbersApp.swift; sourceTree = "<group>"; };
 		66D7992BC8FB7DE533207505 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		6767AD3F2C7296EC510EF3F8 /* QuietNumbers-Personal.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "QuietNumbers-Personal.entitlements"; sourceTree = "<group>"; };
@@ -173,6 +175,7 @@
 				3764A4EF9834602A85298448 /* AchievementText.swift */,
 				45997456AC4544131F86E156 /* AppearanceRoot.swift */,
 				23C8A220045ED805473F40E1 /* DayKeyFormat.swift */,
+				630EEE295069B81DE9BFF117 /* Layout.swift */,
 				CA3D83326830FBDF44307316 /* Rewards.swift */,
 				1F24CF5C37A1787DE8516E1F /* Typography.swift */,
 			);
@@ -488,6 +491,7 @@
 				053BB0365C625243135874E4 /* GameView.swift in Sources */,
 				1A6220A4BF47AFBE8F7D9CEF /* HapticsService.swift in Sources */,
 				6BF43A5E0C5928A2C4530C17 /* HomeView.swift in Sources */,
+				22A872E7DEBDD550391484A4 /* Layout.swift in Sources */,
 				5970D45FBD88ACC4289A804A /* LeaderboardsView.swift in Sources */,
 				119422CC4A4C765B14A95825 /* PersistenceService.swift in Sources */,
 				E4F62B961783E757AF92439F /* QuietNumbersApp.swift in Sources */,
@@ -641,7 +645,6 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
-				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				MARKETING_VERSION = 0.1.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -723,7 +726,6 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
-				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				MARKETING_VERSION = 0.1.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -782,7 +784,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 22F6C4F6421B81585108D7D6 /* Base.xcconfig */;
 			buildSettings = {
-				"ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES[sdk=iphone*]" = "AppIcon-Gold";
+				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "AppIcon-Gold";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -790,9 +792,6 @@
 				CODE_SIGN_ENTITLEMENTS = "$(QN_ENTITLEMENTS)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				ENABLE_APP_SANDBOX = YES;
-				ENABLE_HARDENED_RUNTIME = YES;
-				"ENABLE_OUTGOING_NETWORK_CONNECTIONS[sdk=macosx*]" = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "Quiet Numbers";
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
@@ -809,10 +808,10 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "$(QN_BUNDLE_ID)";
 				PRODUCT_NAME = "Quiet Numbers";
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = YES;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -843,7 +842,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 22F6C4F6421B81585108D7D6 /* Base.xcconfig */;
 			buildSettings = {
-				"ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES[sdk=iphone*]" = "AppIcon-Gold";
+				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "AppIcon-Gold";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -851,9 +850,6 @@
 				CODE_SIGN_ENTITLEMENTS = "$(QN_ENTITLEMENTS)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				ENABLE_APP_SANDBOX = YES;
-				ENABLE_HARDENED_RUNTIME = YES;
-				"ENABLE_OUTGOING_NETWORK_CONNECTIONS[sdk=macosx*]" = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "Quiet Numbers";
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
@@ -870,10 +866,10 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "$(QN_BUNDLE_ID)";
 				PRODUCT_NAME = "Quiet Numbers";
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = YES;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

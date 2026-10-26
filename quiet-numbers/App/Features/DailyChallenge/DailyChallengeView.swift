@@ -7,6 +7,7 @@ struct DailyChallengeView: View {
 
     @Environment(AppModel.self) private var app
     @Environment(\.appearance) private var appearance
+    @Environment(\.horizontalSizeClass) private var sizeClass
     @State private var month = AppClock.now
 
     var body: some View {
@@ -41,10 +42,10 @@ struct DailyChallengeView: View {
                             .foregroundStyle(.secondary)
                     }
                 }
-                .frame(maxWidth: 360)
+                .frame(maxWidth: Layout.buttons(sizeClass))
 
                 CalendarView(month: $month, todayKey: today, records: app.persistence.dailies, onSelect: onPlay)
-                    .frame(maxWidth: 420)
+                    .frame(maxWidth: Layout.calendar(sizeClass))
 
                 Text("Next challenge in \(countdown)")
                     .font(.footnote)
@@ -55,9 +56,7 @@ struct DailyChallengeView: View {
         }
         .background(appearance.theme.background)
         .navigationTitle(Text("Daily Challenge"))
-        #if os(iOS)
         .navigationBarTitleDisplayMode(.inline)
-        #endif
     }
 
     /// Live relative time; frozen in demo launches so screenshots don't depend on the clock.

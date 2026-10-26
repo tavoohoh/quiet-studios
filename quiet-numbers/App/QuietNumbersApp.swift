@@ -19,9 +19,6 @@ struct QuietNumbersApp: App {
                 }
             }
         }
-        #if os(macOS)
-        .defaultSize(width: 520, height: 760)
-        #endif
     }
 
     /// Debug launches go straight in, so UI tests aren't held up.
