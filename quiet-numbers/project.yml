@@ -41,6 +41,18 @@ targets:
         ENABLE_APP_SANDBOX: YES
         ENABLE_HARDENED_RUNTIME: YES
         CODE_SIGN_STYLE: Automatic
+  QuietNumbersTests:
+    type: bundle.unit-test
+    supportedDestinations: [iOS]
+    sources: [AppTests]
+    dependencies:
+      - target: QuietNumbers
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
+        PRODUCT_BUNDLE_IDENTIFIER: com.quietproject.numbers.tests
+        TEST_HOST: "$(BUILT_PRODUCTS_DIR)/Quiet Numbers.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Quiet Numbers"
+        BUNDLE_LOADER: "$(TEST_HOST)"
   QuietNumbersUITests:
     type: bundle.ui-testing
     supportedDestinations: [iOS]
@@ -59,4 +71,5 @@ schemes:
     test:
       targets:
         - package: QuietNumbersCore/QuietNumbersCoreTests
+        - QuietNumbersTests
         - QuietNumbersUITests

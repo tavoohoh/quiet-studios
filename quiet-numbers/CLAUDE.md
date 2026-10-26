@@ -32,8 +32,9 @@ Un solo target multiplataforma (iPhone, iPad, Mac), compra universal, un bundle 
 
 - El `.xcodeproj` se genera desde `project.yml` con XcodeGen: correr `xcodegen generate` tras agregar o mover archivos. No editar el `.pbxproj` a mano.
 - Tests del Core: `cd Packages/QuietNumbersCore && swift test`.
+- Todos los tests (Core en iOS, app y UI): `xcodebuild test -project QuietNumbers.xcodeproj -scheme QuietNumbers -destination 'platform=iOS Simulator,name=iPhone 17'`.
 - UI test en simulador: `xcodebuild test -project QuietNumbers.xcodeproj -scheme QuietNumbers -destination 'platform=iOS Simulator,name=iPhone 17' -only-testing:QuietNumbersUITests`.
-- Argumentos DEBUG: `-startGame` abre una partida directo; `-seedKey <texto>` hace el tablero determinista (`2026-10-25` da el tablero golden de los tests); `-boardValues 5,3,7,…` arranca con números exactos; `-slowEffects` pone los efectos en cámara lenta (×6) para inspeccionarlos.
+- Argumentos DEBUG: `-startGame` abre una partida directo; `-seedKey <texto>` hace el tablero determinista (`2026-10-25` da el tablero golden de los tests); `-boardValues 5,3,7,…` arranca con números exactos; `-slowEffects` pone los efectos en cámara lenta (×6) para inspeccionarlos. `-startGame` usa almacenamiento en memoria; `-uiTesting` usa un archivo propio (`UITests.store`) que `-resetStore` borra, para no tocar los datos reales.
 
 ## Arquitectura
 
@@ -115,6 +116,11 @@ Tablero único por día, igual para todo el mundo, generado en el dispositivo si
 - **Formato:** una sola etapa, mismas reglas y límites. Un solo intento puntuable por día; se puede rejugar sin enviar puntaje.
 - **Racha:** días consecutivos completados, guardada localmente, usada para logros.
 - **Calendario:** vista mensual de retos completados; los últimos 30 días se pueden jugar sin puntuar.
+- **Decisiones de implementación (fase 3):**
+  - "Completar" un reto = vaciar el tablero. Terminar sin vaciarlo guarda el puntaje (cuenta como intento) pero no suma a la racha.
+  - El intento puntuable empieza al tocar "Jugar" por primera vez ese día; si se sale a mitad, se reanuda (sigue puntuando).
+  - Repeticiones y días pasados son "Práctica": no se guardan ni cambian el calendario.
+  - Las fechas de los retos se muestran en UTC (en Colombia el reto del día siguiente aparece a las 7 pm).
 - **Test obligatorio:** la misma fecha produce siempre el mismo tablero en iPhone, iPad y Mac.
 
 ## Game Center
@@ -206,7 +212,13 @@ Cada fase termina con su criterio de aceptación cumplido antes de pasar a la si
 6. **Pulido y lanzamiento.** Localización completa, accesibilidad, PrivacyInfo, capturas, TestFlight.
    Acepta: cero textos sin localizar, auditoría de VoiceOver aprobada, build en TestFlight.
 
+## Anotaciones de diseño
+
+- **Animación al unir números: no satisface (2026-10-25).** La versión actual (línea que crece desde el centro en 3 niveles, azul metálico, luego fantasma) funciona pero hay que rediseñarla. Retomar antes del pulido final (fase 6).
+
 ## Preguntas abiertas
+
+- [ ] ¿Limpiar una fila debe devolver un uso de +? Hoy sí (regla del brief) y en la práctica el + casi nunca se agota. Alternativa propuesta: 5 usos fijos por etapa.
 
 - [ ] Nombre final (propuesto: Quiet Numbers).
 - [ ] Versión mínima de iOS/macOS: 18 o 26.

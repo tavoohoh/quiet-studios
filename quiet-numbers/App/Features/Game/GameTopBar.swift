@@ -4,6 +4,8 @@ import SwiftUI
 /// Score, stage, and the + and hint buttons, plus brief feedback after each move.
 struct GameTopBar: View {
     let model: GameModel
+    /// Under the score: stage, or which daily this is.
+    let subtitle: Text
     let onAddNumbers: () -> Void
     let onHint: () -> Void
 
@@ -19,7 +21,7 @@ struct GameTopBar: View {
                         .accessibilityValue(Text(model.session.score, format: .number))
                     ScoreChangeLabel(model: model)
                 }
-                Text("Stage \(model.session.stage)")
+                subtitle
                     .font(.counter)
                     .foregroundStyle(.secondary)
             }

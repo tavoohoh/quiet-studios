@@ -3,7 +3,11 @@ import SwiftUI
 
 struct GameView: View {
     let model: GameModel
+    let kind: GameKind
+    /// Classic only.
     let onNewGame: () -> Void
+    /// After every change to the session, to save it.
+    let onSessionChange: () -> Void
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.dismiss) private var dismiss
@@ -14,6 +18,7 @@ struct GameView: View {
         VStack(spacing: 0) {
             GameTopBar(
                 model: model,
+                subtitle: subtitle,
                 onAddNumbers: { animate { model.addNumbers() } },
                 onHint: { animate { model.showHint() } }
             )
@@ -42,7 +47,8 @@ struct GameView: View {
         .overlay {
             if model.session.isOver {
                 GameOverView(
-                    score: model.session.score,
+                    session: model.session,
+                    kind: kind,
                     onNewGame: { animate(onNewGame) },
                     onHome: { dismiss() }
                 )
@@ -50,19 +56,30 @@ struct GameView: View {
             }
         }
         .onChange(of: reduceMotion, initial: true) { model.reduceMotion = reduceMotion }
+        .onChange(of: model.session) { onSessionChange() }
         .toolbar {
-            ToolbarItem(placement: .primaryAction) {
-                Menu {
-                    Button("New Game", systemImage: "arrow.counterclockwise") { animate(onNewGame) }
-                        .keyboardShortcut("n")
-                } label: {
-                    Label("Menu", systemImage: "ellipsis.circle")
+            if kind == .classic {
+                ToolbarItem(placement: .primaryAction) {
+                    Menu {
+                        Button("New Game", systemImage: "arrow.counterclockwise") { animate(onNewGame) }
+                            .keyboardShortcut("n")
+                    } label: {
+                        Label("Menu", systemImage: "ellipsis.circle")
+                    }
                 }
             }
         }
         #if os(iOS)
         .navigationBarTitleDisplayMode(.inline)
         #endif
+    }
+
+    private var subtitle: Text {
+        switch kind {
+        case .classic: Text("Stage \(model.session.stage)")
+        case .daily: Text("Daily Challenge")
+        case .practice(let dayKey): Text("Practice · \(DayKeyFormat.string(dayKey))")
+        }
     }
 
     /// Reduce Motion keeps a short fade but drops movement and scaling.
@@ -85,30 +102,43 @@ private struct StageBanner: View {
 }
 
 private struct GameOverView: View {
-    let score: Int
+    let session: GameSession
+    let kind: GameKind
     let onNewGame: () -> Void
     let onHome: () -> Void
 
     var body: some View {
         VStack(spacing: 20) {
-            Text("No moves left")
+            Text(session.isCompleted ? "Challenge complete" : "No moves left")
                 .font(.system(.title2, design: .rounded, weight: .semibold))
             VStack(spacing: 4) {
                 Text("Final score")
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
-                Text(score, format: .number)
+                Text(session.score, format: .number)
                     .font(.score)
+                if case .practice = kind {
+                    Text("Not scored")
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                }
             }
             VStack(spacing: 10) {
-                Button(action: onNewGame) {
-                    Text("New Game").frame(maxWidth: .infinity)
+                if kind == .classic {
+                    Button(action: onNewGame) {
+                        Text("New Game").frame(maxWidth: .infinity)
+                    }
+                    .buttonStyle(.borderedProminent)
+                    Button(action: onHome) {
+                        Text("Home").frame(maxWidth: .infinity)
+                    }
+                    .buttonStyle(.bordered)
+                } else {
+                    Button(action: onHome) {
+                        Text("Done").frame(maxWidth: .infinity)
+                    }
+                    .buttonStyle(.borderedProminent)
                 }
-                .buttonStyle(.borderedProminent)
-                Button(action: onHome) {
-                    Text("Home").frame(maxWidth: .infinity)
-                }
-                .buttonStyle(.bordered)
             }
             .controlSize(.large)
             .buttonBorderShape(.capsule)

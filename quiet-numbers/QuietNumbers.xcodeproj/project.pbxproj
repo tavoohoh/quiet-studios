@@ -8,21 +8,35 @@
 
 /* Begin PBXBuildFile section */
 		053BB0365C625243135874E4 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E7798637C0A4A6CDA4DBB2 /* GameView.swift */; };
+		119422CC4A4C765B14A95825 /* PersistenceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3D9D0DAEED6E7CD8DA283B /* PersistenceService.swift */; };
+		199C20D362693CDF6837DCD6 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571AC2887AA56D2446FF163A /* CalendarView.swift */; };
 		1A6220A4BF47AFBE8F7D9CEF /* HapticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE40B331BB5C56022D43490D /* HapticsService.swift */; };
 		2570D98627055F191E8A2D96 /* Typography.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F24CF5C37A1787DE8516E1F /* Typography.swift */; };
 		3CC92E0B77008BB80B4A299A /* GameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212A4F79BAB138C07EAFF774 /* GameModel.swift */; };
 		43E88AE9810B80FD897EFF08 /* GameTopBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8D9147C86ED9A3911F7A558 /* GameTopBar.swift */; };
+		5554FEE65B821D820A7D6CB5 /* DayKeyFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23C8A220045ED805473F40E1 /* DayKeyFormat.swift */; };
 		62356E8F3C696A26E37DDC38 /* CellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1945F8C8C9CC42DC822995A2 /* CellView.swift */; };
 		6BF43A5E0C5928A2C4530C17 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D7992BC8FB7DE533207505 /* HomeView.swift */; };
 		7285EE1FA7F38A9D5CD2EB39 /* GameplayUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA9DDB21A2D6D9A16F979F4 /* GameplayUITests.swift */; };
 		757679F41159E358229E3201 /* QuietNumbersCore in Frameworks */ = {isa = PBXBuildFile; productRef = 7BE46ECC0AC3158A352BE22A /* QuietNumbersCore */; };
+		94EE4038B4231F54FE822E0C /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D15AA4C99BAE2C8662B34C66 /* AppModel.swift */; };
+		AE09418FE17CF8B80C9985F2 /* DailyChallengeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A94485656D17DA81C15D259 /* DailyChallengeView.swift */; };
 		AEDA50AE1D918285F5991128 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FC76CAE1563A82F982ECB21E /* Assets.xcassets */; };
+		C8F42C0267E4DB6F52F5D3B0 /* PersistenceUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0B0675BDEA4B0A15DEB5B9C /* PersistenceUITests.swift */; };
 		E4F62B961783E757AF92439F /* QuietNumbersApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631019FDC57409A49740D79C /* QuietNumbersApp.swift */; };
 		E763D16DE3F2BD7B5DC82F95 /* BoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C33B49B32F0F2F2AA6714F78 /* BoardView.swift */; };
 		E79894BADD43733A109B5546 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 395784F31889B14D1B911198 /* Localizable.xcstrings */; };
+		F4DE16CB5467780DDC8A41BF /* AppModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C64A3C452C0B00769CC13A /* AppModelTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		5BCDA4ACE0F2EECEA211ABE5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B5A2CB8615613521CE64BA9A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6DB6EF7024B0E5261EE06AE3;
+			remoteInfo = QuietNumbers;
+		};
 		ECC05A8BF358F11631891910 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = B5A2CB8615613521CE64BA9A /* Project object */;
@@ -37,17 +51,25 @@
 		1945F8C8C9CC42DC822995A2 /* CellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellView.swift; sourceTree = "<group>"; };
 		1F24CF5C37A1787DE8516E1F /* Typography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Typography.swift; sourceTree = "<group>"; };
 		212A4F79BAB138C07EAFF774 /* GameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameModel.swift; sourceTree = "<group>"; };
+		23C8A220045ED805473F40E1 /* DayKeyFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayKeyFormat.swift; sourceTree = "<group>"; };
 		395784F31889B14D1B911198 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		4A94485656D17DA81C15D259 /* DailyChallengeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyChallengeView.swift; sourceTree = "<group>"; };
 		5207218E375E6E70D497DCEB /* QuietNumbers.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = QuietNumbers.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		53C64A3C452C0B00769CC13A /* AppModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModelTests.swift; sourceTree = "<group>"; };
+		571AC2887AA56D2446FF163A /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		631019FDC57409A49740D79C /* QuietNumbersApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuietNumbersApp.swift; sourceTree = "<group>"; };
 		66D7992BC8FB7DE533207505 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		86B72A7C6607184099C42B8B /* QuietNumbersTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = QuietNumbersTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9ADB0BD18C8BA1112788571E /* QuietNumbersUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = QuietNumbersUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A8D9147C86ED9A3911F7A558 /* GameTopBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameTopBar.swift; sourceTree = "<group>"; };
 		ABA9DDB21A2D6D9A16F979F4 /* GameplayUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameplayUITests.swift; sourceTree = "<group>"; };
+		B0B0675BDEA4B0A15DEB5B9C /* PersistenceUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceUITests.swift; sourceTree = "<group>"; };
 		B529A32088A2D117919279B6 /* QuietNumbersCore */ = {isa = PBXFileReference; lastKnownFileType = folder; name = QuietNumbersCore; path = Packages/QuietNumbersCore; sourceTree = SOURCE_ROOT; };
 		C33B49B32F0F2F2AA6714F78 /* BoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardView.swift; sourceTree = "<group>"; };
+		D15AA4C99BAE2C8662B34C66 /* AppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModel.swift; sourceTree = "<group>"; };
 		DE40B331BB5C56022D43490D /* HapticsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticsService.swift; sourceTree = "<group>"; };
 		FC76CAE1563A82F982ECB21E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		FF3D9D0DAEED6E7CD8DA283B /* PersistenceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +96,7 @@
 			isa = PBXGroup;
 			children = (
 				ABA9DDB21A2D6D9A16F979F4 /* GameplayUITests.swift */,
+				B0B0675BDEA4B0A15DEB5B9C /* PersistenceUITests.swift */,
 			);
 			path = UITests;
 			sourceTree = "<group>";
@@ -81,6 +104,7 @@
 		2272BB89D00C2BBBA1AA2CE5 /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				D20D0A0FB5D6F655C37F4DCB /* DailyChallenge */,
 				8D800F68626F473A646C1B74 /* Game */,
 				044ECDE25B449BC9452DE93B /* Home */,
 			);
@@ -90,6 +114,7 @@
 		6630C8EAC87F06D7B0E77C4F /* DesignSystem */ = {
 			isa = PBXGroup;
 			children = (
+				23C8A220045ED805473F40E1 /* DayKeyFormat.swift */,
 				1F24CF5C37A1787DE8516E1F /* Typography.swift */,
 			);
 			path = DesignSystem;
@@ -99,6 +124,7 @@
 			isa = PBXGroup;
 			children = (
 				ED96C220A6D5BCBC9F2597D4 /* App */,
+				B945FCD8200B7816736E0B59 /* AppTests */,
 				9605778C70DBA0393575ECC7 /* Packages */,
 				0679877058288DD818BCA636 /* UITests */,
 				B3D60B0A1E034BE53DAA3C47 /* Products */,
@@ -138,22 +164,42 @@
 			isa = PBXGroup;
 			children = (
 				5207218E375E6E70D497DCEB /* QuietNumbers.app */,
+				86B72A7C6607184099C42B8B /* QuietNumbersTests.xctest */,
 				9ADB0BD18C8BA1112788571E /* QuietNumbersUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		B945FCD8200B7816736E0B59 /* AppTests */ = {
+			isa = PBXGroup;
+			children = (
+				53C64A3C452C0B00769CC13A /* AppModelTests.swift */,
+			);
+			path = AppTests;
 			sourceTree = "<group>";
 		};
 		C699F7267315219D023E62A5 /* Services */ = {
 			isa = PBXGroup;
 			children = (
 				DE40B331BB5C56022D43490D /* HapticsService.swift */,
+				FF3D9D0DAEED6E7CD8DA283B /* PersistenceService.swift */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		D20D0A0FB5D6F655C37F4DCB /* DailyChallenge */ = {
+			isa = PBXGroup;
+			children = (
+				571AC2887AA56D2446FF163A /* CalendarView.swift */,
+				4A94485656D17DA81C15D259 /* DailyChallengeView.swift */,
+			);
+			path = DailyChallenge;
 			sourceTree = "<group>";
 		};
 		ED96C220A6D5BCBC9F2597D4 /* App */ = {
 			isa = PBXGroup;
 			children = (
+				D15AA4C99BAE2C8662B34C66 /* AppModel.swift */,
 				631019FDC57409A49740D79C /* QuietNumbersApp.swift */,
 				6630C8EAC87F06D7B0E77C4F /* DesignSystem */,
 				2272BB89D00C2BBBA1AA2CE5 /* Features */,
@@ -166,6 +212,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		114A0F5F2B4220CD027B28F6 /* QuietNumbersTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1FD6EA65D054388ED0AA98A5 /* Build configuration list for PBXNativeTarget "QuietNumbersTests" */;
+			buildPhases = (
+				775DF62EADC0946DD974D166 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4C7C102CA796BDAC7A45B9D4 /* PBXTargetDependency */,
+			);
+			name = QuietNumbersTests;
+			packageProductDependencies = (
+			);
+			productName = QuietNumbersTests;
+			productReference = 86B72A7C6607184099C42B8B /* QuietNumbersTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		1809ADE75B1F2ACED9B86F31 /* QuietNumbersUITests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 960A10D1E149289EBA1C099A /* Build configuration list for PBXNativeTarget "QuietNumbersUITests" */;
@@ -240,6 +304,7 @@
 			projectRoot = "";
 			targets = (
 				6DB6EF7024B0E5261EE06AE3 /* QuietNumbers */,
+				114A0F5F2B4220CD027B28F6 /* QuietNumbersTests */,
 				1809ADE75B1F2ACED9B86F31 /* QuietNumbersUITests */,
 			);
 		};
@@ -262,15 +327,28 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				94EE4038B4231F54FE822E0C /* AppModel.swift in Sources */,
 				E763D16DE3F2BD7B5DC82F95 /* BoardView.swift in Sources */,
+				199C20D362693CDF6837DCD6 /* CalendarView.swift in Sources */,
 				62356E8F3C696A26E37DDC38 /* CellView.swift in Sources */,
+				AE09418FE17CF8B80C9985F2 /* DailyChallengeView.swift in Sources */,
+				5554FEE65B821D820A7D6CB5 /* DayKeyFormat.swift in Sources */,
 				3CC92E0B77008BB80B4A299A /* GameModel.swift in Sources */,
 				43E88AE9810B80FD897EFF08 /* GameTopBar.swift in Sources */,
 				053BB0365C625243135874E4 /* GameView.swift in Sources */,
 				1A6220A4BF47AFBE8F7D9CEF /* HapticsService.swift in Sources */,
 				6BF43A5E0C5928A2C4530C17 /* HomeView.swift in Sources */,
+				119422CC4A4C765B14A95825 /* PersistenceService.swift in Sources */,
 				E4F62B961783E757AF92439F /* QuietNumbersApp.swift in Sources */,
 				2570D98627055F191E8A2D96 /* Typography.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		775DF62EADC0946DD974D166 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F4DE16CB5467780DDC8A41BF /* AppModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -279,12 +357,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				7285EE1FA7F38A9D5CD2EB39 /* GameplayUITests.swift in Sources */,
+				C8F42C0267E4DB6F52F5D3B0 /* PersistenceUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		4C7C102CA796BDAC7A45B9D4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6DB6EF7024B0E5261EE06AE3 /* QuietNumbers */;
+			targetProxy = 5BCDA4ACE0F2EECEA211ABE5 /* PBXContainerItemProxy */;
+		};
 		6039778D9EBEDE20358AF23A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 6DB6EF7024B0E5261EE06AE3 /* QuietNumbers */;
@@ -293,6 +377,27 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		1EFA771FAB1900BD55885D65 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.quietproject.numbers.tests;
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Quiet Numbers.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Quiet Numbers";
+			};
+			name = Debug;
+		};
 		2C185BD825513D67F2321931 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -462,6 +567,27 @@
 			};
 			name = Debug;
 		};
+		A4955D6AE84DAF8FD66D7D79 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.quietproject.numbers.tests;
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Quiet Numbers.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Quiet Numbers";
+			};
+			name = Release;
+		};
 		BA21A03B6CDE879FCAC374A2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -538,6 +664,15 @@
 			buildConfigurations = (
 				30153898042977ADA4DE1435 /* Debug */,
 				696DF045E9877CB2BCE7682A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		1FD6EA65D054388ED0AA98A5 /* Build configuration list for PBXNativeTarget "QuietNumbersTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1EFA771FAB1900BD55885D65 /* Debug */,
+				A4955D6AE84DAF8FD66D7D79 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
