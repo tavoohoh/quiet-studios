@@ -33,7 +33,7 @@ Un solo target multiplataforma (iPhone, iPad, Mac), compra universal, un bundle 
 - El `.xcodeproj` se genera desde `project.yml` con XcodeGen: correr `xcodegen generate` tras agregar o mover archivos. No editar el `.pbxproj` a mano.
 - Tests del Core: `cd Packages/QuietNumbersCore && swift test`.
 - UI test en simulador: `xcodebuild test -project QuietNumbers.xcodeproj -scheme QuietNumbers -destination 'platform=iOS Simulator,name=iPhone 17' -only-testing:QuietNumbersUITests`.
-- Argumentos DEBUG: `-startGame` abre una partida directo; `-seedKey <texto>` hace el tablero determinista (`2026-10-25` da el tablero golden de los tests).
+- Argumentos DEBUG: `-startGame` abre una partida directo; `-seedKey <texto>` hace el tablero determinista (`2026-10-25` da el tablero golden de los tests); `-boardValues 5,3,7,…` arranca con números exactos; `-slowEffects` pone los efectos en cámara lenta (×6) para inspeccionarlos.
 
 ## Arquitectura
 
@@ -158,7 +158,9 @@ Categorías de personalización: tema de color, estilo de ficha, tipografía, ef
 - Fondo `systemBackground`; superficies secundarias `secondarySystemBackground`.
 - SF Pro Rounded con `.monospacedDigit()`.
 - Fichas sin bordes, solo el número. Seleccionada: círculo suave del acento. Eliminada: gris muy tenue.
-- Animaciones: pareja válida = fade + leve escala; inválida = pequeña sacudida; fila limpiada = colapso suave hacia arriba. Respetar Reduce Motion.
+- Animaciones: pareja válida = línea que crece desde el centro hasta ambos números y luego fade + leve escala a fantasma; inválida = pequeña sacudida; fila limpiada = borde que se dibuja alrededor de la fila y luego colapso suave hacia arriba. Respetar Reduce Motion (sin línea ni trazo).
+- Tres tipos de línea según las celdas eliminadas entre la pareja: sutil (0, delgada y tenue), media (1–3) y dramática (4+, gruesa con brillo; coincide con "¡Desde lejos!"). En lectura continua entre filas, la línea entra desde los bordes del tablero.
+- Racha ("¡N seguidas!"): se reinicia con un intento inválido o al pedir pista; el + no la reinicia.
 - Hápticos (iOS): ligero al seleccionar, medio al emparejar, éxito al limpiar fila.
 - Barra superior: puntaje, etapa, contador de + y costo de la pista. Nada más.
 - Feedback por jugada: "+N" flotante junto al puntaje (acento; costos en gris) y elogios breves centrados en la barra: "¡Desde lejos!" (4+ celdas eliminadas entre la pareja), "¡Doble/Triple fila!", "¡N seguidas!" (cada 5 parejas sin error). Solo texto, no dan puntos.

@@ -44,6 +44,8 @@ public struct GameSession: Codable, Hashable, Sendable {
     public private(set) var plusRemaining = maxPlusUses
     /// Hints used in the current stage (for "no help" achievements).
     public private(set) var hintsUsedThisStage = 0
+    /// Valid matches in a row. A miss or a hint resets it; + doesn't.
+    public private(set) var streak = 0
     /// Daily challenge only: the board was cleared.
     public private(set) var isCompleted = false
     private var random: SeededRandom
@@ -53,6 +55,13 @@ public struct GameSession: Codable, Hashable, Sendable {
         self.scoring = scoring
         random = SeededRandom(seed: seed)
         board = BoardGenerator.makeBoard(using: &random)
+    }
+
+    /// Starts from exact numbers instead of a generated board (tutorials, UI tests).
+    /// Later stages are generated from `seed`.
+    public init(values: [Int], mode: GameMode = .classic, seed: UInt64, scoring: Scoring = .standard) {
+        self.init(mode: mode, seed: seed, scoring: scoring)
+        board = Board(values: values)
     }
 
     public var hasValidPair: Bool { MatchRules.hasValidPair(on: board) }
@@ -81,6 +90,7 @@ public struct GameSession: Codable, Hashable, Sendable {
             points += scoring.boardClearedPerStage * stage
         }
         score += points
+        streak += 1
         if boardCleared { advanceStage() }
 
         return MatchOutcome(pair: pair, points: points, clearedRows: rows, boardCleared: boardCleared)
@@ -102,7 +112,13 @@ public struct GameSession: Codable, Hashable, Sendable {
         let cost = min(score, scoring.hintCost)
         score -= cost
         hintsUsedThisStage += 1
+        streak = 0
         return (pair, cost)
+    }
+
+    /// The player tried a pair that doesn't match.
+    public mutating func registerMiss() {
+        streak = 0
     }
 
     private mutating func advanceStage() {

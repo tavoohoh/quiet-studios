@@ -48,3 +48,47 @@ final class GameplayUITests: XCTestCase {
         add(shot)
     }
 }
+
+/// Captures the match effects in slow motion on a hand-made board:
+///   5 3 7 4 6 1 9 2 5
+///   1 3 1 3 1 3 1 8 3
+///   4 2 4 2 4 2 4 2 4
+/// Clearing 3-7, 4-6, 1-9 and 2-8 leaves 5 … 5 across seven ghosts: a long shot that also empties row 1.
+final class EffectsUITests: XCTestCase {
+    @MainActor
+    func testMatchEffects() {
+        let app = XCUIApplication()
+        app.launchArguments = [
+            "-startGame", "-slowEffects",
+            "-boardValues", "5,3,7,4,6,1,9,2,5,1,3,1,3,1,3,1,8,3,4,2,4,2,4,2,4,2,4",
+        ]
+        app.launch()
+        XCTAssertTrue(app.buttons["cell-0"].waitForExistence(timeout: 5))
+
+        app.buttons["cell-1"].tap()
+        app.buttons["cell-2"].tap()
+        snapshot(app, "line-subtle")
+
+        for (a, b) in [(3, 4), (5, 6), (7, 16)] {
+            app.buttons["cell-\(a)"].tap()
+            app.buttons["cell-\(b)"].tap()
+        }
+        sleep(4)
+
+        app.buttons["cell-0"].tap()
+        app.buttons["cell-8"].tap()
+        snapshot(app, "line-dramatic")
+        sleep(2)
+        snapshot(app, "row-effect")
+        sleep(4)
+        snapshot(app, "collapsed")
+    }
+
+    @MainActor
+    private func snapshot(_ app: XCUIApplication, _ name: String) {
+        let shot = XCTAttachment(screenshot: app.screenshot())
+        shot.name = name
+        shot.lifetime = .keepAlways
+        add(shot)
+    }
+}

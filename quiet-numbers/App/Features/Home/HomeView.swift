@@ -46,11 +46,18 @@ struct HomeView: View {
         #if DEBUG
         .onAppear {
             // Screenshots and UI tests: `-startGame` opens a game right away;
-            // `-seedKey <text>` makes its board deterministic.
+            // `-seedKey <text>` makes its board deterministic and
+            // `-boardValues 5,3,7,…` starts from exact numbers.
             let arguments = ProcessInfo.processInfo.arguments
+            func value(after flag: String) -> String? {
+                guard let i = arguments.firstIndex(of: flag), i + 1 < arguments.count else { return nil }
+                return arguments[i + 1]
+            }
             if arguments.contains("-startGame"), game == nil {
-                if let i = arguments.firstIndex(of: "-seedKey"), i + 1 < arguments.count {
-                    game = GameModel(session: GameSession(seed: FNV1a.hash(arguments[i + 1])))
+                if let values = value(after: "-boardValues") {
+                    game = GameModel(session: GameSession(values: values.split(separator: ",").compactMap { Int($0) }, seed: 0))
+                } else if let key = value(after: "-seedKey") {
+                    game = GameModel(session: GameSession(seed: FNV1a.hash(key)))
                 } else {
                     game = GameModel()
                 }

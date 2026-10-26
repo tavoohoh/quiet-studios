@@ -158,6 +158,35 @@ import Testing
         #expect(outcome?.pair.gap == 3)
     }
 
+    @Test func streakCountsMatchesAndResetsOnMissOrHint() {
+        var session = GameSession(board: makeBoard([
+            [1, 1, 2, 2, 3, 3, 4, 4, 5],
+            [5, 6, 6, 7, 7, 8, 8, 9, 9],
+        ]), score: 10)
+        _ = session.match(at: 0, 1)
+        _ = session.match(at: 2, 3)
+        #expect(session.streak == 2)
+        session.registerMiss()
+        #expect(session.streak == 0)
+        _ = session.match(at: 4, 5)
+        #expect(session.streak == 1)
+        _ = session.useHint()
+        #expect(session.streak == 0)
+        session.addNumbers()
+        _ = session.match(at: 6, 7)
+        #expect(session.streak == 1)
+    }
+
+    @Test func pairReportsRoute() {
+        let board = makeBoard([
+            [2, 1, 2, 1, 2, 1, 2, 1, 7],
+            [3, 2, 1, 2, 1, 2, 1, 2, 1],
+        ])
+        #expect(MatchRules.pair(on: board, 8, 9)?.route == .readingOrder)
+        let straight = makeBoard([[4, 4, 1, 2, 1, 2, 1, 2, 1]])
+        #expect(MatchRules.pair(on: straight, 0, 1)?.route == .line)
+    }
+
     @Test func plusMarksAddedCells() {
         var session = GameSession(board: makeBoard([[1, 2, 1, 2, 1, 2, 1, 2, 1]]))
         session.addNumbers()

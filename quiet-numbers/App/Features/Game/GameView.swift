@@ -49,6 +49,7 @@ struct GameView: View {
                 .transition(.opacity)
             }
         }
+        .onChange(of: reduceMotion, initial: true) { model.reduceMotion = reduceMotion }
         .toolbar {
             ToolbarItem(placement: .primaryAction) {
                 Menu {

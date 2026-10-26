@@ -11,5 +11,15 @@ extension Font {
 }
 
 extension Animation {
-    static let quiet = Animation.smooth(duration: 0.3)
+    static let quiet = Animation.smooth(duration: 0.3 * EffectTiming.scale)
+}
+
+enum EffectTiming {
+    /// Multiplies effect durations. DEBUG `-slowEffects` slows them down to inspect them.
+    static let scale: Double = {
+        #if DEBUG
+        if ProcessInfo.processInfo.arguments.contains("-slowEffects") { return 6 }
+        #endif
+        return 1
+    }()
 }

@@ -40,6 +40,14 @@ public struct Board: Codable, Hashable, Sendable {
         rowRange(row).allSatisfy { cells[$0].isCleared }
     }
 
+    /// A copy with the given cells cleared but every row kept, so the UI can
+    /// show a match before its rows collapse.
+    public func clearing(_ indices: [Int]) -> Board {
+        var copy = self
+        for index in indices { copy.clear(at: index) }
+        return copy
+    }
+
     mutating func clear(at index: Int) {
         cells[index].isCleared = true
     }
