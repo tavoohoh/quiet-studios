@@ -107,16 +107,6 @@
         }
       }
     },
-    "A hint shows a pair for 3 points.": {
-      "localizations": {
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Una pista te muestra una pareja por 3 puntos."
-          }
-        }
-      }
-    },
     "Account": {
       "localizations": {
         "es": {
@@ -153,6 +143,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Agregar números"
+          }
+        }
+      }
+    },
+    "Add up to 10": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Suman 10"
           }
         }
       }
@@ -277,12 +277,12 @@
         }
       }
     },
-    "Clear a row for 10 points, and the whole board to reach the next stage.": {
+    "Clear a row": {
       "localizations": {
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Vacía una fila y ganas 10 puntos; vacía el tablero y pasas a la siguiente etapa."
+            "value": "Vacía una fila"
           }
         }
       }
@@ -477,6 +477,16 @@
         }
       }
     },
+    "Diagonals": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En diagonal"
+          }
+        }
+      }
+    },
     "Done": {
       "localizations": {
         "es": {
@@ -493,6 +503,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "¡Doble fila!"
+          }
+        }
+      }
+    },
+    "Empty a whole row and it goes away, for 10 points. Match the last two 6s.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Si vacías una fila entera, desaparece y te da 10 puntos. Junta los dos 6 que quedan."
+          }
+        }
+      }
+    },
+    "Equal numbers": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Números iguales"
           }
         }
       }
@@ -697,6 +727,16 @@
         }
       }
     },
+    "Long shot": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tiro largo"
+          }
+        }
+      }
+    },
     "Long shot!": {
       "localizations": {
         "es": {
@@ -719,16 +759,6 @@
     },
     "Marimba": {
       "shouldTranslate": false
-    },
-    "Match two equal numbers, or two that add up to 10.": {
-      "localizations": {
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Junta dos números iguales o dos que sumen 10."
-          }
-        }
-      }
     },
     "Menu": {
       "localizations": {
@@ -793,6 +823,16 @@
         }
       }
     },
+    "Next row": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fila siguiente"
+          }
+        }
+      }
+    },
     "Night Owl": {
       "localizations": {
         "es": {
@@ -829,6 +869,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "No quedan jugadas"
+          }
+        }
+      }
+    },
+    "No pairs left. Tap + to copy the numbers left to the end of the board. You get 5 per board.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ya no quedan parejas. Toca + para copiar los números que quedan al final del tablero. Tienes 5 por tablero."
           }
         }
       }
@@ -893,6 +943,16 @@
         }
       }
     },
+    "Numbers touching on a diagonal count too. Match the 2 and the 8.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Los que se tocan en diagonal también cuentan. Junta el 2 y el 8."
+          }
+        }
+      }
+    },
     "Open Settings": {
       "localizations": {
         "es": {
@@ -903,12 +963,12 @@
         }
       }
     },
-    "Out of pairs? Tap + to copy the numbers left to the end of the board. You get 5 per board.": {
+    "Out of pairs?": {
       "localizations": {
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "¿Sin parejas? Toca + para copiar los números que quedan al final del tablero. Tienes 5 por tablero."
+            "value": "¿Sin parejas?"
           }
         }
       }
@@ -1156,6 +1216,16 @@
         }
       }
     },
+    "Skip": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Saltar"
+          }
+        }
+      }
+    },
     "Soft": {
       "localizations": {
         "es": {
@@ -1206,6 +1276,32 @@
         }
       }
     },
+    "Start playing": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Empezar a jugar"
+          }
+        }
+      }
+    },
+    "Step %lld of %lld": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Paso %1$lld de %2$lld"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Step %1$lld of %2$lld"
+          }
+        }
+      }
+    },
     "Streak": {
       "localizations": {
         "es": {
@@ -1236,6 +1332,16 @@
         }
       }
     },
+    "Tap to match, or drag from one number to the other. Hints show a pair for 3 points.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Toca para juntar, o arrastra de un número al otro. Las pistas te muestran una pareja por 3 puntos."
+          }
+        }
+      }
+    },
     "Teal & Coral": {
       "localizations": {
         "es": {
@@ -1246,22 +1352,22 @@
         }
       }
     },
+    "The board reads like a page: the end of a row connects to the start of the next. Match the 9 and the 1.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "El tablero se lee como una página: el final de una fila conecta con el inicio de la siguiente. Junta el 9 y el 1."
+          }
+        }
+      }
+    },
     "Theme": {
       "localizations": {
         "es": {
           "stringUnit": {
             "state": "translated",
             "value": "Tema"
-          }
-        }
-      }
-    },
-    "They can touch, or be in a straight line (across, down or diagonal) with only cleared cells between them. The last number of a row also connects to the first of the next.": {
-      "localizations": {
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Pueden estar juntos o en línea recta (horizontal, vertical o diagonal) con solo casillas vacías en medio. El último número de una fila también conecta con el primero de la siguiente."
           }
         }
       }
@@ -1292,6 +1398,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "¡Triple fila!"
+          }
+        }
+      }
+    },
+    "Two equal numbers that touch are a pair. Match the two 5s.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dos números iguales que se tocan son pareja. Junta los dos 5."
+          }
+        }
+      }
+    },
+    "Two numbers that add up to 10 are a pair too, and up and down counts. Match the 4 and the 6.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dos números que suman 10 también son pareja, y arriba con abajo vale. Junta el 4 y el 6."
           }
         }
       }
@@ -1332,6 +1458,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Ola"
+          }
+        }
+      }
+    },
+    "With only cleared cells between them, numbers still connect, and it's worth more: 4 points. Match the 7 and the 3.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Si entre dos números solo hay casillas vacías, igual se conectan, y vale más: 4 puntos. Junta el 7 y el 3."
+          }
+        }
+      }
+    },
+    "You're ready": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¡Listo!"
           }
         }
       }

@@ -10,6 +10,8 @@ struct CellView: View {
     /// Part of an invalid pair: ringed in the accent color for a moment.
     let isMissed: Bool
     let isHinted: Bool
+    /// Tutorial: bumped when a tap misses the guided pair, to blink its rings again.
+    var hintNudges = 0
     let shakes: Int
     /// Set for numbers just added with +: they scale and fade in after this delay.
     let entranceDelay: Double?
@@ -31,7 +33,7 @@ struct CellView: View {
                 .background { ring }
                 .overlay {
                     if isHinted {
-                        HintRing(diameter: ringDiameter)
+                        HintRing(diameter: ringDiameter, nudges: hintNudges)
                             .transition(.opacity)
                     }
                 }
@@ -103,9 +105,10 @@ extension CellView {
     }
 }
 
-/// Dashed ring on a hinted pair; blinks twice, then stays.
+/// Dashed ring on a hinted pair; blinks twice, then stays (and again on each nudge).
 private struct HintRing: View {
     let diameter: CGFloat
+    let nudges: Int
 
     @Environment(\.appearance) private var appearance
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -125,6 +128,7 @@ private struct HintRing: View {
                 LinearKeyframe(1, duration: half)
             }
             .onAppear { if !reduceMotion { blinks += 1 } }
+            .onChange(of: nudges) { if !reduceMotion { blinks += 1 } }
     }
 }
 

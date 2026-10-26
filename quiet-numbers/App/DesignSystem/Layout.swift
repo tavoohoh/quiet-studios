@@ -20,6 +20,14 @@ enum Layout {
     static func calendar(_ sizeClass: UserInterfaceSizeClass?) -> CGFloat {
         sizeClass == .regular ? 600 : 420
     }
+
+    /// A board cell: 9 columns across `width` less 24 pt margins; rows 46 pt tall (52 with
+    /// larger numbers), or square cells when the board is wide (iPad).
+    static func boardCell(width: CGFloat, sizeClass: UserInterfaceSizeClass?, largerNumbers: Bool) -> CGSize {
+        let boardWidth = min(width - 48, boardWidth(sizeClass))
+        let cellWidth = (boardWidth / 9).rounded(.down)
+        return CGSize(width: cellWidth, height: max(largerNumbers ? 52 : 46, cellWidth))
+    }
 }
 
 extension View {

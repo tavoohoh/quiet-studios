@@ -3,15 +3,22 @@ import SwiftUI
 
 /// The grid. Rows are identified by their first cell: rows only ever leave whole,
 /// so that id stays stable while the board collapses and grows.
+/// Numbers can be tapped one after the other, or dragged from one to the other.
 struct BoardView: View {
     let model: GameModel
     /// One cell: a ninth of the board's width, by the row height.
     let cell: CGSize
     let onTap: (Cell) -> Void
+    /// A drag started on this number (it becomes the selection).
+    let onDragStart: (Cell) -> Void
 
     @Environment(\.appearance) private var appearance
+    /// The number a drag started on, and where the finger is (in the grid's space).
+    @State private var dragFromID: Int?
+    @State private var dragLocation: CGPoint?
 
     private static let bottomID = "bottom"
+    private static let gridSpace = "grid"
 
     var body: some View {
         ScrollViewReader { proxy in
@@ -27,6 +34,8 @@ struct BoardView: View {
                         }
                     }
                     .frame(width: cell.width * CGFloat(Board.columns), alignment: .top)
+                    .coordinateSpace(name: Self.gridSpace)
+                    .overlay(alignment: .topLeading) { dragLine }
                     .background(alignment: .topLeading) {
                         if let line = model.matchLine {
                             MatchLineView(line: line, cell: cell)
@@ -81,10 +90,12 @@ struct BoardView: View {
                         isSelected: model.selectedID == cell.id || model.connectingIDs.contains(cell.id),
                         isMissed: model.missIDs.contains(cell.id),
                         isHinted: model.hintIDs.contains(cell.id),
+                        hintNudges: model.guideNudges,
                         shakes: model.shakes[cell.id] ?? 0,
                         entranceDelay: entranceDelay(for: cell),
                         action: { onTap(cell) }
                     )
+                    .highPriorityGesture(drag(from: cell), including: cell.isCleared ? .subviews : .all)
                     .transition(.opacity)
                 }
                 Spacer(minLength: 0)
@@ -99,6 +110,50 @@ struct BoardView: View {
                 }
             }
             .id(firstID)
+        }
+    }
+
+    // MARK: Dragging
+
+    private func drag(from cell: Cell) -> some Gesture {
+        DragGesture(minimumDistance: 8, coordinateSpace: .named(Self.gridSpace))
+            .onChanged { value in
+                if dragFromID != cell.id {
+                    dragFromID = cell.id
+                    onDragStart(cell)
+                }
+                dragLocation = value.location
+            }
+            .onEnded { value in
+                dragFromID = nil
+                dragLocation = nil
+                guard let target = self.cell(at: value.location), target.id != cell.id, !target.isCleared else { return }
+                onTap(target)
+            }
+    }
+
+    /// The board cell under a point of the grid, if any.
+    private func cell(at point: CGPoint) -> Cell? {
+        guard point.x >= 0, point.y >= 0, point.x < cell.width * CGFloat(Board.columns) else { return nil }
+        let index = Int(point.y / cell.height) * Board.columns + Int(point.x / cell.width)
+        return cells.indices.contains(index) ? cells[index] : nil
+    }
+
+    /// From the dragged number to the finger, under the numbers' rings.
+    @ViewBuilder
+    private var dragLine: some View {
+        if let id = dragFromID, let location = dragLocation, let index = model.board.index(ofCell: id) {
+            let start = CGPoint(
+                x: (CGFloat(index % Board.columns) + 0.5) * cell.width,
+                y: (CGFloat(index / Board.columns) + 0.5) * cell.height
+            )
+            Path { path in
+                path.move(to: start)
+                path.addLine(to: location)
+            }
+            .stroke(appearance.theme.primary.opacity(0.5), style: StrokeStyle(lineWidth: 3, lineCap: .round))
+            .allowsHitTesting(false)
+            .accessibilityHidden(true)
         }
     }
 

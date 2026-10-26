@@ -98,6 +98,11 @@ final class GameModel {
     private(set) var praise: Praise?
     /// Bumped when a hint finds nothing and + is the way out; bounces the + button.
     private(set) var plusNudges = 0
+    /// Tutorial: only these cells can be played (ringed like a hint), and + only when
+    /// `allowsAdd`. Undo and hints are off. `nil` is free play.
+    private(set) var guide: Guide?
+    /// Bumped when a tap misses the guided pair, so its rings blink again.
+    private(set) var guideNudges = 0
     /// Set by the view; skips the line and shortens the sequence.
     var reduceMotion = false
     /// Gameplay events for achievements.
@@ -127,9 +132,14 @@ final class GameModel {
         self.feedback = feedback
     }
 
-    var canAddNumbers: Bool { session.plusRemaining > 0 && !session.isOver }
-    var canUseHint: Bool { !session.isOver }
-    var canUndo: Bool { session.canUndo }
+    struct Guide: Equatable {
+        var cells: Set<Int>
+        var allowsAdd = false
+    }
+
+    var canAddNumbers: Bool { session.plusRemaining > 0 && !session.isOver && (guide?.allowsAdd ?? true) }
+    var canUseHint: Bool { !session.isOver && guide == nil }
+    var canUndo: Bool { session.canUndo && guide == nil }
     /// Stuck until the player taps +.
     var needsNumbers: Bool { !session.isOver && !session.hasValidPair }
     var displayedScore: Int { session.score - pendingPoints }
@@ -140,6 +150,11 @@ final class GameModel {
               let index = session.board.index(ofCell: cell.id),
               !session.board.cells[index].isCleared
         else { return }
+        if let guide, !guide.cells.contains(cell.id) {
+            guideNudges += 1
+            feedback.play(.select)
+            return
+        }
         guard let selectedID else {
             select(cell.id)
             return
@@ -197,6 +212,23 @@ final class GameModel {
         hintIDs = []
         additions += 1
         feedback.play(.select)
+    }
+
+    /// Drag started on a number: it becomes the selection, replacing any other.
+    func beginDrag(at cell: Cell) {
+        finishSequence()
+        guard !session.isOver, selectedID != cell.id,
+              let index = session.board.index(ofCell: cell.id), !session.board.cells[index].isCleared,
+              guide?.cells.contains(cell.id) ?? true
+        else { return }
+        select(cell.id)
+    }
+
+    /// Tutorial: points at the next move.
+    func setGuide(_ guide: Guide?) {
+        self.guide = guide
+        hintIDs = guide?.cells ?? []
+        selectedID = nil
     }
 
     /// Highlights a valid pair, for a few points.
@@ -360,7 +392,8 @@ final class GameModel {
         default: break
         }
         if Self.isLongShot(outcome.pair) { return "Long shot!" }
-        if let digit = outcome.clearedDigits.first, !outcome.boardCleared { return "No more \(digit)s!" }
+        // The tutorial board has few of each digit; "No more 8s!" would only distract there.
+        if let digit = outcome.clearedDigits.first, !outcome.boardCleared, guide == nil { return "No more \(digit)s!" }
         let streak = session.streak
         if streak > 0, streak.isMultiple(of: Self.streakStep) { return "\(streak) in a row!" }
         return nil

@@ -27,9 +27,12 @@ struct GameView: View {
                 subtitle: subtitle
             )
             GeometryReader { geometry in
-                BoardView(model: model, cell: cellSize(for: geometry.size.width)) { cell in
-                    animate { model.tap(cell) }
-                }
+                BoardView(
+                    model: model,
+                    cell: Layout.boardCell(width: geometry.size.width, sizeClass: sizeClass, largerNumbers: largeBoardNumbers),
+                    onTap: { cell in animate { model.tap(cell) } },
+                    onDragStart: { cell in animate { model.beginDrag(at: cell) } }
+                )
                 .frame(maxWidth: .infinity)
             }
             .padding(.top, 20)
@@ -80,13 +83,8 @@ struct GameView: View {
         .onAppear { if startingBest == nil { startingBest = bestScore } }
     }
 
-    /// 9 columns across the screen less 24 pt margins; rows 46 pt tall (52 with larger
-    /// numbers), or square cells when the board is wide (iPad).
-    private func cellSize(for width: CGFloat) -> CGSize {
-        let boardWidth = min(width - 48, Layout.boardWidth(sizeClass))
-        let cellWidth = (boardWidth / CGFloat(Board.columns)).rounded(.down)
-        let rowHeight: CGFloat = appearance.largerNumbers || dynamicTypeSize.isAccessibilitySize ? 52 : 46
-        return CGSize(width: cellWidth, height: max(rowHeight, cellWidth))
+    private var largeBoardNumbers: Bool {
+        appearance.largerNumbers || dynamicTypeSize.isAccessibilitySize
     }
 
     private var subtitle: Text {

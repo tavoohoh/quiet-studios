@@ -210,6 +210,8 @@ enum PreferenceKey {
     static let soundEnabled = "soundEnabled"
     static let hapticsEnabled = "hapticsEnabled"
     static let largerNumbers = "largerNumbers"
+    /// The tutorial was played or skipped. Cleared by a reset, like a fresh install.
+    static let tutorialSeen = "tutorialSeen"
     /// Set by a reset until the iCloud copy and achievements are cleared too.
     static let pendingCloudReset = "pendingCloudReset"
 

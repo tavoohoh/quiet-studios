@@ -26,7 +26,7 @@ struct SettingsView: View {
                         SettingsRow(title: Text("Game Center"), detail: gameCenterStatus)
                     }
                     NavigationLink {
-                        HowToPlayView()
+                        TutorialFromSettings()
                     } label: {
                         SettingsRow(title: Text("How to play"))
                     }
@@ -125,39 +125,15 @@ private struct SettingsRow: View {
     }
 }
 
-/// The rules in a few lines.
-private struct HowToPlayView: View {
-    @Environment(\.appearance) private var appearance
-    @Environment(\.horizontalSizeClass) private var sizeClass
+/// "How to play" replays the tutorial and comes back here.
+private struct TutorialFromSettings: View {
+    @Environment(AppModel.self) private var app
+    @Environment(\.dismiss) private var dismiss
 
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 12) {
-                rule("equal", Text("Match two equal numbers, or two that add up to 10."))
-                rule("arrow.up.left.and.arrow.down.right", Text("They can touch, or be in a straight line (across, down or diagonal) with only cleared cells between them. The last number of a row also connects to the first of the next."))
-                rule("plus", Text("Out of pairs? Tap + to copy the numbers left to the end of the board. You get 5 per board."))
-                rule("rectangle.compress.vertical", Text("Clear a row for 10 points, and the whole board to reach the next stage."))
-                rule("lightbulb", Text("A hint shows a pair for 3 points."))
-            }
-            .padding(.horizontal, 20)
-            .padding(.vertical, 12)
-            .frame(maxWidth: Layout.column(sizeClass))
-            .frame(maxWidth: .infinity)
+        TutorialView(isFirstRun: false) {
+            app.finishTutorial()
+            dismiss()
         }
-        .screen(Text("How to play"))
-    }
-
-    private func rule(_ systemImage: String, _ text: Text) -> some View {
-        HStack(alignment: .top, spacing: 14) {
-            Image(systemName: systemImage)
-                .font(.title3)
-                .foregroundStyle(appearance.theme.primary)
-                .frame(width: 28)
-            text
-                .foregroundStyle(appearance.theme.ink)
-                .fixedSize(horizontal: false, vertical: true)
-            Spacer(minLength: 0)
-        }
-        .card()
     }
 }
