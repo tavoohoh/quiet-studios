@@ -15,12 +15,12 @@
         "es": "Primer paso"
       },
       "preEarnedDescription": {
-        "en": "Finish your first game.",
-        "es": "Termina tu primera partida."
+        "en": "Clear your first board or finish your first game.",
+        "es": "Vacía tu primer tablero o termina tu primera partida."
       },
       "earnedDescription": {
-        "en": "You finished your first game.",
-        "es": "Terminaste tu primera partida."
+        "en": "You cleared your first board or finished your first game.",
+        "es": "Vaciaste tu primer tablero o terminaste tu primera partida."
       },
       "image": "AppStore/achievements/first_step.png"
     },
@@ -39,12 +39,12 @@
         "es": "Tabla rasa"
       },
       "preEarnedDescription": {
-        "en": "Clear a whole board.",
-        "es": "Limpia un tablero completo."
+        "en": "Clear a board without using +.",
+        "es": "Vacía un tablero sin usar +."
       },
       "earnedDescription": {
-        "en": "You cleared a whole board.",
-        "es": "Limpiaste un tablero completo."
+        "en": "You cleared a board without using +.",
+        "es": "Vaciaste un tablero sin usar +."
       },
       "image": "AppStore/achievements/clean_slate.png"
     },
@@ -63,12 +63,12 @@
         "es": "Sin ayuda"
       },
       "preEarnedDescription": {
-        "en": "Finish a game without using hints.",
-        "es": "Termina una partida sin usar pistas."
+        "en": "Clear a board without using hints.",
+        "es": "Vacía un tablero sin usar pistas."
       },
       "earnedDescription": {
-        "en": "You finished a game without a single hint.",
-        "es": "Terminaste una partida sin usar ni una pista."
+        "en": "You cleared a board without a single hint.",
+        "es": "Vaciaste un tablero sin usar ni una pista."
       },
       "image": "AppStore/achievements/no_help.png"
     },

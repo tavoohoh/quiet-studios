@@ -76,7 +76,7 @@ import Testing
     @Test func unlocksAreAnnouncedAndPersisted() {
         let persistence = PersistenceService(store: .inMemory)
         let app = AppModel(persistence: persistence)
-        app.record(.gameFinished(classicScore: nil, hintsUsed: 1))
+        app.record(.gameFinished(classicScore: nil))
         #expect(app.pendingUnlocks == [.firstStep])
         app.dismissUnlock(.firstStep)
         #expect(app.pendingUnlocks.isEmpty)
@@ -107,12 +107,26 @@ import Testing
         #expect(app.progress.bestScore == session.score)
         #expect(app.progress.bestScore > 0)
         #expect(app.progress.gamesFinished == 0)
+        #expect(app.progress.gamesPlayed == 1)
+    }
+
+    @Test func newBestShowsDuringTheGame() throws {
+        let app = AppModel(persistence: PersistenceService(store: .inMemory))
+        app.newClassic()
+        let game = try #require(app.activeGame)
+        let pair = try #require(MatchRules.validPairs(on: game.session.board).first)
+        let cells = game.session.board.cells
+        game.tap(cells[pair.first])
+        game.tap(cells[pair.second])
+        app.sessionChanged()
+        #expect(app.progress.bestScore == game.session.score)
+        #expect(app.progress.bestScore > 0)
     }
 
     @Test func resetErasesProgressGamesAndDailies() {
         let persistence = PersistenceService(store: .inMemory)
         let app = AppModel(persistence: persistence)
-        app.record(.gameFinished(classicScore: 300, hintsUsed: 0))
+        app.record(.gameFinished(classicScore: 300))
         app.newClassic()
         persistence.finishDaily("2026-10-20", score: 120, isCompleted: true)
         UserDefaults.standard.set(ThemeChoice.sageSand.rawValue, forKey: PreferenceKey.theme)

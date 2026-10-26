@@ -121,7 +121,7 @@ final class AppModel {
 
     func newClassic() {
         if let abandoned = persistence.loadGame(.classic), !abandoned.isOver {
-            record(.classicAbandoned(score: abandoned.score))
+            record(.classicAbandoned(score: abandoned.score, played: abandoned.hasMoves))
         }
         let model = GameModel()
         persistence.saveGame(model.session, in: .classic)
@@ -185,10 +185,18 @@ final class AppModel {
         case .classic:
             persistence.saveGame(game.session, in: .classic)
             classicStage = game.session.stage
+            // A new best shows up right away (Home, the game's "Best"); Game Center gets it
+            // when the player leaves the game.
+            if game.session.score > progress.bestScore { record(.classicScore(game.session.score)) }
         case .daily: persistence.saveGame(game.session, in: .daily)
         case .practice: break
         }
         if game.session.isOver { finish(game.session, kind) }
+    }
+
+    /// Back from a game: send what changed (a new best, mostly) to Game Center.
+    func leftGame() {
+        Task { await pushToGameCenter() }
     }
 
     func start(_ model: GameModel, as kind: GameKind) {
@@ -211,7 +219,7 @@ final class AppModel {
         case .practice:
             break
         }
-        record(.gameFinished(classicScore: kind == .classic ? session.score : nil, hintsUsed: session.hintsUsed))
+        record(.gameFinished(classicScore: kind == .classic ? session.score : nil))
         refreshSavedGames()
         Task { await pushToGameCenter() }
     }

@@ -100,14 +100,15 @@ Tablero de **9 columnas**; arranca con **42 números** del 1 al 9 (4 filas y med
 - Fila vacía: desaparece, el tablero sube y da puntos extra.
 - Botón **+**: copia todos los números restantes, en orden, al final del tablero (regla estándar del género; se evaluó triplicar y se descartó). **Máximo 5 usos por tablero**; limpiar filas no devuelve usos (cambio del 2026-10-26). Sin parejas ni usos, la partida termina. Los números agregados se muestran en el acento coral del tema para distinguirlos de los originales.
 - **Pistas:** ilimitadas; resaltan una pareja válida y cuestan 3 puntos, **aunque el puntaje quede negativo** (cambio del 2026-10-26; da el logro "Números rojos"). Si no hay parejas, no cobran.
-- **Etapas:** vaciar el tablero pasa a la siguiente etapa con tablero nuevo; los usos de + se reinician.
+- **Etapas:** vaciar el tablero pasa a la siguiente etapa con tablero nuevo; los usos de + se reinician. Cada etapa es más difícil (decisión 2026-10-26): números al inicio 42, 44, 48, 50 y 54 desde la etapa 5 (siempre pares, por `isPairable`); usos de + 5, 5, 4, 4 y 3; parejas mínimas al inicio 3, 3, 2, 2 y 1; desde la etapa 3 cada pareja vale 1 punto más. El reto diario es una sola etapa con las reglas de la 1.
+- **Partida terminada:** solo cuando ya no quedan parejas ni usos de + (vaciar el tablero no la termina en clásico). Para el Inicio, "Partidas" cuenta las terminadas más las clásicas abandonadas con al menos una jugada (`gamesPlayed`); el mejor puntaje se actualiza en vivo durante la partida y se envía a Game Center al salir. "Racha récord" (Top streak) es la racha más larga de retos completados en días seguidos.
 - **Fin de partida:** no quedan parejas válidas ni usos de +.
 - **Deshacer:** retrocede la última pareja o el último + (un solo paso; no se encadena). No se puede después de vaciar un tablero ni con la partida terminada. No devuelve el costo de pistas ni restaura una racha rota, y descuenta del progreso lo que la jugada había sumado.
 - La generación garantiza **al menos 3 parejas válidas** al inicio y que cada familia ({1,9}, {2,8}, {3,7}, {4,6}, {5}) tenga cantidad par, para que "Sin ayuda" sea posible en principio (condición necesaria, no suficiente: la posición aún puede dejar un número aislado).
 
 **Puntaje** (valores iniciales, ajustables — mantenerlos configurables):
-- Pareja adyacente: 1
-- Pareja con eliminadas entre medio: 4
+- Pareja adyacente: 1 (+1 desde la etapa 3)
+- Pareja con eliminadas entre medio: 4 (+1 desde la etapa 3)
 - Fila limpiada: 10
 - Tablero limpiado: 150 × número de etapa
 - Pista: −3
@@ -165,9 +166,9 @@ Toda recompensa es cosmética y nunca altera la jugabilidad ni el layout del tab
 
 | Logro | Condición | Recompensa |
 |---|---|---|
-| Primer paso | Completar la primera partida | Tema Petróleo y coral (por defecto) |
-| Tabla rasa | Limpiar un tablero completo | Ficha: círculo |
-| Sin ayuda | Terminar una partida sin usar pistas (el + sí vale) | Tema Salvia y arena |
+| Primer paso | Vaciar el primer tablero o terminar la primera partida | Tema Petróleo y coral (por defecto) |
+| Tabla rasa | Vaciar un tablero sin usar + | Ficha: círculo |
+| Sin ayuda | Vaciar un tablero sin usar pistas (el + sí vale) | Tema Salvia y arena |
 | Constancia | Racha de 7 retos diarios | Tema Índigo y durazno |
 | Hábito | Racha de 30 retos diarios | Tipografía New York (serif) |
 | Barrendero | Limpiar 100 filas en total | Efecto de limpieza: ola |

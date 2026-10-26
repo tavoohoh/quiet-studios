@@ -6,14 +6,17 @@ public struct Scoring: Codable, Hashable, Sendable {
     public var boardClearedPerStage = 150
     /// Hints are unlimited but cost points, even if that takes the score below zero.
     public var hintCost = 3
+    /// From this stage on, every pair is worth one more point.
+    public static let pairBonusFromStage = 3
 
     public static let standard = Scoring()
 
-    public func points(for connection: Connection) -> Int {
-        switch connection {
+    public func points(for connection: Connection, stage: Int = 1) -> Int {
+        let base = switch connection {
         case .adjacent: adjacentPair
         case .acrossCleared: acrossClearedPair
         }
+        return base + (stage >= Self.pairBonusFromStage ? 1 : 0)
     }
 }
 
@@ -36,12 +39,24 @@ public struct MatchOutcome: Equatable, Sendable {
     public let boardCleared: Bool
     /// Stage after this match (the next one if the board was cleared in classic).
     public let stage: Int
+    /// Hints used on this board, and whether + was used on it (up to this match).
+    public var hintsOnBoard = 0
+    public var usedPlusOnBoard = false
 }
 
 /// A full game: board, score, stages and the + budget.
 public struct GameSession: Codable, Hashable, Sendable {
-    /// + uses per board. Clearing rows doesn't give any back.
+    /// + uses per board at stage 1 (the most). Clearing rows doesn't give any back.
     public static let maxPlusUses = 5
+
+    /// Fewer + as stages go: 5, then 4 from stage 3, then 3 from stage 5.
+    public static func plusUses(forStage stage: Int) -> Int {
+        switch stage {
+        case ...2: maxPlusUses
+        case 3...4: 4
+        default: 3
+        }
+    }
 
     /// State before the last move, so it can be undone once.
     private struct UndoPoint: Codable, Hashable, Sendable {
@@ -63,6 +78,8 @@ public struct GameSession: Codable, Hashable, Sendable {
     public private(set) var streak = 0
     /// Daily challenge only: the board was cleared.
     public private(set) var isCompleted = false
+    /// `hintsUsed` when this board started. Optional so games saved before it still load.
+    private var hintsAtBoardStart: Int?
     private var random: SeededRandom
     private var undoPoint: UndoPoint?
 
@@ -81,6 +98,15 @@ public struct GameSession: Codable, Hashable, Sendable {
     }
 
     public var hasValidPair: Bool { MatchRules.hasValidPair(on: board) }
+
+    /// Hints used on the current board (for "No Help").
+    public var hintsOnBoard: Int { hintsUsed - (hintsAtBoardStart ?? 0) }
+
+    /// + was used on the current board (for "Clean Slate").
+    public var usedPlusOnBoard: Bool { plusRemaining < Self.plusUses(forStage: stage) }
+
+    /// Anything was played: a match, a + or a hint.
+    public var hasMoves: Bool { score != 0 || stage > 1 || hintsUsed > 0 || usedPlusOnBoard }
 
     /// No pairs left and no + uses left.
     public var isOver: Bool { isCompleted || (!hasValidPair && plusRemaining == 0) }
@@ -101,7 +127,7 @@ public struct GameSession: Codable, Hashable, Sendable {
         let values = [board.cells[pair.first].value, board.cells[pair.second].value]
         board.clear(at: pair.first)
         board.clear(at: pair.second)
-        var points = scoring.points(for: pair.connection)
+        var points = scoring.points(for: pair.connection, stage: stage)
 
         let rows = board.removeClearedRows([board.row(of: pair.first), board.row(of: pair.second)])
         points += rows.count * scoring.rowCleared
@@ -115,6 +141,7 @@ public struct GameSession: Codable, Hashable, Sendable {
         score += points
         streak += 1
         undoPoint = boardCleared ? nil : undo
+        let hintsOnBoard = self.hintsOnBoard, usedPlusOnBoard = self.usedPlusOnBoard
         if boardCleared { advanceStage() }
 
         return MatchOutcome(
@@ -124,7 +151,9 @@ public struct GameSession: Codable, Hashable, Sendable {
             clearedRows: rows,
             clearedDigits: clearedDigits,
             boardCleared: boardCleared,
-            stage: stage
+            stage: stage,
+            hintsOnBoard: hintsOnBoard,
+            usedPlusOnBoard: usedPlusOnBoard
         )
     }
 
@@ -183,8 +212,9 @@ public struct GameSession: Codable, Hashable, Sendable {
             isCompleted = true
         case .classic:
             stage += 1
-            plusRemaining = Self.maxPlusUses
-            board = BoardGenerator.makeBoard(using: &random)
+            plusRemaining = Self.plusUses(forStage: stage)
+            hintsAtBoardStart = hintsUsed
+            board = BoardGenerator.makeBoard(using: &random, stage: stage)
         }
     }
 }

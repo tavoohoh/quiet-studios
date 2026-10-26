@@ -150,6 +150,7 @@ private struct ActiveGameView: View {
                 bestScore: kind == .classic ? app.progress.bestScore : nil
             )
             .id(ObjectIdentifier(game))
+            .onDisappear { app.leftGame() }
             .overlay(alignment: .bottom) {
                 if let achievement = app.pendingUnlocks.first {
                     UnlockBanner(achievement: achievement)
@@ -291,8 +292,8 @@ private struct StatsRow: View {
                 .accessibilityAddTraits(.isHeader)
             HStack(spacing: 10) {
                 StatTile(value: app.progress.bestScore, label: "Best score")
-                StatTile(value: app.longestStreak, label: "Best streak")
-                StatTile(value: app.progress.gamesFinished, label: "Games")
+                StatTile(value: app.longestStreak, label: "Top streak")
+                StatTile(value: app.progress.gamesPlayed, label: "Games")
             }
         }
     }
@@ -314,7 +315,8 @@ private struct StatTile: View {
             Text(label)
                 .font(.footnote)
                 .foregroundStyle(appearance.theme.muted)
-                .lineLimit(2)
+                .lineLimit(1)
+                .minimumScaleFactor(0.8)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(14)

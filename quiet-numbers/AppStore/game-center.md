@@ -8,9 +8,9 @@ Ninguno se puede ganar más de una vez. Cada uno lleva una imagen de 1024×1024 
 
 | ID | Caso en el código | Puntos | Oculto | Nombre (en / es) | Descripción antes de ganarlo (en / es) | Descripción al ganarlo (en / es) | Recompensa |
 |---|---|---:|---|---|---|---|---|
-| `first_step` | `firstStep` | 10 | No | First Step / Primer paso | Finish your first game. / Termina tu primera partida. | You finished your first game. / Terminaste tu primera partida. | Tema Petróleo y coral (por defecto) |
-| `clean_slate` | `cleanSlate` | 30 | No | Clean Slate / Tabla rasa | Clear a whole board. / Limpia un tablero completo. | You cleared a whole board. / Limpiaste un tablero completo. | Fichas: círculo |
-| `no_help` | `noHelp` | 50 | No | No Help / Sin ayuda | Finish a game without using hints. / Termina una partida sin usar pistas. | You finished a game without a single hint. / Terminaste una partida sin usar ni una pista. | Tema Salvia y arena |
+| `first_step` | `firstStep` | 10 | No | First Step / Primer paso | Clear your first board or finish your first game. / Vacía tu primer tablero o termina tu primera partida. | You cleared your first board or finished your first game. / Vaciaste tu primer tablero o terminaste tu primera partida. | Tema Petróleo y coral (por defecto) |
+| `clean_slate` | `cleanSlate` | 30 | No | Clean Slate / Tabla rasa | Clear a board without using +. / Vacía un tablero sin usar +. | You cleared a board without using +. / Vaciaste un tablero sin usar +. | Fichas: círculo |
+| `no_help` | `noHelp` | 50 | No | No Help / Sin ayuda | Clear a board without using hints. / Vacía un tablero sin usar pistas. | You cleared a board without a single hint. / Vaciaste un tablero sin usar ni una pista. | Tema Salvia y arena |
 | `consistency` | `consistency` | 80 | No | Consistency / Constancia | Complete 7 daily challenges in a row. / Completa 7 retos diarios seguidos. | You completed 7 daily challenges in a row. / Completaste 7 retos diarios seguidos. | Tema Índigo y durazno |
 | `habit` | `habit` | 100 | No | Habit / Hábito | Complete 30 daily challenges in a row. / Completa 30 retos diarios seguidos. | You completed 30 daily challenges in a row. / Completaste 30 retos diarios seguidos. | Tipografía New York (serif) |
 | `sweeper` | `sweeper` | 60 | No | Sweeper / Barrendero | Clear 100 rows. / Limpia 100 filas. | You cleared 100 rows. / Limpiaste 100 filas. | Efecto de limpieza: ola |

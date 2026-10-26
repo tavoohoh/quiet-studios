@@ -26,7 +26,7 @@ enum DemoData {
         for (index, _) in completedDays.enumerated() {
             _ = progress.record(.dailyCompleted(currentStreak: min(index + 1, 9), localHour: 20))
         }
-        _ = progress.record(.classicAbandoned(score: 2_480))
+        _ = progress.record(.classicAbandoned(score: 2_480, played: true))
         return progress
     }
 

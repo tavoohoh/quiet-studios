@@ -1,3 +1,4 @@
+import Foundation
 import Testing
 @testable import QuietNumbersCore
 
@@ -6,7 +7,9 @@ import Testing
         values: [Int] = [3, 7],
         rows: [Int] = [],
         boardCleared: Bool = false,
-        stage: Int = 1
+        stage: Int = 1,
+        hintsOnBoard: Int = 0,
+        usedPlusOnBoard: Bool = false
     ) -> MatchOutcome {
         MatchOutcome(
             pair: Pair(0, 1, gap: 0),
@@ -15,47 +18,59 @@ import Testing
             clearedRows: rows,
             clearedDigits: [],
             boardCleared: boardCleared,
-            stage: stage
+            stage: stage,
+            hintsOnBoard: hintsOnBoard,
+            usedPlusOnBoard: usedPlusOnBoard
         )
     }
 
     @Test func firstGameUnlocksFirstStep() {
         var progress = PlayerProgress()
-        #expect(progress.record(.gameFinished(classicScore: nil, hintsUsed: 1)) == [.firstStep])
-        #expect(progress.record(.gameFinished(classicScore: nil, hintsUsed: 1)).isEmpty)
+        #expect(progress.record(.gameFinished(classicScore: nil)) == [.firstStep])
+        #expect(progress.record(.gameFinished(classicScore: nil)).isEmpty)
+    }
+
+    @Test func firstClearedBoardAlsoUnlocksFirstStep() {
+        var progress = PlayerProgress()
+        let unlocked = progress.record(.matched(outcome(boardCleared: true, stage: 2, hintsOnBoard: 1, usedPlusOnBoard: true)))
+        #expect(unlocked == [.firstStep])
     }
 
     @Test func bestScoreTracksClassicGamesOnly() {
         var progress = PlayerProgress()
-        _ = progress.record(.gameFinished(classicScore: 320, hintsUsed: 1))
-        _ = progress.record(.gameFinished(classicScore: 150, hintsUsed: 1))
-        _ = progress.record(.gameFinished(classicScore: nil, hintsUsed: 1))
+        _ = progress.record(.gameFinished(classicScore: 320))
+        _ = progress.record(.gameFinished(classicScore: 150))
+        _ = progress.record(.gameFinished(classicScore: nil))
         #expect(progress.bestScore == 320)
     }
 
     @Test func mergeKeepsEverythingEarnedOnEitherDevice() {
         var phone = PlayerProgress()
-        _ = phone.record(.gameFinished(classicScore: 500, hintsUsed: 1))
+        _ = phone.record(.gameFinished(classicScore: 500))
         _ = phone.record(.matched(outcome(rows: [0, 1, 2])))
         var mac = PlayerProgress()
         _ = mac.record(.matched(outcome(boardCleared: true, stage: 2)))
-        _ = mac.record(.gameFinished(classicScore: 900, hintsUsed: 0))
+        _ = mac.record(.gameFinished(classicScore: 900))
+        _ = mac.record(.classicAbandoned(score: 100, played: true))
 
         let merged = phone.merged(with: mac)
         #expect(merged.unlocked == [.firstStep, .cleanSlate, .noHelp])
         #expect(merged.bestScore == 900)
         #expect(merged.rowsCleared == 3)
+        #expect(merged.gamesPlayed == 2)
         #expect(merged == mac.merged(with: phone))
     }
 
-    @Test func clearingBoardUnlocksCleanSlate() {
+    @Test func clearingBoardWithoutPlusUnlocksCleanSlate() {
         var progress = PlayerProgress()
-        #expect(progress.record(.matched(outcome(boardCleared: true, stage: 2))) == [.cleanSlate])
+        _ = progress.record(.matched(outcome(boardCleared: true, stage: 2, hintsOnBoard: 1, usedPlusOnBoard: true)))
+        #expect(progress.record(.matched(outcome(boardCleared: true, stage: 3, hintsOnBoard: 1))) == [.cleanSlate])
     }
 
-    @Test func finishingWithoutHintsUnlocksNoHelp() {
+    @Test func clearingBoardWithoutHintsUnlocksNoHelp() {
         var progress = PlayerProgress()
-        #expect(Set(progress.record(.gameFinished(classicScore: 40, hintsUsed: 0))) == [.firstStep, .noHelp])
+        _ = progress.record(.gameFinished(classicScore: 40))
+        #expect(progress.record(.matched(outcome(boardCleared: true, stage: 2, usedPlusOnBoard: true))) == [.noHelp])
     }
 
     @Test func goingNegativeUnlocksInTheRed() {
@@ -66,10 +81,28 @@ import Testing
 
     @Test func abandonedClassicGameStillSetsBest() {
         var progress = PlayerProgress()
-        _ = progress.record(.classicAbandoned(score: 210))
-        _ = progress.record(.classicAbandoned(score: 90))
+        _ = progress.record(.classicAbandoned(score: 210, played: true))
+        _ = progress.record(.classicAbandoned(score: 0, played: false))
         #expect(progress.bestScore == 210)
         #expect(progress.gamesFinished == 0)
+        #expect(progress.gamesPlayed == 1)
+    }
+
+    @Test func liveClassicScoreRaisesTheBest() {
+        var progress = PlayerProgress()
+        _ = progress.record(.classicScore(120))
+        _ = progress.record(.classicScore(80))
+        #expect(progress.bestScore == 120)
+        #expect(progress.gamesPlayed == 0)
+    }
+
+    @Test func progressSavedBeforeGamesPlayedStillLoads() throws {
+        var progress = PlayerProgress()
+        _ = progress.record(.gameFinished(classicScore: 10))
+        var json = try JSONSerialization.jsonObject(with: JSONEncoder().encode(progress)) as! [String: Any]
+        json["gamesPlayedCount"] = nil
+        let old = try JSONDecoder().decode(PlayerProgress.self, from: JSONSerialization.data(withJSONObject: json))
+        #expect(old.gamesPlayed == 1)
     }
 
     @Test func sweeperNeeds100Rows() {

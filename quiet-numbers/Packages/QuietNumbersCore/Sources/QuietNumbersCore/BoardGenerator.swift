@@ -1,17 +1,35 @@
 public enum BoardGenerator {
-    public static let initialCount = 42
-    public static let minimumPairs = 3
+    /// Stage 1 (and every daily challenge).
+    public static let initialCount = initialCount(forStage: 1)
+    public static let minimumPairs = minimumPairs(forStage: 1)
 
-    /// A fresh board of `initialCount` numbers (1–9) with at least `minimumPairs` valid pairs,
-    /// where every number could in principle find a partner (see `isPairable`).
+    /// Difficulty grows with the stage: bigger boards (42 → 54 numbers by stage 5)…
+    /// Always even: `isPairable` needs every family to have an even count.
+    public static func initialCount(forStage stage: Int) -> Int {
+        [42, 44, 48, 50, 54][min(max(stage, 1), 5) - 1]
+    }
+
+    /// …and fewer easy pairs to start with (3, then 2 from stage 3, then 1 from stage 5).
+    public static func minimumPairs(forStage stage: Int) -> Int {
+        switch stage {
+        case ...2: 3
+        case 3...4: 2
+        default: 1
+        }
+    }
+
+    /// A fresh board for `stage`, with at least its minimum of valid pairs, where every
+    /// number could in principle find a partner (see `isPairable`).
     /// Invalid candidates are discarded and the generator keeps advancing, so the result
     /// stays deterministic for a given generator state.
-    public static func makeBoard(using random: inout SeededRandom) -> Board {
+    public static func makeBoard(using random: inout SeededRandom, stage: Int = 1) -> Board {
+        let count = initialCount(forStage: stage)
+        let pairs = minimumPairs(forStage: stage)
         while true {
-            let values = (0..<initialCount).map { _ in random.nextInt(in: 1...9) }
+            let values = (0..<count).map { _ in random.nextInt(in: 1...9) }
             guard isPairable(values) else { continue }
             let board = Board(values: values)
-            if MatchRules.validPairs(on: board).count >= minimumPairs {
+            if MatchRules.validPairs(on: board).count >= pairs {
                 return board
             }
         }

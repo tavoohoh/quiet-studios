@@ -1,10 +1,10 @@
 /// Achievements. Each one unlocks a cosmetic reward; none affect play.
 public enum Achievement: String, CaseIterable, Codable, Sendable {
-    /// Finish a first game.
+    /// Clear a first board or finish a first game.
     case firstStep
-    /// Clear a whole board.
+    /// Clear a board without using +.
     case cleanSlate
-    /// Finish a game without using any hint (+ is fine).
+    /// Clear a board without using any hint (+ is fine).
     case noHelp
     /// 7-day daily streak.
     case consistency
@@ -48,9 +48,12 @@ public enum ProgressEvent: Sendable {
     case undone(MatchOutcome)
     /// A game reached its end (classic game over, or a daily attempt finished).
     /// `classicScore` is set for classic games, for the best-score leaderboard.
-    case gameFinished(classicScore: Int?, hintsUsed: Int)
-    /// A classic game was replaced by a new one before it ended; its score still counts as a best.
-    case classicAbandoned(score: Int)
+    case gameFinished(classicScore: Int?)
+    /// A classic game was replaced by a new one before it ended; its score still counts as a
+    /// best, and it counts as played if anything was played in it.
+    case classicAbandoned(score: Int, played: Bool)
+    /// The classic game on screen reached this score: the best updates right away.
+    case classicScore(Int)
     /// A daily challenge was completed (board cleared) on its own day.
     case dailyCompleted(currentStreak: Int, localHour: Int)
 }
@@ -69,6 +72,11 @@ public struct PlayerProgress: Codable, Hashable, Sendable {
     public private(set) var bestEqualPairsRun = 0
     /// Best final score in classic mode.
     public private(set) var bestScore = 0
+    /// Games finished, plus classic games left after playing. Optional so progress saved
+    /// before it still loads (it then starts from `gamesFinished`).
+    private var gamesPlayedCount: Int?
+
+    public var gamesPlayed: Int { gamesPlayedCount ?? gamesFinished }
 
     public init() {}
 
@@ -90,7 +98,11 @@ public struct PlayerProgress: Codable, Hashable, Sendable {
             } else {
                 equalPairsRun = 0
             }
-            if outcome.boardCleared { boardsCleared += 1 }
+            if outcome.boardCleared {
+                boardsCleared += 1
+                if outcome.hintsOnBoard == 0 { hits.append(.noHelp) }
+                if !outcome.usedPlusOnBoard { hits.append(.cleanSlate) }
+            }
         case .missed:
             break
         case .hintUsed(let score):
@@ -100,13 +112,16 @@ public struct PlayerProgress: Codable, Hashable, Sendable {
             if outcome.values[0] == outcome.values[1] {
                 equalPairsRun = max(0, equalPairsRun - 1)
             }
-        case .gameFinished(let classicScore, let hintsUsed):
+        case .gameFinished(let classicScore):
+            gamesPlayedCount = gamesPlayed + 1
             gamesFinished += 1
             equalPairsRun = 0
             if let classicScore { bestScore = max(bestScore, classicScore) }
-            if hintsUsed == 0 { hits.append(.noHelp) }
-        case .classicAbandoned(let score):
+        case .classicAbandoned(let score, let played):
+            if played { gamesPlayedCount = gamesPlayed + 1 }
             equalPairsRun = 0
+            bestScore = max(bestScore, score)
+        case .classicScore(let score):
             bestScore = max(bestScore, score)
         case .dailyCompleted(let streak, let hour):
             dailiesCompleted += 1
@@ -130,6 +145,7 @@ public struct PlayerProgress: Codable, Hashable, Sendable {
         result.bestStreak = max(bestStreak, other.bestStreak)
         result.bestEqualPairsRun = max(bestEqualPairsRun, other.bestEqualPairsRun)
         result.bestScore = max(bestScore, other.bestScore)
+        result.gamesPlayedCount = max(gamesPlayed, other.gamesPlayed)
         return result
     }
 
@@ -142,14 +158,13 @@ public struct PlayerProgress: Codable, Hashable, Sendable {
     /// Current count for counted achievements; one-offs report 0 until unlocked.
     private func count(for achievement: Achievement) -> Int {
         switch achievement {
-        case .firstStep: gamesFinished
-        case .cleanSlate: boardsCleared
+        case .firstStep: gamesFinished + boardsCleared
         case .consistency, .habit: bestStreak
         case .sweeper: rowsCleared
         case .stageFive: highestStage
         case .centennial: dailiesCompleted
         case .monotone: bestEqualPairsRun
-        case .noHelp, .nightOwl, .inTheRed: 0
+        case .cleanSlate, .noHelp, .nightOwl, .inTheRed: 0
         }
     }
 

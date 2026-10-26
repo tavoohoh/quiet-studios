@@ -277,6 +277,26 @@
         }
       }
     },
+    "Clear a board without using +.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vacía un tablero sin usar +."
+          }
+        }
+      }
+    },
+    "Clear a board without using hints.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vacía un tablero sin usar pistas."
+          }
+        }
+      }
+    },
     "Clear a row": {
       "localizations": {
         "es": {
@@ -287,12 +307,12 @@
         }
       }
     },
-    "Clear a whole board.": {
+    "Clear your first board or finish your first game.": {
       "localizations": {
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Limpia un tablero completo."
+            "value": "Vacía tu primer tablero o termina tu primera partida."
           }
         }
       }
@@ -533,26 +553,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Puntaje final"
-          }
-        }
-      }
-    },
-    "Finish a game without using hints.": {
-      "localizations": {
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Termina una partida sin usar pistas."
-          }
-        }
-      }
-    },
-    "Finish your first game.": {
-      "localizations": {
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Termina tu primera partida."
           }
         }
       }
@@ -1388,6 +1388,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Hoy"
+          }
+        }
+      }
+    },
+    "Top streak": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Racha récord"
           }
         }
       }

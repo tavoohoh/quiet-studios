@@ -98,13 +98,62 @@ import Testing
         #expect(outcome?.points == 1 + 10 + 150)
         #expect(session.stage == 2)
         #expect(session.plusRemaining == GameSession.maxPlusUses)
-        #expect(session.board.cells.count == BoardGenerator.initialCount)
+        #expect(session.board.cells.count == BoardGenerator.initialCount(forStage: 2))
+    }
+
+    @Test func everyStageCanBeGenerated() {
+        var random = SeededRandom(seed: 1)
+        for stage in 1...6 {
+            #expect(BoardGenerator.initialCount(forStage: stage).isMultiple(of: 2))
+            #expect(BoardGenerator.makeBoard(using: &random, stage: stage).cells.count == BoardGenerator.initialCount(forStage: stage))
+        }
+    }
+
+    @Test func laterStagesAreHarder() {
+        #expect((1...6).map(BoardGenerator.initialCount(forStage:)) == [42, 44, 48, 50, 54, 54])
+        #expect((1...6).map(GameSession.plusUses(forStage:)) == [5, 5, 4, 4, 3, 3])
+        #expect((1...6).map(BoardGenerator.minimumPairs(forStage:)) == [3, 3, 2, 2, 1, 1])
+        var session = GameSession(board: makeBoard([[0, 0, 0, 0, 0, 0, 0, 2, 8]]), stage: 4)
+        _ = session.match(at: 7, 8)
+        #expect(session.stage == 5)
+        #expect(session.plusRemaining == 3)
+        #expect(session.board.cells.count == 54)
+        #expect(MatchRules.validPairs(on: session.board).count >= 1)
+    }
+
+    @Test func hintsAndPlusAreCountedPerBoard() {
+        var session = GameSession(board: makeBoard([[0, 0, 0, 0, 0, 2, 8, 1, 9]]))
+        _ = session.useHint()
+        session.addNumbers()
+        #expect(session.hintsOnBoard == 1 && session.usedPlusOnBoard)
+        // Clear the original 2-8 and 1-9 and their copies.
+        while let pair = MatchRules.validPairs(on: session.board).first, session.stage == 1 {
+            let outcome = session.match(at: pair.first, pair.second)
+            if outcome?.boardCleared == true {
+                #expect(outcome?.hintsOnBoard == 1)
+                #expect(outcome?.usedPlusOnBoard == true)
+            }
+        }
+        #expect(session.stage == 2)
+        #expect(session.hintsOnBoard == 0 && !session.usedPlusOnBoard)
+        #expect(session.hintsUsed == 1)
+    }
+
+    @Test func gamesSavedBeforePerBoardHintsStillLoad() throws {
+        var session = GameSession(seed: 7)
+        _ = session.useHint()
+        let data = try JSONEncoder().encode(session)
+        var json = try JSONSerialization.jsonObject(with: data) as! [String: Any]
+        json["hintsAtBoardStart"] = nil
+        let old = try JSONDecoder().decode(GameSession.self, from: JSONSerialization.data(withJSONObject: json))
+        #expect(old.hintsOnBoard == 1)
     }
 
     @Test func boardBonusScalesWithStage() {
         var session = GameSession(board: makeBoard([[0, 0, 0, 0, 0, 0, 0, 2, 8]]), stage: 3)
         let outcome = session.match(at: 7, 8)
-        #expect(outcome?.points == 1 + 10 + 150 * 3)
+        // From stage 3 every pair is worth one more.
+        #expect(outcome?.points == 2 + 10 + 150 * 3)
         #expect(session.stage == 4)
     }
 

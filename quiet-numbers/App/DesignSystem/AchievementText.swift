@@ -21,9 +21,9 @@ extension Achievement {
 
     var condition: LocalizedStringResource {
         switch self {
-        case .firstStep: "Finish your first game."
-        case .cleanSlate: "Clear a whole board."
-        case .noHelp: "Finish a game without using hints."
+        case .firstStep: "Clear your first board or finish your first game."
+        case .cleanSlate: "Clear a board without using +."
+        case .noHelp: "Clear a board without using hints."
         case .consistency: "Complete 7 daily challenges in a row."
         case .habit: "Complete 30 daily challenges in a row."
         case .sweeper: "Clear 100 rows."
