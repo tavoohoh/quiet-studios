@@ -11,7 +11,8 @@ extension Font {
 }
 
 extension Animation {
-    static let quiet = Animation.smooth(duration: 0.3 * EffectTiming.scale)
+    /// The app's default: quick with a little overshoot.
+    static let quiet = Animation.snappy(duration: 0.2 * EffectTiming.scale, extraBounce: 0.12)
 }
 
 enum EffectTiming {

@@ -30,6 +30,7 @@ struct GameTopBar: View {
                 label: "Add numbers",
                 value: Text("\(model.session.plusRemaining) remaining"),
                 isHighlighted: model.needsNumbers,
+                nudges: model.plusNudges,
                 action: onAddNumbers
             )
             .disabled(!model.canAddNumbers)
@@ -40,6 +41,7 @@ struct GameTopBar: View {
                 label: "Hint",
                 value: Text("Costs \(model.session.scoring.hintCost) points"),
                 isHighlighted: false,
+                nudges: 0,
                 action: onHint
             )
             .disabled(!model.canUseHint)
@@ -63,11 +65,11 @@ private struct ScoreChangeLabel: View {
                     .foregroundStyle(change.amount > 0 ? AnyShapeStyle(.tint) : AnyShapeStyle(.secondary))
                     .id(change.id)
                     .transition(.asymmetric(
-                        insertion: .opacity.combined(with: .offset(y: 10)),
-                        removal: .opacity.combined(with: .offset(y: -14))
+                        insertion: .opacity.combined(with: .offset(y: 14)).combined(with: .scale(scale: 1.4)),
+                        removal: .opacity.combined(with: .offset(y: -18))
                     ))
                     .task(id: change.id) {
-                        try? await Task.sleep(for: .seconds(1.2))
+                        try? await Task.sleep(for: .seconds(0.9))
                         withAnimation(.quiet) { model.dismissScoreChange(change) }
                     }
                     .accessibilityHidden(true)
@@ -88,12 +90,12 @@ private struct PraiseLabel: View {
                     .foregroundStyle(.tint)
                     .id(praise.id)
                     .transition(.asymmetric(
-                        insertion: .opacity.combined(with: .scale(scale: 0.8)),
+                        insertion: .opacity.combined(with: .scale(scale: 1.5)),
                         removal: .opacity.combined(with: .offset(y: -10))
                     ))
                     .task(id: praise.id) {
                         AccessibilityNotification.Announcement(String(localized: praise.text)).post()
-                        try? await Task.sleep(for: .seconds(1.6))
+                        try? await Task.sleep(for: .seconds(1.3))
                         withAnimation(.quiet) { model.dismissPraise(praise) }
                     }
             }
@@ -108,6 +110,7 @@ private struct CounterButton: View {
     let label: LocalizedStringKey
     let value: Text
     let isHighlighted: Bool
+    let nudges: Int
     let action: () -> Void
 
     var body: some View {
@@ -116,6 +119,7 @@ private struct CounterButton: View {
                 Image(systemName: systemImage)
                     .font(.title3.weight(.medium))
                     .symbolEffect(.pulse, options: .repeating, isActive: isHighlighted)
+                    .symbolEffect(.bounce, options: .repeat(2), value: nudges)
                 caption
                     .font(.counter)
                     .contentTransition(.numericText())

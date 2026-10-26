@@ -82,6 +82,22 @@ final class EffectsUITests: XCTestCase {
         snapshot(app, "row-effect")
         sleep(4)
         snapshot(app, "collapsed")
+
+        app.buttons["Add numbers"].tap()
+        sleep(3)
+        snapshot(app, "added")
+    }
+
+    /// A hint with no pairs on the board points to + instead of charging.
+    @MainActor
+    func testEmptyHintSuggestsAddingNumbers() {
+        let app = XCUIApplication()
+        app.launchArguments = ["-startGame", "-boardValues", "1,2,1,2,1,2,1,2,1"]
+        app.launch()
+        XCTAssertTrue(app.buttons["Hint"].waitForExistence(timeout: 5))
+        app.buttons["Hint"].tap()
+        XCTAssertTrue(app.staticTexts["No pairs. Try +"].waitForExistence(timeout: 1))
+        snapshot(app, "empty-hint")
     }
 
     @MainActor

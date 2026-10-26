@@ -18,8 +18,8 @@ struct BoardView: View {
                         ForEach(rows, id: \.self) { start in
                             row(startingAt: start)
                                 .transition(.asymmetric(
-                                    insertion: .opacity,
-                                    removal: .opacity.combined(with: .scale(scale: 0.9, anchor: .top))
+                                    insertion: .opacity.combined(with: .offset(y: 12)),
+                                    removal: .opacity.combined(with: .scale(scale: 0.6))
                                 ))
                         }
                     }
@@ -28,7 +28,7 @@ struct BoardView: View {
                         if let line = model.matchLine {
                             MatchLineView(line: line, size: size)
                                 .id(line.id)
-                                .transition(.opacity)
+                                .transition(.asymmetric(insertion: .identity, removal: .opacity))
                         }
                     }
                     Color.clear.frame(height: size).id(Self.bottomID)
@@ -101,16 +101,19 @@ private struct MatchLineView: View {
     var body: some View {
         ZStack {
             ForEach(Array(line.segments.enumerated()), id: \.offset) { _, segment in
-                SegmentShape(segment: segment, scale: size)
-                    .trim(from: 0, to: progress)
-                    .stroke(.tint.opacity(opacity), style: StrokeStyle(lineWidth: width, lineCap: .round))
+                let shape = SegmentShape(segment: segment, scale: size).trim(from: 0, to: progress)
+                // Steel body with a thin bright core reads as metal in any direction.
+                shape.stroke(Color.matchLine, style: StrokeStyle(lineWidth: width, lineCap: .round))
+                shape.stroke(Color.matchLineSheen.opacity(0.7), style: StrokeStyle(lineWidth: width * 0.3, lineCap: .round))
             }
         }
-        .shadow(color: line.tier == .dramatic ? Color.accentColor.opacity(0.6) : .clear, radius: 6)
+        .opacity(opacity)
+        .shadow(color: line.tier == .dramatic ? Color.matchLine.opacity(0.7) : .clear, radius: 6)
         .allowsHitTesting(false)
         .accessibilityHidden(true)
         .onAppear {
-            withAnimation(.easeOut(duration: line.tier.drawDuration)) { progress = 1 }
+            // Fast start, hard stop.
+            withAnimation(.timingCurve(0.2, 0.9, 0.3, 1, duration: line.tier.drawDuration)) { progress = 1 }
         }
     }
 
@@ -123,7 +126,7 @@ private struct MatchLineView: View {
     }
 
     private var opacity: Double {
-        line.tier == .subtle ? 0.5 : 1
+        line.tier == .subtle ? 0.6 : 1
     }
 }
 
@@ -150,15 +153,15 @@ private struct RowClearEffect: View {
         let shape = RoundedRectangle(cornerRadius: size * 0.35, style: .continuous).inset(by: 2)
         shape
             .trim(from: 0, to: progress)
-            .stroke(.tint, style: StrokeStyle(lineWidth: 2, lineCap: .round))
-            .background(shape.fill(.tint.opacity(0.08 * progress)))
+            .stroke(Color.matchLine, style: StrokeStyle(lineWidth: 2, lineCap: .round))
+            .background(shape.fill(Color.matchLine.opacity(0.08 * progress)))
             .allowsHitTesting(false)
             .accessibilityHidden(true)
             .onAppear {
                 if reduceMotion {
                     progress = 1
                 } else {
-                    withAnimation(.easeInOut(duration: 0.4 * EffectTiming.scale)) { progress = 1 }
+                    withAnimation(.easeOut(duration: 0.22 * EffectTiming.scale)) { progress = 1 }
                 }
             }
     }

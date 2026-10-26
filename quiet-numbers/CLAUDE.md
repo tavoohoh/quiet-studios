@@ -92,7 +92,7 @@ Tablero de **9 columnas**; arranca con **27 números (3 filas)** del 1 al 9.
 **Mecánicas:**
 - Celdas eliminadas quedan como "fantasma" (número tenue) hasta que su fila se vacía.
 - Fila vacía: desaparece, el tablero sube y da puntos extra.
-- Botón **+**: copia todos los números restantes, en orden, al final del tablero (regla estándar del género; se evaluó triplicar y se descartó). 5 usos por partida. Limpiar una fila regala 1 uso extra (máximo 5 acumulados). Los números agregados se muestran en el color de acento para distinguirlos de los originales.
+- Botón **+**: copia todos los números restantes, en orden, al final del tablero (regla estándar del género; se evaluó triplicar y se descartó). 5 usos por partida. Limpiar una fila regala 1 uso extra (máximo 5 acumulados). Los números agregados se muestran en azul (`AddedNumber`) para distinguirlos de los originales.
 - **Pistas:** ilimitadas; resaltan una pareja válida y cuestan 3 puntos (el puntaje nunca baja de 0). Si no hay parejas, no cobran.
 - **Etapas:** vaciar el tablero pasa a la siguiente etapa con tablero nuevo; los usos de + se reinician.
 - **Fin de partida:** no quedan parejas válidas ni usos de +.
@@ -159,7 +159,9 @@ Categorías de personalización: tema de color, estilo de ficha, tipografía, ef
 - SF Pro Rounded con `.monospacedDigit()`.
 - Fichas sin bordes, solo el número. Seleccionada: círculo suave del acento. Eliminada: gris muy tenue.
 - Animaciones: pareja válida = línea que crece desde el centro hasta ambos números y luego fade + leve escala a fantasma; inválida = pequeña sacudida; fila limpiada = borde que se dibuja alrededor de la fila y luego colapso suave hacia arriba. Respetar Reduce Motion (sin línea ni trazo).
-- Tres tipos de línea según las celdas eliminadas entre la pareja: sutil (0, delgada y tenue), media (1–3) y dramática (4+, gruesa con brillo; coincide con "¡Desde lejos!"). En lectura continua entre filas, la línea entra desde los bordes del tablero.
+- Tres tipos de línea según las celdas eliminadas entre la pareja: sutil (0, delgada y tenue), media (1–3) y dramática (4+, gruesa con brillo; coincide con "¡Desde lejos!"). En lectura continua entre filas, la línea entra desde los bordes del tablero. Color azul metálico (`MatchLine` + `MatchLineSheen`), también en el borde de fila limpiada.
+- Ritmo: animaciones rápidas y con algo de rebote (`Animation.quiet` = snappy 0.2 s); el emparejamiento completo dura menos de ~0.6 s y un toque nuevo lo termina al instante.
+- Pista sin parejas: no cobra, muestra "No hay parejas. Prueba +" y hace rebotar el botón +.
 - Racha ("¡N seguidas!"): se reinicia con un intento inválido o al pedir pista; el + no la reinicia.
 - Hápticos (iOS): ligero al seleccionar, medio al emparejar, éxito al limpiar fila.
 - Barra superior: puntaje, etapa, contador de + y costo de la pista. Nada más.

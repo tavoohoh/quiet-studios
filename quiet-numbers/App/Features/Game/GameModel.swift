@@ -27,9 +27,9 @@ struct MatchLine: Equatable {
 
         var drawDuration: Double {
             let base = switch self {
-            case .subtle: 0.15
-            case .medium: 0.22
-            case .dramatic: 0.38
+            case .subtle: 0.08
+            case .medium: 0.12
+            case .dramatic: 0.22
             }
             return base * EffectTiming.scale
         }
@@ -70,6 +70,8 @@ final class GameModel {
     private(set) var additions = 0
     private(set) var scoreChange: ScoreChange?
     private(set) var praise: Praise?
+    /// Bumped when a hint finds nothing and + is the way out; bounces the + button.
+    private(set) var plusNudges = 0
     /// Set by the view; skips the line and shortens the sequence.
     var reduceMotion = false
 
@@ -81,9 +83,9 @@ final class GameModel {
     /// Every this many matches in a row earns a praise.
     private static let streakStep = 5
     /// How long a cleared row shows its effect before collapsing.
-    private static let rowEffectDuration = 0.45 * EffectTiming.scale
+    private static let rowEffectDuration = 0.26 * EffectTiming.scale
     /// How long a drawn line stays before the numbers turn into ghosts.
-    private static let lineHold = 0.08 * EffectTiming.scale
+    private static let lineHold = 0.05 * EffectTiming.scale
     /// Distance from a cell's center where the line stops, so it doesn't cover the number.
     private static let lineInset = 0.3
 
@@ -152,7 +154,15 @@ final class GameModel {
     /// Highlights a valid pair, for a few points.
     func showHint() {
         finishSequence()
-        guard let hint = session.useHint() else { return }
+        guard let hint = session.useHint() else {
+            if canAddNumbers {
+                plusNudges += 1
+                feedbackID += 1
+                praise = Praise(id: feedbackID, text: "No pairs. Try +")
+                haptics.play(.select)
+            }
+            return
+        }
         let cells = session.board.cells
         hintIDs = [cells[hint.pair.first].id, cells[hint.pair.second].id]
         selectedID = nil

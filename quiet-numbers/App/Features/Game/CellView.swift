@@ -18,7 +18,7 @@ struct CellView: View {
             Text(verbatim: "\(cell.value)")
                 .font(.boardNumber(size: size * 0.5))
                 .foregroundStyle(numberStyle)
-                .scaleEffect(cell.isCleared ? 0.85 : 1)
+                .scaleEffect(cell.isCleared ? 0.75 : 1)
                 .frame(width: size, height: size)
                 .background {
                     if isSelected {
@@ -49,10 +49,10 @@ struct CellView: View {
 }
 
 extension CellView {
-    /// Ghosts are faint; numbers added with + use the accent so the originals stand out.
+    /// Ghosts are faint; numbers added with + are blue so the originals stand out.
     private var numberStyle: AnyShapeStyle {
         if cell.isCleared { return AnyShapeStyle(.quaternary) }
-        return cell.isAdded ? AnyShapeStyle(.tint) : AnyShapeStyle(.primary)
+        return cell.isAdded ? AnyShapeStyle(Color.addedNumber) : AnyShapeStyle(.primary)
     }
 }
 
@@ -66,6 +66,6 @@ struct ShakeEffect: GeometryEffect {
     }
 
     func effectValue(size: CGSize) -> ProjectionTransform {
-        ProjectionTransform(CGAffineTransform(translationX: 4 * sin(shakes * .pi * 4), y: 0))
+        ProjectionTransform(CGAffineTransform(translationX: 6 * sin(shakes * .pi * 6), y: 0))
     }
 }

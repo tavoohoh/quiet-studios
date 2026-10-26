@@ -217,6 +217,16 @@
         }
       }
     },
+    "No pairs. Try +": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No hay parejas. Prueba +"
+          }
+        }
+      }
+    },
     "Score": {
       "localizations": {
         "es": {
