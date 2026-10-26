@@ -417,6 +417,16 @@
         }
       }
     },
+    "Deletes games, daily results, streaks, achievements and unlocked rewards, here and in iCloud.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Borra partidas, resultados diarios, rachas, logros y recompensas desbloqueadas, aquí y en iCloud."
+          }
+        }
+      }
+    },
     "Done": {
       "localizations": {
         "es": {
@@ -903,12 +913,12 @@
         }
       }
     },
-    "Quiet Numbers doesn't collect any data. Your games, streaks and achievements stay on this device. If you sign in to Game Center, your scores and achievements are shared with Apple's Game Center.": {
+    "Quiet Numbers doesn't collect any data. Your games, streaks and achievements stay on this device. If you sign in to Game Center, your scores and achievements are shared with Apple's Game Center and your progress is saved in your iCloud.": {
       "localizations": {
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Quiet Numbers no recolecta ningún dato. Tus partidas, rachas y logros se quedan en este dispositivo. Si inicias sesión en Game Center, tus puntajes y logros se comparten con Game Center de Apple."
+            "value": "Quiet Numbers no recolecta ningún dato. Tus partidas, rachas y logros se quedan en este dispositivo. Si inicias sesión en Game Center, tus puntajes y logros se comparten con Game Center de Apple y tu progreso se guarda en tu iCloud."
           }
         }
       }
@@ -929,6 +939,36 @@
           "stringUnit": {
             "state": "translated",
             "value": "Las repeticiones no suman puntaje."
+          }
+        }
+      }
+    },
+    "Reset Progress": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Restablecer progreso"
+          }
+        }
+      }
+    },
+    "Reset Progress…": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Restablecer progreso…"
+          }
+        }
+      }
+    },
+    "Reset all progress?": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Restablecer todo el progreso?"
           }
         }
       }
@@ -1172,6 +1212,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Ola"
+          }
+        }
+      }
+    },
+    "Your games, daily challenge results, streaks, achievements and unlocked rewards will be deleted on this device and in iCloud. Scores already on Game Center leaderboards stay there. This can't be undone.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Se borrarán tus partidas, resultados del reto diario, rachas, logros y recompensas desbloqueadas en este dispositivo y en iCloud. Los puntajes que ya están en los leaderboards de Game Center se quedan ahí. No se puede deshacer."
           }
         }
       }

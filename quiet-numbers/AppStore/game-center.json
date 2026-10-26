@@ -282,8 +282,9 @@
         "es": " puntos"
       },
       "sortOrder": "High to Low",
-      "scoreSubmission": "Best score",
-      "source": "Today's scored daily attempt (AppModel.pushToGameCenter)"
+      "scoreSubmission": "Most recent score",
+      "source": "Today's scored daily attempt, sent whenever it finishes, even at 0 or below (AppModel.pushToGameCenter)",
+      "scoreRange": "None (scores can be negative)"
     },
     {
       "id": "best_score",

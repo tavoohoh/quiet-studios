@@ -74,7 +74,7 @@ targets:
         PRODUCT_BUNDLE_IDENTIFIER: com.quietproject.numbers.uitests
   QuietNumbersScreenshots:
     type: bundle.ui-testing
-    supportedDestinations: [iOS, macOS]
+    supportedDestinations: [iOS]
     sources: [Screenshots]
     dependencies:
       - target: QuietNumbers

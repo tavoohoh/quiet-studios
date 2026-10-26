@@ -61,7 +61,11 @@ final class AppModel {
     /// On sign-in: pull what other devices saved, merge it into local data, then push everything.
     func syncGameCenter() {
         Task {
-            if let remote = await gameCenter.fetchSnapshot() {
+            // A reset made while signed out still has to clear the cloud copy, or it would merge back.
+            if UserDefaults.standard.bool(forKey: PreferenceKey.pendingCloudReset) {
+                guard await gameCenter.resetCloud() else { return }
+                UserDefaults.standard.removeObject(forKey: PreferenceKey.pendingCloudReset)
+            } else if let remote = await gameCenter.fetchSnapshot() {
                 progress = progress.merged(with: remote.progress)
                 persistence.saveProgress(progress)
                 persistence.mergeDailies(remote.dailies)
@@ -78,6 +82,26 @@ final class AppModel {
             await gameCenter.submit(today.score, to: .daily)
         }
         await gameCenter.save(.init(progress: progress, dailies: persistence.dailies))
+    }
+
+    // MARK: Reset
+
+    /// Erases all progress here and in iCloud / Game Center: games, dailies, streaks,
+    /// achievements and the rewards they unlocked. Sound, haptics and text size stay.
+    /// Signed out, the cloud part waits for the next sign-in.
+    func resetProgress() {
+        persistence.deleteEverything()
+        progress = PlayerProgress()
+        persistence.saveProgress(progress)
+        activeGame = nil
+        activeKind = nil
+        pendingUnlocks = []
+        refreshSavedGames()
+        for key in PreferenceKey.rewards {
+            UserDefaults.standard.removeObject(forKey: key)
+        }
+        UserDefaults.standard.set(true, forKey: PreferenceKey.pendingCloudReset)
+        syncGameCenter()
     }
 
     func dismissUnlock(_ achievement: Achievement) {

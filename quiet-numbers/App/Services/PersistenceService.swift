@@ -195,6 +195,17 @@ final class PersistenceService {
         try? context.fetch(FetchDescriptor<StoredProgress>()).first
     }
 
+    // MARK: Reset
+
+    /// Deletes every game, daily result and the progress record.
+    func deleteEverything() {
+        try? context.delete(model: StoredGame.self)
+        try? context.delete(model: StoredDaily.self)
+        try? context.delete(model: StoredProgress.self)
+        save()
+        reloadDailies()
+    }
+
     private func storedGame(_ slot: Slot) -> StoredGame? {
         let key = slot.rawValue
         return try? context.fetch(FetchDescriptor<StoredGame>(predicate: #Predicate { $0.slot == key })).first

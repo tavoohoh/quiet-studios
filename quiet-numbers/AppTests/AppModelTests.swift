@@ -1,3 +1,4 @@
+import Foundation
 import QuietNumbersCore
 import Testing
 @testable import Quiet_Numbers
@@ -106,6 +107,27 @@ import Testing
         #expect(app.progress.bestScore == session.score)
         #expect(app.progress.bestScore > 0)
         #expect(app.progress.gamesFinished == 0)
+    }
+
+    @Test func resetErasesProgressGamesAndDailies() {
+        let persistence = PersistenceService(store: .inMemory)
+        let app = AppModel(persistence: persistence)
+        app.record(.gameFinished(classicScore: 300, hintsUsed: 0))
+        app.newClassic()
+        persistence.finishDaily("2026-10-20", score: 120, isCompleted: true)
+        UserDefaults.standard.set(ThemeChoice.slate.rawValue, forKey: PreferenceKey.theme)
+
+        app.resetProgress()
+
+        #expect(app.progress == PlayerProgress())
+        #expect(app.activeGame == nil)
+        #expect(!app.hasClassicInProgress)
+        #expect(persistence.dailies.isEmpty)
+        #expect(UserDefaults.standard.string(forKey: PreferenceKey.theme) == nil)
+        // Signed out: the cloud copy is cleared on the next sign-in.
+        #expect(UserDefaults.standard.bool(forKey: PreferenceKey.pendingCloudReset))
+        UserDefaults.standard.removeObject(forKey: PreferenceKey.pendingCloudReset)
+        #expect(AppModel(persistence: persistence).progress == PlayerProgress())
     }
 
     @Test func lockedRewardsNeedTheirAchievement() {

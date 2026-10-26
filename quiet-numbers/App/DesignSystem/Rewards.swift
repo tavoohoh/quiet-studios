@@ -173,4 +173,9 @@ enum PreferenceKey {
     static let soundEnabled = "soundEnabled"
     static let hapticsEnabled = "hapticsEnabled"
     static let largerNumbers = "largerNumbers"
+    /// Set by a reset until the iCloud copy and achievements are cleared too.
+    static let pendingCloudReset = "pendingCloudReset"
+
+    /// Cosmetic choices, cleared by a reset.
+    static let rewards = [theme, tileStyle, numberFont, clearEffect, soundPack, appIcon]
 }

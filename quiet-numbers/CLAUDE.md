@@ -35,7 +35,7 @@ Un solo target multiplataforma (iPhone, iPad, Mac), compra universal, un bundle 
 - El `.xcodeproj` se genera desde `project.yml` con XcodeGen: correr `xcodegen generate` tras agregar o mover archivos. No editar el `.pbxproj` a mano.
 - Tests del Core: `cd Packages/QuietNumbersCore && swift test`.
 - Todos los tests (Core en iOS, app y UI): `xcodebuild test -project QuietNumbers.xcodeproj -scheme QuietNumbers -destination 'platform=iOS Simulator,name=iPhone 17'`.
-- Capturas de la App Store: `scripts/screenshots.sh [iphone] [ipad] [mac]` (esquema `Screenshots`, target `QuietNumbersScreenshots`) → `AppStore/screenshots/<dispositivo>/<idioma>/<apariencia>/`. Mac aún no funciona: el test no ve la ventana.
+- Capturas de la App Store: `scripts/screenshots.sh [iphone] [ipad] [mac]` (esquema `Screenshots`, target `QuietNumbersScreenshots`) → `AppStore/screenshots/<iphone-6.9|ipad-13>/<en|es>/<light|dark>/`. Solo iPhone y iPad (decisión: sin capturas de Mac); el español sirve para es-MX y es-ES.
 - Metadatos: `fastlane/metadata/{en-US,es-MX,es-ES}`; validar con `scripts/validate-metadata.py`. Game Center: `AppStore/game-center.{md,json}`; verificar IDs con `scripts/check-game-center.py`.
 - UI test en simulador: `xcodebuild test -project QuietNumbers.xcodeproj -scheme QuietNumbers -destination 'platform=iOS Simulator,name=iPhone 17' -only-testing:QuietNumbersUITests`.
 - Argumentos DEBUG: `-demo` carga el estado fijo de las capturas (`App/Debug/DemoData.swift`: 14-nov-2026 10:00, partida a medias, racha de 8, leaderboards de ejemplo; en memoria); `-startGame` abre una partida directo; `-seedKey <texto>` hace el tablero determinista (`2026-10-25` da el tablero golden de los tests); `-boardValues 5,3,7,…` arranca con números exactos; `-slowEffects` pone los efectos en cámara lenta (×6) para inspeccionarlos. `-startGame` usa almacenamiento en memoria; `-uiTesting` usa un archivo propio (`UITests.store`) que `-resetStore` borra, para no tocar los datos reales. `-unlockAll` desbloquea todos los logros (QA y capturas).
@@ -147,12 +147,15 @@ Opcional: sin sesión, el juego funciona completo y los logros se guardan localm
 
 El código está completo (`GameCenterService`, `LeaderboardsView`, sincronización en `AppModel.syncGameCenter`), pero **no está verificado contra Game Center real**: falta registrar la app. Sin sesión todo funciona y se guarda localmente (verificado con UI test). Pendiente cuando exista el bundle ID:
 
-1. Crear el App ID y activar las capacidades **Game Center** e **iCloud** (iCloud es necesario para `saveGameData`; agregar su entitlement en `project.yml`).
+1. Crear el App ID y activar las capacidades **Game Center** e **iCloud** (iCloud Documents, contenedor `iCloud.<bundle id>`; el entitlement ya está en `App/QuietNumbers.entitlements`).
 2. En App Store Connect, crear los leaderboards `daily_challenge` (recurrente, 24 h, inicio 00:00 UTC = 19:00 en Colombia; en otras zonas la ventana del leaderboard no coincide exactamente con el cambio de reto local), `best_score` y `longest_streak` (clásicos), y los logros `first_step`, `clean_slate`, `no_help`, `in_the_red`, `consistency`, `habit`, `sweeper`, `stage_five`, `centennial`, `night_owl`, `monotone`, con textos en inglés y español.
 3. Probar con una cuenta sandbox: modo avión → jugar → reconectar → verificar envío.
 
 Decisiones:
 - No se fuerza el inicio de sesión (no se presenta la pantalla de login de Game Center); el jugador inicia sesión desde Ajustes del sistema. `GKAccessPoint` solo en Inicio y con sesión.
+- **Progreso en iCloud: requerido.** Vía partidas guardadas de Game Center (necesita sesión). Entitlements de iCloud Documents con contenedor `iCloud.$(CFBundleIdentifier)` en `App/QuietNumbers.entitlements` (el de Personal Team no los tiene).
+- **Restablecer progreso** (Ajustes): borra partidas, retos, rachas, logros y recompensas en local, el guardado de iCloud y los logros de Game Center (`resetAchievements`). Sin sesión, queda pendiente (`pendingCloudReset`) y se hace al iniciar sesión, antes de sincronizar. Los puntajes de leaderboards no se pueden retirar; otros dispositivos conservan su copia local.
+- `daily_challenge` guarda el puntaje **más reciente** (también 0 o negativo); `best_score` y `longest_streak` solo valores > 0.
 - Partidas guardadas: se guarda un `Snapshot` (progreso + resultados diarios). Los conflictos se resuelven **fusionando** (unión de logros, máximo de cada contador, mejor resultado por día), lo que siempre conserva el mayor progreso. La partida clásica en curso no se sincroniza.
 - macOS: `ENABLE_OUTGOING_NETWORK_CONNECTIONS` solo porque GameKit lo necesita dentro del sandbox; la app no hace llamadas propias.
 
@@ -263,7 +266,7 @@ Cada fase termina con su criterio de aceptación cumplido antes de pasar a la si
 | 3. Persistencia y reto diario | ✅ Hecha |
 | 4. Game Center | 🟡 Código completo; falta App ID + App Store Connect para verificarlo |
 | 5. Recompensas y colección | ✅ Hecha |
-| 6. Pulido y lanzamiento | 🟡 Localización auditada (0 textos sin traducir, fallback a inglés verificado), PrivacyInfo, política de privacidad, Dynamic Type en Inicio/Juego. Falta: auditoría de VoiceOver manual, capturas, TestFlight, rediseño de la animación de unión |
+| 6. Pulido y lanzamiento | 🟡 Localización auditada (0 textos sin traducir, fallback a inglés verificado), PrivacyInfo, política de privacidad, Dynamic Type en Inicio/Juego. Capturas de iPhone y iPad, metadatos y web listos. Falta: auditoría de VoiceOver manual (la ficha de la tienda no anuncia VoiceOver hasta aprobarla), TestFlight |
 
 ## Anotaciones de diseño
 

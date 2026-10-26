@@ -20,19 +20,9 @@ struct QuietNumbersApp: App {
             }
         }
         #if os(macOS)
-        .defaultSize(Self.windowSize)
+        .defaultSize(width: 520, height: 760)
         #endif
     }
-
-    #if os(macOS)
-    /// Demo launches (screenshots) open at 1280×800, the Mac App Store's 16:10 size.
-    private static var windowSize: CGSize {
-        #if DEBUG
-        if DemoData.isActive { return CGSize(width: 1280, height: 800) }
-        #endif
-        return CGSize(width: 520, height: 760)
-    }
-    #endif
 
     /// Debug launches go straight in, so UI tests aren't held up.
     private static var wantsSplash: Bool {

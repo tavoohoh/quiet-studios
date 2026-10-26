@@ -1,6 +1,6 @@
 # Textos de las capturas
 
-Texto superior para cada captura (titular corto + línea de apoyo opcional). Mismo orden que los archivos de `screenshots/` (`01-game.png`…). En es-ES se usa el texto en español tal cual, salvo donde se indica.
+Texto superior para cada captura (titular corto + línea de apoyo opcional). Mismo orden que los archivos de `screenshots/<dispositivo>/<en|es>/<light|dark>/` (`01-game.png`…). Las capturas en español sirven para es-MX y es-ES; el idioma de la barra de estado da igual, lo que importa es el texto. Solo iPhone 6.9" y iPad 13" (sin Mac).
 
 | # | Captura | English | Español |
 |---|---|---|---|

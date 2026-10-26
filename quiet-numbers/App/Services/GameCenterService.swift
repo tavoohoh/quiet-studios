@@ -63,8 +63,10 @@ final class GameCenterService {
         try? await GKAchievement.report(achievements)
     }
 
+    /// Daily results are sent whatever they are (the board keeps the most recent one, even
+    /// below zero); the classic boards only take real records.
     func submit(_ score: Int, to leaderboard: Leaderboard) async {
-        guard isAuthenticated, score > 0 else { return }
+        guard isAuthenticated, leaderboard == .daily || score > 0 else { return }
         try? await GKLeaderboard.submitScore(
             score, context: 0, player: GKLocalPlayer.local, leaderboardIDs: [leaderboard.rawValue]
         )
@@ -115,6 +117,19 @@ final class GameCenterService {
             _ = try? await GKLocalPlayer.local.resolveConflictingSavedGames(copies, with: data)
         }
         return merged
+    }
+
+    /// Deletes the progress saved in iCloud and resets achievements. Leaderboard scores
+    /// can't be withdrawn by the app; they stay until Game Center replaces or expires them.
+    func resetCloud() async -> Bool {
+        guard isAuthenticated else { return false }
+        do {
+            try await GKLocalPlayer.local.deleteSavedGames(withName: Self.savedGameName)
+            try await GKAchievement.resetAchievements()
+            return true
+        } catch {
+            return false
+        }
     }
 
     func save(_ snapshot: Snapshot) async {

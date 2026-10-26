@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
-# App Store screenshots: iPhone 6.9", iPad 13" and Mac × English/Spanish × light/dark.
+# App Store screenshots: iPhone 6.9" and iPad 13" × English/Spanish × light/dark.
 # Runs the `Screenshots` scheme (Screenshots/ScreenshotTests.swift) on the `-demo` state
 # and saves PNGs to AppStore/screenshots/<device>/<language>/<appearance>/NN-name.png.
+# Spanish shots serve both es-MX and es-ES. The status bar language doesn't matter.
 #
 #   scripts/screenshots.sh                 # everything
-#   scripts/screenshots.sh iphone ipad     # only some devices (iphone, ipad, mac)
+#   scripts/screenshots.sh ipad            # only some devices (iphone, ipad)
 #   LANGUAGES="es" APPEARANCES="dark" scripts/screenshots.sh iphone
 #
 # Simulators are created on first run ("QN iPhone 6.9", "QN iPad 13") and booted one at a time.
@@ -16,7 +17,7 @@ OUT="$ROOT/AppStore/screenshots"
 WORK="$(mktemp -d)"
 trap 'rm -rf "$WORK"' EXIT
 
-DEVICES=("${@:-iphone ipad mac}")
+DEVICES=("${@:-iphone ipad}")
 read -r -a DEVICES <<< "${DEVICES[*]}"
 read -r -a LANGUAGES <<< "${LANGUAGES:-en es}"
 read -r -a APPEARANCES <<< "${APPEARANCES:-light dark}"
@@ -37,14 +38,12 @@ for devices in json.load(sys.stdin)['devices'].values():
     echo "$udid"
 }
 
-language_folder() { [[ "$1" == es ]] && echo es-MX || echo en-US; }
-
 # Runs the test once and copies its attachments into $1.
 run_tests() { # destination-folder language appearance xcodebuild-destination
     local folder="$1" language="$2" appearance="$3" destination="$4"
     local result="$WORK/$(echo "${folder#"$OUT/"}" | tr / -).xcresult"
     echo "▸ $(basename "$(dirname "$(dirname "$folder")")")/$(basename "$(dirname "$folder")")/$(basename "$folder")"
-    TEST_RUNNER_QN_LANGUAGE="$language" TEST_RUNNER_QN_APPEARANCE="$appearance" \
+    TEST_RUNNER_QN_LANGUAGE="$language" \
         xcodebuild test -project QuietNumbers.xcodeproj -scheme Screenshots \
         -destination "$destination" -resultBundlePath "$result" -quiet >/dev/null
     rm -rf "$WORK/attachments" && mkdir -p "$folder"
@@ -69,7 +68,7 @@ shoot_simulator() { # folder-name simulator-name devicetype
     for appearance in "${APPEARANCES[@]}"; do
         xcrun simctl ui "$udid" appearance "$appearance"
         for language in "${LANGUAGES[@]}"; do
-            run_tests "$OUT/$1/$(language_folder "$language")/$appearance" "$language" "$appearance" "id=$udid"
+            run_tests "$OUT/$1/$language/$appearance" "$language" "$appearance" "id=$udid"
         done
     done
     xcrun simctl status_bar "$udid" clear
@@ -80,13 +79,7 @@ for device in "${DEVICES[@]}"; do
     case "$device" in
         iphone) shoot_simulator iphone-6.9 "QN iPhone 6.9" com.apple.CoreSimulator.SimDeviceType.iPhone-17-Pro-Max ;;
         ipad) shoot_simulator ipad-13 "QN iPad 13" com.apple.CoreSimulator.SimDeviceType.iPad-Pro-13-inch-M5-12GB ;;
-        mac)
-            for appearance in "${APPEARANCES[@]}"; do
-                for language in "${LANGUAGES[@]}"; do
-                    run_tests "$OUT/mac/$(language_folder "$language")/$appearance" "$language" "$appearance" "platform=macOS"
-                done
-            done ;;
-        *) echo "Unknown device: $device (iphone, ipad, mac)" >&2; exit 1 ;;
+        *) echo "Unknown device: $device (iphone, ipad)" >&2; exit 1 ;;
     esac
 done
 
