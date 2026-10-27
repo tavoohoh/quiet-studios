@@ -172,8 +172,15 @@ extension UINavigationController: @retroactive UIGestureRecognizerDelegate {
     }
 
     public func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-        viewControllers.count > 1
+        viewControllers.count > 1 && SwipeBack.isEnabled
     }
+}
+
+/// Screens with their own drags near the left edge (a card table) turn swipe-back off
+/// while they're on screen, so the edge gesture doesn't steal them.
+@MainActor
+public enum SwipeBack {
+    public static var isEnabled = true
 }
 
 // MARK: Segments

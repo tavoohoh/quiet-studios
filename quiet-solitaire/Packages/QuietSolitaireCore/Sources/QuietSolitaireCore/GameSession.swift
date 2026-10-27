@@ -29,6 +29,11 @@ public struct GameSession: Codable, Hashable, Sendable {
     public private(set) var hintsUsed = 0
     public private(set) var usedUndo = false
     public private(set) var recycles = 0
+    /// Seconds played. Optional so games saved before the clock still load.
+    private var elapsed: Int?
+    /// Set on a win: the time multiplier (tenths) and the points it added.
+    private var timeMultiplier: Int?
+    private var timePoints: Int?
     private var history: [Snapshot] = []
 
     /// Undo goes back this many moves at most (keeps saved games small).
@@ -52,7 +57,22 @@ public struct GameSession: Codable, Hashable, Sendable {
         self.state = state
     }
 
-    public var score: Int { playPoints - hintCost + winBonus }
+    public var score: Int { playPoints - hintCost + winBonus + timeBonus }
+
+    /// Extra points from finishing fast (the multiplier applied to play points and the move bonus).
+    public var timeBonus: Int { timePoints ?? 0 }
+    /// ×1.0…×2.0 in tenths, once won.
+    public var timeMultiplierTenths: Int? { timeMultiplier }
+
+    /// Time spent on this game, counted by the app while the game is on screen.
+    /// Shown only: it doesn't change the score.
+    public var elapsedSeconds: Int { elapsed ?? 0 }
+
+    /// One more second, once the game has started and until it's won.
+    public mutating func tick() {
+        guard moves > 0, !isWon else { return }
+        elapsed = elapsedSeconds + 1
+    }
     public var isWon: Bool { state.isWon }
     public var canUndo: Bool { !history.isEmpty && !isWon }
     /// Anything played yet (for "games played").
@@ -78,7 +98,10 @@ public struct GameSession: Codable, Hashable, Sendable {
         if case .move(_, _, .tableau(let column)) = move, hasLadder(in: column) { events.append(.ladder) }
         if state.isWon {
             winBonus = scoring.bonus(forMoves: moves)
-            events.append(.won(WinSummary(score: score, moves: moves, usedUndo: usedUndo, hintsUsed: hintsUsed, recycles: recycles)))
+            let tenths = scoring.timeMultiplierTenths(forSeconds: elapsedSeconds)
+            timeMultiplier = tenths
+            timePoints = max(0, (playPoints + winBonus) * (tenths - 10) / 10)
+            events.append(.won(WinSummary(score: score, moves: moves, usedUndo: usedUndo, hintsUsed: hintsUsed, recycles: recycles, seconds: elapsedSeconds)))
         }
         return events
     }
@@ -149,4 +172,6 @@ public struct WinSummary: Hashable, Codable, Sendable {
     public let usedUndo: Bool
     public let hintsUsed: Int
     public let recycles: Int
+    /// Optional so summaries saved before the clock still load.
+    public let seconds: Int?
 }

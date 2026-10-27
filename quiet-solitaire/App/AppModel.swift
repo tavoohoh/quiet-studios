@@ -284,9 +284,20 @@ final class AppModel {
         if game.session.isWon { finish(game.session, kind) }
     }
 
-    /// Back from a game: send what changed to Game Center.
+    /// Back from a game: keep its clock, and send what changed to Game Center.
     func leftGame() {
+        saveActiveGame()
         Task { await pushToGameCenter() }
+    }
+
+    /// Saves the game on screen (its clock moves without moves). Also on going to background.
+    func saveActiveGame() {
+        guard let game = activeGame, !game.session.isWon else { return }
+        switch activeKind {
+        case .classic: persistence.saveGame(game.session, in: .classic)
+        case .daily: persistence.saveGame(game.session, in: .daily)
+        default: break
+        }
     }
 
     private func finish(_ session: GameSession, _ kind: GameKind) {

@@ -21,6 +21,20 @@ public struct Scoring: Hashable, Codable, Sendable {
         self.hint = hint
     }
 
+    /// Time multiplier on a win (decided 2026-10-27, after another game's ×1.5): ×2 up to
+    /// `fastestTime`, down to ×1 at `slowestTime`, in steps of 0.1. Hint costs aren't multiplied.
+    public var fastestTime = 180
+    public var slowestTime = 900
+    public var maxTimeMultiplier = 2.0
+
+    /// In tenths (20 = ×2.0), so it's exact and easy to show.
+    public func timeMultiplierTenths(forSeconds seconds: Int) -> Int {
+        let span = Double(slowestTime - fastestTime)
+        let progress = min(max(Double(seconds - fastestTime) / span, 0), 1)
+        let multiplier = maxTimeMultiplier - (maxTimeMultiplier - 1) * progress
+        return Int((multiplier * 10 + 1e-9).rounded(.down))
+    }
+
     public func bonus(forMoves moves: Int) -> Int {
         max(0, winBonus - bonusPerExtraMove * max(0, moves - bonusFreeMoves))
     }

@@ -50,6 +50,51 @@ final class GameplayUITests: XCTestCase {
         XCTAssertTrue(app.staticTexts["score"].waitForExistence(timeout: 5))
     }
 
+    /// A drag that starts at the left edge of the first column moves the card (the
+    /// swipe-back gesture used to steal it).
+    func testDragFromLeftEdge() {
+        let app = XCUIApplication()
+        app.launchArguments = ["-startGame", "-nearlyWon"]
+        app.launch()
+        let ten = app.buttons["10 of diamonds, column 1"].firstMatch
+        XCTAssertTrue(ten.waitForExistence(timeout: 3))
+        let jack = app.buttons["Jack of spades, column 4"].firstMatch
+        ten.coordinate(withNormalizedOffset: CGVector(dx: 0.03, dy: 0.2))
+            .press(forDuration: 0.1, thenDragTo: jack.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)))
+        XCTAssertTrue(app.buttons["10 of diamonds, column 4"].waitForExistence(timeout: 3))
+        XCTAssertTrue(app.staticTexts["score"].exists, "still in the game")
+    }
+
+    /// Dropped off-center, the card still goes to the column it overlaps most.
+    func testDropOffCenterLands() {
+        let app = XCUIApplication()
+        app.launchArguments = ["-startGame", "-nearlyWon"]
+        app.launch()
+        let ten = app.buttons["10 of hearts, waste"].firstMatch
+        XCTAssertTrue(ten.waitForExistence(timeout: 3))
+        let jack = app.buttons["Jack of spades, column 4"].firstMatch
+        ten.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
+            .press(forDuration: 0.1, thenDragTo: jack.coordinate(withNormalizedOffset: CGVector(dx: 0.85, dy: 1.6)))
+        XCTAssertTrue(app.buttons["10 of hearts, column 4"].waitForExistence(timeout: 3))
+    }
+
+    /// A lost game blocks the table until the player chooses to keep playing.
+    func testLostGameBlocksUntilKeepPlaying() {
+        let app = XCUIApplication()
+        app.launchArguments = ["-startGame", "-lostDeal"]
+        app.launch()
+        let keepPlaying = app.buttons["keepPlaying"]
+        XCTAssertTrue(keepPlaying.waitForExistence(timeout: 5))
+        // Behind the notice the table doesn't respond: Hint would say there are no moves.
+        app.buttons["hint"].tap()
+        XCTAssertFalse(app.staticTexts["No moves left. Try undo."].waitForExistence(timeout: 2))
+        keepPlaying.tap()
+        XCTAssertFalse(keepPlaying.exists)
+        app.buttons["hint"].tap()
+        // The hint runs the solver; a debug build under load can take a few seconds.
+        XCTAssertTrue(app.staticTexts["No moves left. Try undo."].waitForExistence(timeout: 8))
+    }
+
     /// A new classic game from Home: drawing changes the move count; undo works.
     func testNewGameDrawAndUndo() {
         let app = XCUIApplication()

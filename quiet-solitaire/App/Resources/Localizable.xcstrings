@@ -281,6 +281,26 @@
         }
       }
     },
+    "Achievements unlocked": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Logros desbloqueados"
+          }
+        }
+      }
+    },
+    "All cards face up!": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¡Todas las cartas a la vista!"
+          }
+        }
+      }
+    },
     "Always available for low vision.": {
       "localizations": {
         "es": {
@@ -327,6 +347,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Volver"
+          }
+        }
+      }
+    },
+    "Best": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mejor"
           }
         }
       }
@@ -401,12 +431,12 @@
         }
       }
     },
-    "Cascade": {
+    "Cascade and fireworks": {
       "localizations": {
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Cascada"
+            "value": "Cascada y fuegos artificiales"
           }
         }
       }
@@ -437,6 +467,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Clásico"
+          }
+        }
+      }
+    },
+    "Clubs complete!": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¡Tréboles completos!"
           }
         }
       }
@@ -571,6 +611,16 @@
         }
       }
     },
+    "Daily": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reto"
+          }
+        }
+      }
+    },
     "Daily Challenge": {
       "localizations": {
         "es": {
@@ -607,6 +657,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Borra partidas, retos, rachas, logros y recompensas, aquí y en iCloud."
+          }
+        }
+      }
+    },
+    "Diamonds complete!": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¡Diamantes completos!"
           }
         }
       }
@@ -721,6 +781,16 @@
         }
       }
     },
+    "Fireworks": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fuegos artificiales"
+          }
+        }
+      }
+    },
     "First Hand": {
       "localizations": {
         "es": {
@@ -767,16 +837,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Puntos de juego"
-          }
-        }
-      }
-    },
-    "Gentle": {
-      "localizations": {
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Suave"
           }
         }
       }
@@ -837,6 +897,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Difícil"
+          }
+        }
+      }
+    },
+    "Hearts complete!": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¡Corazones completos!"
           }
         }
       }
@@ -1361,6 +1431,16 @@
         }
       }
     },
+    "Practice": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Práctica"
+          }
+        }
+      }
+    },
     "Practiced": {
       "localizations": {
         "es": {
@@ -1591,6 +1671,16 @@
         }
       }
     },
+    "Spades complete!": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¡Picas completas!"
+          }
+        }
+      }
+    },
     "Standard": {
       "localizations": {
         "es": {
@@ -1811,6 +1901,26 @@
         }
       }
     },
+    "Time": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tiempo"
+          }
+        }
+      }
+    },
+    "Time ×%@": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tiempo ×%@"
+          }
+        }
+      }
+    },
     "Today": {
       "localizations": {
         "es": {
@@ -1867,6 +1977,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Deshacer"
+          }
+        }
+      }
+    },
+    "Undo to go back, or start a new game.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deshace para volver atrás, o empieza una partida nueva."
           }
         }
       }

@@ -1,13 +1,15 @@
 import QuietCore
 
-/// Depth-first Klondike solver (draw one, unlimited passes).
+/// Klondike solver (draw one, unlimited passes).
 ///
 /// With draw one and unlimited passes every card in the stock and waste can be reached
 /// by drawing, so they're searched as one "talon" set: taking any of its cards is one
-/// abstract move. Safe cards go to the foundations automatically, positions already
-/// seen are skipped, and the search stops after `budget` positions, counted (not timed)
-/// so the answer is the same on every device. That's what lets the daily deal check
-/// itself on device: same day, same deal, everywhere.
+/// abstract move. Safe cards go to the foundations automatically and positions already
+/// seen are skipped. The search is best-first (`BestFirstSearch`): it always expands the
+/// most promising position, so one huge bad branch can't eat the budget (a depth-first
+/// search did, and missed wins the player could see; changed 2026-10-27). It stops after
+/// `budget` positions, counted (not timed), so the answer is the same on every device:
+/// that's what lets the daily deal check itself on device.
 public enum Solver {
     public enum Result: Equatable, Sendable {
         /// Solvable. `firstMove` is the first real move to make (`.draw` when the card to
@@ -19,16 +21,17 @@ public enum Solver {
         case unknown
     }
 
-    /// `complete`: also try moves that the quick search skips (splitting a run anywhere,
-    /// a talon card on any column). Needed to *prove* there's no win; the quick search
-    /// is only trusted when it finds one.
+    /// `complete`: also split runs anywhere. The quick search skips those splits unless
+    /// they free a card for the foundations, so its "unsolvable" isn't a strict proof;
+    /// measured (2026-10-27) on 1,346 positions from played games, the 112 it called lost
+    /// were never won by the complete search (108 proven lost, 4 undecided).
     public static func solve(_ state: GameState, budget: Int = 60_000, complete: Bool = false) -> Result {
-        var search = Search(budget: budget, complete: complete)
+        var search = BestFirstSearch(budget: budget, complete: complete)
         let start = Position(state)
         guard let path = search.run(start) else {
             return search.exhausted ? .unknown : .unsolvable
         }
-        return .solved(firstMove: path.first.map { start.concrete($0, in: state) }, effort: search.nodes)
+        return .solved(firstMove: path.first.map { start.concrete($0, in: state) }, effort: search.expanded)
     }
 }
 
@@ -213,40 +216,5 @@ struct Position {
         case .foundationToTableau(let suit, let column):
             return .move(from: .foundation(Suit(rawValue: suit)!), count: 1, to: .tableau(column))
         }
-    }
-}
-
-private struct Search {
-    let budget: Int
-    let complete: Bool
-    var nodes = 0
-    var exhausted = false
-    var seen: Set<UInt64> = []
-
-    init(budget: Int, complete: Bool) {
-        self.budget = budget
-        self.complete = complete
-    }
-
-    /// The steps from `start` to a win, or nil.
-    mutating func run(_ start: Position) -> [Step]? {
-        // The real first move isn't automatic, so the start isn't normalized; safe moves
-        // are just its first candidates.
-        var path: [Step] = []
-        return visit(start, path: &path, isStart: true) ? path : nil
-    }
-
-    private mutating func visit(_ position: Position, path: inout [Step], isStart: Bool = false) -> Bool {
-        if position.isWon { return true }
-        guard nodes < budget else { exhausted = true; return false }
-        nodes += 1
-        guard seen.insert(position.key).inserted || isStart else { return false }
-        for step in position.steps(complete: complete) {
-            path.append(step)
-            if visit(position.applying(step), path: &path) { return true }
-            path.removeLast()
-            if exhausted { return false }
-        }
-        return false
     }
 }

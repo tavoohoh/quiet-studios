@@ -9,7 +9,7 @@ struct AppearanceRoot: ViewModifier {
     @AppStorage(PreferenceKey.board) private var board = BoardChoice.tealCoral
     @AppStorage(PreferenceKey.deck) private var deck = DeckStyle.quiet
     @AppStorage(PreferenceKey.back) private var back = CardBack.theme
-    @AppStorage(PreferenceKey.victory) private var victory = VictoryEffect.gentle
+    @AppStorage(PreferenceKey.victory) private var victory = VictoryEffect.fireworks
     @AppStorage(PreferenceKey.leftHanded) private var leftHanded = false
 
     func body(content: Content) -> some View {
@@ -19,7 +19,7 @@ struct AppearanceRoot: ViewModifier {
             .environment(\.appearance, Appearance(
                 deck: available(deck, or: .quiet),
                 back: available(back, or: .theme),
-                victory: available(victory, or: .gentle),
+                victory: available(victory, or: .fireworks),
                 leftHanded: leftHanded
             ))
             .tint(theme.primary)

@@ -4,13 +4,13 @@ import QuietCore
 public enum Difficulty: Int, CaseIterable, Codable, Sendable, Comparable {
     case easy, medium, hard, expert
 
-    /// Bands of solver effort (positions visited before the first win). Tuned on 100
-    /// deals (2026-10-27): p25 42, p50 48, p75 76, p90 1,731.
+    /// Bands of solver effort (positions expanded before the first win). Tuned on 200
+    /// deals with the best-first search (2026-10-27): p25 41, p50 49, p75 130, p90 1,939.
     init(effort: Int) {
         switch effort {
         case ..<46: self = .easy
-        case ..<91: self = .medium
-        case ..<1_500: self = .hard
+        case ..<131: self = .medium
+        case ..<1_940: self = .hard
         default: self = .expert
         }
     }

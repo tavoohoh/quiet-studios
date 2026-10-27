@@ -135,6 +135,8 @@ struct HomeView: View {
         }
         let session = if arguments.contains("-nearlyWon") {
             GameSession(state: DebugDeals.nearlyWon)
+        } else if arguments.contains("-lostDeal") {
+            GameSession(state: DebugDeals.lost)
         } else {
             GameSession(seed: value(after: "-seedKey").map(FNV1a.hash) ?? .random(in: .min ... .max))
         }

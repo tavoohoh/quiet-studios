@@ -104,13 +104,14 @@ enum CardBack: String, Reward {
     }
 }
 
+/// Every win ends in fireworks; Cascade first sends the cards tumbling off the table.
 enum VictoryEffect: String, Reward {
-    case gentle, cascade
+    case fireworks, cascade
 
     var title: LocalizedStringResource {
         switch self {
-        case .gentle: "Gentle"
-        case .cascade: "Cascade"
+        case .fireworks: "Fireworks"
+        case .cascade: "Cascade and fireworks"
         }
     }
 
@@ -137,7 +138,7 @@ enum AppIconChoice: String, Reward {
 struct Appearance {
     var deck: DeckStyle = .quiet
     var back: CardBack = .theme
-    var victory: VictoryEffect = .gentle
+    var victory: VictoryEffect = .fireworks
     var leftHanded = false
 }
 

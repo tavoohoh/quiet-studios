@@ -11,7 +11,7 @@ struct CollectionView: View {
     @AppStorage(PreferenceKey.board) private var board = BoardChoice.tealCoral
     @AppStorage(PreferenceKey.deck) private var deck = DeckStyle.quiet
     @AppStorage(PreferenceKey.back) private var back = CardBack.theme
-    @AppStorage(PreferenceKey.victory) private var victory = VictoryEffect.gentle
+    @AppStorage(PreferenceKey.victory) private var victory = VictoryEffect.fireworks
     @AppStorage(PreferenceKey.appIcon) private var appIcon = AppIconChoice.standard
 
     var body: some View {

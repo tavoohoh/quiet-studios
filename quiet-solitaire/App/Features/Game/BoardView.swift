@@ -19,6 +19,9 @@ struct BoardView: View {
     /// Kept while a won game celebrates.
     @State private var celebrating = false
 
+    /// Drags are measured on the table, not on the card (which moves with the finger).
+    private static let space = "board"
+
     var body: some View {
         let state = model.state
         let placements = placements(for: state)
@@ -31,6 +34,8 @@ struct BoardView: View {
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .coordinateSpace(.named(Self.space))
+        .overlay(alignment: .topLeading) { foundationBurst }
         .onChange(of: state.isWon) { _, won in
             guard won, appearance.victory == .cascade, !reduceMotion else { return }
             celebrating = true
@@ -159,7 +164,7 @@ struct BoardView: View {
     }
 
     private func dragGesture(for card: Card, placement: Placement) -> some Gesture {
-        DragGesture(minimumDistance: 6, coordinateSpace: .local)
+        DragGesture(minimumDistance: 4, coordinateSpace: .named(Self.space))
             .onChanged { value in
                 guard placement.isFaceUp, model.locate(card.id) != nil else { return }
                 if drag == nil {
@@ -167,25 +172,58 @@ struct BoardView: View {
                     drag = (model.carried(from: card.id), .zero)
                 }
                 drag?.offset = value.translation
-                let center = CGPoint(x: placement.point.x + layout.cardWidth / 2 + value.translation.width,
-                                     y: placement.point.y + layout.cardWidth * 0.3 + value.translation.height)
-                let target = layout.location(at: center, state: model.state, carrying: drag?.ids.count ?? 1)
-                dropTarget = target.flatMap { model.state.accepts(cards(drag?.ids ?? []), at: $0) ? $0 : nil }
+                dropTarget = target(for: drag?.ids ?? [], from: placement, translation: value.translation, finger: value.location)
             }
             .onEnded { value in
                 guard let current = drag else { return }
-                let center = CGPoint(x: placement.point.x + layout.cardWidth / 2 + value.translation.width,
-                                     y: placement.point.y + layout.cardWidth * 0.3 + value.translation.height)
-                let target = layout.location(at: center, state: model.state, carrying: current.ids.count)
+                let target = target(for: current.ids, from: placement, translation: value.translation, finger: value.location)
                 dropTarget = nil
-                var played = false
-                if let target { played = model.drop(card.id, on: target) }
-                if played {
+                // One transaction: the cards glide from where the finger left them, either to
+                // their new place or back home.
+                withAnimation(.spring(duration: 0.28, bounce: 0.12)) {
                     drag = nil
-                } else {
-                    withAnimation(.spring(duration: 0.3, bounce: 0.25)) { drag = nil }
+                    if let target { model.drop(card.id, on: target) }
                 }
+                let moved = hypot(value.translation.width, value.translation.height)
+                if target == nil, moved > layout.cardWidth { FeedbackService.shared.play(.invalid) }
             }
+    }
+
+    /// The legal place the dragged cards overlap most; failing that, a legal place under
+    /// the finger. Long runs and quick flicks land where the player meant.
+    private func target(for ids: [Int], from placement: Placement, translation: CGSize, finger: CGPoint) -> Location? {
+        guard !ids.isEmpty else { return nil }
+        let state = model.state
+        let moving = cards(ids)
+        let dragged = CGRect(x: placement.point.x + translation.width, y: placement.point.y + translation.height,
+                             width: layout.cardWidth, height: layout.cardHeight)
+        var candidates: [(Location, CGRect)] = []
+        if ids.count == 1 {
+            for suit in Suit.allCases { candidates.append((.foundation(suit), layout.frame(.foundation(suit)))) }
+        }
+        for column in 0..<7 {
+            let bottom = layout.positions(column: column, cards: state.tableau[column]).last?.y ?? layout.tableauTop
+            candidates.append((.tableau(column), CGRect(x: layout.x(column: column), y: layout.tableauTop,
+                                                         width: layout.cardWidth, height: bottom - layout.tableauTop + layout.cardHeight)))
+        }
+        let legal = candidates.filter { location, _ in
+            !isSource(location, of: ids) && state.accepts(moving, at: location)
+        }
+        var best: (location: Location, area: CGFloat)?
+        for (location, rect) in legal {
+            let overlap = rect.intersection(dragged)
+            guard !overlap.isNull else { continue }
+            let area = overlap.width * overlap.height
+            if area > 0, area > (best?.area ?? 0) { best = (location, area) }
+        }
+        if let best { return best.location }
+        let underFinger = layout.location(at: finger, state: state, carrying: ids.count)
+        return legal.first { $0.0 == underFinger }?.0
+    }
+
+    private func isSource(_ location: Location, of ids: [Int]) -> Bool {
+        guard let first = ids.first else { return false }
+        return model.locate(first)?.location == location
     }
 
     private func cards(_ ids: [Int]) -> [Card] { ids.map(Card.init(id:)) }
@@ -206,6 +244,18 @@ struct BoardView: View {
             if case .tableau(let column) = to, let last = model.state.tableau[column].last { ids.insert(last.card.id) }
             if case .foundation(let suit) = to, let last = model.state.foundation(suit).last { ids.insert(last.id) }
             return ids
+        }
+    }
+
+    // MARK: Milestones
+
+    /// A completed foundation glows and rings outward.
+    @ViewBuilder
+    private var foundationBurst: some View {
+        if case .foundationComplete(let suit) = model.milestone, !reduceMotion {
+            FoundationBurst(width: layout.cardWidth, height: layout.cardHeight, color: theme.primary)
+                .offset(x: layout.frame(.foundation(suit)).minX, y: layout.frame(.foundation(suit)).minY)
+                .id(suit)
         }
     }
 
@@ -315,5 +365,26 @@ private struct Shake: GeometryEffect {
 
     func effectValue(size: CGSize) -> ProjectionTransform {
         ProjectionTransform(CGAffineTransform(translationX: 4 * sin(amount * .pi * 6), y: 0))
+    }
+}
+
+/// Two rings expand from a card and fade, with a soft glow, in 0.9 s.
+private struct FoundationBurst: View {
+    let width: CGFloat
+    let height: CGFloat
+    let color: Color
+
+    @State private var expanded = false
+
+    var body: some View {
+        let shape = RoundedRectangle(cornerRadius: max(4, width * 0.1) + 4, style: .continuous)
+        ZStack {
+            shape.fill(color.opacity(expanded ? 0 : 0.28))
+            shape.strokeBorder(color, lineWidth: 2).scaleEffect(expanded ? 1.45 : 1).opacity(expanded ? 0 : 0.9)
+            shape.strokeBorder(color, lineWidth: 1.5).scaleEffect(expanded ? 1.8 : 1).opacity(expanded ? 0 : 0.6)
+        }
+        .frame(width: width, height: height)
+        .allowsHitTesting(false)
+        .onAppear { withAnimation(.easeOut(duration: 0.9)) { expanded = true } }
     }
 }

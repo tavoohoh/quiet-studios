@@ -18,5 +18,16 @@ enum DebugDeals {
         let foundations = suits.map { suit in (1...9).map { Card($0, suit) } }
         return GameState(stock: [], waste: [Card(10, .hearts)], foundations: foundations, tableau: tableau)
     }
+
+    /// Lost: the A♥ is buried under the 2♥ and 3♥ it has to come before.
+    static var lost: GameState {
+        let foundations = Suit.allCases.map { suit in suit == .hearts ? [] : (1...13).map { Card($0, suit) } }
+        var tableau: [[TableauCard]] = Array(repeating: [], count: 7)
+        tableau[0] = [TableauCard(Card(1, .hearts), faceUp: false), TableauCard(Card(2, .hearts), faceUp: true)]
+        tableau[1] = [TableauCard(Card(3, .hearts), faceUp: false), TableauCard(Card(4, .hearts), faceUp: true)]
+        tableau[2] = (5...13).reversed().map { TableauCard(Card($0, .hearts), faceUp: false) } + []
+        tableau[2][tableau[2].count - 1].isFaceUp = true
+        return GameState(stock: [], foundations: foundations, tableau: tableau)
+    }
 }
 #endif

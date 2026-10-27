@@ -145,7 +145,9 @@ func table(stock: [String] = [], waste: [String] = [], foundations: [Int] = [0, 
         let played = session.play(.move(from: .tableau(0), count: 1, to: .foundation(.clubs)))
         let events = try #require(played)
         #expect(session.isWon)
-        #expect(session.score == 10 + 500)
+        // Won at 0 seconds: ×2 on play points and the bonus.
+        #expect(session.timeMultiplierTenths == 20)
+        #expect(session.score == (10 + 500) * 2)
         #expect(events.contains { if case .won = $0 { true } else { false } })
     }
 
@@ -155,12 +157,49 @@ func table(stock: [String] = [], waste: [String] = [], foundations: [Int] = [0, 
         #expect(Scoring.standard.bonus(forMoves: 400) == 0)
     }
 
+    @Test func timeMultiplierGoesFromTwoToOne() {
+        let scoring = Scoring.standard
+        #expect(scoring.timeMultiplierTenths(forSeconds: 0) == 20)
+        #expect(scoring.timeMultiplierTenths(forSeconds: 180) == 20)
+        #expect(scoring.timeMultiplierTenths(forSeconds: 316) == 18)
+        #expect(scoring.timeMultiplierTenths(forSeconds: 540) == 15)
+        #expect(scoring.timeMultiplierTenths(forSeconds: 900) == 10)
+        #expect(scoring.timeMultiplierTenths(forSeconds: 5_000) == 10)
+    }
+
+    /// Hint costs stay outside the multiplier.
+    @Test func hintsArentMultiplied() throws {
+        var session = GameSession(state: table(foundations: [13, 13, 13, 12], column("K♣")))
+        _ = session.chargeHint()
+        session.play(.move(from: .tableau(0), count: 1, to: .foundation(.clubs)))
+        #expect(session.score == (10 + 500) * 2 - 10)
+    }
+
     @Test func ladderIsReported() throws {
         let run = ["Q♥", "J♠", "10♥", "9♠", "8♥", "7♠", "6♥", "5♠", "4♥", "3♠", "2♥"]
         var session = GameSession(state: table(waste: ["A♠"], [TableauCard(card("K♠"), faceUp: true)] + run.map { TableauCard(card($0), faceUp: true) }))
         let played = session.play(.move(from: .waste, count: 1, to: .tableau(0)))
         let events = try #require(played)
         #expect(events.contains(.ladder))
+    }
+
+    @Test func clockRunsOnlyWhilePlaying() {
+        var session = GameSession(state: table(stock: ["2♠"], column("K♠")))
+        session.tick()
+        #expect(session.elapsedSeconds == 0)
+        session.play(.draw)
+        session.tick()
+        session.tick()
+        #expect(session.elapsedSeconds == 2)
+    }
+
+    /// Games saved before the clock existed still load, at 0 seconds.
+    @Test func oldSavedGamesLoad() throws {
+        let session = GameSession(seed: 3)
+        var json = try JSONSerialization.jsonObject(with: JSONEncoder().encode(session)) as! [String: Any]
+        json.removeValue(forKey: "elapsed")
+        let old = try JSONDecoder().decode(GameSession.self, from: JSONSerialization.data(withJSONObject: json))
+        #expect(old.elapsedSeconds == 0)
     }
 
     @Test func savedGamesRoundTrip() throws {
@@ -203,7 +242,7 @@ func table(stock: [String] = [], waste: [String] = [], foundations: [Int] = [0, 
 
 @Suite struct ProgressTests {
     private func win(moves: Int = 120, undo: Bool = false, hints: Int = 0, recycles: Int = 1) -> ProgressEvent {
-        .won(WinSummary(score: 900, moves: moves, usedUndo: undo, hintsUsed: hints, recycles: recycles), isClassic: true)
+        .won(WinSummary(score: 900, moves: moves, usedUndo: undo, hintsUsed: hints, recycles: recycles, seconds: 300), isClassic: true)
     }
 
     @Test func firstCleanWinUnlocksSeveral() {
@@ -246,6 +285,27 @@ func table(stock: [String] = [], waste: [String] = [], foundations: [Int] = [0, 
         #expect(Solver.solve(lost) == .unsolvable)
         #expect(Solver.solve(lost, complete: true) == .unsolvable)
         let won = table(foundations: [13, 13, 13, 12], column("K♣"))
+        if case .solved = Solver.solve(won) {} else { Issue.record("should be solved") }
         if case .solved = Solver.solve(won, complete: true) {} else { Issue.record("should be solved") }
+    }
+}
+
+@Suite struct RegressionTests {
+    /// A game from the device (2026-10-27) that looked stuck but got no notice: the
+    /// depth-first search ran out of budget (3 million positions) without a verdict. The
+    /// best-first search runs out of moves and calls it lost.
+    @Test func stuckGameFromDeviceIsFlagged() {
+        let state = table(
+            waste: ["Q♣", "Q♦", "7♦", "3♦", "6♦", "K♠", "J♥", "K♦", "K♥"],
+            foundations: [2, 1, 0, 3],
+            column("K♣", "Q♥", "J♠", "10♥", "9♠", "8♥", "7♠", "6♥", "5♠", "4♦"),
+            column("J♦", "10♣", "9♦"),
+            column("?Q♠", "?A♦", "3♥"),
+            column("?5♣", "?10♠", "2♦"),
+            column("?J♣", "?8♠", "?2♥", "?4♠", "9♥", "8♣", "7♥", "6♠", "5♥"),
+            column("?3♠", "?9♣", "?4♣", "8♦"),
+            column("?4♥", "?10♦", "?5♦", "?7♣", "6♣")
+        )
+        #expect(Solver.solve(state, budget: 40_000) == .unsolvable)
     }
 }

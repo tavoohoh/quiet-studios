@@ -14,7 +14,7 @@ Los mismos de Quiet Numbers:
 - Recompensas solo cosméticas, ganadas con logros. Única excepción, igual que en Quiet Numbers: el easter egg de "Números rojos" (pistas más baratas fuera del reto diario puntuable).
 - Sin identificadores propios, fingerprinting ni App Tracking Transparency.
 - Frameworks permitidos: SwiftUI, SwiftData, GameKit y StoreKit **solo** para `requestReview()`.
-- Sin presión de tiempo: no hay reloj en pantalla ni puntaje por velocidad.
+- El tiempo se muestra y, al ganar, multiplica el puntaje (decisión 2026-10-27, tomando como referencia otra app del género).
 
 ## Stack
 
@@ -94,12 +94,15 @@ Klondike estándar, **robar 1**, reciclar el mazo **sin límite**.
 
 **Decisiones de implementación (2026-10-27):**
 - Las fundaciones tienen palo fijo (♠ ♥ ♦ ♣, como el canvas), no "cualquier as en cualquier hueco".
-- Solver (`Solver.swift`): DFS con presupuesto de posiciones. Con robar 1 y vueltas ilimitadas, todo el mazo y el descarte es alcanzable, así que se buscan como un solo conjunto ("talón"). Cartas seguras a la fundación de forma automática y posiciones vistas descartadas con un hash FNV-1a, sin `Hasher`, para que el resultado sea igual en todos los dispositivos. Presupuesto de 20.000 posiciones para elegir repartos; 30.000 para "sin salida", que solo aparece con prueba de que no hay forma de ganar.
-- Dificultad = posiciones que visita el solver hasta la primera victoria: Fácil < 46, Media < 91, Difícil < 1.500, Experta desde ahí (percentiles 25/50/75/90 de 100 repartos: 42, 48, 76, 1.731). El reto del día prueba las semillas `"<día>#0"`, `"<día>#1"`… y toma la primera ganable con la dificultad del día (o la primera ganable tras 40 intentos). Cambiar el solver o estos umbrales cambia el reparto de cada fecha.
+- Solver (`Solver.swift` + `BestFirst.swift`): búsqueda best-first (expande siempre la posición más prometedora: más cartas en fundaciones, menos boca abajo, menos talón; empates por orden de llegada) con presupuesto de posiciones. Reemplazó a la DFS el 2026-10-27: en una partida real del dispositivo la DFS gastó 3 millones de posiciones en una rama mala sin veredicto y no avisó. Con robar 1 y vueltas ilimitadas, todo el mazo y el descarte es alcanzable, así que se buscan como un solo conjunto ("talón"). Cartas seguras a la fundación de forma automática y posiciones vistas descartadas con un hash FNV-1a, sin `Hasher`, para que el resultado sea igual en todos los dispositivos. Presupuesto de 20.000 posiciones para elegir repartos y pistas, 40.000 para "sin salida".
+- Dificultad = posiciones que expande el solver hasta la primera victoria: Fácil < 46, Media < 131, Difícil < 1.940, Experta desde ahí (percentiles 25/50/75/90 de 200 repartos con best-first: 41, 49, 130, 1.939). El reto del día prueba las semillas `"<día>#0"`, `"<día>#1"`… y toma la primera ganable con la dificultad del día (o la primera ganable tras 40 intentos). Cambiar el solver o estos umbrales cambia el reparto de cada fecha.
 - Pista = la primera jugada de la solución del solver (si la carta está en el mazo, "toca el mazo"); si el solver no encuentra victoria, una jugada razonable. Se calcula fuera del hilo principal y solo se cobra si encontró algo.
 - Deshacer guarda hasta 200 pasos (`GameSession.historyLimit`).
+- **Hitos (2026-10-27):** al completar un palo, la fundación destella (anillos que se expanden) y sale "¡Picas completas!"; al quedar todas las cartas boca arriba, "¡Todas las cartas a la vista!" (no durante el autocompletar). **Victoria:** fuegos artificiales clásicos para todos (`Fireworks` en QuietUI, dibujados con `Canvas` según el tiempo y deterministas por semilla; nada con Reduce Motion), por encima de la hoja de victoria sin tomar toques; "Cascada" (logro Cincuenta) suma la caída de las cartas antes. Los logros de la partida van juntos en una tarjeta.
+- **Arrastre (revisado 2026-10-27):** el gesto se mide en el espacio del tablero (no en la carta, que se mueve con el dedo); el destino es el lugar válido que más se superpone con la carta arrastrada, o el que está bajo el dedo; al soltar, la carta sigue desde donde quedó hasta su sitio (una sola animación); y el gesto de volver atrás se desactiva en la partida (`SwipeBack.isEnabled` en QuietUI), porque se robaba los arrastres de la primera columna. Tests: `testDragFromLeftEdge`, `testDropOffCenterLands`.
 - **Tutorial** (`Features/Tutorial`, mesa en `Tutorial.swift` del Core, verificada por `TutorialTests`): 6 pasos (robar, rojo sobre negro, as a la fundación, mover una escalera, seguir la fundación, rey en columna vacía). Solo vale la jugada señalada, tocando o arrastrando. Sale con la primera "Nueva partida" (sin partidas jugadas ni en curso y sin `tutorialSeen`) y desde Ajustes › Cómo jugar; las reglas quedan en Ajustes › Reglas. Los UI tests lo omiten salvo con `-tutorial`.
-- **"Sin salida"** usa la búsqueda completa del solver (`complete: true`: también parte escaleras en cualquier punto), así que solo aparece con prueba. Verificado el 2026-10-27: en 60 partidas jugadas al azar, las 25 posiciones que la búsqueda rápida dio por perdidas también lo eran para la completa con 2 millones de posiciones. El aviso se puede cerrar ("Seguir jugando") y no vuelve en esa partida.
+- **"Sin salida"** aparece cuando la búsqueda rápida recorre todas sus jugadas sin ganar (no es una prueba estricta: omite partir escaleras salvo para liberar una carta a la fundación). Medido el 2026-10-27 en 1.346 posiciones de partidas jugadas: de las 112 que llamó perdidas, la búsqueda completa ganó 0 (108 demostradas perdidas, 4 sin veredicto). Si se le acaba el presupuesto, no avisa. El aviso **bloquea la mesa** (fondo oscuro, sin jugadas) hasta elegir Deshacer, Nueva partida o "Seguir jugando"; con esta última no vuelve en esa partida (decisión 2026-10-27, para que no se siga jugando sin darse cuenta). Debug: `-lostDeal`.
+- **Tiempo:** se cuenta por segundo mientras la partida está en pantalla y la app activa, desde la primera jugada hasta ganar (`GameSession.tick`, guardado con la partida). Encabezado como la referencia: puntaje y debajo Tiempo · Movimientos · Mejor (Reto + dificultad en el diario). También en la hoja de victoria.
 
 **Interacción:** tocar una carta la manda a su mejor destino (fundación primero, luego tableau); arrastrar mueve la carta o la secuencia. Opción "Zurdo" en Ajustes: mazo y descarte a la izquierda.
 
@@ -110,7 +113,8 @@ Klondike estándar, **robar 1**, reciclar el mazo **sin límite**.
 - Fundación → tableau: −15
 - Reciclar el mazo: 0 (decidido 2026-10-27). No lleva castigo directo: como cada toque al mazo es un movimiento, dar vueltas ya reduce el bono de victoria. Se descartó el −100 por vuelta de Windows, muy duro en robar 1.
 - Pista: −10 (−3 con "Números rojos", salvo en el reto diario). Decidido 2026-10-27: las apps móviles suelen dar pistas gratis; aquí cobran para que el leaderboard del reto sea parejo.
-- Victoria: bono de 500 menos 2 por movimiento sobre 100 (mínimo 0). Así el mismo reparto premia jugar con menos movimientos sin introducir reloj.
+- Victoria: bono de 500 menos 2 por movimiento sobre 100 (mínimo 0).
+- Multiplicador por tiempo al ganar (2026-10-27): ×2,0 hasta 3 min, baja lineal hasta ×1,0 a los 15 min, en pasos de 0,1 (`Scoring.timeMultiplierTenths`). Se aplica a los puntos de juego más el bono de movimientos; el costo de las pistas queda fuera. La hoja de victoria muestra "Tiempo ×1,8 +N".
 
 ## Reto diario
 
@@ -159,7 +163,7 @@ Mazos (2026-10-27, tras la primera revisión: Contorno y New York se parecían d
 | `qs_ladder` | Escalera / Ladder | Tener una columna del Rey al As en el tableau | Reverso Lino |
 | `qs_centennial` | Centenario / Centennial | Ganar 100 partidas | Reverso Dorado + ícono dorado |
 | `qs_night_owl` | Noctámbulo / Night Owl | Ganar un reto entre 00:00 y 04:00 (oculto) | Reverso Noche |
-| `qs_fifty_wins` | Cincuenta / Fifty | Ganar 50 partidas | Efecto de victoria: cascada |
+| `qs_fifty_wins` | Cincuenta / Fifty | Ganar 50 partidas | Efecto de victoria: cascada (las cartas caen y luego los fuegos) |
 | `qs_economy` | Economía / Economy | Ganar en menos de 100 movimientos (oculto) | Mazo Pixel |
 | `qs_in_the_red` | Números rojos / In the Red | Llevar el puntaje por debajo de cero (oculto) | Easter egg: pistas a 3 en clásico y práctica (el reto diario sigue a 10 para que su leaderboard sea parejo; `qs_best_score` sí se beneficia, aceptado como en Quiet Numbers). No aparece en Colección. Mismo premio que en Quiet Numbers (decidido 2026-10-27). |
 

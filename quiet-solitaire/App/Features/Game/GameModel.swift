@@ -23,6 +23,15 @@ final class GameModel {
     private var keepsPlayingLostGame = false
     /// Hint found nothing to do (shown as a short note).
     private(set) var hintNote: LocalizedStringResource?
+    /// The last milestone, shown for a moment (a burst on the foundation, a toast).
+    private(set) var milestone: Milestone?
+
+    enum Milestone: Equatable {
+        /// A suit reached its king.
+        case foundationComplete(Suit)
+        /// No face-down card left in the tableau.
+        case allRevealed
+    }
 
     /// Achievements and progress (`AppModel.record`).
     var onProgress: ((ProgressEvent) -> Void)?
@@ -124,6 +133,7 @@ final class GameModel {
 
     private func play(_ move: Move) {
         let foundationsBefore = session.state.foundations.map(\.count)
+        let faceDownBefore = faceDownCount
         var events: [GameSession.Event]?
         withAnimation(.spring(duration: 0.28, bounce: 0.12)) {
             inFlight = movedIDs(for: move)
@@ -131,7 +141,12 @@ final class GameModel {
             hint = nil
         }
         guard let events else { return FeedbackService.shared.play(.invalid) }
-        let completed = zip(foundationsBefore, session.state.foundations.map(\.count)).contains { $0 != 13 && $1 == 13 }
+        let completedSuit = Suit.allCases.first { foundationsBefore[$0.rawValue] != 13 && session.state.foundation($0).count == 13 }
+        let completed = completedSuit != nil
+        if !session.isWon, !isAutoCompleting {
+            if let completedSuit { show(.foundationComplete(completedSuit)) }
+            if faceDownBefore > 0, faceDownCount == 0 { show(.allRevealed) }
+        }
         switch move {
         case .move(_, _, .foundation): FeedbackService.shared.play(completed ? .foundationComplete : .toFoundation)
         default: FeedbackService.shared.play(.place)
@@ -161,6 +176,18 @@ final class GameModel {
         }
     }
 
+    private var faceDownCount: Int {
+        session.state.tableau.reduce(0) { $0 + $1.filter { !$0.isFaceUp }.count }
+    }
+
+    private func show(_ milestone: Milestone) {
+        withAnimation(.quiet) { self.milestone = milestone }
+        Task {
+            try? await Task.sleep(for: .seconds(1.8))
+            if self.milestone == milestone { withAnimation(.quiet) { self.milestone = nil } }
+        }
+    }
+
     private func reject(_ ids: [Int]) {
         FeedbackService.shared.play(.invalid)
         rejected = Set(ids)
@@ -173,6 +200,12 @@ final class GameModel {
     private func changed() {
         onChange?()
         checkStuck()
+    }
+
+    /// One second of play (the game screen ticks it while the app is active). Not saved
+    /// on every tick: the next move, leaving the game or the app going to background saves it.
+    func tick() {
+        session.tick()
     }
 
     func keepPlaying() {
@@ -232,7 +265,7 @@ final class GameModel {
         stuckCheck = Task {
             try? await Task.sleep(for: .milliseconds(600))
             guard !Task.isCancelled else { return }
-            let result = await Task.detached(priority: .utility) { Solver.solve(state, budget: 30_000, complete: true) }.value
+            let result = await Task.detached(priority: .utility) { Solver.solve(state, budget: 40_000) }.value
             guard !Task.isCancelled, state == session.state else { return }
             withAnimation(.quiet) { isStuck = result == .unsolvable }
         }

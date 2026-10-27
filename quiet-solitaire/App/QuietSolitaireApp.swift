@@ -5,6 +5,7 @@ import SwiftUI
 struct QuietSolitaireApp: App {
     @State private var app = AppModel(persistence: PersistenceService(store: Self.store))
     @State private var showsSplash = Self.wantsSplash
+    @Environment(\.scenePhase) private var scenePhase
 
     var body: some Scene {
         WindowGroup {
@@ -15,6 +16,9 @@ struct QuietSolitaireApp: App {
                     .task {
                         app.gameCenter.authenticate()
                         app.warmUpDaily()
+                    }
+                    .onChange(of: scenePhase) { _, phase in
+                        if phase != .active { app.saveActiveGame() }
                     }
                 if showsSplash {
                     SplashView {
