@@ -51,8 +51,8 @@ public enum DailyChallenge {
         FNV1a.hash(key)
     }
 
-    public static func session(forDayKey key: String) -> GameSession {
-        GameSession(mode: .daily(dayKey: key), seed: seed(forDayKey: key))
+    public static func session(forDayKey key: String, scoring: Scoring = .standard) -> GameSession {
+        GameSession(mode: .daily(dayKey: key), seed: seed(forDayKey: key), scoring: scoring)
     }
 
     private static func localCalendar(_ timeZone: TimeZone) -> Calendar {

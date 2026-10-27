@@ -123,13 +123,19 @@ final class AppModel {
         if let abandoned = persistence.loadGame(.classic), !abandoned.isOver {
             record(.classicAbandoned(score: abandoned.score, played: abandoned.hasMoves))
         }
-        let model = GameModel()
+        let model = GameModel(session: GameSession(seed: .random(in: .min ... .max), scoring: unscoredScoring))
         persistence.saveGame(model.session, in: .classic)
         classicStage = model.session.stage
         start(model, as: .classic)
     }
 
     var hasClassicInProgress: Bool { classicStage != nil }
+
+    /// Classic and practice: "In the Red" makes hints cheaper (a hidden reward). The scored
+    /// daily challenge always uses `.standard`, so its leaderboard stays even.
+    var unscoredScoring: Scoring {
+        progress.unlocked.contains(.inTheRed) ? .cheapHints : .standard
+    }
 
     /// First "New Game" of someone who never played: the tutorial comes first.
     /// UI tests skip it unless launched with `-tutorial`.
@@ -172,7 +178,8 @@ final class AppModel {
             openDailyKey = dayKey
             start(model, as: .daily(dayKey: dayKey))
         } else {
-            start(GameModel(session: DailyChallenge.session(forDayKey: dayKey)), as: .practice(dayKey: dayKey))
+            let session = DailyChallenge.session(forDayKey: dayKey, scoring: unscoredScoring)
+            start(GameModel(session: session), as: .practice(dayKey: dayKey))
         }
     }
 

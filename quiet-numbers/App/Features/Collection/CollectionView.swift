@@ -167,10 +167,13 @@ private struct AchievementRow: View {
 
     var body: some View {
         HStack(spacing: 14) {
-            Image(systemName: achievement.systemImage)
-                .font(.title3)
-                .frame(width: 36)
-                .foregroundStyle(progress >= 1 ? appearance.theme.primary : appearance.theme.muted)
+            // Locked badges are shown faded and without color.
+            achievement.badge
+                .resizable()
+                .frame(width: 44, height: 44)
+                .saturation(progress >= 1 ? 1 : 0)
+                .opacity(progress >= 1 ? 1 : 0.4)
+                .accessibilityHidden(true)
             VStack(alignment: .leading, spacing: 4) {
                 Text(achievement.title)
                     .font(.headline)

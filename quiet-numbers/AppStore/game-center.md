@@ -18,7 +18,7 @@ Ninguno se puede ganar más de una vez. Cada uno lleva una imagen de 1024×1024 
 | `centennial` | `centennial` | 100 | No | Centennial / Centenario | Complete 100 daily challenges. / Completa 100 retos diarios. | You completed 100 daily challenges. / Completaste 100 retos diarios. | Ícono dorado (iPhone y iPad) |
 | `night_owl` | `nightOwl` | 40 | Sí | Night Owl / Noctámbulo | Complete a daily challenge between midnight and 4 a.m. / Completa un reto diario entre la medianoche y las 4 a. m. | You completed a daily challenge in the small hours. / Completaste un reto diario de madrugada. | Tema Salvia y coral |
 | `monotone` | `monotone` | 60 | Sí | Monotone / Monótono | Make 10 pairs of equal numbers in a row. / Haz 10 parejas de números iguales seguidas. | You made 10 pairs of equal numbers in a row. / Hiciste 10 parejas de números iguales seguidas. | Pack de sonido: marimba |
-| `in_the_red` | `inTheRed` | 20 | Sí | In the Red / Números rojos | Take your score below zero. / Lleva tu puntaje por debajo de cero. | Your score went below zero. It happens. / Tu puntaje bajó de cero. Pasa. | Ninguna por ahora |
+| `in_the_red` | `inTheRed` | 20 | Sí | In the Red / Números rojos | Take your score below zero. / Lleva tu puntaje por debajo de cero. | Your score went below zero. It happens. / Tu puntaje bajó de cero. Pasa. | Oculta: pistas a 3 fuera del reto diario |
 
 Ocultos: Noctámbulo, Monótono y Números rojos son sorpresas; el resto son metas visibles.
 

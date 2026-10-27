@@ -9,7 +9,7 @@ Nombre: **Quiet Numbers** (alternativa evaluada: "Diez"). Nunca usar "Number Mat
 - Sin anuncios, compras in-app, suscripciones ni tip jar.
 - Sin backend, analytics, crash reporters ni SDKs de terceros. Ninguna llamada de red propia.
 - 100% offline. Game Center es un extra que sincroniza al reconectar.
-- Recompensas solo cosméticas, ganadas con logros.
+- Recompensas solo cosméticas, ganadas con logros. Única excepción: el easter egg de "Números rojos" (pistas más baratas fuera del reto diario puntuable).
 - Sin identificadores propios, fingerprinting ni App Tracking Transparency.
 - Frameworks permitidos: SwiftUI, SwiftData, GameKit y StoreKit **solo** para `requestReview()`.
 
@@ -36,7 +36,8 @@ Un solo target iOS (iPhone y iPad); en Mac con Apple silicon se ofrece la app de
 - Tests del Core: `cd Packages/QuietNumbersCore && swift test`.
 - Todos los tests (Core en iOS, app y UI): `xcodebuild test -project QuietNumbers.xcodeproj -scheme QuietNumbers -destination 'platform=iOS Simulator,name=iPhone 17'`.
 - Capturas de la App Store: `scripts/screenshots.sh [iphone] [ipad]` (esquema `Screenshots`, target `QuietNumbersScreenshots`) → `AppStore/screenshots/<iphone-6.9|ipad-13>/<en|es>/<light|dark>/`. Solo iPhone y iPad (decisión: sin capturas de Mac); el español sirve para es-MX y es-ES.
-- Arte: `scripts/render-artwork.py` genera desde SVG el ícono (claro, oscuro, tinted y Gold), el lockup del splash (`SplashLockup`, también en la launch screen) y las insignias de Game Center (`AppStore/achievements/<id>.png`, 1024 sin alfa). `scripts/theme-colors.py` escribe los colorsets de los temas (`Assets.xcassets/Themes`, `AccentColor`, `LaunchBackground`) y falla si un texto queda bajo 4,5:1. Los valores vienen del canvas "Quiet Numbers · Diseño" (página 6, brief para Claude Code).
+- Imágenes de la App Store: `scripts/store-images.py` (después de `screenshots.sh`) compone los marcos del canvas (páginas "App Store 01–05": fondo, titular, callouts) alrededor de capturas reales → `AppStore/store-images/<iphone-6.9|ipad-13>/<en|es>/`. Las imágenes 1, 2 y 4 usan el tablero armado del canvas (`-storeScene 1|2|4`, `DemoData.StoreScene`) y sus callouts se anclan a las celdas reales. Sin combos ni textos que la app no tenga (en la 4, "Combo ×4 +120" pasó a "¡10 seguidas!").
+- Arte: `scripts/render-artwork.py` genera desde SVG el ícono (claro, oscuro, tinted y Gold), el lockup del splash (`SplashLockup`, también en la launch screen) y las insignias de Game Center (`AppStore/achievements/<id>.png`, 1024 sin alfa; en la app, redondas en `Assets.xcassets/Badges`, para Colección y el aviso de logro). `scripts/theme-colors.py` escribe los colorsets de los temas (`Assets.xcassets/Themes`, `AccentColor`, `LaunchBackground`) y falla si un texto queda bajo 4,5:1. Los valores vienen del canvas "Quiet Numbers · Diseño" (página 6, brief para Claude Code).
 - Metadatos: `fastlane/metadata/{en-US,es-MX,es-ES}`; validar con `scripts/validate-metadata.py`. Game Center: `AppStore/game-center.{md,json}`; verificar IDs con `scripts/check-game-center.py`.
 - UI test en simulador: `xcodebuild test -project QuietNumbers.xcodeproj -scheme QuietNumbers -destination 'platform=iOS Simulator,name=iPhone 17' -only-testing:QuietNumbersUITests`.
 - Argumentos DEBUG: `-demo` carga el estado fijo de las capturas (`App/Debug/DemoData.swift`: 14-nov-2026 10:00, partida a medias, racha de 8, leaderboards de ejemplo; en memoria); `-startGame` abre una partida directo; `-seedKey <texto>` hace el tablero determinista (`2026-10-25` da el tablero golden de los tests); `-boardValues 5,3,7,…` arranca con números exactos; `-slowEffects` pone los efectos en cámara lenta (×6) para inspeccionarlos. `-startGame` usa almacenamiento en memoria; `-uiTesting` usa un archivo propio (`UITests.store`) que `-resetStore` borra, para no tocar los datos reales. `-unlockAll` desbloquea todos los logros (QA y capturas).
@@ -99,7 +100,7 @@ Tablero de **9 columnas**; arranca con **42 números** del 1 al 9 (4 filas y med
 - Celdas eliminadas quedan como "fantasma" (número tenue) hasta que su fila se vacía.
 - Fila vacía: desaparece, el tablero sube y da puntos extra.
 - Botón **+**: copia todos los números restantes, en orden, al final del tablero (regla estándar del género; se evaluó triplicar y se descartó). **Máximo 5 usos por tablero**; limpiar filas no devuelve usos (cambio del 2026-10-26). Sin parejas ni usos, la partida termina. Los números agregados se muestran en el acento coral del tema para distinguirlos de los originales.
-- **Pistas:** ilimitadas; resaltan una pareja válida y cuestan 3 puntos, **aunque el puntaje quede negativo** (cambio del 2026-10-26; da el logro "Números rojos"). Si no hay parejas, no cobran.
+- **Pistas:** ilimitadas; resaltan una pareja válida y cuestan 10 puntos, **aunque el puntaje quede negativo** (cambio del 2026-10-26; da el logro "Números rojos"). Con "Números rojos" cuestan 3 en clásico y práctica (`Scoring.cheapHints`, `AppModel.unscoredScoring`); el reto diario puntuable siempre cobra 10. Cada partida guarda su `Scoring`, así que el cambio aplica desde la siguiente. Si no hay parejas, no cobran.
 - **Etapas:** vaciar el tablero pasa a la siguiente etapa con tablero nuevo; los usos de + se reinician. Cada etapa es más difícil (decisión 2026-10-26): números al inicio 42, 44, 48, 50 y 54 desde la etapa 5 (siempre pares, por `isPairable`); usos de + 5, 5, 4, 4 y 3; parejas mínimas al inicio 3, 3, 2, 2 y 1; desde la etapa 3 cada pareja vale 1 punto más. El reto diario es una sola etapa con las reglas de la 1.
 - **Partida terminada:** solo cuando ya no quedan parejas ni usos de + (vaciar el tablero no la termina en clásico). Para el Inicio, "Partidas" cuenta las terminadas más las clásicas abandonadas con al menos una jugada (`gamesPlayed`); el mejor puntaje se actualiza en vivo durante la partida y se envía a Game Center al salir. "Racha récord" (Top streak) es la racha más larga de retos completados en días seguidos.
 - **Fin de partida:** no quedan parejas válidas ni usos de +.
@@ -111,7 +112,7 @@ Tablero de **9 columnas**; arranca con **42 números** del 1 al 9 (4 filas y med
 - Pareja con eliminadas entre medio: 4 (+1 desde la etapa 3)
 - Fila limpiada: 10
 - Tablero limpiado: 150 × número de etapa
-- Pista: −3
+- Pista: −10 (−3 con "Números rojos", salvo en el reto diario)
 
 ## Reto diario
 
@@ -154,7 +155,7 @@ El código está completo (`GameCenterService`, `LeaderboardsView`, sincronizaci
 3. Probar con una cuenta sandbox: modo avión → jugar → reconectar → verificar envío.
 
 Decisiones:
-- No se fuerza el inicio de sesión (no se presenta la pantalla de login de Game Center); el jugador inicia sesión desde Ajustes del sistema. `GKAccessPoint` solo en Inicio y con sesión.
+- No se fuerza el inicio de sesión: la pantalla de login de Game Center solo aparece si el jugador la pide ("Abrir Ajustes" en Clasificaciones o la fila de Game Center en Ajustes); si GameKit no la ofrece, se abren los Ajustes de la app. `GKAccessPoint` solo en Inicio y con sesión.
 - **Progreso en iCloud: requerido.** Vía partidas guardadas de Game Center (necesita sesión). Entitlements de iCloud Documents con contenedor `iCloud.$(CFBundleIdentifier)` en `App/QuietNumbers.entitlements` (el de Personal Team no los tiene).
 - **Restablecer progreso** (Ajustes): borra partidas, retos, rachas, logros y recompensas en local, el guardado de iCloud y los logros de Game Center (`resetAchievements`). Sin sesión, queda pendiente (`pendingCloudReset`) y se hace al iniciar sesión, antes de sincronizar. Los puntajes de leaderboards no se pueden retirar; otros dispositivos conservan su copia local.
 - `daily_challenge` guarda el puntaje **más reciente** (también 0 o negativo); `best_score` y `longest_streak` solo valores > 0.
@@ -162,7 +163,7 @@ Decisiones:
 
 ## Logros y recompensas
 
-Toda recompensa es cosmética y nunca altera la jugabilidad ni el layout del tablero. Los desbloqueos se calculan y guardan localmente.
+Toda recompensa es cosmética y nunca altera la jugabilidad ni el layout del tablero, salvo el easter egg de "Números rojos". Los desbloqueos se calculan y guardan localmente.
 
 | Logro | Condición | Recompensa |
 |---|---|---|
@@ -176,7 +177,7 @@ Toda recompensa es cosmética y nunca altera la jugabilidad ni el layout del tab
 | Centenario | Completar 100 retos diarios | Ícono alternativo dorado |
 | Noctámbulo | Completar un reto entre 00:00 y 04:00 | Tema Salvia y coral |
 | Monótono | 10 parejas seguidas del mismo número | Pack de sonido: marimba |
-| Números rojos | Llevar el puntaje por debajo de cero | Ninguna por ahora (decisión 2026-10-26) |
+| Números rojos | Llevar el puntaje por debajo de cero | Easter egg oculto: pistas a 3 en clásico y práctica (decisión 2026-10-26, opción B: el reto diario sigue a 10 para que su leaderboard sea parejo; `best_score` sí se beneficia, aceptado). No aparece en Colección. |
 
 El tema **Alto contraste** (accesibilidad) está siempre disponible, sin logro.
 

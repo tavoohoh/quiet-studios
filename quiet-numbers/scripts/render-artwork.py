@@ -118,10 +118,13 @@ BADGES = {
 }
 
 
-def badge(background, ink, paths):
+def badge(background, ink, paths, round=False):
+    """Square for Game Center (it crops it round); `round` for the app's Collection."""
+    shape = (f'<circle cx="50" cy="50" r="50" fill="{background}"/>' if round
+             else f'<rect width="100" height="100" fill="{background}"/>')
     return (
         '<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100">'
-        f'<rect width="100" height="100" fill="{background}"/>'
+        + shape +
         f'<circle cx="50" cy="50" r="41" fill="none" stroke="{ink}" stroke-opacity="0.3" stroke-width="1.5"/>'
         + "".join(paths) + "</svg>"
     )
@@ -184,6 +187,15 @@ def main():
 
         for identifier, (background, ink, paths) in BADGES.items():
             render(badge(background, ink, paths), ROOT / f"AppStore/achievements/{identifier}.png", 1024, 1024, True, tmp)
+            # The same badge in the app (Collection), round, at 44 pt.
+            folder = ASSETS / "Badges" / f"badge-{identifier}.imageset"
+            images = []
+            for scale in (2, 3):
+                filename = f"badge-{identifier}@{scale}x.png"
+                render(badge(background, ink, paths, round=True), folder / filename, 44 * scale, 44 * scale, False, tmp)
+                images.append({"filename": filename, "idiom": "universal", "scale": f"{scale}x"})
+            write_json(folder / "Contents.json", {"images": images, "info": info})
+        write_json(ASSETS / "Badges" / "Contents.json", {"info": info})
 
 
 if __name__ == "__main__":

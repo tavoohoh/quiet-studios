@@ -110,6 +110,17 @@ import Testing
         #expect(app.progress.gamesPlayed == 1)
     }
 
+    @Test func inTheRedMakesHintsCheaperExceptInTheDaily() throws {
+        let app = AppModel(persistence: PersistenceService(store: .inMemory))
+        app.newClassic()
+        #expect(try #require(app.activeGame).session.scoring.hintCost == 10)
+        app.record(.hintUsed(scoreAfter: -10))
+        app.newClassic()
+        #expect(try #require(app.activeGame).session.scoring.hintCost == 3)
+        app.playDaily(app.todayKey)
+        #expect(try #require(app.activeGame).session.scoring.hintCost == 10)
+    }
+
     @Test func newBestShowsDuringTheGame() throws {
         let app = AppModel(persistence: PersistenceService(store: .inMemory))
         app.newClassic()

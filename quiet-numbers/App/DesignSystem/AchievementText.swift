@@ -35,19 +35,6 @@ extension Achievement {
         }
     }
 
-    var systemImage: String {
-        switch self {
-        case .firstStep: "figure.walk"
-        case .cleanSlate: "square.dashed"
-        case .noHelp: "hand.raised.slash"
-        case .consistency: "calendar"
-        case .habit: "calendar.badge.checkmark"
-        case .sweeper: "wind"
-        case .stageFive: "5.circle"
-        case .centennial: "rosette"
-        case .nightOwl: "moon.stars"
-        case .monotone: "equal.circle"
-        case .inTheRed: "minus.circle"
-        }
-    }
+    /// The badge from the design system (same art as Game Center's), from render-artwork.py.
+    var badge: Image { Image("badge-\(gameCenterID)") }
 }

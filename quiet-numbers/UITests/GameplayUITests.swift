@@ -39,9 +39,9 @@ final class GameplayUITests: XCTestCase {
         app.buttons["cell-12"].tap()
         XCTAssertEqual(score.value as? String, "2")
 
-        // Hint costs 3, even below zero.
+        // Hint costs 10, even below zero.
         app.buttons["Hint"].tap()
-        XCTAssertEqual(score.value as? String, "-1")
+        XCTAssertEqual(score.value as? String, "-8")
         snapshot(app, "hint")
 
         app.buttons["Add numbers"].tap()

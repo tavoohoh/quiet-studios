@@ -1332,12 +1332,12 @@
         }
       }
     },
-    "Tap to match, or drag from one number to the other. Hints show a pair for 3 points.": {
+    "Tap to match, or drag from one number to the other. Hints show a pair, for a few points.": {
       "localizations": {
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Toca para juntar, o arrastra de un número al otro. Las pistas te muestran una pareja por 3 puntos."
+            "value": "Toca para juntar, o arrastra de un número al otro. Las pistas te muestran una pareja, a cambio de unos puntos."
           }
         }
       }

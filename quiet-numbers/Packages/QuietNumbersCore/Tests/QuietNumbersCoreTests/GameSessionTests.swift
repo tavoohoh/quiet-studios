@@ -171,8 +171,8 @@ import Testing
         let result = session.useHint()
         let hint = try #require(result)
         #expect(MatchRules.pair(on: session.board, hint.pair.first, hint.pair.second) != nil)
-        #expect(hint.cost == 3)
-        #expect(session.score == 22)
+        #expect(hint.cost == 10)
+        #expect(session.score == 15)
         #expect(session.hintsUsed == 1)
     }
 
@@ -180,8 +180,16 @@ import Testing
         var session = GameSession(board: makeBoard([[1, 2, 3, 3, 1, 2, 1, 2, 1]]), score: 2)
         let result = session.useHint()
         let hint = try #require(result)
+        #expect(hint.cost == 10)
+        #expect(session.score == -8)
+    }
+
+    @Test func cheapHintsCostThree() throws {
+        var session = GameSession(values: [1, 2, 3, 3, 1, 2, 1, 2, 1], seed: 0, scoring: .cheapHints)
+        let result = session.useHint()
+        let hint = try #require(result)
         #expect(hint.cost == 3)
-        #expect(session.score == -1)
+        #expect(session.score == -3)
     }
 
     @Test func hintIsFreeWithoutPairs() {
@@ -260,9 +268,9 @@ import Testing
         _ = session.match(at: 0, 1)
         #expect(session.score == 11 && session.streak == 1)
         _ = session.useHint()
-        #expect(session.score == 8)
+        #expect(session.score == 1)
         session.undo()
-        #expect(session.score == 7)
+        #expect(session.score == 0)
         #expect(session.streak == 0)
     }
 

@@ -42,12 +42,43 @@ final class ScreenshotTests: XCTestCase {
         tap(themed.buttons["continue"])
         XCTAssertTrue(themed.staticTexts["score"].waitForExistence(timeout: 5))
         capture(themed, "05-theme")
+        themed.terminate()
+
+        // 6. Leaderboards with Friends selected (App Store image 5).
+        let friends = launch()
+        tap(friends.buttons["leaderboards"])
+        tap(friends.buttons[language == "es" ? "Amigos" : "Friends"])
+        sleep(1)
+        capture(friends, "06-leaderboards-friends")
     }
+
+    /// The canvas's hand-made board (`DemoData.StoreScene`) for App Store images 1, 2 and 4,
+    /// plus where its first and last cells and the score are (points), so the frames can place their callouts.
+    @MainActor
+    func testStoreScenes() throws {
+        for scene in ["1", "2", "4"] {
+            let app = launch(extra: ["-storeScene", scene])
+            tap(app.buttons["continue"])
+            XCTAssertTrue(app.staticTexts["score"].waitForExistence(timeout: 5))
+            sleep(1)
+            capture(app, "store\(scene)")
+            let first = app.descendants(matching: .any)["cell-0"].frame
+            let last = app.descendants(matching: .any)["cell-89"].frame
+            let score = app.staticTexts["score"].frame
+            let geometry = [first.midX, first.midY, last.midX, last.midY, score.minX, score.minY]
+            let attachment = XCTAttachment(string: geometry.map { "\($0)" }.joined(separator: ","))
+            attachment.name = "store\(scene)-cells"
+            attachment.lifetime = .keepAlways
+            add(attachment)
+            app.terminate()
+        }
+    }
+
+    private var language: String { ProcessInfo.processInfo.environment["QN_LANGUAGE"] ?? "en" }
 
     @MainActor
     private func launch(extra: [String] = []) -> XCUIApplication {
         let app = XCUIApplication()
-        let language = ProcessInfo.processInfo.environment["QN_LANGUAGE"] ?? "en"
         let locale = language == "es" ? "es_MX" : "en_US"
         app.launchArguments = ["-demo", "-AppleLanguages", "(\(language))", "-AppleLocale", locale] + extra
         app.launch()

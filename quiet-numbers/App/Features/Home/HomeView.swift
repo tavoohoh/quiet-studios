@@ -174,9 +174,10 @@ private struct UnlockBanner: View {
 
     var body: some View {
         HStack(spacing: 12) {
-            Image(systemName: achievement.systemImage)
-                .font(.title3)
-                .foregroundStyle(appearance.theme.primary)
+            achievement.badge
+                .resizable()
+                .frame(width: 36, height: 36)
+                .accessibilityHidden(true)
             VStack(alignment: .leading, spacing: 2) {
                 Text("Achievement unlocked")
                     .font(.caption)

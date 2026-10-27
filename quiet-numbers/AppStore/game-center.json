@@ -247,8 +247,8 @@
       "hidden": true,
       "achievableMoreThanOnce": false,
       "reward": {
-        "en": "None for now",
-        "es": "Ninguna por ahora"
+        "en": "Hidden: hints cost 3 outside the scored daily challenge",
+        "es": "Oculta: pistas a 3 fuera del reto diario puntuable"
       },
       "name": {
         "en": "In the Red",

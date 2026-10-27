@@ -5,11 +5,17 @@ public struct Scoring: Codable, Hashable, Sendable {
     public var rowCleared = 10
     public var boardClearedPerStage = 150
     /// Hints are unlimited but cost points, even if that takes the score below zero.
-    public var hintCost = 3
+    public var hintCost = 10
     /// From this stage on, every pair is worth one more point.
     public static let pairBonusFromStage = 3
 
     public static let standard = Scoring()
+    /// "In the Red"'s hidden reward, outside the scored daily challenge: hints cost 3.
+    public static let cheapHints = {
+        var scoring = Scoring()
+        scoring.hintCost = 3
+        return scoring
+    }()
 
     public func points(for connection: Connection, stage: Int = 1) -> Int {
         let base = switch connection {
@@ -220,8 +226,8 @@ public struct GameSession: Codable, Hashable, Sendable {
 }
 
 extension GameSession {
-    /// Test hook: start from a hand-made board.
-    init(board: Board, mode: GameMode = .classic, seed: UInt64 = 0, plusRemaining: Int = maxPlusUses, stage: Int = 1, score: Int = 0) {
+    /// Starts from a hand-made position (tests, App Store screenshots).
+    public init(board: Board, mode: GameMode = .classic, seed: UInt64 = 0, plusRemaining: Int = maxPlusUses, stage: Int = 1, score: Int = 0) {
         self.init(mode: mode, seed: seed)
         self.board = board
         self.plusRemaining = plusRemaining

@@ -26,7 +26,7 @@ enum DemoData {
         for (index, _) in completedDays.enumerated() {
             _ = progress.record(.dailyCompleted(currentStreak: min(index + 1, 9), localHour: 20))
         }
-        _ = progress.record(.classicAbandoned(score: 2_480, played: true))
+        _ = progress.record(.classicAbandoned(score: storeScene?.best ?? 2_480, played: true))
         return progress
     }
 
@@ -34,6 +34,10 @@ enum DemoData {
     static func seed(_ persistence: PersistenceService) {
         for (day, score) in completedDays {
             persistence.finishDaily(day, score: score, isCompleted: true)
+        }
+        if let scene = storeScene {
+            persistence.saveGame(scene.session, in: .classic)
+            return
         }
         var session = GameSession(seed: FNV1a.hash("quiet-demo"))
         func play(_ moves: Int) {
@@ -50,6 +54,53 @@ enum DemoData {
         play(3)
         persistence.saveGame(session, in: .classic)
     }
+
+    // MARK: App Store images
+
+    /// `-storeScene 1|2|4`: the hand-made board of the canvas's App Store images (Store1, 2
+    /// and 4), so the real screenshot matches the approved frames and their callouts.
+    struct StoreScene {
+        let score: Int
+        let stage: Int
+        let best: Int
+
+        /// Four original rows, then two rounds of + (from index 36). Every cleared pair is legal.
+        static let rows = [
+            [9, 7, 1, 7, 1, 9, 3, 5, 8],
+            [2, 1, 9, 7, 4, 8, 8, 3, 8],
+            [2, 8, 9, 4, 6, 5, 1, 5, 4],
+            [5, 5, 8, 9, 1, 3, 7, 1, 1],
+            [7, 1, 9, 3, 5, 4, 8, 8, 3],
+            [8, 9, 4, 6, 5, 1, 5, 4, 5],
+            [5, 8, 3, 7, 7, 1, 9, 3, 5],
+            [4, 8, 8, 3, 8, 9, 5, 1, 5],
+            [4, 8, 3, 7, 7, 9, 3, 4, 8],
+            [8, 3, 4, 6, 1, 5, 4, 3, 7],
+        ]
+        static let ghosts: Set = [0, 2, 3, 8, 9, 10, 11, 12, 18, 19, 21, 22, 27, 28, 30, 31, 34, 35,
+                                  37, 40, 45, 46, 47, 48, 49, 53, 54, 55, 64, 73]
+        static let addedFrom = 36
+
+        var session: GameSession {
+            let cells = Self.rows.joined().enumerated().map { index, value in
+                Cell(id: index, value: value, isCleared: Self.ghosts.contains(index), isAdded: index >= Self.addedFrom)
+            }
+            // Two + used on this board.
+            return GameSession(board: Board(cells: cells), plusRemaining: GameSession.plusUses(forStage: stage) - 2,
+                               stage: stage, score: score)
+        }
+    }
+
+    static let storeScene: StoreScene? = {
+        let arguments = ProcessInfo.processInfo.arguments
+        guard isActive, let i = arguments.firstIndex(of: "-storeScene"), i + 1 < arguments.count else { return nil }
+        return switch arguments[i + 1] {
+        case "1": StoreScene(score: 1_240, stage: 2, best: 2_480)
+        case "2": StoreScene(score: 3_385, stage: 3, best: 4_120)
+        case "4": StoreScene(score: 9_615, stage: 5, best: 12_840)
+        default: nil
+        }
+    }()
 
     static func leaderboard(_ board: GameCenterService.Leaderboard) -> (local: GameCenterService.Entry?, top: [GameCenterService.Entry]) {
         let scores: [Int] = switch board {

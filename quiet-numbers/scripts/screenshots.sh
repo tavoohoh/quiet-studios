@@ -54,7 +54,8 @@ source, target = map(pathlib.Path, sys.argv[1:])
 for test in json.loads((source / "manifest.json").read_text()):
     for attachment in test["attachments"]:
         name = attachment["suggestedHumanReadableName"].split("_")[0]
-        shutil.copy(source / attachment["exportedFileName"], target / f"{name}.png")
+        suffix = pathlib.Path(attachment["exportedFileName"]).suffix or ".png"
+        shutil.copy(source / attachment["exportedFileName"], target / f"{name}{suffix}")
 PY
 }
 
@@ -63,8 +64,8 @@ shoot_simulator() { # folder-name simulator-name devicetype
     udid="$(simulator "$2" "$3")"
     xcrun simctl boot "$udid" 2>/dev/null || true
     xcrun simctl bootstatus "$udid" >/dev/null
-    xcrun simctl status_bar "$udid" override --time "9:41" --dataNetwork wifi --wifiBars 3 \
-        --cellularMode active --cellularBars 4 --batteryState charged --batteryLevel 100
+    xcrun simctl status_bar "$udid" override --time "2026-11-14T09:41:00.000-05:00" --dataNetwork wifi --wifiBars 3 \
+        --cellularMode active --cellularBars 4 --batteryState discharging --batteryLevel 100
     for appearance in "${APPEARANCES[@]}"; do
         xcrun simctl ui "$udid" appearance "$appearance"
         for language in "${LANGUAGES[@]}"; do

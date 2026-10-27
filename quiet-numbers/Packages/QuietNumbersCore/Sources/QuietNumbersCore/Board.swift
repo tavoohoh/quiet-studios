@@ -28,6 +28,12 @@ public struct Board: Codable, Hashable, Sendable {
         nextID = values.count
     }
 
+    /// A hand-made position (tests, App Store screenshots).
+    public init(cells: [Cell]) {
+        self.cells = cells
+        nextID = (cells.map(\.id).max() ?? -1) + 1
+    }
+
     public var rowCount: Int { (cells.count + Self.columns - 1) / Self.columns }
     public var isEmpty: Bool { cells.allSatisfy(\.isCleared) }
     public var activeValues: [Int] { cells.filter { !$0.isCleared }.map(\.value) }

@@ -73,7 +73,7 @@ struct TutorialView: View {
                 Text("You're ready")
                     .font(.system(.title3, design: .rounded, weight: .heavy))
                     .foregroundStyle(theme.ink)
-                Text("Tap to match, or drag from one number to the other. Hints show a pair for 3 points.")
+                Text("Tap to match, or drag from one number to the other. Hints show a pair, for a few points.")
                     .foregroundStyle(theme.muted)
                     .fixedSize(horizontal: false, vertical: true)
                 Button(isFirstRun ? "Start playing" : "Done", action: onFinish)
