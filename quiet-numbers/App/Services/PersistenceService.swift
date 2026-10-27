@@ -76,11 +76,13 @@ final class PersistenceService {
 
     init(store: Store = .standard) {
         let configuration: ModelConfiguration
+        // Local only. With iCloud entitlements SwiftData would turn on CloudKit by default,
+        // which this model doesn't support; progress syncs through Game Center saved games.
         switch store {
         case .standard:
-            configuration = ModelConfiguration()
+            configuration = ModelConfiguration(cloudKitDatabase: .none)
         case .inMemory:
-            configuration = ModelConfiguration(isStoredInMemoryOnly: true)
+            configuration = ModelConfiguration(isStoredInMemoryOnly: true, cloudKitDatabase: .none)
         case .named(let name, let reset):
             let url = URL.applicationSupportDirectory.appending(path: "\(name).store")
             if reset {
@@ -88,7 +90,7 @@ final class PersistenceService {
                     try? FileManager.default.removeItem(atPath: url.path(percentEncoded: false) + suffix)
                 }
             }
-            configuration = ModelConfiguration(url: url)
+            configuration = ModelConfiguration(url: url, cloudKitDatabase: .none)
         }
         // On a fresh install the folder may not exist yet; create it so the store opens cleanly.
         try? FileManager.default.createDirectory(at: .applicationSupportDirectory, withIntermediateDirectories: true)

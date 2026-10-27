@@ -279,6 +279,7 @@ Cada fase termina con su criterio de aceptación cumplido antes de pasar a la si
 - [x] + : máximo 5 por tablero, sin devolución al limpiar filas.
 - [x] Color primario: petróleo (reemplazó al azul eléctrico).
 - [x] Paleta: Petróleo y coral (diseño cerrado con Claude Design el 2026-10-26, canvas "Quiet Numbers · Diseño").
+- [x] Nombre en la App Store (2026-10-27): **Quiet Numbers: Calm Puzzle** ("Quiet Numbers" ya estaba reservado), subtítulo "Match equal pairs or make 10" / "Junta iguales o que sumen 10". En la pantalla de inicio sigue "Quiet Numbers". Bundle ID `com.tavoohoh.quietnumbers`, cuenta individual (el Team ID solo va en `Config/Local.xcconfig`), app en App Store Connect con SKU `quietnumbers-ios`; Game Center creado con `scripts/setup-game-center.py`.
 - [x] Nombre final: **Quiet Numbers**; estudio **Quiet Studios**. Búsqueda (2026-10-26): ninguna app con esos nombres en la App Store; existen quietnumbers.com (plantillas financieras) y quietstudios.com (estudio de arquitectura/diseño), rubros distintos. No se hizo búsqueda formal de marcas (USPTO / SIC).
 - [x] Versión mínima: iOS/iPadOS 18.
 - [ ] Team de Apple Developer (pendiente de crear; bloquea Game Center, TestFlight y App Store).
