@@ -19,6 +19,8 @@ final class GameModel {
     /// The solver proved there's no win left from here.
     private(set) var isStuck = false
     private(set) var isFindingHint = false
+    /// The player chose to keep playing a lost game: no more notices for it.
+    private var keepsPlayingLostGame = false
     /// Hint found nothing to do (shown as a short note).
     private(set) var hintNote: LocalizedStringResource?
 
@@ -27,11 +29,27 @@ final class GameModel {
     /// After every change, to save.
     var onChange: (() -> Void)?
 
+    /// Tutorial: the only move allowed, ringed like a hint until it's played.
+    private(set) var guide: Move?
+    /// Tutorial tables aren't meant to be won: no "no way out" notice.
+    let isTutorial: Bool
+
     private var stuckCheck: Task<Void, Never>?
 
-    init(session: GameSession) {
+    init(session: GameSession, isTutorial: Bool = false) {
         self.session = session
+        self.isTutorial = isTutorial
         checkStuck()
+    }
+
+    func setGuide(_ move: Move?) {
+        guide = move
+    }
+
+    /// Outside the tutorial everything legal goes; in it, only the guided move (nothing
+    /// between steps).
+    private func isAllowed(_ move: Move) -> Bool {
+        isTutorial ? guide == move : true
     }
 
     var state: GameState { session.state }
@@ -66,13 +84,15 @@ final class GameModel {
     // MARK: Playing
 
     func drawFromStock() {
+        guard isAllowed(.draw) else { return FeedbackService.shared.play(.invalid) }
         play(.draw)
     }
 
     /// A tap on a face-up card sends it (and the run on it) to its best place.
     func tap(_ cardID: Int) {
         guard let (location, count) = locate(cardID) else { return }
-        if let destination = session.state.bestDestination(from: location, count: count) {
+        if let destination = session.state.bestDestination(from: location, count: count),
+           isAllowed(.move(from: location, count: count, to: destination)) {
             play(.move(from: location, count: count, to: destination))
         } else {
             reject(carried(from: cardID))
@@ -84,7 +104,7 @@ final class GameModel {
     func drop(_ cardID: Int, on destination: Location) -> Bool {
         guard let (location, count) = locate(cardID) else { return false }
         let move = Move.move(from: location, count: count, to: destination)
-        guard session.state.isLegal(move) else {
+        guard session.state.isLegal(move), isAllowed(move) else {
             if destination != location { reject(carried(from: cardID)) }
             return false
         }
@@ -155,6 +175,13 @@ final class GameModel {
         checkStuck()
     }
 
+    func keepPlaying() {
+        withAnimation(.quiet) {
+            keepsPlayingLostGame = true
+            isStuck = false
+        }
+    }
+
     // MARK: Help
 
     /// Finds the solver's next move (off the main thread), charges for it and shows it.
@@ -201,11 +228,11 @@ final class GameModel {
         stuckCheck?.cancel()
         isStuck = false
         let state = session.state
-        guard !state.isWon else { return }
+        guard !state.isWon, !isTutorial, !keepsPlayingLostGame else { return }
         stuckCheck = Task {
             try? await Task.sleep(for: .milliseconds(600))
             guard !Task.isCancelled else { return }
-            let result = await Task.detached(priority: .utility) { Solver.solve(state, budget: 30_000) }.value
+            let result = await Task.detached(priority: .utility) { Solver.solve(state, budget: 30_000, complete: true) }.value
             guard !Task.isCancelled, state == session.state else { return }
             withAnimation(.quiet) { isStuck = result == .unsolvable }
         }

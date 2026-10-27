@@ -11,6 +11,7 @@ struct HomeView: View {
         case collection
         case settings
         case leaderboards
+        case tutorial
     }
 
     @Environment(AppModel.self) private var app
@@ -55,9 +56,13 @@ struct HomeView: View {
                             .accessibilityIdentifier("continue")
                         }
                         Button {
-                            Task {
-                                await app.newClassic()
-                                path.append(.game)
+                            if app.needsTutorial {
+                                path.append(.tutorial)
+                            } else {
+                                Task {
+                                    await app.newClassic()
+                                    path.append(.game)
+                                }
                             }
                         } label: {
                             Text("New Game")
@@ -94,6 +99,14 @@ struct HomeView: View {
                     SettingsView()
                 case .leaderboards:
                     LeaderboardsView()
+                case .tutorial:
+                    TutorialView(isFirstRun: true) {
+                        app.finishTutorial()
+                        Task {
+                            await app.newClassic()
+                            path = [.game]
+                        }
+                    }
                 }
             }
             .onChange(of: app.gameCenter.isAuthenticated, initial: true) { updateAccessPoint() }

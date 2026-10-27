@@ -139,6 +139,11 @@ struct GameView: View {
                             .buttonStyle(CapsuleButtonStyle())
                     }
                 }
+                Button("Keep playing") { model.keepPlaying() }
+                    .font(.subheadline.weight(.semibold))
+                    .foregroundStyle(theme.primary)
+                    .frame(minHeight: 44)
+                    .accessibilityIdentifier("keepPlaying")
             }
             .padding(18)
             .background { SurfaceShape(shape: RoundedRectangle(cornerRadius: 24, style: .continuous)) }

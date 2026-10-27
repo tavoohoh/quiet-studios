@@ -31,9 +31,14 @@ struct SettingsView: View {
                         SettingsRow(title: Text("Game Center"), detail: gameCenterStatus)
                     }
                     NavigationLink {
-                        HowToPlayView()
+                        TutorialFromSettings()
                     } label: {
                         SettingsRow(title: Text("How to play"))
+                    }
+                    NavigationLink {
+                        HowToPlayView()
+                    } label: {
+                        SettingsRow(title: Text("Rules"))
                     }
                 }
                 .buttonStyle(.plain)
@@ -147,6 +152,19 @@ private struct SettingsRow: View {
     }
 }
 
+/// "How to play" replays the tutorial and comes back here.
+private struct TutorialFromSettings: View {
+    @Environment(AppModel.self) private var app
+    @Environment(\.dismiss) private var dismiss
+
+    var body: some View {
+        TutorialView(isFirstRun: false) {
+            app.finishTutorial()
+            dismiss()
+        }
+    }
+}
+
 /// The rules, short.
 struct HowToPlayView: View {
     @Environment(\.quietTheme) private var theme
@@ -167,7 +185,7 @@ struct HowToPlayView: View {
             .frame(maxWidth: Layout.column(sizeClass))
             .frame(maxWidth: .infinity)
         }
-        .screen(Text("How to play"))
+        .screen(Text("Rules"))
     }
 
     private func rule(_ systemImage: String, _ title: LocalizedStringKey, _ text: LocalizedStringKey) -> some View {

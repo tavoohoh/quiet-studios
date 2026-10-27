@@ -31,6 +31,25 @@ final class GameplayUITests: XCTestCase {
         XCTAssertTrue(app.buttons["autoComplete"].waitForExistence(timeout: 3))
     }
 
+    /// The tutorial walks through its six moves by tapping, then starts a game.
+    func testTutorial() {
+        let app = XCUIApplication()
+        app.launchArguments = ["-uiTesting", "-resetStore", "-tutorial"]
+        app.launch()
+        app.buttons["newGame"].tap()
+        let cards = ["Stock, 3 cards", "7 of hearts, waste", "Ace of diamonds, column 2", "8 of spades, column 1",
+                     "2 of diamonds, column 1", "King of clubs, column 4"]
+        for label in cards {
+            let card = app.buttons[label].firstMatch
+            XCTAssertTrue(card.waitForExistence(timeout: 3), label)
+            card.tap()
+        }
+        let finish = app.buttons["finishTutorial"]
+        XCTAssertTrue(finish.waitForExistence(timeout: 3))
+        finish.tap()
+        XCTAssertTrue(app.staticTexts["score"].waitForExistence(timeout: 5))
+    }
+
     /// A new classic game from Home: drawing changes the move count; undo works.
     func testNewGameDrawAndUndo() {
         let app = XCUIApplication()

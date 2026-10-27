@@ -19,8 +19,11 @@ public enum Solver {
         case unknown
     }
 
-    public static func solve(_ state: GameState, budget: Int = 60_000) -> Result {
-        var search = Search(budget: budget)
+    /// `complete`: also try moves that the quick search skips (splitting a run anywhere,
+    /// a talon card on any column). Needed to *prove* there's no win; the quick search
+    /// is only trusted when it finds one.
+    public static func solve(_ state: GameState, budget: Int = 60_000, complete: Bool = false) -> Result {
+        var search = Search(budget: budget, complete: complete)
         let start = Position(state)
         guard let path = search.run(start) else {
             return search.exhausted ? .unknown : .unsolvable
@@ -102,7 +105,7 @@ struct Position {
     }
 
     /// Candidate steps, most promising first.
-    func steps() -> [Step] {
+    func steps(complete: Bool = false) -> [Step] {
         var reveal: [(Step, Int)] = [], toFoundation: [Step] = [], fromTalon: [Step] = [], other: [Step] = []
         let firstEmpty = (0..<7).first { up[$0].isEmpty && down[$0].isEmpty }
         for column in 0..<7 {
@@ -119,7 +122,7 @@ struct Position {
                         // Moving a king that already sits on an empty spot is pointless.
                         if down[column].isEmpty && targetIsEmpty { continue }
                         reveal.append((.tableauToTableau(column: column, index: index, to: target), down[column].count))
-                    } else if fitsFoundation(up[column][index - 1]) {
+                    } else if complete || fitsFoundation(up[column][index - 1]) {
                         // Splitting a run only helps if it frees the card under it.
                         other.append(.tableauToTableau(column: column, index: index, to: target))
                     }
@@ -215,11 +218,15 @@ struct Position {
 
 private struct Search {
     let budget: Int
+    let complete: Bool
     var nodes = 0
     var exhausted = false
     var seen: Set<UInt64> = []
 
-    init(budget: Int) { self.budget = budget }
+    init(budget: Int, complete: Bool) {
+        self.budget = budget
+        self.complete = complete
+    }
 
     /// The steps from `start` to a win, or nil.
     mutating func run(_ start: Position) -> [Step]? {
@@ -234,7 +241,7 @@ private struct Search {
         guard nodes < budget else { exhausted = true; return false }
         nodes += 1
         guard seen.insert(position.key).inserted || isStart else { return false }
-        for step in position.steps() {
+        for step in position.steps(complete: complete) {
             path.append(step)
             if visit(position.applying(step), path: &path) { return true }
             path.removeLast()

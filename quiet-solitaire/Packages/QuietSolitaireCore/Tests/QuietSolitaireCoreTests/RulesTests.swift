@@ -237,3 +237,15 @@ func table(stock: [String] = [], waste: [String] = [], foundations: [Int] = [0, 
         #expect(merged.gamesWon == 1 && merged.gamesPlayed == 2 && merged.unlocked.contains(.firstWin))
     }
 }
+
+@Suite struct SolverTests {
+    /// Both searches call a lost position unsolvable and a won-in-one position solved.
+    @Test func verdictsAgreeOnSimplePositions() {
+        // Spades are done but the A♥ is buried under the 2♥ it needs to go after: lost.
+        let lost = table(foundations: [13, 0, 13, 13], column("?A♥", "2♥"), column("?3♥", "4♥"))
+        #expect(Solver.solve(lost) == .unsolvable)
+        #expect(Solver.solve(lost, complete: true) == .unsolvable)
+        let won = table(foundations: [13, 13, 13, 12], column("K♣"))
+        if case .solved = Solver.solve(won, complete: true) {} else { Issue.record("should be solved") }
+    }
+}

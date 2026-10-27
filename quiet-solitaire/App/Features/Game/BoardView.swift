@@ -192,7 +192,7 @@ struct BoardView: View {
 
     /// Source and destination of the hint: the cards to move, plus the stock for a draw.
     private var hintIDs: Set<Int> {
-        guard let hint = model.hint else { return [] }
+        guard let hint = model.hint ?? model.guide else { return [] }
         switch hint {
         case .draw:
             return Set((model.state.stock.last ?? model.state.waste.first).map { [$0.id] } ?? [])

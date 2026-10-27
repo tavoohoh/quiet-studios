@@ -65,6 +65,9 @@ final class AppModel {
         self.gameCenter = gameCenter
         progress = persistence.loadProgress()
         #if DEBUG
+        if ProcessInfo.processInfo.arguments.contains("-resetStore") {
+            UserDefaults.standard.removeObject(forKey: PreferenceKey.tutorialSeen)
+        }
         if ProcessInfo.processInfo.arguments.contains("-unlockAll") {
             progress = PlayerProgress(unlocked: Set(Achievement.allCases))
         }
@@ -134,7 +137,7 @@ final class AppModel {
         activeKind = nil
         pendingUnlocks = []
         refreshSavedGames()
-        for key in PreferenceKey.rewards {
+        for key in PreferenceKey.rewards + [PreferenceKey.tutorialSeen] {
             UserDefaults.standard.removeObject(forKey: key)
         }
         UserDefaults.standard.set(true, forKey: PreferenceKey.pendingCloudReset)
@@ -182,6 +185,21 @@ final class AppModel {
         case .practice:
             start(GameModel(session: session), as: kind)
         }
+    }
+
+    /// First "New Game" of someone who never played: the tutorial comes first.
+    /// UI tests skip it unless launched with `-tutorial`.
+    var needsTutorial: Bool {
+        #if DEBUG
+        let arguments = ProcessInfo.processInfo.arguments
+        if arguments.contains("-uiTesting"), !arguments.contains("-tutorial") { return false }
+        #endif
+        return !UserDefaults.standard.bool(forKey: PreferenceKey.tutorialSeen)
+            && progress.gamesPlayed == 0 && !hasClassicInProgress
+    }
+
+    func finishTutorial() {
+        UserDefaults.standard.set(true, forKey: PreferenceKey.tutorialSeen)
     }
 
     /// Classic and practice: "In the Red" makes hints cheaper (a hidden reward). The scored

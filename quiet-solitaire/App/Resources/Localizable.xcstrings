@@ -211,6 +211,16 @@
         }
       }
     },
+    "A run in order moves together. Tap the 8♠ to move it with the 7♥ onto the 9♥.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Una escalera en orden se mueve completa. Toca el 8♠ para llevarlo con el 7♥ sobre el 9♥."
+          }
+        }
+      }
+    },
     "A tapped card goes to its best place.": {
       "localizations": {
         "es": {
@@ -237,6 +247,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "As"
+          }
+        }
+      }
+    },
+    "Aces first": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Primero los ases"
           }
         }
       }
@@ -367,6 +387,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Reverso"
+          }
+        }
+      }
+    },
+    "Cards go on a column one rank lower and in the other color. Tap the 7♥ to put it on the 8♠.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En una columna, cada carta va sobre una de un número más y del otro color. Toca el 7♥ para ponerlo sobre el 8♠."
           }
         }
       }
@@ -581,12 +611,32 @@
         }
       }
     },
+    "Done": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Listo"
+          }
+        }
+      }
+    },
     "Draw": {
       "localizations": {
         "es": {
           "stringUnit": {
             "state": "translated",
             "value": "Robar"
+          }
+        }
+      }
+    },
+    "Each suit builds up from its ace in the foundations at the top. Tap the A♦. The card under it turns over.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cada palo se arma desde su as en las fundaciones de arriba. Toca el A♦. La carta de abajo se voltea."
           }
         }
       }
@@ -911,6 +961,26 @@
         }
       }
     },
+    "Keep building": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sigue subiendo"
+          }
+        }
+      }
+    },
+    "Keep playing": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Seguir jugando"
+          }
+        }
+      }
+    },
     "Keep playing to find it.": {
       "localizations": {
         "es": {
@@ -927,6 +997,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Rey"
+          }
+        }
+      }
+    },
+    "Kings on empty columns": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reyes en columnas vacías"
           }
         }
       }
@@ -1011,12 +1091,32 @@
         }
       }
     },
+    "Move a run": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mueve una escalera"
+          }
+        }
+      }
+    },
     "Move all 52 cards to the four foundations, one per suit, from ace to king.": {
       "localizations": {
         "es": {
           "stringUnit": {
             "state": "translated",
             "value": "Lleva las 52 cartas a las cuatro fundaciones, una por palo, del as al rey."
+          }
+        }
+      }
+    },
+    "Move every card to the foundations to win. Stuck? Undo, or ask for a hint for a few points.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lleva todas las cartas a las fundaciones para ganar. ¿Te trabaste? Deshace o pide una pista por unos puntos."
           }
         }
       }
@@ -1171,6 +1271,16 @@
         }
       }
     },
+    "Only a king goes on an empty column. Tap the K♣. You can also drag any card where you want it.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En una columna vacía solo va un rey. Toca el K♣. También puedes arrastrar cualquier carta a donde quieras."
+          }
+        }
+      }
+    },
     "Only winnable deals": {
       "localizations": {
         "es": {
@@ -1311,6 +1421,16 @@
         }
       }
     },
+    "Red on black": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rojo sobre negro"
+          }
+        }
+      }
+    },
     "Replays don't count toward your score.": {
       "localizations": {
         "es": {
@@ -1357,6 +1477,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Reiniciar este reparto"
+          }
+        }
+      }
+    },
+    "Rules": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reglas"
           }
         }
       }
@@ -1441,6 +1571,16 @@
         }
       }
     },
+    "Skip": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Saltar"
+          }
+        }
+      }
+    },
     "Sound": {
       "localizations": {
         "es": {
@@ -1461,12 +1601,32 @@
         }
       }
     },
+    "Start playing": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Empezar a jugar"
+          }
+        }
+      }
+    },
     "Steady Hand": {
       "localizations": {
         "es": {
           "stringUnit": {
             "state": "translated",
             "value": "A pulso"
+          }
+        }
+      }
+    },
+    "Step %lld of %lld": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Paso %1$lld de %2$lld"
           }
         }
       }
@@ -1571,6 +1731,16 @@
         }
       }
     },
+    "Tap the stock to turn its top card over onto the waste.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Toca el mazo para voltear su primera carta al descarte."
+          }
+        }
+      }
+    },
     "Tap the stock to turn one card. When it runs out, tap again to turn the waste over. As many times as you like.": {
       "localizations": {
         "es": {
@@ -1607,6 +1777,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Diez victorias"
+          }
+        }
+      }
+    },
+    "The 2♦ goes on the A♦. Foundations go up to the king.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "El 2♦ va sobre el A♦. Las fundaciones suben hasta el rey."
           }
         }
       }
@@ -1657,6 +1837,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Mejor racha"
+          }
+        }
+      }
+    },
+    "Turn a card": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Voltea una carta"
           }
         }
       }
@@ -1837,6 +2027,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "¡Ganaste!"
+          }
+        }
+      }
+    },
+    "You're ready": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ya sabes jugar"
           }
         }
       }

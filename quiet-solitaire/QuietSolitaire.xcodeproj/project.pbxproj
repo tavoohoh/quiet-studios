@@ -21,6 +21,7 @@
 		64240801ED003B746A711161 /* QuietCore in Frameworks */ = {isa = PBXBuildFile; productRef = 53E6C254157C33445CF3AB60 /* QuietCore */; };
 		6CF885E2031A837DC1696CD3 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1661A525354B469EF8280B50 /* CalendarView.swift */; };
 		72181FCA4E65A9316B5577A4 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B23356F1A9237FE934ED91 /* GameView.swift */; };
+		8A3F135C0321D029BD6BC784 /* TutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DDE25C5F108F3854E8E2E97 /* TutorialView.swift */; };
 		9DB0CCCFD4D5A5C25FD938C9 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = E93B5E9FD51DA8E7E247E148 /* PrivacyInfo.xcprivacy */; };
 		A702C4711A651D71F88D68C7 /* QuietSolitaireCore in Frameworks */ = {isa = PBXBuildFile; productRef = 3D0303E69ECBEA7267BAE774 /* QuietSolitaireCore */; };
 		A87E1838C3992FC8D2932FF4 /* CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 154FE75B0079D8CD192C2E2C /* CollectionView.swift */; };
@@ -63,6 +64,7 @@
 		43B2BB136EB373FF11DFC286 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		6007B3FEF286D8B062BEE372 /* QuietSolitaire.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = QuietSolitaire.entitlements; sourceTree = "<group>"; };
 		60DF0BA237D012B9707D7558 /* QuietSolitaireUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = QuietSolitaireUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		6DDE25C5F108F3854E8E2E97 /* TutorialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialView.swift; sourceTree = "<group>"; };
 		79B23356F1A9237FE934ED91 /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
 		82C838AB33AB932D01E914CF /* GameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameModel.swift; sourceTree = "<group>"; };
 		8F3CE59A61B55CA0C7F050E6 /* FeedbackService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackService.swift; sourceTree = "<group>"; };
@@ -170,6 +172,14 @@
 			path = Packages;
 			sourceTree = "<group>";
 		};
+		7A3231E535EE1EAC913853E8 /* Tutorial */ = {
+			isa = PBXGroup;
+			children = (
+				6DDE25C5F108F3854E8E2E97 /* TutorialView.swift */,
+			);
+			path = Tutorial;
+			sourceTree = "<group>";
+		};
 		7C9D3A51FEF01EBAC063F73C /* Debug */ = {
 			isa = PBXGroup;
 			children = (
@@ -242,6 +252,7 @@
 				D840947DF9DDF1F1543B6084 /* Home */,
 				23628FE0B76CE5D2CD1F8759 /* Leaderboards */,
 				CFBE34EA037885D7D01608FC /* Settings */,
+				7A3231E535EE1EAC913853E8 /* Tutorial */,
 			);
 			path = Features;
 			sourceTree = "<group>";
@@ -396,6 +407,7 @@
 				3E8ED021FFA38A8110B96F26 /* QuietSolitaireApp.swift in Sources */,
 				0D2191D80AE58D17958E71FB /* Rewards.swift in Sources */,
 				E286052F3D4F7D31ED91839B /* SettingsView.swift in Sources */,
+				8A3F135C0321D029BD6BC784 /* TutorialView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

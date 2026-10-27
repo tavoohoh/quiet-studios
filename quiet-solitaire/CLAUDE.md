@@ -98,6 +98,8 @@ Klondike estándar, **robar 1**, reciclar el mazo **sin límite**.
 - Dificultad = posiciones que visita el solver hasta la primera victoria: Fácil < 46, Media < 91, Difícil < 1.500, Experta desde ahí (percentiles 25/50/75/90 de 100 repartos: 42, 48, 76, 1.731). El reto del día prueba las semillas `"<día>#0"`, `"<día>#1"`… y toma la primera ganable con la dificultad del día (o la primera ganable tras 40 intentos). Cambiar el solver o estos umbrales cambia el reparto de cada fecha.
 - Pista = la primera jugada de la solución del solver (si la carta está en el mazo, "toca el mazo"); si el solver no encuentra victoria, una jugada razonable. Se calcula fuera del hilo principal y solo se cobra si encontró algo.
 - Deshacer guarda hasta 200 pasos (`GameSession.historyLimit`).
+- **Tutorial** (`Features/Tutorial`, mesa en `Tutorial.swift` del Core, verificada por `TutorialTests`): 6 pasos (robar, rojo sobre negro, as a la fundación, mover una escalera, seguir la fundación, rey en columna vacía). Solo vale la jugada señalada, tocando o arrastrando. Sale con la primera "Nueva partida" (sin partidas jugadas ni en curso y sin `tutorialSeen`) y desde Ajustes › Cómo jugar; las reglas quedan en Ajustes › Reglas. Los UI tests lo omiten salvo con `-tutorial`.
+- **"Sin salida"** usa la búsqueda completa del solver (`complete: true`: también parte escaleras en cualquier punto), así que solo aparece con prueba. Verificado el 2026-10-27: en 60 partidas jugadas al azar, las 25 posiciones que la búsqueda rápida dio por perdidas también lo eran para la completa con 2 millones de posiciones. El aviso se puede cerrar ("Seguir jugando") y no vuelve en esa partida.
 
 **Interacción:** tocar una carta la manda a su mejor destino (fundación primero, luego tableau); arrastrar mueve la carta o la secuencia. Opción "Zurdo" en Ajustes: mazo y descarte a la izquierda.
 
@@ -216,7 +218,7 @@ Cada fase termina con su criterio de aceptación cumplido antes de pasar a la si
 | 3. Persistencia y reto diario | 🟡 Implementado (SwiftData como Quiet Numbers, reto con solución garantizada, racha, calendario, dificultad de la semana); falta verificar en dispositivo. |
 | 4. Game Center | 🟡 Código listo (IDs `qs_*`); falta crear la app, los 13 logros y las 3 clasificaciones en App Store Connect. |
 | 5. Recompensas y colección | 🟡 Mazos (6), reversos (5), tableros (5), efecto de victoria e ícono dorado, con sus desbloqueos; falta revisión en dispositivo. |
-| 6. Pulido y lanzamiento | ⏳ Inglés y español completos (186 textos). Falta: tutorial interactivo (hoy "Cómo jugar" es una pantalla de reglas), auditoría de VoiceOver, capturas, metadatos, insignias de Game Center, TestFlight. |
+| 6. Pulido y lanzamiento | 🟡 Inglés y español completos (206 textos). Tutorial interactivo hecho. Instalada en iPhone 16 Pro (2026-10-27). Falta: capturas, metadatos, insignias de Game Center, TestFlight. Auditoría de VoiceOver: pospuesta (decisión del usuario). |
 
 ## Preguntas abiertas
 

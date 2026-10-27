@@ -157,6 +157,8 @@ enum PreferenceKey {
     static let tapToMove = "tapToMove"
     static let winnableOnly = "winnableOnly"
     static let leftHanded = "leftHanded"
+    /// The tutorial was played or skipped. Cleared by a reset, like a fresh install.
+    static let tutorialSeen = "tutorialSeen"
     /// Set by a reset until the iCloud copy and achievements are cleared too.
     static let pendingCloudReset = "pendingCloudReset"
 
