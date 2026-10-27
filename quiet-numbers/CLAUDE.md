@@ -259,16 +259,16 @@ Cada fase termina con su criterio de aceptación cumplido antes de pasar a la si
 6. **Pulido y lanzamiento.** Localización completa, accesibilidad, PrivacyInfo, capturas, TestFlight.
    Acepta: cero textos sin localizar, auditoría de VoiceOver aprobada, build en TestFlight.
 
-## Estado (2026-10-25)
+## Estado (2026-10-27)
 
 | Fase | Estado |
 |---|---|
 | 1. Motor | ✅ Hecha |
 | 2. Juego jugable | ✅ Hecha (probada en iPhone real; iPad en simulador con layout responsivo) |
 | 3. Persistencia y reto diario | ✅ Hecha |
-| 4. Game Center | 🟡 Código completo; falta App ID + App Store Connect para verificarlo |
+| 4. Game Center | 🟡 App ID, 11 logros y 3 clasificaciones creados en App Store Connect (`scripts/setup-game-center.py`); falta verificar envío y sincronización en el dispositivo |
 | 5. Recompensas y colección | ✅ Hecha |
-| 6. Pulido y lanzamiento | 🟡 Localización auditada (0 textos sin traducir, fallback a inglés verificado), PrivacyInfo, política de privacidad, Dynamic Type en Inicio/Juego. Capturas de iPhone y iPad, metadatos y web listos. Falta: auditoría de VoiceOver manual (la ficha de la tienda no anuncia VoiceOver hasta aprobarla), TestFlight |
+| 6. Pulido y lanzamiento | 🟡 Localización auditada (0 textos sin traducir, fallback a inglés verificado), PrivacyInfo, política de privacidad, Dynamic Type en Inicio/Juego. Capturas de iPhone y iPad, metadatos y web listos. Build 1.0 (1) en TestFlight (beta externa en revisión) y versión 1.0 enviada a revisión de la App Store el 2026-10-27, con publicación automática al aprobarse. Pendiente (decidido posponer): auditoría de VoiceOver; la ficha no declara VoiceOver |
 
 ## Anotaciones de diseño
 

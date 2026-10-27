@@ -8,7 +8,8 @@ screenshots of the app.
 Frames, copy and callouts come from the canvas "Quiet Numbers · Diseño". The phone shows the
 real screenshot; callouts drawn over the board (pills, rings) are anchored to the real cells,
 using the cell positions ScreenshotTests saves next to each store scene. Rendered with Chrome
-headless: iPhone 6.9" at 1320×2868 and iPad 13" at 2064×2752, no alpha.
+headless: iPhone 6.9" at 1320×2868 (scaled to 6.3", 1206×2622, the size App Store Connect asks
+for first) and iPad 13" at 2064×2752, no alpha.
 """
 import html
 import pathlib
@@ -20,6 +21,7 @@ from PIL import Image
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 SHOTS = ROOT / "AppStore/screenshots"
 OUT = ROOT / "AppStore/store-images"
+IPHONE_63 = (1206, 2622)
 CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 
 # Canvas geometry (iPhone frame, 440×956): phone 340 wide at x 50, 8 of bezel, a 324-wide
@@ -263,6 +265,13 @@ def main():
                     out = OUT / device / language / f"{frame['name']}.png"
                     render(build(device, language, number), out, spec, tmp)
                     print(out.relative_to(ROOT))
+                    if device == "iphone-6.9":
+                        # App Store Connect's base iPhone size is now 6.3" (1206×2622); same
+                        # aspect ratio within 0.1%, so the 6.9" image is scaled down.
+                        small = OUT / "iphone-6.3" / language / out.name
+                        small.parent.mkdir(parents=True, exist_ok=True)
+                        Image.open(out).resize(IPHONE_63, Image.LANCZOS).save(small)
+                        print(small.relative_to(ROOT))
 
 
 if __name__ == "__main__":
