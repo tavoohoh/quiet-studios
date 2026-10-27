@@ -1,0 +1,1916 @@
+{
+  "sourceLanguage": "en",
+  "strings": {
+    "": {
+      "shouldTranslate": false
+    },
+    "%@ of %@": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ de %2$@"
+          }
+        }
+      }
+    },
+    "%@ · %@": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ · %2$@"
+          }
+        }
+      }
+    },
+    "%@ · Best %@": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ · Mejor %2$@"
+          }
+        }
+      }
+    },
+    "%@ · Daily challenge": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ · Reto diario"
+          }
+        }
+      }
+    },
+    "%@ · Practice": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ · Práctica"
+          }
+        }
+      }
+    },
+    "%@, column %lld": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@, columna %2$lld"
+          }
+        }
+      }
+    },
+    "%@, foundation": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@, fundación"
+          }
+        }
+      }
+    },
+    "%@, waste": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@, descarte"
+          }
+        }
+      }
+    },
+    "%lld moves": {
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld move"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld moves"
+                }
+              }
+            }
+          }
+        },
+        "es": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld movimiento"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld movimientos"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "%lld-day streak": {
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld-day streak"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld-day streak"
+                }
+              }
+            }
+          }
+        },
+        "es": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Racha de %lld día"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Racha de %lld días"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "10": {
+      "shouldTranslate": false
+    },
+    "2": {
+      "shouldTranslate": false
+    },
+    "3": {
+      "shouldTranslate": false
+    },
+    "4": {
+      "shouldTranslate": false
+    },
+    "5": {
+      "shouldTranslate": false
+    },
+    "5 for a card from the waste to a column, 10 for each card on a foundation, 5 for each card turned over. Win in 100 moves or fewer for a 500 bonus.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "5 por llevar una carta del descarte a una columna, 10 por cada carta en una fundación y 5 por cada carta que se voltea. Gana en 100 movimientos o menos y suma un bono de 500."
+          }
+        }
+      }
+    },
+    "6": {
+      "shouldTranslate": false
+    },
+    "7": {
+      "shouldTranslate": false
+    },
+    "8": {
+      "shouldTranslate": false
+    },
+    "9": {
+      "shouldTranslate": false
+    },
+    "A hint shows a move that leads to a win when there is one. Each hint costs 10 points.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Una pista muestra una jugada que lleva a ganar, si la hay. Cada pista cuesta 10 puntos."
+          }
+        }
+      }
+    },
+    "A tapped card goes to its best place.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La carta va sola a su mejor sitio."
+          }
+        }
+      }
+    },
+    "Account": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cuenta"
+          }
+        }
+      }
+    },
+    "Ace": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "As"
+          }
+        }
+      }
+    },
+    "Achievement unlocked": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Logro desbloqueado"
+          }
+        }
+      }
+    },
+    "Achievements": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Logros"
+          }
+        }
+      }
+    },
+    "Always available for low vision.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Siempre disponible para baja visión."
+          }
+        }
+      }
+    },
+    "Always available to tell suits apart.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Siempre disponible para distinguir los palos."
+          }
+        }
+      }
+    },
+    "App icon": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ícono de la app"
+          }
+        }
+      }
+    },
+    "Auto-complete": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Autocompletar"
+          }
+        }
+      }
+    },
+    "Back": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Volver"
+          }
+        }
+      }
+    },
+    "Best score": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mejor puntaje"
+          }
+        }
+      }
+    },
+    "Best streak": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mejor racha"
+          }
+        }
+      }
+    },
+    "Board": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tablero"
+          }
+        }
+      }
+    },
+    "Build a column from king to ace.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Arma una columna del rey al as."
+          }
+        }
+      }
+    },
+    "Build down in alternating colors: a red 6 on a black 7. Move a whole run at once. Only a king goes on an empty column.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Baja alternando colores: un 6 rojo sobre un 7 negro. Puedes mover una escalera completa. En una columna vacía solo va un rey."
+          }
+        }
+      }
+    },
+    "Card back": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reverso"
+          }
+        }
+      }
+    },
+    "Cascade": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cascada"
+          }
+        }
+      }
+    },
+    "Centennial": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Centenario"
+          }
+        }
+      }
+    },
+    "Check your connection and try again.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Revisa tu conexión e inténtalo de nuevo."
+          }
+        }
+      }
+    },
+    "Classic": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clásico"
+          }
+        }
+      }
+    },
+    "Collection": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Colección"
+          }
+        }
+      }
+    },
+    "Columns": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Columnas"
+          }
+        }
+      }
+    },
+    "Complete 30 daily challenges in a row.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Completa 30 retos diarios seguidos."
+          }
+        }
+      }
+    },
+    "Complete 7 daily challenges in a row.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Completa 7 retos diarios seguidos."
+          }
+        }
+      }
+    },
+    "Completed": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Completado"
+          }
+        }
+      }
+    },
+    "Consistency": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Constancia"
+          }
+        }
+      }
+    },
+    "Continue": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Continuar"
+          }
+        }
+      }
+    },
+    "Continue · %lld moves": {
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Continue · %lld move"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Continue · %lld moves"
+                }
+              }
+            }
+          }
+        },
+        "es": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Continuar · %lld movimiento"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Continuar · %lld movimientos"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "Coral": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Coral"
+          }
+        }
+      }
+    },
+    "Couldn't load": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No se pudo cargar"
+          }
+        }
+      }
+    },
+    "Daily Challenge": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reto diario"
+          }
+        }
+      }
+    },
+    "Daily challenge": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reto diario"
+          }
+        }
+      }
+    },
+    "Deck": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mazo"
+          }
+        }
+      }
+    },
+    "Deletes games, daily results, streaks, achievements and unlocked rewards, here and in iCloud.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Borra partidas, retos, rachas, logros y recompensas, aquí y en iCloud."
+          }
+        }
+      }
+    },
+    "Draw": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Robar"
+          }
+        }
+      }
+    },
+    "Easy": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fácil"
+          }
+        }
+      }
+    },
+    "Economy": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Economía"
+          }
+        }
+      }
+    },
+    "Empty": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vacío"
+          }
+        }
+      }
+    },
+    "Every classic deal can be won.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cada reparto clásico se puede ganar."
+          }
+        }
+      }
+    },
+    "Expert": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Experto"
+          }
+        }
+      }
+    },
+    "Face-down card": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Carta boca abajo"
+          }
+        }
+      }
+    },
+    "Few-moves bonus": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bono por pocos movimientos"
+          }
+        }
+      }
+    },
+    "Fifty": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cincuenta"
+          }
+        }
+      }
+    },
+    "First Hand": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Primera mano"
+          }
+        }
+      }
+    },
+    "Four colors": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cuatro colores"
+          }
+        }
+      }
+    },
+    "Friends": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Amigos"
+          }
+        }
+      }
+    },
+    "Game Center": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Game Center"
+          }
+        }
+      }
+    },
+    "Game points": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Puntos de juego"
+          }
+        }
+      }
+    },
+    "Gentle": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Suave"
+          }
+        }
+      }
+    },
+    "Global": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Global"
+          }
+        }
+      }
+    },
+    "Goal": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Objetivo"
+          }
+        }
+      }
+    },
+    "Gold": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dorado"
+          }
+        }
+      }
+    },
+    "Habit": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hábito"
+          }
+        }
+      }
+    },
+    "Haptics": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hápticos"
+          }
+        }
+      }
+    },
+    "Hard": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Difícil"
+          }
+        }
+      }
+    },
+    "Hidden achievement": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Logro oculto"
+          }
+        }
+      }
+    },
+    "Hidden achievement.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Logro oculto."
+          }
+        }
+      }
+    },
+    "High contrast": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alto contraste"
+          }
+        }
+      }
+    },
+    "Hint": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pista"
+          }
+        }
+      }
+    },
+    "Hints": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pistas"
+          }
+        }
+      }
+    },
+    "Home": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Inicio"
+          }
+        }
+      }
+    },
+    "How to play": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cómo jugar"
+          }
+        }
+      }
+    },
+    "Illustrated": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ilustrado"
+          }
+        }
+      }
+    },
+    "In progress": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En curso"
+          }
+        }
+      }
+    },
+    "In the Red": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Números rojos"
+          }
+        }
+      }
+    },
+    "Indigo & Peach": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Índigo y durazno"
+          }
+        }
+      }
+    },
+    "Jack": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jota"
+          }
+        }
+      }
+    },
+    "Keep playing to find it.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sigue jugando para encontrarlo."
+          }
+        }
+      }
+    },
+    "King": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rey"
+          }
+        }
+      }
+    },
+    "Ladder": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Escalera"
+          }
+        }
+      }
+    },
+    "Large index": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Índice grande"
+          }
+        }
+      }
+    },
+    "Leaderboards": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clasificaciones"
+          }
+        }
+      }
+    },
+    "Left-handed": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Modo zurdo"
+          }
+        }
+      }
+    },
+    "Linen": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lino"
+          }
+        }
+      }
+    },
+    "Medium": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Media"
+          }
+        }
+      }
+    },
+    "Monday and Tuesday easy, Wednesday to Friday medium, Saturday hard, Sunday expert.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lunes y martes fácil, de miércoles a viernes media, sábado difícil, domingo experto."
+          }
+        }
+      }
+    },
+    "More": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Más"
+          }
+        }
+      }
+    },
+    "Move all 52 cards to the four foundations, one per suit, from ace to king.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lleva las 52 cartas a las cuatro fundaciones, una por palo, del as al rey."
+          }
+        }
+      }
+    },
+    "Moves": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Movimientos"
+          }
+        }
+      }
+    },
+    "New Game": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nueva partida"
+          }
+        }
+      }
+    },
+    "New record!": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¡Nuevo récord!"
+          }
+        }
+      }
+    },
+    "Next challenge in %@": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Próximo reto en %@"
+          }
+        }
+      }
+    },
+    "Next month": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mes siguiente"
+          }
+        }
+      }
+    },
+    "Night": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Noche"
+          }
+        }
+      }
+    },
+    "Night Owl": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Noctámbulo"
+          }
+        }
+      }
+    },
+    "No Going Back": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sin vuelta atrás"
+          }
+        }
+      }
+    },
+    "No moves left. Try undo.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No quedan jugadas. Prueba deshacer."
+          }
+        }
+      }
+    },
+    "No scores yet": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aún no hay puntajes"
+          }
+        }
+      }
+    },
+    "No way to win from here": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Desde aquí ya no se puede ganar"
+          }
+        }
+      }
+    },
+    "Not played yet": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aún no lo juegas"
+          }
+        }
+      }
+    },
+    "Not signed in": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sin sesión"
+          }
+        }
+      }
+    },
+    "One Pass": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Una sola vuelta"
+          }
+        }
+      }
+    },
+    "One deal for everyone each day, always winnable. Easy on Monday, expert on Sunday.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Un reparto para todos cada día, que siempre se puede ganar. Fácil el lunes, experto el domingo."
+          }
+        }
+      }
+    },
+    "Only winnable deals": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Solo partidas con solución"
+          }
+        }
+      }
+    },
+    "Open Settings": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Abrir Ajustes"
+          }
+        }
+      }
+    },
+    "Past days are practice: they don't count toward your streak.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Los días pasados son práctica: no cuentan para la racha."
+          }
+        }
+      }
+    },
+    "Pixel": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pixel"
+          }
+        }
+      }
+    },
+    "Play": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jugar"
+          }
+        }
+      }
+    },
+    "Play again": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jugar de nuevo"
+          }
+        }
+      }
+    },
+    "Play with friends": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Juega con amigos"
+          }
+        }
+      }
+    },
+    "Played": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jugado"
+          }
+        }
+      }
+    },
+    "Practiced": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Practicado"
+          }
+        }
+      }
+    },
+    "Previous month": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mes anterior"
+          }
+        }
+      }
+    },
+    "Privacy": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Privacidad"
+          }
+        }
+      }
+    },
+    "Queen": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reina"
+          }
+        }
+      }
+    },
+    "Quiet": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quiet"
+          }
+        }
+      }
+    },
+    "Quiet Solitaire doesn't collect any data. Your games, streaks and achievements stay on this device. If you sign in to Game Center, your scores and achievements are shared with Apple's Game Center and your progress is saved in your iCloud.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quiet Solitaire no recolecta ningún dato. Tus partidas, rachas y logros se quedan en este dispositivo. Si inicias sesión en Game Center, tus puntajes y logros se comparten con Game Center de Apple y tu progreso se guarda en tu iCloud."
+          }
+        }
+      }
+    },
+    "Replays don't count toward your score.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Las repeticiones no cuentan para tu puntaje."
+          }
+        }
+      }
+    },
+    "Reset Progress": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Restablecer progreso"
+          }
+        }
+      }
+    },
+    "Reset Progress…": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Restablecer progreso…"
+          }
+        }
+      }
+    },
+    "Reset all progress?": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Restablecer todo el progreso?"
+          }
+        }
+      }
+    },
+    "Restart This Deal": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reiniciar este reparto"
+          }
+        }
+      }
+    },
+    "Sage & Coral": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Salvia y coral"
+          }
+        }
+      }
+    },
+    "Sage & Sand": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Salvia y arena"
+          }
+        }
+      }
+    },
+    "Score": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Puntaje"
+          }
+        }
+      }
+    },
+    "Score %lld": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Puntaje %lld"
+          }
+        }
+      }
+    },
+    "Scores from Game Center · updated just now": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Puntajes de Game Center · actualizado hace un momento"
+          }
+        }
+      }
+    },
+    "Settings": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ajustes"
+          }
+        }
+      }
+    },
+    "Sign in to Game Center in Settings to see leaderboards. Your progress is saved on this device either way.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Inicia sesión en Game Center para ver las clasificaciones. Tu progreso se guarda en este dispositivo de todos modos."
+          }
+        }
+      }
+    },
+    "Signed in as %@": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sesión iniciada como %@"
+          }
+        }
+      }
+    },
+    "Sound": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sonido"
+          }
+        }
+      }
+    },
+    "Standard": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Estándar"
+          }
+        }
+      }
+    },
+    "Steady Hand": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A pulso"
+          }
+        }
+      }
+    },
+    "Stock": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mazo"
+          }
+        }
+      }
+    },
+    "Stock and waste on the left.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mazo y descarte a la izquierda."
+          }
+        }
+      }
+    },
+    "Stock, %lld cards": {
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Stock, %lld card"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Stock, %lld cards"
+                }
+              }
+            }
+          }
+        },
+        "es": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Mazo, %lld carta"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Mazo, %lld cartas"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "Streak": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Racha"
+          }
+        }
+      }
+    },
+    "Take your score below zero.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lleva tu puntaje por debajo de cero."
+          }
+        }
+      }
+    },
+    "Tap a card to send it to its best place, or drag it where you want.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Toca una carta para mandarla a su mejor sitio, o arrástrala a donde quieras."
+          }
+        }
+      }
+    },
+    "Tap or drag": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Toca o arrastra"
+          }
+        }
+      }
+    },
+    "Tap the stock to turn one card. When it runs out, tap again to turn the waste over. As many times as you like.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Toca el mazo para voltear una carta. Cuando se acabe, tócalo otra vez para dar vuelta el descarte. Todas las veces que quieras."
+          }
+        }
+      }
+    },
+    "Tap to move": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tocar para mover"
+          }
+        }
+      }
+    },
+    "Teal & Coral": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Petróleo y coral"
+          }
+        }
+      }
+    },
+    "Ten Wins": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Diez victorias"
+          }
+        }
+      }
+    },
+    "Theme": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Del tema"
+          }
+        }
+      }
+    },
+    "This week": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dificultad de la semana"
+          }
+        }
+      }
+    },
+    "Today": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hoy"
+          }
+        }
+      }
+    },
+    "Today: %@": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hoy: %@"
+          }
+        }
+      }
+    },
+    "Top streak": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mejor racha"
+          }
+        }
+      }
+    },
+    "Turn the waste over": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dar vuelta el descarte"
+          }
+        }
+      }
+    },
+    "Undo": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deshacer"
+          }
+        }
+      }
+    },
+    "Unlocked": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Desbloqueado"
+          }
+        }
+      }
+    },
+    "Version": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Versión"
+          }
+        }
+      }
+    },
+    "Victory": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Victoria"
+          }
+        }
+      }
+    },
+    "Win 10 games.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gana 10 partidas."
+          }
+        }
+      }
+    },
+    "Win 100 games.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gana 100 partidas."
+          }
+        }
+      }
+    },
+    "Win 50 games.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gana 50 partidas."
+          }
+        }
+      }
+    },
+    "Win a daily challenge between midnight and 4 a.m.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gana un reto diario entre la medianoche y las 4 a. m."
+          }
+        }
+      }
+    },
+    "Win in fewer than 100 moves.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gana en menos de 100 movimientos."
+          }
+        }
+      }
+    },
+    "Win without hints.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gana sin pistas."
+          }
+        }
+      }
+    },
+    "Win without recycling the stock.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gana sin reciclar el mazo."
+          }
+        }
+      }
+    },
+    "Win without undo.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gana sin deshacer."
+          }
+        }
+      }
+    },
+    "Win your first game.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gana tu primera partida."
+          }
+        }
+      }
+    },
+    "Wins": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Victorias"
+          }
+        }
+      }
+    },
+    "Won": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ganadas"
+          }
+        }
+      }
+    },
+    "Won · %@": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ganado · %@"
+          }
+        }
+      }
+    },
+    "You won!": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¡Ganaste!"
+          }
+        }
+      }
+    },
+    "Your 5-minute break.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tu pausa de 5 minutos."
+          }
+        }
+      }
+    },
+    "Your games, daily challenge results, streaks, achievements and unlocked rewards will be deleted on this device and in iCloud. Scores already on Game Center leaderboards stay there. This can't be undone.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Se borrarán tus partidas, retos, rachas, logros y recompensas en este dispositivo y en iCloud. Los puntajes que ya están en las clasificaciones de Game Center se quedan ahí. No se puede deshacer."
+          }
+        }
+      }
+    },
+    "Your stats": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tus estadísticas"
+          }
+        }
+      }
+    },
+    "clubs": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "tréboles"
+          }
+        }
+      }
+    },
+    "diamonds": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "diamantes"
+          }
+        }
+      }
+    },
+    "hearts": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "corazones"
+          }
+        }
+      }
+    },
+    "spades": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "picas"
+          }
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}

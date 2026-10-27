@@ -36,6 +36,8 @@ Stack por defecto (cada app puede ajustarlo en su propio CLAUDE.md):
 Cada app vive en su propio directorio en la raíz, con su propio `CLAUDE.md` que contiene el brief y las decisiones específicas:
 
 - `quiet-numbers/` — puzzle de números (emparejar iguales o que sumen 10). Primera app de la familia.
+- `quiet-solitaire/` — solitario clásico (Klondike, robar 1). Segunda app, jugable en el simulador.
+- `QuietKit/` — paquete compartido: `QuietCore` (PRNG, día del reto, rachas, paleta de temas) y `QuietUI` (tema, componentes, hápticos, tonos, Game Center, splash). Lo usa Quiet Solitaire; Quiet Numbers lo adopta en su 1.1.
 
 ## Cómo trabajamos
 
