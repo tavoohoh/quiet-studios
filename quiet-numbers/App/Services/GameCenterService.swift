@@ -1,6 +1,18 @@
 @preconcurrency import GameKit
+import OSLog
 import QuietNumbersCore
 import UIKit
+
+/// Device-only log of what Game Center answers (Console.app; in DEBUG also stdout, which
+/// `devicectl … --console` shows). Nothing leaves the device.
+private let log = Logger(subsystem: "com.tavoohoh.quietnumbers", category: "GameCenter")
+
+private func note(_ message: String, isError: Bool = false) {
+    if isError { log.error("\(message, privacy: .public)") } else { log.info("\(message, privacy: .public)") }
+    #if DEBUG
+    print("[GameCenter] \(message)")
+    #endif
+}
 
 /// Optional Game Center layer. Everything works signed out; local data is the source
 /// of truth and is pushed here when the player is authenticated.
@@ -83,28 +95,44 @@ final class GameCenterService {
             reported.showsCompletionBanner = true
             return reported
         }
-        try? await GKAchievement.report(achievements)
+        do {
+            try await GKAchievement.report(achievements)
+        } catch {
+            note("Reporting achievements failed: \(error)", isError: true)
+        }
     }
 
     /// Daily results are sent whatever they are (the board keeps the most recent one, even
     /// below zero); the classic boards only take real records.
     func submit(_ score: Int, to leaderboard: Leaderboard) async {
         guard isAuthenticated, leaderboard == .daily || score > 0 else { return }
-        try? await GKLeaderboard.submitScore(
-            score, context: 0, player: GKLocalPlayer.local, leaderboardIDs: [leaderboard.rawValue]
-        )
+        do {
+            try await GKLeaderboard.submitScore(
+                score, context: 0, player: GKLocalPlayer.local, leaderboardIDs: [leaderboard.rawValue]
+            )
+            note("Submitted \(score) to \(leaderboard.rawValue)")
+        } catch {
+            note("Submitting \(score) to \(leaderboard.rawValue) failed: \(error)", isError: true)
+        }
     }
 
     func entries(for leaderboard: Leaderboard, friendsOnly: Bool) async throws -> (local: Entry?, top: [Entry]) {
-        guard let board = try await GKLeaderboard.loadLeaderboards(IDs: [leaderboard.rawValue]).first else {
-            return (nil, [])
+        do {
+            guard let board = try await GKLeaderboard.loadLeaderboards(IDs: [leaderboard.rawValue]).first else {
+                note("Leaderboard \(leaderboard.rawValue) not found", isError: true)
+                return (nil, [])
+            }
+            let (local, entries, total) = try await board.loadEntries(
+                for: friendsOnly ? .friendsOnly : .global,
+                timeScope: .allTime,
+                range: NSRange(1...25)
+            )
+            note("\(leaderboard.rawValue): \(entries.count) of \(total) entries, local \(local?.score ?? -1)")
+            return (local.map(Self.entry), entries.map(Self.entry))
+        } catch {
+            note("Loading \(leaderboard.rawValue) failed: \(error)", isError: true)
+            throw error
         }
-        let (local, entries, _) = try await board.loadEntries(
-            for: friendsOnly ? .friendsOnly : .global,
-            timeScope: .allTime,
-            range: NSRange(1...25)
-        )
-        return (local.map(Self.entry), entries.map(Self.entry))
     }
 
     private static func entry(_ entry: GKLeaderboard.Entry) -> Entry {

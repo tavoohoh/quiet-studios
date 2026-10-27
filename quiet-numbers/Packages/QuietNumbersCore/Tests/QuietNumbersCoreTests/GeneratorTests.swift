@@ -23,13 +23,22 @@ import Testing
     }
 
     @Test(arguments: 0..<200)
-    func generatedBoardsHaveMinimumPairs(seed: UInt64) {
+    func generatedBoardsHaveFewStartingPairs(seed: UInt64) {
         var random = SeededRandom(seed: seed)
-        let board = BoardGenerator.makeBoard(using: &random)
-        #expect(board.cells.count == BoardGenerator.initialCount)
-        #expect(board.cells.allSatisfy { (1...9).contains($0.value) })
-        #expect(MatchRules.validPairs(on: board).count >= BoardGenerator.minimumPairs)
-        #expect(BoardGenerator.isPairable(board.cells.map(\.value)))
+        for stage in 1...6 {
+            let board = BoardGenerator.makeBoard(using: &random, stage: stage)
+            #expect(board.cells.count == BoardGenerator.initialCount(forStage: stage))
+            #expect(board.cells.allSatisfy { (1...9).contains($0.value) })
+            #expect(BoardGenerator.startingPairs(forStage: stage).contains(MatchRules.validPairs(on: board).count))
+            #expect(BoardGenerator.isPairable(board.cells.map(\.value)))
+        }
+    }
+
+    @Test(arguments: 0..<50)
+    func layoutStartsWithoutPairs(seed: UInt64) {
+        var random = SeededRandom(seed: seed)
+        let values = BoardGenerator.valuesWithoutPairs(54, using: &random)
+        #expect(MatchRules.validPairs(on: Board(values: values)).isEmpty)
     }
 
     @Test func pairableNeedsEveryFamilyEven() {
@@ -55,5 +64,5 @@ import Testing
         #expect(values == Self.golden20261025)
     }
 
-    static let golden20261025 = [8, 4, 3, 4, 9, 8, 5, 1, 1, 1, 1, 8, 4, 6, 4, 3, 5, 7, 9, 1, 2, 7, 9, 6, 9, 8, 9, 4, 1, 4, 1, 4, 6, 6, 4, 4, 7, 2, 4, 7, 9, 9]
+    static let golden20261025 = [5, 6, 9, 8, 7, 6, 7, 4, 4, 3, 8, 3, 4, 7, 8, 9, 2, 9, 6, 5, 9, 8, 5, 7, 4, 5, 7, 1, 7, 4, 7, 6, 8, 1, 2, 1, 6, 2, 1, 1, 1, 3]
 }

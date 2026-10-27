@@ -112,13 +112,13 @@ import Testing
     @Test func laterStagesAreHarder() {
         #expect((1...6).map(BoardGenerator.initialCount(forStage:)) == [42, 44, 48, 50, 54, 54])
         #expect((1...6).map(GameSession.plusUses(forStage:)) == [5, 5, 4, 4, 3, 3])
-        #expect((1...6).map(BoardGenerator.minimumPairs(forStage:)) == [3, 3, 2, 2, 1, 1])
+        #expect((1...6).map(BoardGenerator.startingPairs(forStage:)) == [3...5, 2...4, 2...3, 2...3, 2...3, 2...3])
         var session = GameSession(board: makeBoard([[0, 0, 0, 0, 0, 0, 0, 2, 8]]), stage: 4)
         _ = session.match(at: 7, 8)
         #expect(session.stage == 5)
         #expect(session.plusRemaining == 3)
         #expect(session.board.cells.count == 54)
-        #expect(MatchRules.validPairs(on: session.board).count >= 1)
+        #expect(BoardGenerator.startingPairs(forStage: 5).contains(MatchRules.validPairs(on: session.board).count))
     }
 
     @Test func hintsAndPlusAreCountedPerBoard() {

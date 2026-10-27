@@ -1,6 +1,6 @@
 import XCTest
 
-/// Plays a few moves on a known board. `-seedKey 2026-10-25` produces:
+/// Plays a few moves on a known board (the 2026-10-25 daily board of the first generator):
 ///   8 4 3 4 9 8 5 1 1
 ///   1 1 8 4 6 4 3 5 7
 ///   9 1 2 7 9 6 9 8 9
@@ -10,7 +10,7 @@ final class GameplayUITests: XCTestCase {
     @MainActor
     func testMatchingAndAddingNumbers() {
         let app = XCUIApplication()
-        app.launchArguments = ["-startGame", "-seedKey", "2026-10-25"]
+        app.launchArguments = ["-startGame", "-boardValues", Self.board]
         app.launch()
 
         let score = app.staticTexts["score"]
@@ -49,6 +49,8 @@ final class GameplayUITests: XCTestCase {
 
         snapshot(app, "added")
     }
+
+    private static let board = "8,4,3,4,9,8,5,1,1,1,1,8,4,6,4,3,5,7,9,1,2,7,9,6,9,8,9,4,1,4,1,4,6,6,4,4,7,2,4,7,9,9"
 
     @MainActor
     private func snapshot(_ app: XCUIApplication, _ name: String) {
@@ -113,6 +115,8 @@ final class EffectsUITests: XCTestCase {
         XCTAssertTrue(app.staticTexts["No pairs. Try +"].waitForExistence(timeout: 1))
         snapshot(app, "empty-hint")
     }
+
+    private static let board = "8,4,3,4,9,8,5,1,1,1,1,8,4,6,4,3,5,7,9,1,2,7,9,6,9,8,9,4,1,4,1,4,6,6,4,4,7,2,4,7,9,9"
 
     @MainActor
     private func snapshot(_ app: XCUIApplication, _ name: String) {
