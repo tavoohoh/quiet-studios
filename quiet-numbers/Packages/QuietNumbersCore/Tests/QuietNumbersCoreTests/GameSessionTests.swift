@@ -113,6 +113,7 @@ import Testing
         #expect((1...6).map(BoardGenerator.initialCount(forStage:)) == [42, 44, 48, 50, 54, 54])
         #expect((1...6).map(GameSession.plusUses(forStage:)) == [5, 5, 4, 4, 3, 3])
         #expect((1...6).map(BoardGenerator.startingPairs(forStage:)) == [3...5, 2...4, 2...3, 2...3, 2...3, 2...3])
+        #expect((1...6).map(BoardGenerator.typicalMoves(forStage:)) == [8, 7, 6, 6, 5, 5])
         var session = GameSession(board: makeBoard([[0, 0, 0, 0, 0, 0, 0, 2, 8]]), stage: 4)
         _ = session.match(at: 7, 8)
         #expect(session.stage == 5)

@@ -223,8 +223,8 @@ final class AppModel {
                 let hour = Calendar.current.component(.hour, from: AppClock.now)
                 record(.dailyCompleted(currentStreak: currentStreak, localHour: hour))
             }
-        case .practice:
-            break
+        case .practice(let dayKey):
+            if session.isCompleted { record(.practiceCompleted(dayKey: dayKey)) }
         }
         record(.gameFinished(classicScore: kind == .classic ? session.score : nil))
         refreshSavedGames()

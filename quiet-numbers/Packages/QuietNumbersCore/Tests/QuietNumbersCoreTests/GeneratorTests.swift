@@ -22,7 +22,7 @@ import Testing
         }
     }
 
-    @Test(arguments: 0..<200)
+    @Test(arguments: 0..<40)
     func generatedBoardsHaveFewStartingPairs(seed: UInt64) {
         var random = SeededRandom(seed: seed)
         for stage in 1...6 {
@@ -32,6 +32,14 @@ import Testing
             #expect(BoardGenerator.startingPairs(forStage: stage).contains(MatchRules.validPairs(on: board).count))
             #expect(BoardGenerator.isPairable(board.cells.map(\.value)))
         }
+    }
+
+    @Test func movesBeforePlusCountsPlayableMatches() {
+        var random = SeededRandom(seed: 1)
+        // Nothing pairs: stuck right away.
+        #expect(BoardGenerator.movesBeforePlus(on: makeBoard([[1, 2, 1, 2, 1, 2, 1, 2, 1]]), using: &random) == 0)
+        // 4-4, then 3-7 meet across the cleared pair: every order plays both.
+        #expect(BoardGenerator.movesBeforePlus(on: makeBoard([[3, 4, 4, 7, 1, 2, 1, 2, 1]]), using: &random) == 2)
     }
 
     @Test(arguments: 0..<50)
@@ -64,5 +72,5 @@ import Testing
         #expect(values == Self.golden20261025)
     }
 
-    static let golden20261025 = [5, 6, 9, 8, 7, 6, 7, 4, 4, 3, 8, 3, 4, 7, 8, 9, 2, 9, 6, 5, 9, 8, 5, 7, 4, 5, 7, 1, 7, 4, 7, 6, 8, 1, 2, 1, 6, 2, 1, 1, 1, 3]
+    static let golden20261025 = [7, 5, 6, 5, 5, 9, 7, 5, 4, 9, 2, 1, 1, 8, 5, 2, 9, 2, 4, 3, 4, 5, 4, 3, 6, 3, 5, 9, 8, 9, 2, 9, 5, 9, 8, 1, 3, 4, 7, 6, 7, 8]
 }

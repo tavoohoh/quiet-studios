@@ -105,6 +105,24 @@ import Testing
         #expect(old.gamesPlayed == 1)
     }
 
+    @Test func practiceMarksTheDayAndNothingElse() throws {
+        var progress = PlayerProgress()
+        let unlocked = progress.record(.practiceCompleted(dayKey: "2026-10-01"))
+        #expect(unlocked.isEmpty)
+        #expect(progress.practicedDays == ["2026-10-01"])
+        #expect(progress.dailiesCompleted == 0 && progress.bestStreak == 0)
+
+        var other = PlayerProgress()
+        _ = other.record(.practiceCompleted(dayKey: "2026-10-02"))
+        #expect(progress.merged(with: other).practicedDays == ["2026-10-01", "2026-10-02"])
+
+        // Progress saved before practice days existed still loads.
+        var json = try JSONSerialization.jsonObject(with: JSONEncoder().encode(progress)) as! [String: Any]
+        json["practicedDayKeys"] = nil
+        let old = try JSONDecoder().decode(PlayerProgress.self, from: JSONSerialization.data(withJSONObject: json))
+        #expect(old.practicedDays.isEmpty)
+    }
+
     @Test func sweeperNeeds100Rows() {
         var progress = PlayerProgress()
         for _ in 0..<49 { _ = progress.record(.matched(outcome(rows: [0, 1]))) }

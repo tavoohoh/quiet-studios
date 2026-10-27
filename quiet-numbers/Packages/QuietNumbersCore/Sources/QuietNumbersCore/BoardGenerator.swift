@@ -19,12 +19,23 @@ public enum BoardGenerator {
         }
     }
 
-    /// A fresh board for `stage` with `startingPairs` valid pairs, where every number could
-    /// in principle find a partner (see `isPairable`).
+    /// …but playing them should open more: a typical player (random order) gets at least
+    /// this many matches before needing + (8, 7, then 6, then 5 from stage 5).
+    public static func typicalMoves(forStage stage: Int) -> Int {
+        switch stage {
+        case ...1: 8
+        case 2: 7
+        case 3...4: 6
+        default: 5
+        }
+    }
+
+    /// A fresh board for `stage` with `startingPairs` valid pairs that opens up to at least
+    /// `typicalMoves`, where every number could in principle find a partner (see `isPairable`).
     ///
     /// Numbers are laid out so no neighbours pair, then a few cells are changed to match a
-    /// neighbour. Candidates outside the range are discarded and the generator keeps
-    /// advancing, so the result stays deterministic for a given generator state.
+    /// neighbour. Candidates that miss are discarded and the generator keeps advancing, so
+    /// the result stays deterministic for a given generator state.
     public static func makeBoard(using random: inout SeededRandom, stage: Int = 1) -> Board {
         let count = initialCount(forStage: stage)
         let range = startingPairs(forStage: stage)
@@ -35,10 +46,32 @@ public enum BoardGenerator {
             }
             guard isPairable(values) else { continue }
             let board = Board(values: values)
-            if range.contains(MatchRules.validPairs(on: board).count) {
+            guard range.contains(MatchRules.validPairs(on: board).count) else { continue }
+            if movesBeforePlus(on: board, using: &random) >= typicalMoves(forStage: stage) {
                 return board
             }
         }
+    }
+
+    /// Median matches over a few random playouts until no pair is left (no +). Plays on the
+    /// board directly, like `GameSession.match` (a session would generate boards itself).
+    static func movesBeforePlus(on board: Board, playouts: Int = 15, using random: inout SeededRandom) -> Int {
+        var results: [Int] = []
+        for _ in 0..<playouts {
+            var current = board
+            var moves = 0
+            while !current.isEmpty {
+                let pairs = MatchRules.validPairs(on: current)
+                guard !pairs.isEmpty else { break }
+                let pair = pairs[random.nextInt(in: 0...(pairs.count - 1))]
+                current.clear(at: pair.first)
+                current.clear(at: pair.second)
+                current.removeClearedRows([current.row(of: pair.first), current.row(of: pair.second)])
+                moves += 1
+            }
+            results.append(moves)
+        }
+        return results.sorted()[playouts / 2]
     }
 
     /// In reading order, each number avoids the families of the neighbours already placed

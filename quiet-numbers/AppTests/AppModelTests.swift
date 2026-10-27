@@ -121,6 +121,20 @@ import Testing
         #expect(try #require(app.activeGame).session.scoring.hintCost == 10)
     }
 
+    @Test func clearedPracticeMarksTheDayOnly() {
+        let app = AppModel(persistence: PersistenceService(store: .inMemory))
+        let day = "2026-10-01"
+        let model = GameModel(session: GameSession(values: [4, 4], mode: .daily(dayKey: day), seed: 0))
+        app.start(model, as: .practice(dayKey: day))
+        model.tap(model.session.board.cells[0])
+        model.tap(model.session.board.cells[1])
+        app.sessionChanged()
+        #expect(model.session.isCompleted)
+        #expect(app.progress.practicedDays == [day])
+        #expect(app.persistence.dailies[day] == nil)
+        #expect(app.longestStreak == 0)
+    }
+
     @Test func newBestShowsDuringTheGame() throws {
         let app = AppModel(persistence: PersistenceService(store: .inMemory))
         app.newClassic()

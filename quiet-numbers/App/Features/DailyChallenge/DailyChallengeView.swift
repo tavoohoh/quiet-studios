@@ -28,11 +28,19 @@ struct DailyChallengeView: View {
                 )
 
                 VStack(spacing: 6) {
-                    CalendarView(month: $month, todayKey: today, records: app.persistence.dailies, onSelect: onPlay)
+                    CalendarView(
+                        month: $month, todayKey: today, records: app.persistence.dailies,
+                        practiced: app.progress.practicedDays, onSelect: onPlay
+                    )
                     Text("Next challenge in \(countdown)")
                         .font(.subheadline)
                         .foregroundStyle(appearance.theme.muted)
                         .padding(.top, 4)
+                    Text("Past days are practice: they don't count toward your streak.")
+                        .font(.footnote)
+                        .foregroundStyle(appearance.theme.muted)
+                        .multilineTextAlignment(.center)
+                        .fixedSize(horizontal: false, vertical: true)
                         .padding(.bottom, 2)
                 }
                 .padding(.horizontal, 12)

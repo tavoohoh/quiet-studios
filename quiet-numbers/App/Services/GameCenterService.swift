@@ -128,7 +128,8 @@ final class GameCenterService {
                 range: NSRange(1...25)
             )
             note("\(leaderboard.rawValue): \(entries.count) of \(total) entries, local \(local?.score ?? -1)")
-            return (local.map(Self.entry), entries.map(Self.entry))
+            // With no score on this board (or today's occurrence) yet, the local entry has rank 0.
+            return (local.flatMap { $0.rank > 0 ? Self.entry($0) : nil }, entries.map(Self.entry))
         } catch {
             note("Loading \(leaderboard.rawValue) failed: \(error)", isError: true)
             throw error

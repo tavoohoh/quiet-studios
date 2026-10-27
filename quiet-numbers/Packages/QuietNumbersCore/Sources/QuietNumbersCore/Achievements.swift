@@ -56,6 +56,8 @@ public enum ProgressEvent: Sendable {
     case classicScore(Int)
     /// A daily challenge was completed (board cleared) on its own day.
     case dailyCompleted(currentStreak: Int, localHour: Int)
+    /// A past day's board was cleared as practice: shown on the calendar, nothing else.
+    case practiceCompleted(dayKey: String)
 }
 
 /// Lifetime counters and unlocked achievements. Stored locally; works without Game Center.
@@ -75,8 +77,12 @@ public struct PlayerProgress: Codable, Hashable, Sendable {
     /// Games finished, plus classic games left after playing. Optional so progress saved
     /// before it still loads (it then starts from `gamesFinished`).
     private var gamesPlayedCount: Int?
+    /// Days (`yyyy-MM-dd`) cleared as practice. Optional so progress saved before it still loads.
+    private var practicedDayKeys: Set<String>?
 
     public var gamesPlayed: Int { gamesPlayedCount ?? gamesFinished }
+    /// Past days cleared as practice. They don't count toward streaks or daily achievements.
+    public var practicedDays: Set<String> { practicedDayKeys ?? [] }
 
     public init() {}
 
@@ -127,6 +133,8 @@ public struct PlayerProgress: Codable, Hashable, Sendable {
             dailiesCompleted += 1
             bestStreak = max(bestStreak, streak)
             if (0..<4).contains(hour) { hits.append(.nightOwl) }
+        case .practiceCompleted(let dayKey):
+            practicedDayKeys = practicedDays.union([dayKey])
         }
         hits += Achievement.allCases.filter { count(for: $0) >= $0.target }
         return unlock(hits)
@@ -146,6 +154,7 @@ public struct PlayerProgress: Codable, Hashable, Sendable {
         result.bestEqualPairsRun = max(bestEqualPairsRun, other.bestEqualPairsRun)
         result.bestScore = max(bestScore, other.bestScore)
         result.gamesPlayedCount = max(gamesPlayed, other.gamesPlayed)
+        result.practicedDayKeys = practicedDays.union(other.practicedDays)
         return result
     }
 

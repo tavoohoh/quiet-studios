@@ -1,13 +1,14 @@
 import QuietNumbersCore
 import SwiftUI
 
-/// Month grid of daily challenges. Completed days are filled, played ones outlined, and
-/// days completed in a row are joined by a band (within a week). Days within the replay
-/// window can be tapped to play them unscored.
+/// Month grid of daily challenges. Completed days are filled, played ones outlined, past
+/// days cleared as practice softly tinted, and days completed in a row are joined by a band
+/// (within a week). Days within the replay window can be tapped to play them unscored.
 struct CalendarView: View {
     @Binding var month: Date
     let todayKey: String
     let records: [String: DailyRecord]
+    let practiced: Set<String>
     let onSelect: (String) -> Void
 
     @Environment(\.appearance) private var appearance
@@ -64,6 +65,7 @@ struct CalendarView: View {
                             dayKey: dayKey(for: day),
                             todayKey: todayKey,
                             record: records[dayKey(for: day)],
+                            isPracticed: practiced.contains(dayKey(for: day)),
                             isPlayable: isPlayable(dayKey(for: day)),
                             joinsPrevious: column != 0 && isCompleted(day) && isCompleted(day - 1),
                             joinsNext: column != 6 && isCompleted(day) && isCompleted(day + 1),
@@ -136,6 +138,8 @@ private struct DayCell: View {
     let dayKey: String
     let todayKey: String
     let record: DailyRecord?
+    /// Cleared later as practice; a day completed on time keeps its own look.
+    let isPracticed: Bool
     let isPlayable: Bool
     /// Completed, like the day before (or after) in the same week: the band reaches it.
     let joinsPrevious: Bool
@@ -153,12 +157,14 @@ private struct DayCell: View {
             onSelect(dayKey)
         } label: {
             Text(day, format: .number)
-                .font(.system(isRegular ? .title3 : .callout, design: .rounded, weight: record?.isCompleted == true || isToday ? .bold : .regular).monospacedDigit())
+                .font(.system(isRegular ? .title3 : .callout, design: .rounded, weight: record?.isCompleted == true || isPracticed || isToday ? .bold : .regular).monospacedDigit())
                 .foregroundStyle(foreground)
                 .frame(width: circle, height: circle)
                 .background {
                     if record?.isCompleted == true {
                         Circle().fill(appearance.theme.primary)
+                    } else if isPracticed {
+                        Circle().fill(appearance.theme.primary.opacity(0.22))
                     } else if record?.isFinished == true {
                         Circle().strokeBorder(appearance.theme.primary, lineWidth: 1.5)
                     }
@@ -202,11 +208,13 @@ private struct DayCell: View {
     private var foreground: Color {
         if record?.isCompleted == true { return appearance.theme.onPrimary }
         if isToday { return appearance.theme.accent }
+        if isPracticed { return appearance.theme.primary }
         return isPlayable ? appearance.theme.ink : appearance.theme.muted.opacity(0.6)
     }
 
     private var accessibilityStatus: Text {
         if record?.isCompleted == true { return Text("Completed") }
+        if isPracticed { return Text("Practiced") }
         if record?.isFinished == true { return Text("Played") }
         return Text(verbatim: "")
     }

@@ -983,6 +983,16 @@
         }
       }
     },
+    "Past days are practice: they don't count toward your streak.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Los días pasados son práctica: no cuentan para tu racha."
+          }
+        }
+      }
+    },
     "Plain": {
       "localizations": {
         "es": {
@@ -1049,6 +1059,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Práctica · %@"
+          }
+        }
+      }
+    },
+    "Practiced": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Practicado"
           }
         }
       }
