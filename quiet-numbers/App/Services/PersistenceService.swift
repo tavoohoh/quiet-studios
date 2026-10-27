@@ -55,13 +55,27 @@ struct DailyRecord: Equatable, Codable {
 @MainActor
 @Observable
 final class PersistenceService {
-    enum Slot: String {
+    enum Slot: Equatable {
         case classic
         /// The scored daily attempt in progress (its day is inside the session).
         case daily
+        /// A day replayed as practice, kept until it ends or leaves the replay window.
+        case practice(dayKey: String)
+
+        static let practicePrefix = "practice-"
+
+        var rawValue: String {
+            switch self {
+            case .classic: "classic"
+            case .daily: "daily"
+            case .practice(let dayKey): Self.practicePrefix + dayKey
+            }
+        }
     }
 
     private(set) var dailies: [String: DailyRecord] = [:]
+    /// Days with a practice game saved halfway (for "Continue" and the calendar).
+    private(set) var practiceInProgress: Set<String> = []
 
     /// Kept alive for as long as `context` is used.
     private let container: ModelContainer
@@ -103,6 +117,7 @@ final class PersistenceService {
             fatalError("Couldn't open the local store: \(error)")
         }
         reloadDailies()
+        reloadPractice()
     }
 
     var completedDays: Set<String> {
@@ -125,12 +140,23 @@ final class PersistenceService {
             context.insert(StoredGame(slot: slot.rawValue, data: data))
         }
         save()
+        if case .practice = slot { reloadPractice() }
     }
 
     func deleteGame(_ slot: Slot) {
         guard let stored = storedGame(slot) else { return }
         context.delete(stored)
         save()
+        if case .practice = slot { reloadPractice() }
+    }
+
+    /// Drops practice games for days that can no longer be replayed.
+    func deletePractice(before oldestDayKey: String) {
+        for game in practiceGames() where game.slot.dropFirst(Slot.practicePrefix.count) < oldestDayKey {
+            context.delete(game)
+        }
+        save()
+        reloadPractice()
     }
 
     // MARK: Daily challenge
@@ -153,6 +179,20 @@ final class PersistenceService {
         stored.isFinished = true
         stored.isCompleted = isCompleted
         stored.finishedAt = .now
+        save()
+        reloadDailies()
+    }
+
+    /// A scored attempt still being played (e.g. past its goal): keeps its score and
+    /// completion without marking it finished.
+    func updateDaily(_ dayKey: String, score: Int, isCompleted: Bool) {
+        let stored = storedDaily(dayKey) ?? {
+            let new = StoredDaily(dayKey: dayKey)
+            context.insert(new)
+            return new
+        }()
+        stored.score = score
+        stored.isCompleted = stored.isCompleted || isCompleted
         save()
         reloadDailies()
     }
@@ -206,6 +246,7 @@ final class PersistenceService {
         try? context.delete(model: StoredProgress.self)
         save()
         reloadDailies()
+        reloadPractice()
     }
 
     private func storedGame(_ slot: Slot) -> StoredGame? {
@@ -222,6 +263,15 @@ final class PersistenceService {
         dailies = Dictionary(uniqueKeysWithValues: all.map {
             ($0.dayKey, DailyRecord(score: $0.score, isFinished: $0.isFinished, isCompleted: $0.isCompleted))
         })
+    }
+
+    private func practiceGames() -> [StoredGame] {
+        let prefix = Slot.practicePrefix
+        return (try? context.fetch(FetchDescriptor<StoredGame>(predicate: #Predicate { $0.slot.starts(with: prefix) }))) ?? []
+    }
+
+    private func reloadPractice() {
+        practiceInProgress = Set(practiceGames().map { String($0.slot.dropFirst(Slot.practicePrefix.count)) })
     }
 
     private func save() {

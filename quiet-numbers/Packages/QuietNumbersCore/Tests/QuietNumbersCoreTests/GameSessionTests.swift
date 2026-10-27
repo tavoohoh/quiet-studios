@@ -167,6 +167,41 @@ import Testing
         #expect(session.stage == 1)
     }
 
+    @Test func dailyGoesOnToNextStageUntilTheGoal() {
+        let board = makeBoard([[0, 0, 0, 0, 0, 0, 0, 2, 8]])
+        var session = GameSession(board: board, mode: .daily(dayKey: "2026-10-27"), goal: 400)
+        let cleared = session.match(at: 7, 8)
+        #expect(cleared?.boardCleared == true && cleared?.reachedGoal == false)
+        #expect(session.stage == 2 && !session.isCompleted && !session.isOver)
+        #expect(session.board.cells.count == BoardGenerator.initialCount(forStage: 2))
+
+        var near = GameSession(board: board, mode: .daily(dayKey: "2026-10-27"), score: 300, goal: 400)
+        let outcome = near.match(at: 7, 8)
+        #expect(outcome?.reachedGoal == true)
+        #expect(near.isCompleted)
+        // Reaching the goal doesn't end it: the player can keep going for a higher score.
+        #expect(!near.isOver && near.stage == 2)
+    }
+
+    @Test func hintsAfterTheGoalDontUndoCompletion() throws {
+        var session = GameSession(board: makeBoard([[4, 4, 1, 2, 1, 2, 1, 2, 3, 7]]), mode: .daily(dayKey: "2026-10-27"), score: 399, goal: 400)
+        _ = session.match(at: 0, 1)
+        #expect(session.isCompleted)
+        _ = session.useHint()
+        #expect(session.score < 400 && session.isCompleted)
+    }
+
+    @Test func dailiesSavedBeforeGoalsKeepTheOldRule() throws {
+        let board = makeBoard([[0, 0, 0, 0, 0, 0, 0, 2, 8]])
+        let session = GameSession(board: board, mode: .daily(dayKey: "2026-10-26"), goal: 500)
+        var json = try JSONSerialization.jsonObject(with: JSONEncoder().encode(session)) as! [String: Any]
+        json["goal"] = nil
+        var old = try JSONDecoder().decode(GameSession.self, from: JSONSerialization.data(withJSONObject: json))
+        #expect(old.goal == nil)
+        _ = old.match(at: 7, 8)
+        #expect(old.isCompleted && old.isOver && old.stage == 1)
+    }
+
     @Test func hintReturnsValidPairAndCostsPoints() throws {
         var session = GameSession(board: makeBoard([[1, 2, 3, 3, 1, 2, 1, 2, 1]]), score: 25)
         let result = session.useHint()

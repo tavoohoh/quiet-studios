@@ -66,6 +66,14 @@ import Testing
         #expect(DailyChallenge.session(forDayKey: "2026-10-25").board != DailyChallenge.session(forDayKey: "2026-10-26").board)
     }
 
+    @Test func dailyGoalIsStableAndInRange() {
+        let goals = (1...60).compactMap { DailyChallenge.dayKey("2026-10-01", addingDays: $0) }.map(DailyChallenge.goal(forDayKey:))
+        #expect(goals.allSatisfy { (400...700).contains($0) && $0.isMultiple(of: 50) })
+        #expect(Set(goals).count > 3)
+        #expect(DailyChallenge.goal(forDayKey: "2026-10-25") == DailyChallenge.goal(forDayKey: "2026-10-25"))
+        #expect(DailyChallenge.session(forDayKey: "2026-10-25").goal == DailyChallenge.goal(forDayKey: "2026-10-25"))
+    }
+
     /// Golden board for a fixed day. iPhone, iPad and Mac must all produce exactly this.
     @Test func dailyBoardGolden() {
         let values = DailyChallenge.session(forDayKey: "2026-10-25").board.cells.map(\.value)

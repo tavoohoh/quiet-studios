@@ -135,6 +135,72 @@ import Testing
         #expect(app.longestStreak == 0)
     }
 
+    @Test func practiceIsSavedAndResumed() throws {
+        let persistence = PersistenceService(store: .inMemory)
+        let app = AppModel(persistence: persistence)
+        let day = try #require(DailyChallenge.dayKey(app.todayKey, addingDays: -3))
+        app.playDaily(day)
+        let game = try #require(app.activeGame)
+        let pair = try #require(MatchRules.validPairs(on: game.session.board).first)
+        let cells = game.session.board.cells
+        game.tap(cells[pair.first])
+        game.tap(cells[pair.second])
+        app.sessionChanged()
+        #expect(app.daysInProgress == [day])
+
+        // Leaving and coming back (even after relaunching) continues the same game.
+        let played = game.session
+        app.playDaily(day)
+        #expect(app.activeGame?.session == played)
+        #expect(AppModel(persistence: persistence).daysInProgress == [day])
+        // Today's scored attempt stays separate.
+        #expect(persistence.dailies[day] == nil)
+    }
+
+    @Test func finishedPracticeIsDropped() {
+        let persistence = PersistenceService(store: .inMemory)
+        let app = AppModel(persistence: persistence)
+        let day = "2026-10-01"
+        let model = GameModel(session: GameSession(values: [4, 4], mode: .daily(dayKey: day), seed: 0))
+        app.start(model, as: .practice(dayKey: day))
+        persistence.saveGame(model.session, in: .practice(dayKey: day))
+        model.tap(model.session.board.cells[0])
+        model.tap(model.session.board.cells[1])
+        app.sessionChanged()
+        #expect(persistence.practiceInProgress.isEmpty)
+    }
+
+    @Test func practiceOutsideTheReplayWindowIsDropped() {
+        let persistence = PersistenceService(store: .inMemory)
+        let session = DailyChallenge.session(forDayKey: "2026-08-01")
+        persistence.saveGame(session, in: .practice(dayKey: "2026-08-01"))
+        persistence.saveGame(session, in: .practice(dayKey: "2026-10-20"))
+        persistence.deletePractice(before: "2026-09-27")
+        #expect(persistence.practiceInProgress == ["2026-10-20"])
+    }
+
+    @Test func reachingTheGoalCompletesTheDayOnce() {
+        let app = AppModel(persistence: PersistenceService(store: .inMemory))
+        let today = app.todayKey
+        let board = Board(values: [4, 4, 1, 2, 1, 2, 1, 2, 1, 3, 7, 2, 1, 2, 1, 2, 1, 2])
+        let model = GameModel(session: GameSession(board: board, mode: .daily(dayKey: today), score: 399, goal: 400))
+        app.start(model, as: .daily(dayKey: today))
+        model.tap(model.session.board.cells[0])
+        model.tap(model.session.board.cells[1])
+        app.sessionChanged()
+        #expect(model.session.isCompleted && !model.session.isOver)
+        #expect(app.persistence.dailies[today]?.isCompleted == true)
+        #expect(app.currentStreak == 1)
+        #expect(app.progress.dailiesCompleted == 1)
+
+        // Playing on after the goal updates the score but doesn't count the day again.
+        model.tap(model.session.board.cells[9])
+        model.tap(model.session.board.cells[10])
+        app.sessionChanged()
+        #expect(app.progress.dailiesCompleted == 1)
+        #expect(app.persistence.dailies[today]?.score == model.session.score)
+    }
+
     @Test func newBestShowsDuringTheGame() throws {
         let app = AppModel(persistence: PersistenceService(store: .inMemory))
         app.newClassic()

@@ -192,9 +192,13 @@ final class GameModel {
         )
         onEvent?(.matched(outcome))
         lastOutcome = outcome
+        if outcome.reachedGoal {
+            feedbackID += 1
+            praise = Praise(id: feedbackID, text: "Goal reached!", delay: effectsDelay)
+        }
         if session.stage != stage {
             stageBanner = session.stage
-        } else if let text = praiseText(for: outcome) {
+        } else if !outcome.reachedGoal, let text = praiseText(for: outcome) {
             feedbackID += 1
             praise = Praise(id: feedbackID, text: text, delay: effectsDelay)
         }

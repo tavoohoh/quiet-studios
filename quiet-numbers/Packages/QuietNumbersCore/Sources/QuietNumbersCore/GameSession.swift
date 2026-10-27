@@ -28,7 +28,7 @@ public struct Scoring: Codable, Hashable, Sendable {
 
 public enum GameMode: Codable, Hashable, Sendable {
     case classic
-    /// One stage only. `dayKey` is `yyyy-MM-dd` (UTC).
+    /// Stages like classic until the day's `goal` score. `dayKey` is `yyyy-MM-dd` (UTC).
     case daily(dayKey: String)
 }
 
@@ -48,6 +48,8 @@ public struct MatchOutcome: Equatable, Sendable {
     /// Hints used on this board, and whether + was used on it (up to this match).
     public var hintsOnBoard = 0
     public var usedPlusOnBoard = false
+    /// This match took the score to the daily goal.
+    public var reachedGoal = false
 }
 
 /// A full game: board, score, stages and the + budget.
@@ -82,24 +84,29 @@ public struct GameSession: Codable, Hashable, Sendable {
     public private(set) var hintsUsed = 0
     /// Valid matches in a row. A miss or a hint resets it; + doesn't.
     public private(set) var streak = 0
-    /// Daily challenge only: the board was cleared.
+    /// Daily challenge only: the goal was reached (or, in games saved before goals, the
+    /// board was cleared). It stays set even if hints take the score back down.
     public private(set) var isCompleted = false
+    /// Daily challenge only: the score that completes it. `nil` in games saved before goals,
+    /// which keep the old rule (one stage, completed by clearing it).
+    public private(set) var goal: Int?
     /// `hintsUsed` when this board started. Optional so games saved before it still load.
     private var hintsAtBoardStart: Int?
     private var random: SeededRandom
     private var undoPoint: UndoPoint?
 
-    public init(mode: GameMode = .classic, seed: UInt64, scoring: Scoring = .standard) {
+    public init(mode: GameMode = .classic, seed: UInt64, scoring: Scoring = .standard, goal: Int? = nil) {
         self.mode = mode
         self.scoring = scoring
+        self.goal = goal
         random = SeededRandom(seed: seed)
         board = BoardGenerator.makeBoard(using: &random)
     }
 
     /// Starts from exact numbers instead of a generated board (tutorials, UI tests).
     /// Later stages are generated from `seed`.
-    public init(values: [Int], mode: GameMode = .classic, seed: UInt64, scoring: Scoring = .standard) {
-        self.init(mode: mode, seed: seed, scoring: scoring)
+    public init(values: [Int], mode: GameMode = .classic, seed: UInt64, scoring: Scoring = .standard, goal: Int? = nil) {
+        self.init(mode: mode, seed: seed, scoring: scoring, goal: goal)
         board = Board(values: values)
     }
 
@@ -114,8 +121,11 @@ public struct GameSession: Codable, Hashable, Sendable {
     /// Anything was played: a match, a + or a hint.
     public var hasMoves: Bool { score != 0 || stage > 1 || hintsUsed > 0 || usedPlusOnBoard }
 
-    /// No pairs left and no + uses left.
-    public var isOver: Bool { isCompleted || (!hasValidPair && plusRemaining == 0) }
+    /// No pairs left and no + uses left. A daily with a goal goes on after reaching it, for
+    /// a higher score; one saved before goals ends when its board is cleared.
+    public var isOver: Bool {
+        (isCompleted && goal == nil) || (!hasValidPair && plusRemaining == 0)
+    }
 
     /// The last match or + can be taken back: one step only, not across a cleared
     /// board, and not once the game is over.
@@ -146,6 +156,8 @@ public struct GameSession: Codable, Hashable, Sendable {
         }
         score += points
         streak += 1
+        let reachedGoal = !isCompleted && goal.map { score >= $0 } == true
+        if reachedGoal { isCompleted = true }
         undoPoint = boardCleared ? nil : undo
         let hintsOnBoard = self.hintsOnBoard, usedPlusOnBoard = self.usedPlusOnBoard
         if boardCleared { advanceStage() }
@@ -159,7 +171,8 @@ public struct GameSession: Codable, Hashable, Sendable {
             boardCleared: boardCleared,
             stage: stage,
             hintsOnBoard: hintsOnBoard,
-            usedPlusOnBoard: usedPlusOnBoard
+            usedPlusOnBoard: usedPlusOnBoard,
+            reachedGoal: reachedGoal
         )
     }
 
@@ -214,9 +227,9 @@ public struct GameSession: Codable, Hashable, Sendable {
 
     private mutating func advanceStage() {
         switch mode {
-        case .daily:
+        case .daily where goal == nil:
             isCompleted = true
-        case .classic:
+        case .daily, .classic:
             stage += 1
             plusRemaining = Self.plusUses(forStage: stage)
             hintsAtBoardStart = hintsUsed
@@ -227,8 +240,8 @@ public struct GameSession: Codable, Hashable, Sendable {
 
 extension GameSession {
     /// Starts from a hand-made position (tests, App Store screenshots).
-    public init(board: Board, mode: GameMode = .classic, seed: UInt64 = 0, plusRemaining: Int = maxPlusUses, stage: Int = 1, score: Int = 0) {
-        self.init(mode: mode, seed: seed)
+    public init(board: Board, mode: GameMode = .classic, seed: UInt64 = 0, plusRemaining: Int = maxPlusUses, stage: Int = 1, score: Int = 0, goal: Int? = nil) {
+        self.init(mode: mode, seed: seed, goal: goal)
         self.board = board
         self.plusRemaining = plusRemaining
         self.stage = stage

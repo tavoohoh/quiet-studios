@@ -18,7 +18,7 @@ final class PersistenceUITests: XCTestCase {
         app.buttons["back"].tap()
         dailyCard(app).tap()
         app.buttons["Play"].tap()
-        XCTAssertTrue(app.staticTexts["Daily Challenge"].waitForExistence(timeout: 2))
+        XCTAssertTrue(app.staticTexts["score"].waitForExistence(timeout: 2))
         app.buttons["Add numbers"].tap()
         let dailyCells = app.buttons.matching(identifierPrefix: "cell-").count
 
@@ -36,7 +36,7 @@ final class PersistenceUITests: XCTestCase {
         dailyCard(app).tap()
         snapshot(app, "daily")
         app.buttons["Continue"].tap()
-        XCTAssertTrue(app.staticTexts["Daily Challenge"].waitForExistence(timeout: 2))
+        XCTAssertTrue(app.staticTexts["score"].waitForExistence(timeout: 2))
         XCTAssertEqual(app.buttons.matching(identifierPrefix: "cell-").count, dailyCells)
         snapshot(app, "daily-resumed")
     }

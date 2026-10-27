@@ -45,6 +45,9 @@ final class AppModel {
         }
         #endif
         refreshSavedGames()
+        if let oldest = DailyChallenge.dayKey(todayKey, addingDays: -DailyChallenge.replayWindow) {
+            persistence.deletePractice(before: oldest)
+        }
         gameCenter.onAuthenticated = { [weak self] in self?.syncGameCenter() }
     }
 
@@ -82,7 +85,7 @@ final class AppModel {
         await gameCenter.report(progress)
         await gameCenter.submit(progress.bestScore, to: .bestScore)
         await gameCenter.submit(longestStreak, to: .longestStreak)
-        if let today = persistence.dailies[todayKey], today.isFinished {
+        if let today = persistence.dailies[todayKey], today.isFinished || today.isCompleted {
             await gameCenter.submit(today.score, to: .daily)
         }
         await gameCenter.save(.init(progress: progress, dailies: persistence.dailies))
@@ -163,6 +166,11 @@ final class AppModel {
         openDailyKey == dayKey
     }
 
+    /// Days with a game left halfway: today's scored attempt or any practice replay.
+    var daysInProgress: Set<String> {
+        persistence.practiceInProgress.union(openDailyKey.map { [$0] } ?? [])
+    }
+
     /// Whether playing `dayKey` now would count.
     func isScored(_ dayKey: String) -> Bool {
         isDailyInProgress(dayKey) || (dayKey == todayKey && persistence.dailies[dayKey] == nil)
@@ -177,6 +185,8 @@ final class AppModel {
             persistence.saveGame(model.session, in: .daily)
             openDailyKey = dayKey
             start(model, as: .daily(dayKey: dayKey))
+        } else if let saved = persistence.loadGame(.practice(dayKey: dayKey)), !saved.isOver {
+            start(GameModel(session: saved), as: .practice(dayKey: dayKey))
         } else {
             let session = DailyChallenge.session(forDayKey: dayKey, scoring: unscoredScoring)
             start(GameModel(session: session), as: .practice(dayKey: dayKey))
@@ -195,8 +205,15 @@ final class AppModel {
             // A new best shows up right away (Home, the game's "Best"); Game Center gets it
             // when the player leaves the game.
             if game.session.score > progress.bestScore { record(.classicScore(game.session.score)) }
-        case .daily: persistence.saveGame(game.session, in: .daily)
-        case .practice: break
+        case .daily(let dayKey):
+            persistence.saveGame(game.session, in: .daily)
+            // Completed on reaching the goal, even if the game goes on for a higher score.
+            if game.session.isCompleted { completeDaily(dayKey, score: game.session.score) }
+        case .practice(let dayKey):
+            persistence.saveGame(game.session, in: .practice(dayKey: dayKey))
+            if game.session.isCompleted, !progress.practicedDays.contains(dayKey) {
+                record(.practiceCompleted(dayKey: dayKey))
+            }
         }
         if game.session.isOver { finish(game.session, kind) }
     }
@@ -219,16 +236,22 @@ final class AppModel {
         case .daily(let dayKey):
             persistence.finishDaily(dayKey, score: session.score, isCompleted: session.isCompleted)
             persistence.deleteGame(.daily)
-            if session.isCompleted {
-                let hour = Calendar.current.component(.hour, from: AppClock.now)
-                record(.dailyCompleted(currentStreak: currentStreak, localHour: hour))
-            }
         case .practice(let dayKey):
-            if session.isCompleted { record(.practiceCompleted(dayKey: dayKey)) }
+            persistence.deleteGame(.practice(dayKey: dayKey))
         }
         record(.gameFinished(classicScore: kind == .classic ? session.score : nil))
         refreshSavedGames()
         Task { await pushToGameCenter() }
+    }
+
+    /// The day counts (streak, calendar, achievements) from the move that reaches the goal;
+    /// later moves only update its score.
+    private func completeDaily(_ dayKey: String, score: Int) {
+        let isNew = persistence.dailies[dayKey]?.isCompleted != true
+        persistence.updateDaily(dayKey, score: score, isCompleted: true)
+        guard isNew else { return }
+        let hour = Calendar.current.component(.hour, from: AppClock.now)
+        record(.dailyCompleted(currentStreak: currentStreak, localHour: hour))
     }
 
     private func refreshSavedGames() {

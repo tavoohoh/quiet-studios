@@ -122,13 +122,13 @@ Tablero único por día, igual para todo el mundo, generado en el dispositivo si
 - **Cambio de día:** a las **19:00 en la zona horaria del dispositivo** (`DailyChallenge.rolloverHour`); desde esa hora se juega el reto del día siguiente. En Colombia (UTC-5) coincide con las 00:00 UTC. La misma clave da el mismo tablero en todo el mundo, pero cada dispositivo la habilita según su reloj.
 - **PRNG:** propio y determinista (SplitMix64 o Xoshiro256). **Nunca** `SystemRandomNumberGenerator`. Evitar cualquier API cuyo resultado dependa de plataforma (p. ej. `Hasher`, `shuffled()` sin generador propio).
 - **Validación:** si el tablero no cumple el mínimo de parejas, avanzar la semilla de forma determinista hasta obtener uno válido.
-- **Formato:** una sola etapa, mismas reglas y límites. Un solo intento puntuable por día; se puede rejugar sin enviar puntaje.
+- **Formato (2026-10-27, idea de una probadora):** meta de puntos del día, 400–700 en pasos de 50 (`DailyChallenge.goal`, de un flujo aparte de la semilla para no cambiar los tableros). Se juegan etapas como en clásico, con tableros que también salen de la semilla (el generador solo avanza al crear un tablero, nunca con jugadas), así que son iguales para todos. El reto se completa **al llegar a la meta** (racha, calendario y logros en ese momento) y se puede seguir jugando por más puntaje; termina sin parejas ni +. La clasificación diaria recibe el puntaje al terminar o al salir del juego después de la meta. Retos guardados antes del cambio (`goal == nil`) siguen con la regla vieja: una etapa, completado al vaciarla. Un solo intento puntuable por día; se puede rejugar sin enviar puntaje.
 - **Racha:** días consecutivos completados, guardada localmente, usada para logros.
 - **Calendario:** vista mensual de retos completados; los últimos 30 días se pueden jugar sin puntuar.
 - **Decisiones de implementación (fase 3):**
-  - "Completar" un reto = vaciar el tablero. Terminar sin vaciarlo guarda el puntaje (cuenta como intento) pero no suma a la racha.
+  - "Completar" un reto = llegar a su meta de puntos (antes: vaciar el tablero). Terminar sin llegar guarda el puntaje (cuenta como intento) pero no suma a la racha.
   - El intento puntuable empieza al tocar "Jugar" por primera vez ese día; si se sale a mitad, se reanuda (sigue puntuando).
-  - Repeticiones y días pasados son "Práctica": no se guardan ni cambian el calendario.
+  - Repeticiones y días pasados son "Práctica": no cuentan para racha, clasificación ni logros de retos. Una práctica a medias se guarda por día (ranura `practice-<día>`; "Continue" y un punto en el calendario) y se borra al terminar o al salir de la ventana de 30 días (2026-10-27). Un día pasado vaciado como práctica se marca con relleno suave (`PlayerProgress.practicedDays`, viaja con el progreso).
 - **Test obligatorio:** la misma fecha produce siempre el mismo tablero en todos los dispositivos.
 
 ## Game Center
@@ -187,7 +187,7 @@ Decisiones de implementación (fase 5):
 - "Monótono" se interpreta como 10 parejas seguidas de números iguales (4-4, 7-7…), no 10 veces el mismo dígito. Confirmado.
 - Las opciones por defecto (Petróleo y coral, Simple, SF Rounded, Contorno, Suave, ícono estándar) están siempre disponibles.
 - Rediseño 2026-10-26: los temas viejos se reemplazaron conservando el desbloqueo (Papel → Petróleo y coral, Pizarra → Salvia y arena, Arena → Índigo y durazno, Medianoche → Salvia y coral, Brasa → Alto contraste). La preferencia guardada se migra al arrancar (`ThemeChoice.migrateSavedChoice`).
-- Colores por rol (`Theme`: background, surface, surface2, ink, muted, primary, onPrimary, accent, ghost, separator) en el Asset Catalog (`TealCoralPrimary`, `SageSandInk`…). Solo Petróleo y coral tiene claro y oscuro y sigue al sistema; Salvia y arena, Salvia y coral y Alto contraste son solo claros, Índigo y durazno solo oscuro, y fuerzan ese esquema. Alto contraste además pone borde de 2 pt a las superficies y subraya los números agregados.
+- Colores por rol (`Theme`: background, surface, surface2, ink, muted, primary, onPrimary, accent, ghost, separator) en el Asset Catalog (`TealCoralPrimary`, `SageSandInk`…). Solo Petróleo y coral tiene claro y oscuro: sigue al sistema, y sus variantes Claro y Oscuro (siempre disponibles, 2026-10-27) fijan un modo para quien quiere el juego distinto al teléfono; Salvia y arena, Salvia y coral y Alto contraste son solo claros, Índigo y durazno solo oscuro, y fuerzan ese esquema. Alto contraste además pone borde de 2 pt a las superficies y subraya los números agregados.
 - Los sonidos se sintetizan en el dispositivo (AVAudioEngine, sin archivos), categoría `.ambient` (respeta el modo silencio). Sonido y hápticos activados por defecto.
 - El ícono dorado funciona en iPhone y iPad (en Mac, la app de iPad no cambia de ícono).
 - Preferencias en `UserDefaults` (`@AppStorage`); progreso y logros en SwiftData (`StoredProgress`). Las partidas de práctica también cuentan para logros de juego.

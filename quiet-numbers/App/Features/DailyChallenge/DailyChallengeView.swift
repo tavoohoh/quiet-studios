@@ -30,7 +30,7 @@ struct DailyChallengeView: View {
                 VStack(spacing: 6) {
                     CalendarView(
                         month: $month, todayKey: today, records: app.persistence.dailies,
-                        practiced: app.progress.practicedDays, onSelect: onPlay
+                        practiced: app.progress.practicedDays, inProgress: app.daysInProgress, onSelect: onPlay
                     )
                     Text("Next challenge in \(countdown)")
                         .font(.subheadline)
@@ -82,13 +82,15 @@ struct DailyChallengeView: View {
 
     private func status(for dayKey: String) -> Text {
         if app.isDailyInProgress(dayKey) { return Text("In progress") }
-        guard let record = app.persistence.dailies[dayKey] else { return Text("Not played yet") }
+        guard let record = app.persistence.dailies[dayKey] else {
+            return Text("Goal: \(Text(DailyChallenge.goal(forDayKey: dayKey), format: .number)) points")
+        }
         let score = Text(record.score, format: .number)
         return record.isCompleted ? Text("Completed · \(score)") : Text("Played · \(score)")
     }
 
     private func playTitle(for dayKey: String) -> LocalizedStringKey {
-        if app.isDailyInProgress(dayKey) { return "Continue" }
+        if app.daysInProgress.contains(dayKey) { return "Continue" }
         return app.isScored(dayKey) ? "Play" : "Play again"
     }
 }

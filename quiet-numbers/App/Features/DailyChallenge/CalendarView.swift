@@ -2,13 +2,15 @@ import QuietNumbersCore
 import SwiftUI
 
 /// Month grid of daily challenges. Completed days are filled, played ones outlined, past
-/// days cleared as practice softly tinted, and days completed in a row are joined by a band
-/// (within a week). Days within the replay window can be tapped to play them unscored.
+/// days cleared as practice softly tinted, a dot marks a game left halfway, and days completed
+/// in a row are joined by a band (within a week). Days within the replay window can be tapped
+/// to play them unscored.
 struct CalendarView: View {
     @Binding var month: Date
     let todayKey: String
     let records: [String: DailyRecord]
     let practiced: Set<String>
+    let inProgress: Set<String>
     let onSelect: (String) -> Void
 
     @Environment(\.appearance) private var appearance
@@ -66,6 +68,7 @@ struct CalendarView: View {
                             todayKey: todayKey,
                             record: records[dayKey(for: day)],
                             isPracticed: practiced.contains(dayKey(for: day)),
+                            isInProgress: inProgress.contains(dayKey(for: day)),
                             isPlayable: isPlayable(dayKey(for: day)),
                             joinsPrevious: column != 0 && isCompleted(day) && isCompleted(day - 1),
                             joinsNext: column != 6 && isCompleted(day) && isCompleted(day + 1),
@@ -140,6 +143,8 @@ private struct DayCell: View {
     let record: DailyRecord?
     /// Cleared later as practice; a day completed on time keeps its own look.
     let isPracticed: Bool
+    /// A game on this day was left halfway.
+    let isInProgress: Bool
     let isPlayable: Bool
     /// Completed, like the day before (or after) in the same week: the band reaches it.
     let joinsPrevious: Bool
@@ -174,6 +179,14 @@ private struct DayCell: View {
                         Circle()
                             .strokeBorder(appearance.theme.accent, lineWidth: 2)
                             .padding(-4)
+                    }
+                }
+                .overlay(alignment: .bottom) {
+                    if isInProgress {
+                        Circle()
+                            .fill(record?.isCompleted == true ? appearance.theme.onPrimary : appearance.theme.accent)
+                            .frame(width: 5, height: 5)
+                            .padding(.bottom, isRegular ? 7 : 5)
                     }
                 }
                 .frame(maxWidth: .infinity)
@@ -213,6 +226,7 @@ private struct DayCell: View {
     }
 
     private var accessibilityStatus: Text {
+        if isInProgress { return Text("In progress") }
         if record?.isCompleted == true { return Text("Completed") }
         if isPracticed { return Text("Practiced") }
         if record?.isFinished == true { return Text("Played") }

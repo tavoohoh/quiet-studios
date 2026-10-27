@@ -92,9 +92,18 @@ struct GameView: View {
         case .classic:
             Text("Stage \(model.session.stage)") + Text(verbatim: " · ")
                 + Text("Best \(Text(max(startingBest ?? bestScore ?? 0, model.displayedScore), format: .number))")
-        case .daily: Text("Daily Challenge")
-        case .practice(let dayKey): Text("Practice · \(DayKeyFormat.string(dayKey))")
+        case .daily: Text("Stage \(model.session.stage)") + goal
+        case .practice(let dayKey): Text("Practice · \(DayKeyFormat.string(dayKey))") + goal
         }
+    }
+
+    /// " · Goal 500", or " · Goal reached" once it is. Empty for dailies saved before goals.
+    private var goal: Text {
+        guard let goal = model.session.goal else { return Text(verbatim: "") }
+        let label = model.session.isCompleted
+            ? Text("Goal reached")
+            : Text("Goal \(Text(goal, format: .number))")
+        return Text(verbatim: " · ") + label
     }
 
     /// Reduce Motion keeps a short fade but drops movement and scaling.

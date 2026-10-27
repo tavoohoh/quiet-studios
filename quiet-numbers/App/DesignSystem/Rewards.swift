@@ -14,11 +14,13 @@ extension Reward {
 }
 
 enum ThemeChoice: String, Reward {
-    case tealCoral, sageSand, indigoPeach, sageCoral, highContrast
+    case tealCoral, tealCoralLight, tealCoralDark, sageSand, indigoPeach, sageCoral, highContrast
 
     var title: LocalizedStringResource {
         switch self {
         case .tealCoral: "Teal & Coral"
+        case .tealCoralLight: "Teal & Coral Light"
+        case .tealCoralDark: "Teal & Coral Dark"
         case .sageSand: "Sage & Sand"
         case .indigoPeach: "Indigo & Peach"
         case .sageCoral: "Sage & Coral"
@@ -26,10 +28,10 @@ enum ThemeChoice: String, Reward {
         }
     }
 
-    /// High contrast is an accessibility option, so it's never locked.
+    /// The default in a fixed mode and High contrast (accessibility) are never locked.
     var unlockedBy: Achievement? {
         switch self {
-        case .tealCoral, .highContrast: nil
+        case .tealCoral, .tealCoralLight, .tealCoralDark, .highContrast: nil
         case .sageSand: .noHelp
         case .indigoPeach: .consistency
         case .sageCoral: .nightOwl
@@ -38,13 +40,19 @@ enum ThemeChoice: String, Reward {
 
     /// Shown instead of an unlock condition.
     var note: LocalizedStringResource? {
-        self == .highContrast ? "Always available for low vision." : nil
+        // Separate returns: string extraction skips literals after the first case of a switch here.
+        if self == .tealCoral { return "Follows your device's light or dark mode." }
+        if self == .highContrast { return "Always available for low vision." }
+        return nil
     }
 
-    /// Teal & Coral follows the system; the others have a single mode of their own.
+    /// Teal & Coral follows the system, or stays light or dark whatever the device uses;
+    /// the others have a single mode of their own.
     var theme: Theme {
         switch self {
         case .tealCoral: Theme(assetPrefix: "TealCoral", colorScheme: nil)
+        case .tealCoralLight: Theme(assetPrefix: "TealCoral", colorScheme: .light)
+        case .tealCoralDark: Theme(assetPrefix: "TealCoral", colorScheme: .dark)
         case .sageSand: Theme(assetPrefix: "SageSand", colorScheme: .light)
         case .indigoPeach: Theme(assetPrefix: "IndigoPeach", colorScheme: .dark)
         case .sageCoral: Theme(assetPrefix: "SageCoral", colorScheme: .light)

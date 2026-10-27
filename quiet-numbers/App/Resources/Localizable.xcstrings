@@ -567,6 +567,16 @@
         }
       }
     },
+    "Follows your device's light or dark mode.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sigue el modo claro u oscuro de tu dispositivo."
+          }
+        }
+      }
+    },
     "Friends": {
       "localizations": {
         "es": {
@@ -603,6 +613,46 @@
           "stringUnit": {
             "state": "translated",
             "value": "Global"
+          }
+        }
+      }
+    },
+    "Goal %@": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Meta %@"
+          }
+        }
+      }
+    },
+    "Goal reached": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Meta alcanzada"
+          }
+        }
+      }
+    },
+    "Goal reached!": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¡Meta alcanzada!"
+          }
+        }
+      }
+    },
+    "Goal: %@ points": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Meta: %@ puntos"
           }
         }
       }
@@ -1368,6 +1418,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Petróleo y coral"
+          }
+        }
+      }
+    },
+    "Teal & Coral Dark": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Petróleo y coral oscuro"
+          }
+        }
+      }
+    },
+    "Teal & Coral Light": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Petróleo y coral claro"
           }
         }
       }
