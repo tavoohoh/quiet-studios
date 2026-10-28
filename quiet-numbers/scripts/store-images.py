@@ -39,14 +39,14 @@ TEXT = {
     "en": {
         1: ("Your 5-minute<br><span>break.</span>", "One quick round of numbers. Clear your head, beat your best, back to your day."),
         2: ("Match.<br><span>Pop.</span> <em>Clear.</em>", "Pair equal numbers or two that add up to 10. Horizontal, vertical or diagonal."),
-        3: ("Beat your friends.<br><span>Or just yesterday's you.</span>", "New challenges every day. Keep your streak alive."),
+        3: ("Beat your friends.<br><span>Or just yesterday's you.</span>", "A new score goal every day. Keep your streak alive."),
         4: ("No ads.<br><span>No purchases.</span>", "Always free, no hidden charges. Just focus on playing."),
         5: ("Climb to<br><span>the top</span>", "Daily, best score and streak leaderboards with your friends and the world, on Game Center."),
     },
     "es": {
         1: ("Tu pausa de<br><span>5 minutos.</span>", "Una ronda rápida de números. Despeja la mente, supera tu récord y vuelve a tu día."),
         2: ("Junta.<br><span>Explota.</span> <em>Limpia.</em>", "Junta números iguales o dos que sumen 10. En horizontal, vertical o diagonal."),
-        3: ("Gánales a tus amigos.<br><span>O a tu yo de ayer.</span>", "Un reto nuevo cada día. Mantén viva tu racha."),
+        3: ("Gánales a tus amigos.<br><span>O a tu yo de ayer.</span>", "Una meta nueva cada día. Mantén viva tu racha."),
         4: ("Sin anuncios.<br><span>Sin compras.</span>", "Gratis siempre, sin cobros ocultos. Solo concéntrate en jugar."),
         5: ("Llega a<br><span>la cima</span>", "Clasificaciones del día, de mejor puntaje y de racha con tus amigos y el mundo, en Game Center."),
     },
