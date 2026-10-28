@@ -44,6 +44,7 @@ Un solo target iOS (iPhone y iPad), un bundle ID. Proyecto generado con XcodeGen
   - Imágenes de la App Store: `scripts/store-images.py` (después de las capturas) → `AppStore/store-images/<iphone-6.9|iphone-6.3|ipad-13>/<en|es>/01…05.png`, sin alfa.
   - Textos: `fastlane/metadata/{en-US,es-MX}` (solo inglés de EE. UU. y español de México, decisión 2026-10-28); validar con `scripts/validate-metadata.py`.
   - Subir la ficha por la API (sin fastlane, mismo cliente `scripts/asc.py` que Quiet Numbers; credenciales en `~/.appstoreconnect`): `scripts/upload-metadata.py [--apply] [--replace-screenshots]` sube textos (en-US, es-MX), categoría, copyright e imágenes (iPhone 6.9" e iPad 13"); `scripts/setup-game-center.py [--apply]` crea logros (con imagen) y clasificaciones desde `game-center.json`. Ambos muestran qué cambiaría sin `--apply` y no duplican lo que ya existe.
+  - Build a TestFlight: archivar desde una copia limpia de `main` (`git worktree add --detach <carpeta> origin/main`, copiar `Config/Local.xcconfig`), `xcodebuild archive … -configuration Release -destination 'generic/platform=iOS' -allowProvisioningUpdates` y `xcodebuild -exportArchive` con `method app-store-connect`, `destination upload` (mismo `ExportOptions.plist` que Quiet Numbers). La exportación usa la cuenta de Xcode: la clave de la API no tiene permiso de firma en la nube ("Cloud signing permission error").
   - Game Center: `scripts/game-center.py` escribe `AppStore/game-center.{md,json}` y las 13 insignias (`AppStore/achievements/<id>.png`, 1024 sin alfa) y verifica los IDs contra el código.
   - Web: `../docs/quiet-solitaire/{index,privacy,support}.html` (GitHub Pages desde `/docs`).
 - Simuladores: para pruebas usar uno solo ("iPhone 17") y apagarlo al terminar (`xcrun simctl shutdown <udid>`).
@@ -230,7 +231,7 @@ Cada fase termina con su criterio de aceptación cumplido antes de pasar a la si
 | 3. Persistencia y reto diario | 🟡 Implementado (SwiftData como Quiet Numbers, reto con solución garantizada, racha, calendario, dificultad de la semana); falta verificar en dispositivo. |
 | 4. Game Center | 🟡 13 logros y 3 clasificaciones creados en App Store Connect (2026-10-28, `scripts/setup-game-center.py`); falta activarlos en la versión y verificar envío y sincronización en el dispositivo. |
 | 5. Recompensas y colección | 🟡 Mazos (6), reversos (5), tableros (5), efecto de victoria e ícono dorado, con sus desbloqueos; falta revisión en dispositivo. |
-| 6. Pulido y lanzamiento | 🟡 Inglés y español completos (206 textos). Tutorial interactivo hecho. Instalada en iPhone 16 Pro (2026-10-27). Falta: capturas, metadatos, insignias de Game Center, TestFlight. Auditoría de VoiceOver: pospuesta (decisión del usuario). |
+| 6. Pulido y lanzamiento | 🟡 Inglés y español completos (206 textos). Tutorial interactivo hecho. Instalada en iPhone 16 Pro (2026-10-27). Ficha subida por la API y build 1.0 (1) subido a TestFlight (2026-10-28). Falta: capturas, metadatos, insignias de Game Center, TestFlight. Auditoría de VoiceOver: pospuesta (decisión del usuario). |
 
 ## Preguntas abiertas
 
