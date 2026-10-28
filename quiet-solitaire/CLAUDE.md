@@ -39,7 +39,14 @@ Un solo target iOS (iPhone y iPad), un bundle ID. Proyecto generado con XcodeGen
 - Todos los tests (Core y UI): `xcodebuild test -project QuietSolitaire.xcodeproj -scheme QuietSolitaire -destination 'platform=iOS Simulator,name=iPhone 17' -derivedDataPath build/dd`.
 - Textos: `scripts/strings.py` escribe `Localizable.xcstrings` e `InfoPlist.xcstrings` (en/es) y falla si un texto que extrajo el compilador (`build/dd`) no tiene español. Correrlo después de compilar con `-derivedDataPath build/dd`.
 - Arte: `scripts/card-art.py` escribe los SVG de palos, emblemas y figuras en `Assets.xcassets/Cards` (mismos trazos del canvas); `scripts/render-icon.py` dibuja los íconos (estándar y Gold, claro/oscuro/tinted) con Chrome sin interfaz. El arte pixel se dibuja en código (`DesignSystem/PixelArt.swift`).
-- Argumentos DEBUG: `-startGame` abre una partida en memoria (`-seedKey <texto>` la hace determinista; `-nearlyWon` arranca a una jugada de autocompletar); `-uiTesting` usa `UITests.store` (`-resetStore` lo borra); `-unlockAll` desbloquea todo; `-date <ISO 8601>` fija el reloj del reto.
+- **Publicación** (`AppStore/app-store-connect.md`: todos los campos para crear la app, notas para la revisión y el orden de las imágenes):
+  - Capturas: `scripts/screenshots.sh [iphone] [ipad]` (esquema `Screenshots`, estado `-demo` de `App/Debug/DemoData.swift`: sábado 14-nov-2026 10:00, partida a medias jugada por el solver, racha de 8, clasificaciones de ejemplo) → `AppStore/screenshots/<iphone-6.9|ipad-13>/<en|es>/<light|dark>/`. Usa sus propios simuladores ("QS iPhone 6.9", "QS iPad 13") y los apaga al terminar. No correrla a la vez que la de Quiet Numbers: su script apaga todos los simuladores.
+  - Imágenes de la App Store: `scripts/store-images.py` (después de las capturas) → `AppStore/store-images/<iphone-6.9|iphone-6.3|ipad-13>/<en|es>/01…05.png`, sin alfa.
+  - Textos: `fastlane/metadata/{en-US,es-MX,es-ES}`; validar con `scripts/validate-metadata.py`.
+  - Game Center: `scripts/game-center.py` escribe `AppStore/game-center.{md,json}` y las 13 insignias (`AppStore/achievements/<id>.png`, 1024 sin alfa) y verifica los IDs contra el código.
+  - Web: `../docs/quiet-solitaire/{index,privacy,support}.html` (GitHub Pages desde `/docs`).
+- Simuladores: para pruebas usar uno solo ("iPhone 17") y apagarlo al terminar (`xcrun simctl shutdown <udid>`).
+- Argumentos DEBUG: `-startGame` abre una partida en memoria (`-seedKey <texto>` la hace determinista; `-nearlyWon` arranca a una jugada de autocompletar); `-uiTesting` usa `UITests.store` (`-resetStore` lo borra); `-unlockAll` desbloquea todo; `-date <ISO 8601>` fija el reloj del reto; `-demo` carga el estado de las capturas (en memoria); `-demoClock <segundos>` fija el reloj de una mesa `-startGame`.
 
 ## QuietKit
 

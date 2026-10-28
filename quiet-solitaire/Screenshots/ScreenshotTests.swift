@@ -58,8 +58,9 @@ final class ScreenshotTests: XCTestCase {
         tap(waste)
         tap(app.buttons["autoComplete"])
         // No element queries from here: XCUITest waits for the app to be idle first, and the
-        // fireworks keep it busy until they're over. 17 cards × 90 ms, then 1.4 s to the sheet.
-        sleep(4)
+        // fireworks keep it busy until they're over. 17 cards × 90 ms, then 1.4 s to the sheet
+        // (the iPad simulator is slower); the last rockets burst around 5 s.
+        sleep(5)
         let attachment = XCTAttachment(screenshot: XCUIScreen.main.screenshot())
         attachment.name = "06-win"
         attachment.lifetime = .keepAlways

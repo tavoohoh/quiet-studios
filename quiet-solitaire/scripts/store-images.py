@@ -46,8 +46,8 @@ TEXT = {
 }
 
 CALLOUT_TEXT = {
-    "en": {"winnable": "Every deal can be won", "streak": "8-day streak", "double": "×2.0", "decks": "6 decks"},
-    "es": {"winnable": "Cada reparto se puede ganar", "streak": "Racha de 8 días", "double": "×2,0", "decks": "6 mazos"},
+    "en": {"winnable": "Every deal can be won", "streak": "8-day streak", "double": "×2", "decks": "6 decks"},
+    "es": {"winnable": "Cada reparto se puede ganar", "streak": "Racha de 8 días", "double": "×2", "decks": "6 mazos"},
 }
 
 ICON = {
