@@ -179,17 +179,44 @@ import Testing
         var near = GameSession(board: board, mode: .daily(dayKey: "2026-10-27"), score: 300, goal: 400)
         let outcome = near.match(at: 7, 8)
         #expect(outcome?.reachedGoal == true)
-        #expect(near.isCompleted)
-        // Reaching the goal doesn't end it: the player can keep going for a higher score.
-        #expect(!near.isOver && near.stage == 2)
+        // Reaching the goal ends the game, even on a cleared board: no next stage.
+        #expect(near.isCompleted && near.isOver && near.stage == 1)
     }
 
-    @Test func hintsAfterTheGoalDontUndoCompletion() throws {
+    @Test func nothingIsPlayableAfterTheGoal() throws {
         var session = GameSession(board: makeBoard([[4, 4, 1, 2, 1, 2, 1, 2, 3, 7]]), mode: .daily(dayKey: "2026-10-27"), score: 399, goal: 400)
         _ = session.match(at: 0, 1)
-        #expect(session.isCompleted)
-        _ = session.useHint()
-        #expect(session.score < 400 && session.isCompleted)
+        #expect(session.isCompleted && session.isOver)
+        #expect(session.useHint() == nil)
+        #expect(session.match(at: 8, 9) == nil)
+        #expect(!session.addNumbers() && !session.canUndo)
+        #expect(session.score == 400)
+    }
+
+    @Test func statsCountTheGameAndUndoTakesTheMoveBack() throws {
+        var session = GameSession(board: makeBoard([[4, 4, 1, 2, 1, 2, 1, 2, 3], [7, 5, 5, 6, 6, 1, 1, 2, 3]]))
+        _ = session.match(at: 0, 1)
+        _ = session.match(at: 8, 9)
+        session.addNumbers()
+        #expect(session.stats == GameSession.Stats(pairs: 2, rowsCleared: 0, plusUsed: 1, longestStreak: 2))
+        session.undo()
+        #expect(session.stats.plusUsed == 0 && session.stats.pairs == 2)
+        _ = session.match(at: 10, 11)
+        session.undo()
+        #expect(session.stats.pairs == 2)
+    }
+
+    @Test func timeCountsOnlyFromTheFirstMoveUntilTheEnd() {
+        var session = GameSession(board: makeBoard([[4, 4, 1, 2, 1, 2, 1, 2, 3, 7]]), mode: .daily(dayKey: "2026-10-27"), score: 0, goal: 2)
+        session.addTime(30)
+        #expect(session.elapsedSeconds == 0)
+        _ = session.match(at: 0, 1)
+        session.addTime(12)
+        #expect(session.elapsedSeconds == 12)
+        _ = session.match(at: 8, 9)
+        #expect(session.isOver)
+        session.addTime(5)
+        #expect(session.elapsedSeconds == 12)
     }
 
     @Test func dailiesSavedBeforeGoalsKeepTheOldRule() throws {

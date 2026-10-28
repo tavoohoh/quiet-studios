@@ -13,6 +13,8 @@ struct DailyChallengeView: View {
     @State private var month = AppClock.now
     /// Today's place among Game Center friends, when signed in.
     @State private var friendsRank: Int?
+    /// A practice left halfway: continue it or deal the day again.
+    @State private var unfinishedPractice: String?
 
     var body: some View {
         let today = app.todayKey
@@ -26,13 +28,13 @@ struct DailyChallengeView: View {
                     streak: app.currentStreak,
                     bestStreak: app.longestStreak,
                     friendsRank: friendsRank,
-                    onPlay: { onPlay(today) }
+                    onPlay: { play(today) }
                 )
 
                 VStack(spacing: 6) {
                     CalendarView(
                         month: $month, todayKey: today, records: app.persistence.dailies,
-                        practiced: app.progress.practicedDays, inProgress: app.daysInProgress, onSelect: onPlay
+                        practiced: app.progress.practicedDays, inProgress: app.daysInProgress, onSelect: play
                     )
                     Text("Next challenge in \(countdown)")
                         .font(.subheadline)
@@ -57,6 +59,29 @@ struct DailyChallengeView: View {
         }
         .screen(Text("Daily Challenge"))
         .task(id: app.gameCenter.isAuthenticated) { await loadFriendsRank() }
+        .alert(
+            "Continue this practice?",
+            isPresented: Binding(get: { unfinishedPractice != nil }, set: { if !$0 { unfinishedPractice = nil } }),
+            presenting: unfinishedPractice
+        ) { dayKey in
+            Button("Continue") { onPlay(dayKey) }
+            Button("Start over") {
+                app.discardPractice(dayKey)
+                onPlay(dayKey)
+            }
+            Button("Cancel", role: .cancel) {}
+        } message: { dayKey in
+            Text("You left \(DayKeyFormat.string(dayKey)) halfway.")
+        }
+    }
+
+    /// The scored attempt always resumes; a practice in progress asks first.
+    private func play(_ dayKey: String) {
+        if !app.isDailyInProgress(dayKey), app.persistence.practiceInProgress.contains(dayKey) {
+            unfinishedPractice = dayKey
+        } else {
+            onPlay(dayKey)
+        }
     }
 
     private func loadFriendsRank() async {

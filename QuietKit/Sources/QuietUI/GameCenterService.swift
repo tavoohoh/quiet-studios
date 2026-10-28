@@ -18,13 +18,16 @@ public final class GameCenterService {
         public let name: String
         public let score: Int
         public let isLocalPlayer: Bool
+        /// What the app sent with the score (0 if nothing). Game Center doesn't rank by it.
+        public let context: Int
 
-        public init(id: String, rank: Int, name: String, score: Int, isLocalPlayer: Bool) {
+        public init(id: String, rank: Int, name: String, score: Int, isLocalPlayer: Bool, context: Int = 0) {
             self.id = id
             self.rank = rank
             self.name = name
             self.score = score
             self.isLocalPlayer = isLocalPlayer
+            self.context = context
         }
     }
 
@@ -104,10 +107,10 @@ public final class GameCenterService {
 
     /// Recurring boards take every result (`always`, even zero or below); classic boards
     /// only take real records.
-    public func submit(_ score: Int, to leaderboardID: String, always: Bool = false) async {
+    public func submit(_ score: Int, to leaderboardID: String, always: Bool = false, context: Int = 0) async {
         guard isAuthenticated, always || score > 0 else { return }
         do {
-            try await GKLeaderboard.submitScore(score, context: 0, player: GKLocalPlayer.local, leaderboardIDs: [leaderboardID])
+            try await GKLeaderboard.submitScore(score, context: context, player: GKLocalPlayer.local, leaderboardIDs: [leaderboardID])
             note("Submitted \(score) to \(leaderboardID)")
         } catch {
             note("Submitting \(score) to \(leaderboardID) failed: \(error)", isError: true)
@@ -135,7 +138,8 @@ public final class GameCenterService {
     private static func entry(_ entry: GKLeaderboard.Entry) -> Entry {
         Entry(
             id: entry.player.gamePlayerID, rank: entry.rank, name: entry.player.displayName, score: entry.score,
-            isLocalPlayer: entry.player.gamePlayerID == GKLocalPlayer.local.gamePlayerID
+            isLocalPlayer: entry.player.gamePlayerID == GKLocalPlayer.local.gamePlayerID,
+            context: entry.context
         )
     }
 

@@ -25,6 +25,8 @@ final class StoredDaily {
     /// The board was cleared. Only completed days count for the streak.
     var isCompleted: Bool
     var finishedAt: Date?
+    /// Time played when it finished (leaderboard tie-break). `nil` before 1.1.
+    var seconds: Int?
 
     init(dayKey: String) {
         self.dayKey = dayKey
@@ -49,6 +51,8 @@ struct DailyRecord: Equatable, Codable {
     let score: Int
     let isFinished: Bool
     let isCompleted: Bool
+    /// Time played, once finished. Optional so older records and snapshots still load.
+    var seconds: Int?
 }
 
 /// Local storage. SwiftData is the source of truth; Game Center only mirrors it.
@@ -169,7 +173,7 @@ final class PersistenceService {
         reloadDailies()
     }
 
-    func finishDaily(_ dayKey: String, score: Int, isCompleted: Bool) {
+    func finishDaily(_ dayKey: String, score: Int, isCompleted: Bool, seconds: Int? = nil) {
         let stored = storedDaily(dayKey) ?? {
             let new = StoredDaily(dayKey: dayKey)
             context.insert(new)
@@ -179,6 +183,7 @@ final class PersistenceService {
         stored.isFinished = true
         stored.isCompleted = isCompleted
         stored.finishedAt = .now
+        stored.seconds = seconds
         save()
         reloadDailies()
     }
@@ -209,6 +214,7 @@ final class PersistenceService {
             stored.score = record.score
             stored.isFinished = record.isFinished
             stored.isCompleted = record.isCompleted
+            stored.seconds = record.seconds
         }
         save()
         reloadDailies()
@@ -261,7 +267,7 @@ final class PersistenceService {
     private func reloadDailies() {
         let all = (try? context.fetch(FetchDescriptor<StoredDaily>())) ?? []
         dailies = Dictionary(uniqueKeysWithValues: all.map {
-            ($0.dayKey, DailyRecord(score: $0.score, isFinished: $0.isFinished, isCompleted: $0.isCompleted))
+            ($0.dayKey, DailyRecord(score: $0.score, isFinished: $0.isFinished, isCompleted: $0.isCompleted, seconds: $0.seconds))
         })
     }
 

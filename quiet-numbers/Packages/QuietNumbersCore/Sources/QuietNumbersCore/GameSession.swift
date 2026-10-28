@@ -74,6 +74,17 @@ public struct GameSession: Codable, Hashable, Sendable {
         var score: Int
         var plusRemaining: Int
         var streak: Int
+        /// Optional so undo points saved before stats still load.
+        var stats: Stats?
+    }
+
+    /// How the game went, for the end-of-game summary. Undo takes back what the move added.
+    public struct Stats: Codable, Hashable, Sendable {
+        public var pairs = 0
+        public var rowsCleared = 0
+        /// + uses over the whole game.
+        public var plusUsed = 0
+        public var longestStreak = 0
     }
 
     public let mode: GameMode
@@ -87,13 +98,16 @@ public struct GameSession: Codable, Hashable, Sendable {
     /// Valid matches in a row. A miss or a hint resets it; + doesn't.
     public private(set) var streak = 0
     /// Daily challenge only: the goal was reached (or, in games saved before goals, the
-    /// board was cleared). It stays set even if hints take the score back down.
+    /// board was cleared). Either way, that ends the game.
     public private(set) var isCompleted = false
     /// Daily challenge only: the score that completes it. `nil` in games saved before goals,
     /// which keep the old rule (one stage, completed by clearing it).
     public private(set) var goal: Int?
     /// `hintsUsed` when this board started. Optional so games saved before it still load.
     private var hintsAtBoardStart: Int?
+    /// Optional, like `hintsAtBoardStart`, for games saved before them.
+    private var savedStats: Stats?
+    private var elapsed: Int?
     private var random: SeededRandom
     private var undoPoint: UndoPoint?
 
@@ -123,10 +137,20 @@ public struct GameSession: Codable, Hashable, Sendable {
     /// Anything was played: a match, a + or a hint.
     public var hasMoves: Bool { score != 0 || stage > 1 || hintsUsed > 0 || usedPlusOnBoard }
 
-    /// No pairs left and no + uses left. A daily with a goal goes on after reaching it, for
-    /// a higher score; one saved before goals ends when its board is cleared.
+    /// No pairs left and no + uses left, or a daily challenge that reached its goal.
     public var isOver: Bool {
-        (isCompleted && goal == nil) || (!hasValidPair && plusRemaining == 0)
+        isCompleted || (!hasValidPair && plusRemaining == 0)
+    }
+
+    public var stats: Stats { savedStats ?? Stats() }
+
+    /// Seconds played: counted from the first move, while the game is on screen.
+    public var elapsedSeconds: Int { elapsed ?? 0 }
+
+    /// Adds play time (the game screen keeps the count and hands it in with each move).
+    public mutating func addTime(_ seconds: Int) {
+        guard seconds > 0, hasMoves, !isOver else { return }
+        elapsed = elapsedSeconds + seconds
     }
 
     /// The last match or + can be taken back: one step only, not across a cleared
@@ -158,11 +182,17 @@ public struct GameSession: Codable, Hashable, Sendable {
         }
         score += points
         streak += 1
+        var stats = self.stats
+        stats.pairs += 1
+        stats.rowsCleared += rows.count
+        stats.longestStreak = max(stats.longestStreak, streak)
+        savedStats = stats
         let reachedGoal = !isCompleted && goal.map { score >= $0 } == true
         if reachedGoal { isCompleted = true }
         undoPoint = boardCleared ? nil : undo
         let hintsOnBoard = self.hintsOnBoard, usedPlusOnBoard = self.usedPlusOnBoard
-        if boardCleared { advanceStage() }
+        // Reaching the goal ends the game: no next board, even if this one was cleared.
+        if boardCleared, !reachedGoal { advanceStage() }
 
         return MatchOutcome(
             pair: pair,
@@ -184,6 +214,9 @@ public struct GameSession: Codable, Hashable, Sendable {
         guard plusRemaining > 0, !isOver else { return false }
         undoPoint = checkpoint()
         plusRemaining -= 1
+        var stats = self.stats
+        stats.plusUsed += 1
+        savedStats = stats
         board.append(board.activeValues)
         return true
     }
@@ -219,12 +252,13 @@ public struct GameSession: Codable, Hashable, Sendable {
         score = point.score
         plusRemaining = point.plusRemaining
         streak = point.streak
+        savedStats = point.stats
         undoPoint = nil
         return true
     }
 
     private func checkpoint() -> UndoPoint {
-        UndoPoint(board: board, score: score, plusRemaining: plusRemaining, streak: streak)
+        UndoPoint(board: board, score: score, plusRemaining: plusRemaining, streak: streak, stats: savedStats)
     }
 
     private mutating func advanceStage() {

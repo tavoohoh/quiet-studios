@@ -110,6 +110,8 @@ final class GameModel {
     var onEvent: ((ProgressEvent) -> Void)?
 
     private var feedbackID = 0
+    /// Seconds played since the session last got them (`commitTime`).
+    private var uncommittedSeconds = 0
     private var sequence: Task<Void, Never>?
     private var missTask: Task<Void, Never>?
     /// The last move if it was a match, so undoing it can take its progress back.
@@ -147,6 +149,7 @@ final class GameModel {
 
     func tap(_ cell: Cell) {
         finishSequence()
+        commitTime()
         guard !session.isOver,
               let index = session.board.index(ofCell: cell.id),
               !session.board.cells[index].isCleared
@@ -208,6 +211,7 @@ final class GameModel {
 
     func addNumbers() {
         finishSequence()
+        commitTime()
         let firstNewID = session.board.cells.count
         guard session.addNumbers() else { return }
         lastOutcome = nil
@@ -239,6 +243,7 @@ final class GameModel {
     /// Highlights a valid pair, for a few points.
     func showHint() {
         finishSequence()
+        commitTime()
         guard let hint = session.useHint() else {
             if canAddNumbers {
                 plusNudges += 1
@@ -259,6 +264,7 @@ final class GameModel {
     /// Takes back the last match or + (one step).
     func undo() {
         finishSequence()
+        commitTime()
         let scoreBefore = session.score
         guard session.undo() else { return }
         if let outcome = lastOutcome { onEvent?(.undone(outcome)) }
@@ -268,6 +274,22 @@ final class GameModel {
         hintIDs = []
         if session.score != scoreBefore { showScoreChange(session.score - scoreBefore) }
         feedback.play(.select)
+    }
+
+    /// One second on screen with the app active (the game view ticks it). Kept here and
+    /// handed to the session with the next move, so the game isn't saved every second.
+    func tick() {
+        uncommittedSeconds += 1
+    }
+
+    /// Hands the seconds played to the session. Returns whether that changed it (the caller
+    /// saves when leaving the game or going to the background).
+    @discardableResult
+    func commitTime() -> Bool {
+        defer { uncommittedSeconds = 0 }
+        let before = session.elapsedSeconds
+        session.addTime(uncommittedSeconds)
+        return session.elapsedSeconds != before
     }
 
     func dismissScoreChange(_ change: ScoreChange) {

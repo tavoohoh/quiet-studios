@@ -29,6 +29,8 @@ final class AppModel {
     private(set) var progress: PlayerProgress
     /// Newly unlocked achievements waiting to be announced, oldest first.
     private(set) var pendingUnlocks: [Achievement] = []
+    /// Achievements unlocked during the active game, for the end-of-game summary.
+    private(set) var unlockedThisGame: [Achievement] = []
 
     init(persistence: PersistenceService, gameCenter: GameCenterService = .quietNumbers()) {
         self.persistence = persistence
@@ -46,6 +48,7 @@ final class AppModel {
             DemoData.seed(persistence)
         }
         #endif
+        finishDailyPastItsGoal()
         refreshSavedGames()
         if let oldest = DailyKey.dayKey(todayKey, addingDays: -DailyKey.replayWindow) {
             persistence.deletePractice(before: oldest)
@@ -59,6 +62,7 @@ final class AppModel {
         let unlocked = progress.record(event)
         persistence.saveProgress(progress)
         pendingUnlocks += unlocked
+        unlockedThisGame += unlocked
         if !unlocked.isEmpty {
             let progress = progress
             Task { await gameCenter.report(progress) }
@@ -88,7 +92,7 @@ final class AppModel {
         await gameCenter.submit(progress.bestScore, to: .bestScore)
         await gameCenter.submit(longestStreak, to: .longestStreak)
         if let today = persistence.dailies[todayKey], today.isFinished || today.isCompleted {
-            await gameCenter.submit(today.score, to: .daily)
+            await gameCenter.submitDaily(today)
         }
         await gameCenter.save(GameCenterService.Snapshot(progress: progress, dailies: persistence.dailies))
     }
@@ -105,6 +109,7 @@ final class AppModel {
         activeGame = nil
         activeKind = nil
         pendingUnlocks = []
+        unlockedThisGame = []
         refreshSavedGames()
         for key in PreferenceKey.rewards + [PreferenceKey.tutorialSeen] {
             UserDefaults.standard.removeObject(forKey: key)
@@ -195,6 +200,19 @@ final class AppModel {
         }
     }
 
+    /// "Start over" on a practice left halfway: the next `playDaily` deals the day again.
+    func discardPractice(_ dayKey: String) {
+        persistence.deleteGame(.practice(dayKey: dayKey))
+    }
+
+    /// Before 1.1 a daily went on after its goal; one saved like that is over now. Closes it
+    /// as if its last move had just been played.
+    private func finishDailyPastItsGoal() {
+        guard let daily = persistence.loadGame(.daily), daily.isOver, case .daily(let key) = daily.mode else { return }
+        persistence.finishDaily(key, score: daily.score, isCompleted: daily.isCompleted)
+        persistence.deleteGame(.daily)
+    }
+
     // MARK: Active game
 
     /// After every move.
@@ -209,7 +227,7 @@ final class AppModel {
             if game.session.score > progress.bestScore { record(.classicScore(game.session.score)) }
         case .daily(let dayKey):
             persistence.saveGame(game.session, in: .daily)
-            // Completed on reaching the goal, even if the game goes on for a higher score.
+            // Reaching the goal completes the day and ends the game.
             if game.session.isCompleted { completeDaily(dayKey, score: game.session.score) }
         case .practice(let dayKey):
             persistence.saveGame(game.session, in: .practice(dayKey: dayKey))
@@ -229,6 +247,7 @@ final class AppModel {
         model.onEvent = { [weak self] event in self?.record(event) }
         activeGame = model
         activeKind = kind
+        unlockedThisGame = []
     }
 
     private func finish(_ session: GameSession, _ kind: GameKind) {
@@ -236,18 +255,19 @@ final class AppModel {
         case .classic:
             persistence.deleteGame(.classic)
         case .daily(let dayKey):
-            persistence.finishDaily(dayKey, score: session.score, isCompleted: session.isCompleted)
+            persistence.finishDaily(dayKey, score: session.score, isCompleted: session.isCompleted, seconds: session.elapsedSeconds)
             persistence.deleteGame(.daily)
         case .practice(let dayKey):
             persistence.deleteGame(.practice(dayKey: dayKey))
         }
         record(.gameFinished(classicScore: kind == .classic ? session.score : nil))
+        // The summary lists what this game unlocked; no banners over it.
+        pendingUnlocks = []
         refreshSavedGames()
         Task { await pushToGameCenter() }
     }
 
-    /// The day counts (streak, calendar, achievements) from the move that reaches the goal;
-    /// later moves only update its score.
+    /// The day counts (streak, calendar, achievements) from the move that reaches the goal.
     private func completeDaily(_ dayKey: String, score: Int) {
         let isNew = persistence.dailies[dayKey]?.isCompleted != true
         persistence.updateDaily(dayKey, score: score, isCompleted: true)

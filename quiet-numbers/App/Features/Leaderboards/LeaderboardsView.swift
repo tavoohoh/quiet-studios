@@ -56,13 +56,18 @@ struct LeaderboardsView: View {
                 } else {
                     ScrollView {
                         VStack(spacing: 10) {
-                            EntryList(entries: top)
+                            EntryList(entries: top, showsTime: board == .daily)
                             if let local, !top.contains(where: \.isLocalPlayer) {
-                                EntryList(entries: [local])
+                                EntryList(entries: [local], showsTime: board == .daily)
                             }
                             Text("Scores from Game Center · updated just now")
                                 .font(.footnote)
                                 .foregroundStyle(theme.muted)
+                            if board == .daily {
+                                Text("Same score: the faster time ranks higher.")
+                                    .font(.footnote)
+                                    .foregroundStyle(theme.muted)
+                            }
                         }
                     }
                     .scrollIndicators(.hidden)
@@ -99,10 +104,11 @@ struct LeaderboardsView: View {
 
 private struct EntryList: View {
     let entries: [GameCenterService.Entry]
+    let showsTime: Bool
 
     var body: some View {
         VStack(spacing: 0) {
-            ForEach(entries) { EntryRow(entry: $0) }
+            ForEach(entries) { EntryRow(entry: $0, showsTime: showsTime) }
         }
         .padding(6)
         .background { SurfaceShape(shape: RoundedRectangle(cornerRadius: 24, style: .continuous)) }
@@ -111,6 +117,8 @@ private struct EntryList: View {
 
 private struct EntryRow: View {
     let entry: GameCenterService.Entry
+    /// Today's board: the time that breaks ties, next to the score.
+    let showsTime: Bool
 
     @Environment(\.quietTheme) private var theme
 
@@ -132,6 +140,11 @@ private struct EntryRow: View {
                 .foregroundStyle(entry.isLocalPlayer ? theme.primary : theme.ink)
                 .lineLimit(1)
             Spacer(minLength: 8)
+            if showsTime, let seconds = GameCenterService.seconds(of: entry) {
+                Text(GameClock.string(seconds))
+                    .font(.subheadline.monospacedDigit())
+                    .foregroundStyle(theme.muted)
+            }
             Text(entry.score, format: .number)
                 .font(.system(.title3, design: .rounded, weight: entry.isLocalPlayer ? .heavy : .medium).monospacedDigit())
                 .foregroundStyle(entry.isLocalPlayer ? theme.primary : theme.ink)

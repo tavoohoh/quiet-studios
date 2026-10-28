@@ -107,6 +107,16 @@
         }
       }
     },
+    "+ used": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Usos de +"
+          }
+        }
+      }
+    },
     "Account": {
       "localizations": {
         "es": {
@@ -133,6 +143,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Logros"
+          }
+        }
+      }
+    },
+    "Achievements unlocked": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Logros desbloqueados"
           }
         }
       }
@@ -215,6 +235,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Mejor racha"
+          }
+        }
+      }
+    },
+    "Cancel": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cancelar"
           }
         }
       }
@@ -419,6 +449,16 @@
         }
       }
     },
+    "Continue this practice?": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Seguir con esta práctica?"
+          }
+        }
+      }
+    },
     "Continue · Stage %lld": {
       "localizations": {
         "es": {
@@ -619,6 +659,16 @@
         }
       }
     },
+    "Goal": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Meta"
+          }
+        }
+      }
+    },
     "Goal %@": {
       "localizations": {
         "es": {
@@ -705,6 +755,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Pista"
+          }
+        }
+      }
+    },
+    "Hints": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pistas"
           }
         }
       }
@@ -995,6 +1055,16 @@
         }
       }
     },
+    "Numbers left: %@": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Números que quedan: %@"
+          }
+        }
+      }
+    },
     "Numbers touching on a diagonal count too. Match the 2 and the 8.": {
       "localizations": {
         "es": {
@@ -1031,6 +1101,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Contorno"
+          }
+        }
+      }
+    },
+    "Pairs": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Parejas"
           }
         }
       }
@@ -1215,6 +1295,16 @@
         }
       }
     },
+    "Rows cleared": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Filas limpiadas"
+          }
+        }
+      }
+    },
     "SF Rounded": {
       "shouldTranslate": false
     },
@@ -1234,6 +1324,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Salvia y arena"
+          }
+        }
+      }
+    },
+    "Same score: the faster time ranks higher.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Con el mismo puntaje, gana el menor tiempo."
           }
         }
       }
@@ -1318,6 +1418,16 @@
         }
       }
     },
+    "Stage": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Etapa"
+          }
+        }
+      }
+    },
     "Stage %lld": {
       "localizations": {
         "es": {
@@ -1344,6 +1454,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Estándar"
+          }
+        }
+      }
+    },
+    "Start over": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Empezar de nuevo"
           }
         }
       }
@@ -1474,6 +1594,16 @@
         }
       }
     },
+    "Time": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tiempo"
+          }
+        }
+      }
+    },
     "Today": {
       "localizations": {
         "es": {
@@ -1570,6 +1700,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Si entre dos números solo hay casillas vacías, igual se conectan, y vale más: 4 puntos. Junta el 7 y el 3."
+          }
+        }
+      }
+    },
+    "You left %@ halfway.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dejaste el %@ a medias."
           }
         }
       }

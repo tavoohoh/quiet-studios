@@ -149,12 +149,13 @@ private struct ActiveGameView: View {
                 kind: kind,
                 onNewGame: { app.newClassic() },
                 onSessionChange: { app.sessionChanged() },
-                bestScore: kind == .classic ? app.progress.bestScore : nil
+                bestScore: kind == .classic ? app.progress.bestScore : nil,
+                unlocked: app.unlockedThisGame
             )
             .id(ObjectIdentifier(game))
             .onDisappear { app.leftGame() }
             .overlay(alignment: .bottom) {
-                if let achievement = app.pendingUnlocks.first {
+                if let achievement = app.pendingUnlocks.first, !game.session.isOver {
                     UnlockBanner(achievement: achievement)
                         .id(achievement)
                         .transition(.move(edge: .bottom).combined(with: .opacity))

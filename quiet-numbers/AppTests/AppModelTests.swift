@@ -1,6 +1,7 @@
 import QuietCore
 import Foundation
 import QuietNumbersCore
+import QuietUI
 import Testing
 @testable import Quiet_Numbers
 
@@ -189,17 +190,46 @@ import Testing
         model.tap(model.session.board.cells[0])
         model.tap(model.session.board.cells[1])
         app.sessionChanged()
-        #expect(model.session.isCompleted && !model.session.isOver)
+        // The goal ends the game: the day is completed and closed at that score.
+        #expect(model.session.isCompleted && model.session.isOver)
         #expect(app.persistence.dailies[today]?.isCompleted == true)
+        #expect(app.persistence.dailies[today]?.isFinished == true)
+        #expect(app.persistence.dailies[today]?.score == 400)
         #expect(app.currentStreak == 1)
         #expect(app.progress.dailiesCompleted == 1)
+        #expect(!app.isDailyInProgress(today))
+        #expect(app.unlockedThisGame.contains(.firstStep))
+        #expect(app.pendingUnlocks.isEmpty)
+    }
 
-        // Playing on after the goal updates the score but doesn't count the day again.
-        model.tap(model.session.board.cells[9])
-        model.tap(model.session.board.cells[10])
+    @Test func aDailySavedPastItsGoalIsClosedOnLaunch() throws {
+        let persistence = PersistenceService(store: .inMemory)
+        let today = DailyKey.dayKey(for: AppClock.now)
+        var session = GameSession(board: Board(values: [4, 4, 1, 2, 1, 2, 1, 2, 3, 7]), mode: .daily(dayKey: today), score: 399, goal: 400)
+        _ = session.match(at: 0, 1)
+        persistence.startDaily(today)
+        persistence.saveGame(session, in: .daily)
+        let app = AppModel(persistence: persistence)
+        #expect(!app.isDailyInProgress(today))
+        #expect(persistence.loadGame(.daily) == nil)
+        #expect(persistence.dailies[today]?.isFinished == true)
+        #expect(persistence.dailies[today]?.isCompleted == true)
+    }
+
+    @Test func startingOverAPracticeDealsTheDayAgain() throws {
+        let app = AppModel(persistence: PersistenceService(store: .inMemory))
+        let day = try #require(DailyKey.dayKey(app.todayKey, addingDays: -3))
+        app.playDaily(day)
+        let game = try #require(app.activeGame)
+        let pair = try #require(MatchRules.validPairs(on: game.session.board).first)
+        game.tap(game.session.board.cells[pair.first])
+        game.tap(game.session.board.cells[pair.second])
         app.sessionChanged()
-        #expect(app.progress.dailiesCompleted == 1)
-        #expect(app.persistence.dailies[today]?.score == model.session.score)
+        #expect(app.daysInProgress.contains(day))
+        app.discardPractice(day)
+        #expect(!app.daysInProgress.contains(day))
+        app.playDaily(day)
+        #expect(app.activeGame?.session.score == 0)
     }
 
     @Test func newBestShowsDuringTheGame() throws {
@@ -280,5 +310,51 @@ import Testing
         #expect(persistence.dailies["2026-10-20"]?.score == 70)
         #expect(persistence.dailies["2026-10-21"]?.score == 90)
         #expect(persistence.completedDays == ["2026-10-20", "2026-10-21", "2026-10-22"])
+    }
+}
+
+@MainActor
+@Suite struct DailyTieBreakTests {
+    private typealias Entry = GameCenterService.Entry
+
+    private func entry(_ id: String, rank: Int, score: Int, seconds: Int?) -> Entry {
+        Entry(id: id, rank: rank, name: id, score: score, isLocalPlayer: id == "me", context: seconds.map { $0 + 1 } ?? 0)
+    }
+
+    @Test func sameScoreGoesToTheFasterTime() {
+        let ranked = GameCenterService.rankedByTime([
+            entry("slow", rank: 1, score: 500, seconds: 300),
+            entry("fast", rank: 1, score: 500, seconds: 120),
+            entry("old", rank: 1, score: 500, seconds: nil),
+            entry("top", rank: 1, score: 520, seconds: 900),
+            entry("twin", rank: 5, score: 500, seconds: 120),
+        ])
+        #expect(ranked.map(\.id) == ["top", "fast", "twin", "slow", "old"])
+        #expect(ranked.map(\.rank) == [1, 2, 2, 4, 5])
+        #expect(GameCenterService.seconds(of: ranked[1]) == 120)
+        #expect(GameCenterService.seconds(of: ranked[4]) == nil)
+    }
+
+    @Test func finishingADailyKeepsItsTime() throws {
+        let app = AppModel(persistence: PersistenceService(store: .inMemory))
+        let today = app.todayKey
+        let model = GameModel(session: GameSession(board: Board(values: [4, 4, 1, 2, 1, 2, 1, 2, 3, 7]), mode: .daily(dayKey: today), score: 0, goal: 2))
+        app.start(model, as: .daily(dayKey: today))
+        model.tap(model.session.board.cells[0])
+        model.tap(model.session.board.cells[1])
+        for _ in 0..<42 { model.tick() }
+        model.tap(model.session.board.cells[8])
+        model.tap(model.session.board.cells[9])
+        app.sessionChanged()
+        #expect(app.persistence.dailies[today]?.isFinished == true)
+        #expect(app.persistence.dailies[today]?.seconds == 42)
+    }
+
+    @Test func theFasterOfTwoEqualResultsWins() {
+        let slow = DailyRecord(score: 500, isFinished: true, isCompleted: true, seconds: 300)
+        let fast = DailyRecord(score: 500, isFinished: true, isCompleted: true, seconds: 200)
+        let old = DailyRecord(score: 500, isFinished: true, isCompleted: true)
+        #expect(slow.better(than: fast) == fast)
+        #expect(old.better(than: slow) == slow)
     }
 }
