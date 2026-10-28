@@ -7,7 +7,7 @@ Todo lo necesario para crear y publicar la app. Textos en `fastlane/metadata/{en
 | Campo | Valor |
 |---|---|
 | Plataforma | iOS (iPhone y iPad; en Mac se ofrece la app de iPad) |
-| Nombre | **Quiet Solitaire: Klondike** (si estuviera tomado: "Quiet Solitaire: Calm Cards"; en la pantalla de inicio sigue "Quiet Solitaire") |
+| Nombre | **Quiet Solitaire: Klondike** ("Quiet Solitaire" ya estaba tomado; en la pantalla de inicio sigue "Quiet Solitaire") |
 | Idioma principal | English (U.S.) |
 | Bundle ID | `com.tavoohoh.quietsolitaire` (ya registrado por Xcode al instalar en el iPhone) |
 | SKU | `quietsolitaire-ios` |

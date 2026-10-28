@@ -234,7 +234,7 @@ Cada fase termina con su criterio de aceptación cumplido antes de pasar a la si
 ## Preguntas abiertas
 
 - [x] Modalidad: Klondike robar 1 (robar 3 quizá como opción futura).
-- [x] Nombre: Quiet Solitaire. Falta verificar disponibilidad en la App Store y reservarlo en App Store Connect.
+- [x] Nombre en la App Store (2026-10-28): **Quiet Solitaire: Klondike** ("Quiet Solitaire" ya estaba tomado). En la pantalla de inicio sigue "Quiet Solitaire". Bundle ID `com.tavoohoh.quietsolitaire`, SKU `quietsolitaire-ios`.
 - [x] "UI kit" = paquete compartido QuietKit, no el framework UIKit.
 - [x] Dificultad del reto por día de la semana: sí.
 - [x] Puntaje: reciclar 0 (cada toque al mazo es movimiento), pista −10, logro "Números rojos" con pistas a 3 fuera del reto.
