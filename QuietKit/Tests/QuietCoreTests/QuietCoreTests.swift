@@ -36,16 +36,17 @@ import Testing
     private let bogota = TimeZone(identifier: "America/Bogota")!
     private let madrid = TimeZone(identifier: "Europe/Madrid")!
 
-    @Test func rollsOverAt7pmLocal() {
-        #expect(DailyKey.dayKey(for: date("2026-10-25T23:59:00Z"), timeZone: bogota) == "2026-10-25")
-        #expect(DailyKey.dayKey(for: date("2026-10-26T00:00:00Z"), timeZone: bogota) == "2026-10-26")
-        #expect(DailyKey.dayKey(for: date("2026-10-26T05:30:00Z"), timeZone: bogota) == "2026-10-26")
-        #expect(DailyKey.dayKey(for: date("2026-10-25T18:30:00Z"), timeZone: madrid) == "2026-10-26")
+    @Test func rollsOverAtLocalMidnight() {
+        // Bogotá is UTC-5: 23:59 local is still the 25th, midnight is the 26th.
+        #expect(DailyKey.dayKey(for: date("2026-10-26T04:59:00Z"), timeZone: bogota) == "2026-10-25")
+        #expect(DailyKey.dayKey(for: date("2026-10-26T05:00:00Z"), timeZone: bogota) == "2026-10-26")
+        // Same instant, other time zone: each device follows its own clock.
+        #expect(DailyKey.dayKey(for: date("2026-10-25T23:30:00Z"), timeZone: madrid) == "2026-10-26")
     }
 
-    @Test func nextRolloverIsNext7pm() {
-        #expect(DailyKey.nextRollover(after: date("2026-10-25T15:00:00Z"), timeZone: bogota) == date("2026-10-26T00:00:00Z"))
-        #expect(DailyKey.nextRollover(after: date("2026-10-26T00:00:00Z"), timeZone: bogota) == date("2026-10-27T00:00:00Z"))
+    @Test func nextRolloverIsNextMidnight() {
+        #expect(DailyKey.nextRollover(after: date("2026-10-25T15:00:00Z"), timeZone: bogota) == date("2026-10-26T05:00:00Z"))
+        #expect(DailyKey.nextRollover(after: date("2026-10-26T05:00:00Z"), timeZone: bogota) == date("2026-10-27T05:00:00Z"))
     }
 
     @Test func weekdayIsMondayFirst() {

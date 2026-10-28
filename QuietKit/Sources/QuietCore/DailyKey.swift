@@ -5,15 +5,16 @@ import Foundation
 public enum DailyKey {
     /// Past days that can still be replayed (unscored).
     public static let replayWindow = 30
-    /// Local hour when the next day's challenge starts. 19:00 in Colombia is 00:00 UTC.
-    public static let rolloverHour = 19
+    /// Local hour when the next day's challenge starts: midnight, like Quiet Numbers since
+    /// 2026-10-27 (it was 19:00), so the day's challenge can be played at any hour.
+    public static let rolloverHour = 0
 
     /// `yyyy-MM-dd` of the challenge on at `date`: the device's local day, moved to the
-    /// next one from `rolloverHour` on.
+    /// next one from `rolloverHour` on (no shift at midnight).
     public static func dayKey(for date: Date, timeZone: TimeZone = .current) -> String {
         let calendar = localCalendar(timeZone)
         var day = calendar.startOfDay(for: date)
-        if calendar.component(.hour, from: date) >= rolloverHour {
+        if rolloverHour > 0, calendar.component(.hour, from: date) >= rolloverHour {
             day = calendar.date(byAdding: .day, value: 1, to: day)!
         }
         let parts = calendar.dateComponents([.year, .month, .day], from: day)
