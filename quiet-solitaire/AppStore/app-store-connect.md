@@ -1,13 +1,13 @@
 # App Store Connect: Quiet Solitaire
 
-Todo lo necesario para crear y publicar la app. Textos en `fastlane/metadata/{en-US,es-MX,es-ES}` (validar con `scripts/validate-metadata.py`), imágenes en `AppStore/store-images/`, Game Center en `game-center.md`.
+Todo lo necesario para crear y publicar la app. Textos en `fastlane/metadata/{en-US,es-MX}` (validar con `scripts/validate-metadata.py`), imágenes en `AppStore/store-images/`, Game Center en `game-center.md`.
 
 ## Crear la app (Apps › +)
 
 | Campo | Valor |
 |---|---|
 | Plataforma | iOS (iPhone y iPad; en Mac se ofrece la app de iPad) |
-| Nombre | **Quiet Solitaire: Klondike** ("Quiet Solitaire" ya estaba tomado; en la pantalla de inicio sigue "Quiet Solitaire") |
+| Nombre | **Quiet Solitaire: Card Game** ("Quiet Solitaire" y "Quiet Solitaire: Klondike" ya estaban tomados; en la pantalla de inicio sigue "Quiet Solitaire") |
 | Idioma principal | English (U.S.) |
 | Bundle ID | `com.tavoohoh.quietsolitaire` (ya registrado por Xcode al instalar en el iPhone) |
 | SKU | `quietsolitaire-ios` |
@@ -23,7 +23,7 @@ Todo lo necesario para crear y publicar la app. Textos en `fastlane/metadata/{en
 | Clasificación por edad | Todas las preguntas en "Ninguno"/"No" → **4+**. Sin contenido generado por usuarios, sin navegador web, sin compras, sin juegos de azar con dinero (es solitario de un jugador, sin apuestas) |
 | Derechos de contenido | No contiene contenido de terceros (arte, figuras y palos dibujados para la app) |
 | Copyright | © 2026 Quiet Studios |
-| Localizaciones | English (U.S.), Spanish (Mexico), Spanish (Spain) |
+| Localizaciones | English (U.S.) y Spanish (Mexico) |
 
 ## Precio y disponibilidad
 
@@ -41,7 +41,7 @@ Gratis, todos los países. Sin compras dentro de la app.
 | Capturas iPhone 6.9" (1320×2868) | `AppStore/store-images/iphone-6.9/<en|es>/01…05.png` |
 | Capturas iPhone 6.3" (1206×2622) | `AppStore/store-images/iphone-6.3/<en|es>/` (si App Store Connect las pide aparte) |
 | Capturas iPad 13" (2064×2752) | `AppStore/store-images/ipad-13/<en|es>/` |
-| Texto promocional, descripción, palabras clave, novedades | `fastlane/metadata/<idioma>/*.txt` (el español de las capturas sirve para es-MX y es-ES) |
+| Texto promocional, descripción, palabras clave, novedades | `fastlane/metadata/<idioma>/*.txt` |
 | URL de soporte | `https://tavoohoh.github.io/quiet-studios/quiet-solitaire/support.html` |
 | URL de marketing | `https://tavoohoh.github.io/quiet-studios/quiet-solitaire/` |
 | Game Center | Activar en la versión y agregar los 13 logros y las 3 clasificaciones (`scripts/setup-game-center.py`, pendiente) |

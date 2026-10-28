@@ -42,7 +42,7 @@ Un solo target iOS (iPhone y iPad), un bundle ID. Proyecto generado con XcodeGen
 - **Publicación** (`AppStore/app-store-connect.md`: todos los campos para crear la app, notas para la revisión y el orden de las imágenes):
   - Capturas: `scripts/screenshots.sh [iphone] [ipad]` (esquema `Screenshots`, estado `-demo` de `App/Debug/DemoData.swift`: sábado 14-nov-2026 10:00, partida a medias jugada por el solver, racha de 8, clasificaciones de ejemplo) → `AppStore/screenshots/<iphone-6.9|ipad-13>/<en|es>/<light|dark>/`. Usa sus propios simuladores ("QS iPhone 6.9", "QS iPad 13") y los apaga al terminar. No correrla a la vez que la de Quiet Numbers: su script apaga todos los simuladores.
   - Imágenes de la App Store: `scripts/store-images.py` (después de las capturas) → `AppStore/store-images/<iphone-6.9|iphone-6.3|ipad-13>/<en|es>/01…05.png`, sin alfa.
-  - Textos: `fastlane/metadata/{en-US,es-MX,es-ES}`; validar con `scripts/validate-metadata.py`.
+  - Textos: `fastlane/metadata/{en-US,es-MX}` (solo inglés de EE. UU. y español de México, decisión 2026-10-28); validar con `scripts/validate-metadata.py`.
   - Game Center: `scripts/game-center.py` escribe `AppStore/game-center.{md,json}` y las 13 insignias (`AppStore/achievements/<id>.png`, 1024 sin alfa) y verifica los IDs contra el código.
   - Web: `../docs/quiet-solitaire/{index,privacy,support}.html` (GitHub Pages desde `/docs`).
 - Simuladores: para pruebas usar uno solo ("iPhone 17") y apagarlo al terminar (`xcrun simctl shutdown <udid>`).
@@ -234,7 +234,7 @@ Cada fase termina con su criterio de aceptación cumplido antes de pasar a la si
 ## Preguntas abiertas
 
 - [x] Modalidad: Klondike robar 1 (robar 3 quizá como opción futura).
-- [x] Nombre en la App Store (2026-10-28): **Quiet Solitaire: Klondike** ("Quiet Solitaire" ya estaba tomado). En la pantalla de inicio sigue "Quiet Solitaire". Bundle ID `com.tavoohoh.quietsolitaire`, SKU `quietsolitaire-ios`.
+- [x] Nombre en la App Store (2026-10-28): **Quiet Solitaire: Card Game** ("Quiet Solitaire" y "Quiet Solitaire: Klondike" ya estaban tomados). Subtítulo en inglés "Classic Klondike with no ads" (para no repetir "card game"); "klondike" en las palabras clave. En la pantalla de inicio sigue "Quiet Solitaire". Bundle ID `com.tavoohoh.quietsolitaire`, SKU `quietsolitaire-ios`.
 - [x] "UI kit" = paquete compartido QuietKit, no el framework UIKit.
 - [x] Dificultad del reto por día de la semana: sí.
 - [x] Puntaje: reciclar 0 (cada toque al mazo es movimiento), pista −10, logro "Números rojos" con pistas a 3 fuera del reto.
