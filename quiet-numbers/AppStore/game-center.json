@@ -271,7 +271,7 @@
       "id": "daily_challenge",
       "codeCase": "GameCenterService.Leaderboard.daily",
       "type": "recurring",
-      "recurrence": "Every 1 day, starting at 00:00 UTC (19:00 in Colombia)",
+      "recurrence": "Every 1 day, starting at 05:00 UTC (00:00 in Colombia)",
       "name": {
         "en": "Daily Challenge",
         "es": "Reto diario"

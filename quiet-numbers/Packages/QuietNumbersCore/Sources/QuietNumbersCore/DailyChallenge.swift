@@ -4,15 +4,16 @@ import Foundation
 public enum DailyChallenge {
     /// Past days that can still be replayed (unscored).
     public static let replayWindow = 30
-    /// Local hour when the next day's challenge starts. 19:00 in Colombia is 00:00 UTC.
-    public static let rolloverHour = 19
+    /// Local hour when the next day's challenge starts: midnight, so the whole day is the
+    /// day's challenge (2026-10-27; it used to be 19:00, 00:00 UTC in Colombia).
+    public static let rolloverHour = 0
 
     /// `yyyy-MM-dd` of the challenge on at `date`: the device's local day, moved to the
-    /// next one from `rolloverHour` on.
-    public static func dayKey(for date: Date, timeZone: TimeZone = .current) -> String {
+    /// next one from `rolloverHour` on (no shift at midnight).
+    public static func dayKey(for date: Date, timeZone: TimeZone = .current, rolloverHour: Int = rolloverHour) -> String {
         let calendar = localCalendar(timeZone)
         var day = calendar.startOfDay(for: date)
-        if calendar.component(.hour, from: date) >= rolloverHour {
+        if rolloverHour > 0, calendar.component(.hour, from: date) >= rolloverHour {
             day = calendar.date(byAdding: .day, value: 1, to: day)!
         }
         let parts = calendar.dateComponents([.year, .month, .day], from: day)
@@ -20,7 +21,7 @@ public enum DailyChallenge {
     }
 
     /// When the challenge after the one on at `date` starts.
-    public static func nextRollover(after date: Date, timeZone: TimeZone = .current) -> Date {
+    public static func nextRollover(after date: Date, timeZone: TimeZone = .current, rolloverHour: Int = rolloverHour) -> Date {
         let calendar = localCalendar(timeZone)
         let today = calendar.date(bySettingHour: rolloverHour, minute: 0, second: 0, of: date)!
         return today > date ? today : calendar.date(byAdding: .day, value: 1, to: today)!

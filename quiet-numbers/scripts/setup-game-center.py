@@ -18,8 +18,8 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 BUNDLE_ID = "com.tavoohoh.quietnumbers"
 # Game Center locales: English plus both Spanish storefronts (same text).
 LOCALES = {"en-US": "en", "es-MX": "es", "es-ES": "es"}
-# The daily board resets at 00:00 UTC, same as DailyChallenge's 19:00 in Colombia.
-DAILY_START = "2026-10-28T00:00:00Z"
+# The daily board resets at 05:00 UTC, midnight in Colombia (DailyChallenge.rolloverHour = 0).
+DAILY_START = "2026-10-29T05:00:00Z"
 SINGULAR = {" points": " point", " puntos": " punto", " days": " day", " días": " día"}
 
 APPLY = "--apply" in sys.argv

@@ -19,25 +19,32 @@ import Testing
     private let bogota = TimeZone(identifier: "America/Bogota")!
     private let madrid = TimeZone(identifier: "Europe/Madrid")!
 
-    @Test func rollsOverAt7pmLocal() {
-        // Bogotá is UTC-5: 18:59 local is still the 25th, 19:00 is the 26th.
-        #expect(DailyChallenge.dayKey(for: date("2026-10-25T23:59:00Z"), timeZone: bogota) == "2026-10-25")
-        #expect(DailyChallenge.dayKey(for: date("2026-10-26T00:00:00Z"), timeZone: bogota) == "2026-10-26")
-        // Just after local midnight it's still the same challenge that started at 19:00.
-        #expect(DailyChallenge.dayKey(for: date("2026-10-26T05:30:00Z"), timeZone: bogota) == "2026-10-26")
+    @Test func rollsOverAtLocalMidnight() {
+        // Bogotá is UTC-5: 23:59 local is still the 25th, 00:00 is the 26th.
+        #expect(DailyChallenge.dayKey(for: date("2026-10-26T04:59:00Z"), timeZone: bogota) == "2026-10-25")
+        #expect(DailyChallenge.dayKey(for: date("2026-10-26T05:00:00Z"), timeZone: bogota) == "2026-10-26")
+        // The evening belongs to the same day now.
+        #expect(DailyChallenge.dayKey(for: date("2026-10-26T00:30:00Z"), timeZone: bogota) == "2026-10-25")
         // Same instant, other time zone: each device follows its own clock.
-        #expect(DailyChallenge.dayKey(for: date("2026-10-25T18:30:00Z"), timeZone: madrid) == "2026-10-26")
+        #expect(DailyChallenge.dayKey(for: date("2026-10-25T23:30:00Z"), timeZone: madrid) == "2026-10-26")
     }
 
     @Test func rolloverHoldsAcrossDaylightSaving() {
-        // Madrid leaves summer time on 2026-10-25 at 03:00; rollover is still 19:00 local.
-        #expect(DailyChallenge.dayKey(for: date("2026-10-25T17:59:00Z"), timeZone: madrid) == "2026-10-25")
-        #expect(DailyChallenge.dayKey(for: date("2026-10-25T18:00:00Z"), timeZone: madrid) == "2026-10-26")
+        // Madrid leaves summer time on 2026-10-25 at 03:00; midnight is still the change.
+        #expect(DailyChallenge.dayKey(for: date("2026-10-25T22:59:00Z"), timeZone: madrid) == "2026-10-25")
+        #expect(DailyChallenge.dayKey(for: date("2026-10-25T23:00:00Z"), timeZone: madrid) == "2026-10-26")
     }
 
-    @Test func nextRolloverIsNext7pm() {
-        #expect(DailyChallenge.nextRollover(after: date("2026-10-25T15:00:00Z"), timeZone: bogota) == date("2026-10-26T00:00:00Z"))
-        #expect(DailyChallenge.nextRollover(after: date("2026-10-26T00:00:00Z"), timeZone: bogota) == date("2026-10-27T00:00:00Z"))
+    @Test func nextRolloverIsNextMidnight() {
+        #expect(DailyChallenge.nextRollover(after: date("2026-10-25T15:00:00Z"), timeZone: bogota) == date("2026-10-26T05:00:00Z"))
+        #expect(DailyChallenge.nextRollover(after: date("2026-10-26T05:00:00Z"), timeZone: bogota) == date("2026-10-27T05:00:00Z"))
+    }
+
+    @Test func anEveningRolloverStillWorks() {
+        // The rule supports a rollover hour other than midnight (it was 19:00 before).
+        #expect(DailyChallenge.dayKey(for: date("2026-10-25T23:59:00Z"), timeZone: bogota, rolloverHour: 19) == "2026-10-25")
+        #expect(DailyChallenge.dayKey(for: date("2026-10-26T00:00:00Z"), timeZone: bogota, rolloverHour: 19) == "2026-10-26")
+        #expect(DailyChallenge.nextRollover(after: date("2026-10-25T15:00:00Z"), timeZone: bogota, rolloverHour: 19) == date("2026-10-26T00:00:00Z"))
     }
 
     @Test func currentStreakEndsTodayOrYesterday() {

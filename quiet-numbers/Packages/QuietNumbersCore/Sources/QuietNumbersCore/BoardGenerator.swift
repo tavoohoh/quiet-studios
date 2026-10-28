@@ -30,8 +30,9 @@ public enum BoardGenerator {
         }
     }
 
-    /// A fresh board for `stage` with `startingPairs` valid pairs that opens up to at least
-    /// `typicalMoves`, where every number could in principle find a partner (see `isPairable`).
+    /// A fresh board for `stage` with `startingPairs` valid pairs (at least one a sum, not only
+    /// equal numbers) that opens up to at least `typicalMoves`, where every number could in
+    /// principle find a partner (see `isPairable`).
     ///
     /// Numbers are laid out so no neighbours pair, then a few cells are changed to match a
     /// neighbour. Candidates that miss are discarded and the generator keeps advancing, so
@@ -46,7 +47,8 @@ public enum BoardGenerator {
             }
             guard isPairable(values) else { continue }
             let board = Board(values: values)
-            guard range.contains(MatchRules.validPairs(on: board).count) else { continue }
+            let pairs = MatchRules.validPairs(on: board)
+            guard range.contains(pairs.count), pairs.contains(where: { isSum($0, on: board) }) else { continue }
             if movesBeforePlus(on: board, using: &random) >= typicalMoves(forStage: stage) {
                 return board
             }
@@ -88,12 +90,18 @@ public enum BoardGenerator {
         return values
     }
 
-    /// Makes one cell pair with one of its earlier neighbours (same number or its complement).
+    /// Makes one cell pair with one of its earlier neighbours: two times in three the
+    /// complement (3 and 7), otherwise the same number, so the opening isn't all 9-9s.
     static func plantPair(in values: inout [Int], using random: inout SeededRandom) {
         let index = random.nextInt(in: 1...(values.count - 1))
         let neighbours = earlierNeighbours(of: index)
         let partner = values[neighbours[random.nextInt(in: 0...(neighbours.count - 1))]]
-        values[index] = random.nextInt(in: 0...1) == 0 ? partner : 10 - partner
+        values[index] = random.nextInt(in: 0...2) == 0 ? partner : 10 - partner
+    }
+
+    /// Two different numbers that add up to 10 (not two 5s).
+    static func isSum(_ pair: Pair, on board: Board) -> Bool {
+        board.cells[pair.first].value != board.cells[pair.second].value
     }
 
     /// Neighbours placed before `index` in reading order. Every cell after the first has one.

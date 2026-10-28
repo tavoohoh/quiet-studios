@@ -26,13 +26,13 @@ Ocultos: Noctámbulo, Monótono y Números rojos son sorpresas; el resto son met
 
 | ID | Caso en el código | Nombre (en / es) | Tipo | Formato | Sufijo (en / es) | Orden | Envío | Qué se envía |
 |---|---|---|---|---|---|---|---|---|
-| `daily_challenge` | `daily` | Daily Challenge / Reto diario | Recurrente (Every 1 day, starting at 00:00 UTC (19:00 in Colombia)) | Entero | " points" / " puntos" | Mayor a menor | **Más reciente** | El intento puntuable del día, siempre que termine, aunque sea 0 o negativo (`AppModel.pushToGameCenter`). Sin rango de puntaje, para aceptar negativos. |
+| `daily_challenge` | `daily` | Daily Challenge / Reto diario | Recurrente (Every 1 day, starting at 05:00 UTC (00:00 in Colombia)) | Entero | " points" / " puntos" | Mayor a menor | **Más reciente** | El intento puntuable del día, siempre que termine, aunque sea 0 o negativo (`AppModel.pushToGameCenter`). Sin rango de puntaje, para aceptar negativos. |
 | `best_score` | `bestScore` | Best Score / Mejor puntaje | Clásico | Entero | " points" / " puntos" | Mayor a menor | Mejor puntaje | PlayerProgress.bestScore (classic games, including abandoned ones) |
 | `longest_streak` | `longestStreak` | Longest Streak / Racha más larga | Clásico | Entero | " days" / " días" | Mayor a menor | Mejor puntaje | Longest run of completed daily challenges (AppModel.longestStreak) |
 
 ## Notas
 
-- El reto cambia a las 19:00 de cada dispositivo. `daily_challenge` recurre cada 24 h desde las 00:00 UTC (19:00 en Colombia) y guarda el puntaje **más reciente**: cada envío cae en la ventana UTC vigente al terminar. Fuera de UTC-5 un mismo reto puede quedar en la ventana anterior o siguiente.
+- El reto cambia a la medianoche de cada dispositivo. `daily_challenge` recurre cada 24 h desde las 05:00 UTC (00:00 en Colombia) y guarda el puntaje **más reciente**: cada envío cae en la ventana UTC vigente al terminar. Fuera de UTC-5 un mismo reto puede quedar en la ventana anterior o siguiente.
 - `best_score` y `longest_streak` solo reciben valores > 0.
 - Partidas guardadas (`saveGameData`): el progreso se guarda en el iCloud del jugador vía Game Center (requiere sesión). Entitlements en `App/QuietNumbers.entitlements` (contenedor `iCloud.<bundle id>`, iCloud Documents); falta activar iCloud en el App ID y crear el contenedor.
 - Restablecer progreso (Ajustes) borra el guardado de iCloud y reinicia los logros con `GKAchievement.resetAchievements()`. Los puntajes ya enviados a leaderboards no se pueden retirar.
