@@ -1,6 +1,6 @@
 # App Store Connect: Quiet Solitaire
 
-Todo lo necesario para crear y publicar la app. Textos en `fastlane/metadata/{en-US,es-MX}` (validar con `scripts/validate-metadata.py`), imágenes en `AppStore/store-images/`, Game Center en `game-center.md`.
+Todo lo necesario para crear y publicar la app. App creada el 2026-10-28 (ID `6828074077`); `scripts/upload-metadata.py --apply` subió textos, categoría, copyright e imágenes, y `scripts/setup-game-center.py --apply` creó Game Center. Textos en `fastlane/metadata/{en-US,es-MX}` (validar con `scripts/validate-metadata.py`), imágenes en `AppStore/store-images/`, Game Center en `game-center.md`.
 
 ## Crear la app (Apps › +)
 
@@ -18,8 +18,7 @@ Todo lo necesario para crear y publicar la app. Textos en `fastlane/metadata/{en
 | Campo | Valor |
 |---|---|
 | Subtítulo | Ver `subtitle.txt` por idioma |
-| Categoría principal | Juegos › **Cartas** |
-| Categoría secundaria | Juegos › Puzle |
+| Categoría | Juegos, subcategorías **Cartas** y Puzle (sin categoría secundaria) |
 | Clasificación por edad | Todas las preguntas en "Ninguno"/"No" → **4+**. Sin contenido generado por usuarios, sin navegador web, sin compras, sin juegos de azar con dinero (es solitario de un jugador, sin apuestas) |
 | Derechos de contenido | No contiene contenido de terceros (arte, figuras y palos dibujados para la app) |
 | Copyright | © 2026 Quiet Studios |
@@ -44,7 +43,7 @@ Gratis, todos los países. Sin compras dentro de la app.
 | Texto promocional, descripción, palabras clave, novedades | `fastlane/metadata/<idioma>/*.txt` |
 | URL de soporte | `https://tavoohoh.github.io/quiet-studios/quiet-solitaire/support.html` |
 | URL de marketing | `https://tavoohoh.github.io/quiet-studios/quiet-solitaire/` |
-| Game Center | Activar en la versión y agregar los 13 logros y las 3 clasificaciones (`scripts/setup-game-center.py`, pendiente) |
+| Game Center | 13 logros y 3 clasificaciones creados (`scripts/setup-game-center.py`). Falta activar Game Center en la versión y elegirlos ahí |
 | Cifrado | No usa cifrado propio (`ITSAppUsesNonExemptEncryption = NO` en el Info.plist) |
 | Publicación | Automática al aprobarse (como Quiet Numbers) |
 
@@ -65,3 +64,13 @@ Cinco por dispositivo e idioma, en este orden (`scripts/screenshots.sh` y luego 
 | 5 | `05-leaderboards` (amigos, oscuro) | **Climb to the top.** Daily, best-score and streak leaderboards with friends and the world, on Game Center. | **Llega a la cima.** Clasificaciones del día, de mejor puntaje y de racha con tus amigos y el mundo, en Game Center. |
 
 Sin nombres ni estética de otras apps de solitario.
+
+## Qué falta hacer a mano en App Store Connect
+
+La API no cubre bien estos pasos, o conviene revisarlos con calma:
+
+- Clasificación por edad (cuestionario: todo "No"/"Ninguno" → 4+).
+- Precio (gratis) y disponibilidad.
+- Privacidad de la app: "Data Not Collected".
+- En la versión 1.0: activar Game Center y elegir los logros y clasificaciones, elegir el build, las notas para la revisión (arriba) y la publicación automática.
+- Revisar la ficha generada (textos e imágenes en inglés y español de México).

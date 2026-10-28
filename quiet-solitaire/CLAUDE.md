@@ -43,6 +43,7 @@ Un solo target iOS (iPhone y iPad), un bundle ID. Proyecto generado con XcodeGen
   - Capturas: `scripts/screenshots.sh [iphone] [ipad]` (esquema `Screenshots`, estado `-demo` de `App/Debug/DemoData.swift`: sábado 14-nov-2026 10:00, partida a medias jugada por el solver, racha de 8, clasificaciones de ejemplo) → `AppStore/screenshots/<iphone-6.9|ipad-13>/<en|es>/<light|dark>/`. Usa sus propios simuladores ("QS iPhone 6.9", "QS iPad 13") y los apaga al terminar. No correrla a la vez que la de Quiet Numbers: su script apaga todos los simuladores.
   - Imágenes de la App Store: `scripts/store-images.py` (después de las capturas) → `AppStore/store-images/<iphone-6.9|iphone-6.3|ipad-13>/<en|es>/01…05.png`, sin alfa.
   - Textos: `fastlane/metadata/{en-US,es-MX}` (solo inglés de EE. UU. y español de México, decisión 2026-10-28); validar con `scripts/validate-metadata.py`.
+  - Subir la ficha por la API (sin fastlane, mismo cliente `scripts/asc.py` que Quiet Numbers; credenciales en `~/.appstoreconnect`): `scripts/upload-metadata.py [--apply] [--replace-screenshots]` sube textos (en-US, es-MX), categoría, copyright e imágenes (iPhone 6.9" e iPad 13"); `scripts/setup-game-center.py [--apply]` crea logros (con imagen) y clasificaciones desde `game-center.json`. Ambos muestran qué cambiaría sin `--apply` y no duplican lo que ya existe.
   - Game Center: `scripts/game-center.py` escribe `AppStore/game-center.{md,json}` y las 13 insignias (`AppStore/achievements/<id>.png`, 1024 sin alfa) y verifica los IDs contra el código.
   - Web: `../docs/quiet-solitaire/{index,privacy,support}.html` (GitHub Pages desde `/docs`).
 - Simuladores: para pruebas usar uno solo ("iPhone 17") y apagarlo al terminar (`xcrun simctl shutdown <udid>`).
@@ -227,7 +228,7 @@ Cada fase termina con su criterio de aceptación cumplido antes de pasar a la si
 | 1. Motor | ✅ Hecha. Reglas, deshacer, puntaje, solver, reparto diario con dificultad por día, logros; 24 tests. Solver: 80 de 100 repartos al azar resueltos (máximo teórico ~82 %), ~30 ms por reparto en release. |
 | 2. Juego jugable | 🟡 Jugable en el simulador (tocar, arrastrar pilas, voltear, pistas, autocompletar, "sin salida", victoria con cascada). Falta probar en un iPhone real y en iPad. |
 | 3. Persistencia y reto diario | 🟡 Implementado (SwiftData como Quiet Numbers, reto con solución garantizada, racha, calendario, dificultad de la semana); falta verificar en dispositivo. |
-| 4. Game Center | 🟡 Código listo (IDs `qs_*`); falta crear la app, los 13 logros y las 3 clasificaciones en App Store Connect. |
+| 4. Game Center | 🟡 13 logros y 3 clasificaciones creados en App Store Connect (2026-10-28, `scripts/setup-game-center.py`); falta activarlos en la versión y verificar envío y sincronización en el dispositivo. |
 | 5. Recompensas y colección | 🟡 Mazos (6), reversos (5), tableros (5), efecto de victoria e ícono dorado, con sus desbloqueos; falta revisión en dispositivo. |
 | 6. Pulido y lanzamiento | 🟡 Inglés y español completos (206 textos). Tutorial interactivo hecho. Instalada en iPhone 16 Pro (2026-10-27). Falta: capturas, metadatos, insignias de Game Center, TestFlight. Auditoría de VoiceOver: pospuesta (decisión del usuario). |
 
