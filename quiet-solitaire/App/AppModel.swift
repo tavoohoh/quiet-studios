@@ -71,6 +71,10 @@ final class AppModel {
         if ProcessInfo.processInfo.arguments.contains("-unlockAll") {
             progress = PlayerProgress(unlocked: Set(Achievement.allCases))
         }
+        if DemoData.isActive {
+            progress = DemoData.progress
+            DemoData.seed(persistence)
+        }
         #endif
         refreshSavedGames()
         gameCenter.onAuthenticated = { [weak self] in self?.syncGameCenter() }

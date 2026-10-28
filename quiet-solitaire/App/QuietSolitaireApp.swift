@@ -37,7 +37,7 @@ struct QuietSolitaireApp: App {
     private static var wantsSplash: Bool {
         #if DEBUG
         let arguments = ProcessInfo.processInfo.arguments
-        return !arguments.contains("-startGame") && !arguments.contains("-uiTesting")
+        return !arguments.contains("-startGame") && !arguments.contains("-uiTesting") && !arguments.contains("-demo")
         #else
         return true
         #endif
@@ -49,7 +49,7 @@ struct QuietSolitaireApp: App {
     private static var store: PersistenceService.Store {
         #if DEBUG
         let arguments = ProcessInfo.processInfo.arguments
-        if arguments.contains("-startGame") { return .inMemory }
+        if arguments.contains("-startGame") || arguments.contains("-demo") { return .inMemory }
         if arguments.contains("-uiTesting") { return .named("UITests", reset: arguments.contains("-resetStore")) }
         #endif
         return .standard

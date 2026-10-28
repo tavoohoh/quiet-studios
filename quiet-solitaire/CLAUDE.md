@@ -118,7 +118,7 @@ Klondike estándar, **robar 1**, reciclar el mazo **sin límite**.
 
 ## Reto diario
 
-Mismo esquema que Quiet Numbers (clave `yyyy-MM-dd` → FNV-1a → semilla, cambio de día a las 19:00 locales, un intento puntuable, práctica sin puntuar, racha y calendario de 30 días).
+Mismo esquema que Quiet Numbers (clave `yyyy-MM-dd` → FNV-1a → semilla, cambio de día a la **medianoche local** como Quiet Numbers desde el 2026-10-27 (`DailyKey.rolloverHour = 0` en QuietKit; antes 19:00), un intento puntuable, práctica sin puntuar, racha y calendario de 30 días). La clasificación `qs_daily_challenge` recurre cada día desde las 05:00 UTC (medianoche en Colombia).
 
 Lo nuevo: **cada reto diario tiene solución garantizada.** Con un reparto aleatorio se juega "otra partida más"; el reto diario se distingue porque es el mismo para todos y se sabe que se puede ganar.
 

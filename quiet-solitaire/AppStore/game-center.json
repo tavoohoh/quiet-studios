@@ -1,0 +1,374 @@
+{
+  "achievements": [
+    {
+      "id": "qs_first_win",
+      "codeCase": "Achievement.firstWin",
+      "points": 10,
+      "hidden": false,
+      "achievableMoreThanOnce": false,
+      "reward": {
+        "en": "Quiet deck, theme back, Teal & Coral board (defaults)",
+        "es": "Mazo Quiet, reverso del tema, tablero Petróleo y coral (por defecto)"
+      },
+      "name": {
+        "en": "First Hand",
+        "es": "Primera mano"
+      },
+      "preEarnedDescription": {
+        "en": "Win your first game.",
+        "es": "Gana tu primera partida."
+      },
+      "earnedDescription": {
+        "en": "You won your first game.",
+        "es": "Ganaste tu primera partida."
+      },
+      "image": "AppStore/achievements/qs_first_win.png"
+    },
+    {
+      "id": "qs_no_undo",
+      "codeCase": "Achievement.noUndo",
+      "points": 30,
+      "hidden": false,
+      "achievableMoreThanOnce": false,
+      "reward": {
+        "en": "Coral back",
+        "es": "Reverso Coral"
+      },
+      "name": {
+        "en": "No Going Back",
+        "es": "Sin vuelta atrás"
+      },
+      "preEarnedDescription": {
+        "en": "Win without undo.",
+        "es": "Gana sin deshacer."
+      },
+      "earnedDescription": {
+        "en": "You won without a single undo.",
+        "es": "Ganaste sin deshacer ni una vez."
+      },
+      "image": "AppStore/achievements/qs_no_undo.png"
+    },
+    {
+      "id": "qs_no_hints",
+      "codeCase": "Achievement.noHints",
+      "points": 40,
+      "hidden": false,
+      "achievableMoreThanOnce": false,
+      "reward": {
+        "en": "Sage & Sand board",
+        "es": "Tablero Salvia y arena"
+      },
+      "name": {
+        "en": "Steady Hand",
+        "es": "A pulso"
+      },
+      "preEarnedDescription": {
+        "en": "Win without hints.",
+        "es": "Gana sin pistas."
+      },
+      "earnedDescription": {
+        "en": "You won without a single hint.",
+        "es": "Ganaste sin usar ni una pista."
+      },
+      "image": "AppStore/achievements/qs_no_hints.png"
+    },
+    {
+      "id": "qs_one_pass",
+      "codeCase": "Achievement.onePass",
+      "points": 50,
+      "hidden": false,
+      "achievableMoreThanOnce": false,
+      "reward": {
+        "en": "Classic deck",
+        "es": "Mazo Clásico"
+      },
+      "name": {
+        "en": "One Pass",
+        "es": "Una sola vuelta"
+      },
+      "preEarnedDescription": {
+        "en": "Win without recycling the stock.",
+        "es": "Gana sin reciclar el mazo."
+      },
+      "earnedDescription": {
+        "en": "You won going through the stock only once.",
+        "es": "Ganaste recorriendo el mazo una sola vez."
+      },
+      "image": "AppStore/achievements/qs_one_pass.png"
+    },
+    {
+      "id": "qs_ten_wins",
+      "codeCase": "Achievement.tenWins",
+      "points": 40,
+      "hidden": false,
+      "achievableMoreThanOnce": false,
+      "reward": {
+        "en": "Sage & Coral board",
+        "es": "Tablero Salvia y coral"
+      },
+      "name": {
+        "en": "Ten Wins",
+        "es": "Diez victorias"
+      },
+      "preEarnedDescription": {
+        "en": "Win 10 games.",
+        "es": "Gana 10 partidas."
+      },
+      "earnedDescription": {
+        "en": "You won 10 games.",
+        "es": "Ganaste 10 partidas."
+      },
+      "image": "AppStore/achievements/qs_ten_wins.png"
+    },
+    {
+      "id": "qs_consistency",
+      "codeCase": "Achievement.consistency",
+      "points": 80,
+      "hidden": false,
+      "achievableMoreThanOnce": false,
+      "reward": {
+        "en": "Indigo & Peach board",
+        "es": "Tablero Índigo y durazno"
+      },
+      "name": {
+        "en": "Consistency",
+        "es": "Constancia"
+      },
+      "preEarnedDescription": {
+        "en": "Complete 7 daily challenges in a row.",
+        "es": "Completa 7 retos diarios seguidos."
+      },
+      "earnedDescription": {
+        "en": "You completed 7 daily challenges in a row.",
+        "es": "Completaste 7 retos diarios seguidos."
+      },
+      "image": "AppStore/achievements/qs_consistency.png"
+    },
+    {
+      "id": "qs_habit",
+      "codeCase": "Achievement.habit",
+      "points": 100,
+      "hidden": false,
+      "achievableMoreThanOnce": false,
+      "reward": {
+        "en": "Illustrated deck",
+        "es": "Mazo Ilustrado"
+      },
+      "name": {
+        "en": "Habit",
+        "es": "Hábito"
+      },
+      "preEarnedDescription": {
+        "en": "Complete 30 daily challenges in a row.",
+        "es": "Completa 30 retos diarios seguidos."
+      },
+      "earnedDescription": {
+        "en": "You completed 30 daily challenges in a row.",
+        "es": "Completaste 30 retos diarios seguidos."
+      },
+      "image": "AppStore/achievements/qs_habit.png"
+    },
+    {
+      "id": "qs_ladder",
+      "codeCase": "Achievement.ladder",
+      "points": 60,
+      "hidden": false,
+      "achievableMoreThanOnce": false,
+      "reward": {
+        "en": "Linen back",
+        "es": "Reverso Lino"
+      },
+      "name": {
+        "en": "Ladder",
+        "es": "Escalera"
+      },
+      "preEarnedDescription": {
+        "en": "Build a column from king to ace.",
+        "es": "Arma una columna del rey al as."
+      },
+      "earnedDescription": {
+        "en": "You built a column from king to ace.",
+        "es": "Armaste una columna del rey al as."
+      },
+      "image": "AppStore/achievements/qs_ladder.png"
+    },
+    {
+      "id": "qs_centennial",
+      "codeCase": "Achievement.centennial",
+      "points": 100,
+      "hidden": false,
+      "achievableMoreThanOnce": false,
+      "reward": {
+        "en": "Gold back and gold app icon",
+        "es": "Reverso Dorado e ícono dorado"
+      },
+      "name": {
+        "en": "Centennial",
+        "es": "Centenario"
+      },
+      "preEarnedDescription": {
+        "en": "Win 100 games.",
+        "es": "Gana 100 partidas."
+      },
+      "earnedDescription": {
+        "en": "You won 100 games.",
+        "es": "Ganaste 100 partidas."
+      },
+      "image": "AppStore/achievements/qs_centennial.png"
+    },
+    {
+      "id": "qs_night_owl",
+      "codeCase": "Achievement.nightOwl",
+      "points": 40,
+      "hidden": true,
+      "achievableMoreThanOnce": false,
+      "reward": {
+        "en": "Night back",
+        "es": "Reverso Noche"
+      },
+      "name": {
+        "en": "Night Owl",
+        "es": "Noctámbulo"
+      },
+      "preEarnedDescription": {
+        "en": "Win a daily challenge between midnight and 4 a.m.",
+        "es": "Gana un reto diario entre la medianoche y las 4 a. m."
+      },
+      "earnedDescription": {
+        "en": "You won a daily challenge in the small hours.",
+        "es": "Ganaste un reto diario de madrugada."
+      },
+      "image": "AppStore/achievements/qs_night_owl.png"
+    },
+    {
+      "id": "qs_fifty_wins",
+      "codeCase": "Achievement.fiftyWins",
+      "points": 80,
+      "hidden": false,
+      "achievableMoreThanOnce": false,
+      "reward": {
+        "en": "Cascade victory",
+        "es": "Victoria en cascada"
+      },
+      "name": {
+        "en": "Fifty",
+        "es": "Cincuenta"
+      },
+      "preEarnedDescription": {
+        "en": "Win 50 games.",
+        "es": "Gana 50 partidas."
+      },
+      "earnedDescription": {
+        "en": "You won 50 games.",
+        "es": "Ganaste 50 partidas."
+      },
+      "image": "AppStore/achievements/qs_fifty_wins.png"
+    },
+    {
+      "id": "qs_economy",
+      "codeCase": "Achievement.economy",
+      "points": 60,
+      "hidden": true,
+      "achievableMoreThanOnce": false,
+      "reward": {
+        "en": "Pixel deck",
+        "es": "Mazo Pixel"
+      },
+      "name": {
+        "en": "Economy",
+        "es": "Economía"
+      },
+      "preEarnedDescription": {
+        "en": "Win in fewer than 100 moves.",
+        "es": "Gana en menos de 100 movimientos."
+      },
+      "earnedDescription": {
+        "en": "You won in fewer than 100 moves.",
+        "es": "Ganaste en menos de 100 movimientos."
+      },
+      "image": "AppStore/achievements/qs_economy.png"
+    },
+    {
+      "id": "qs_in_the_red",
+      "codeCase": "Achievement.inTheRed",
+      "points": 20,
+      "hidden": true,
+      "achievableMoreThanOnce": false,
+      "reward": {
+        "en": "Hidden: hints at 3 outside the daily challenge",
+        "es": "Oculta: pistas a 3 fuera del reto diario"
+      },
+      "name": {
+        "en": "In the Red",
+        "es": "Números rojos"
+      },
+      "preEarnedDescription": {
+        "en": "Take your score below zero.",
+        "es": "Lleva tu puntaje por debajo de cero."
+      },
+      "earnedDescription": {
+        "en": "Your score went below zero. It happens.",
+        "es": "Tu puntaje bajó de cero. Pasa."
+      },
+      "image": "AppStore/achievements/qs_in_the_red.png"
+    }
+  ],
+  "totalPoints": 710,
+  "leaderboards": [
+    {
+      "id": "qs_daily_challenge",
+      "codeCase": "Leaderboard.daily",
+      "type": "recurring",
+      "recurrence": "Every 1 day, starting at 05:00 UTC (00:00 in Colombia)",
+      "name": {
+        "en": "Daily Challenge",
+        "es": "Reto diario"
+      },
+      "scoreFormat": "Integer",
+      "formatSuffix": {
+        "en": " points",
+        "es": " puntos"
+      },
+      "sortOrder": "High to Low",
+      "scoreSubmission": "Most recent score",
+      "source": "Today's scored daily attempt when it's won (AppModel.pushToGameCenter)",
+      "scoreRange": "None (scores can be negative)"
+    },
+    {
+      "id": "qs_best_score",
+      "codeCase": "Leaderboard.bestScore",
+      "type": "classic",
+      "recurrence": null,
+      "name": {
+        "en": "Best Score",
+        "es": "Mejor puntaje"
+      },
+      "scoreFormat": "Integer",
+      "formatSuffix": {
+        "en": " points",
+        "es": " puntos"
+      },
+      "sortOrder": "High to Low",
+      "scoreSubmission": "Best score",
+      "source": "PlayerProgress.bestScore (classic games, including abandoned ones)"
+    },
+    {
+      "id": "qs_longest_streak",
+      "codeCase": "Leaderboard.longestStreak",
+      "type": "classic",
+      "recurrence": null,
+      "name": {
+        "en": "Longest Streak",
+        "es": "Racha más larga"
+      },
+      "scoreFormat": "Integer",
+      "formatSuffix": {
+        "en": " days",
+        "es": " días"
+      },
+      "sortOrder": "High to Low",
+      "scoreSubmission": "Best score",
+      "source": "Longest run of completed daily challenges (AppModel.longestStreak)"
+    }
+  ]
+}

@@ -134,7 +134,7 @@ struct HomeView: View {
             return arguments[i + 1]
         }
         let session = if arguments.contains("-nearlyWon") {
-            GameSession(state: DebugDeals.nearlyWon)
+            GameSession(state: DebugDeals.nearlyWon, elapsedSeconds: DemoData.clock)
         } else if arguments.contains("-lostDeal") {
             GameSession(state: DebugDeals.lost)
         } else {

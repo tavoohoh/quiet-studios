@@ -49,12 +49,14 @@ public struct GameSession: Codable, Hashable, Sendable {
         self.init(mode: mode, seed: seed, scoring: scoring, state: .deal(seed: seed))
     }
 
-    /// A game from an exact table (tests, tutorial, screenshots).
-    public init(mode: Mode = .classic, seed: UInt64 = 0, scoring: Scoring = .standard, state: GameState) {
+    /// A game from an exact table (tests, tutorial, screenshots). `elapsedSeconds` presets
+    /// the clock (screenshots of a win at a given time).
+    public init(mode: Mode = .classic, seed: UInt64 = 0, scoring: Scoring = .standard, state: GameState, elapsedSeconds: Int = 0) {
         self.mode = mode
         self.seed = seed
         self.scoring = scoring
         self.state = state
+        elapsed = elapsedSeconds > 0 ? elapsedSeconds : nil
     }
 
     public var score: Int { playPoints - hintCost + winBonus + timeBonus }
@@ -174,4 +176,13 @@ public struct WinSummary: Hashable, Codable, Sendable {
     public let recycles: Int
     /// Optional so summaries saved before the clock still load.
     public let seconds: Int?
+
+    public init(score: Int, moves: Int, usedUndo: Bool, hintsUsed: Int, recycles: Int, seconds: Int?) {
+        self.score = score
+        self.moves = moves
+        self.usedUndo = usedUndo
+        self.hintsUsed = hintsUsed
+        self.recycles = recycles
+        self.seconds = seconds
+    }
 }

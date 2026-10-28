@@ -13,6 +13,7 @@
 		2500234929CD206F22CCE94C /* FeedbackService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F3CE59A61B55CA0C7F050E6 /* FeedbackService.swift */; };
 		389A935A43D0A1BF9E67AC4D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 935188F0619C49561C0EDD99 /* Assets.xcassets */; };
 		3A960FFDFD1FADB27F0D966C /* AchievementText.swift in Sources */ = {isa = PBXBuildFile; fileRef = E993C77A51AB0DB7C53AC73D /* AchievementText.swift */; };
+		3B7A350D61A0DE0DF30C524C /* ScreenshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DB51CB7B49EC9F8595D437 /* ScreenshotTests.swift */; };
 		3E8ED021FFA38A8110B96F26 /* QuietSolitaireApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 405D5003598030F7890BE92E /* QuietSolitaireApp.swift */; };
 		409C212F6F927FB16B4018E3 /* LeaderboardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA957FFDAE406767BF42C997 /* LeaderboardsView.swift */; };
 		464AC52079521EFC1E7F46EB /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = A1598119819D74D1885B44B5 /* Localizable.xcstrings */; };
@@ -22,6 +23,7 @@
 		6CF885E2031A837DC1696CD3 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1661A525354B469EF8280B50 /* CalendarView.swift */; };
 		72181FCA4E65A9316B5577A4 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B23356F1A9237FE934ED91 /* GameView.swift */; };
 		8A3F135C0321D029BD6BC784 /* TutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DDE25C5F108F3854E8E2E97 /* TutorialView.swift */; };
+		946DB91DD115F572C5B35C3D /* DemoData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C793E9A47F71855472AB3F50 /* DemoData.swift */; };
 		9DB0CCCFD4D5A5C25FD938C9 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = E93B5E9FD51DA8E7E247E148 /* PrivacyInfo.xcprivacy */; };
 		A702C4711A651D71F88D68C7 /* QuietSolitaireCore in Frameworks */ = {isa = PBXBuildFile; productRef = 3D0303E69ECBEA7267BAE774 /* QuietSolitaireCore */; };
 		A87E1838C3992FC8D2932FF4 /* CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 154FE75B0079D8CD192C2E2C /* CollectionView.swift */; };
@@ -48,6 +50,13 @@
 			remoteGlobalIDString = 7448B47C0E688473D9844461;
 			remoteInfo = QuietSolitaire;
 		};
+		B6B2152E49BFE7AEB43B2C41 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B04288618EA8CA6C1ABBA2AE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7448B47C0E688473D9844461;
+			remoteInfo = QuietSolitaire;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -62,6 +71,7 @@
 		405D5003598030F7890BE92E /* QuietSolitaireApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuietSolitaireApp.swift; sourceTree = "<group>"; };
 		427BB895680B609FEB65EF6B /* Rewards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rewards.swift; sourceTree = "<group>"; };
 		43B2BB136EB373FF11DFC286 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
+		50DB51CB7B49EC9F8595D437 /* ScreenshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenshotTests.swift; sourceTree = "<group>"; };
 		6007B3FEF286D8B062BEE372 /* QuietSolitaire.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = QuietSolitaire.entitlements; sourceTree = "<group>"; };
 		60DF0BA237D012B9707D7558 /* QuietSolitaireUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = QuietSolitaireUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6DDE25C5F108F3854E8E2E97 /* TutorialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialView.swift; sourceTree = "<group>"; };
@@ -76,6 +86,7 @@
 		B073CE3BF38DA394219A37D0 /* BoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardView.swift; sourceTree = "<group>"; };
 		B95587A4C15E1AAE45551191 /* QuietKit */ = {isa = PBXFileReference; lastKnownFileType = folder; name = QuietKit; path = ../QuietKit; sourceTree = SOURCE_ROOT; };
 		C0CD30D9596E357DD2712213 /* QuietSolitaireCore */ = {isa = PBXFileReference; lastKnownFileType = folder; name = QuietSolitaireCore; path = Packages/QuietSolitaireCore; sourceTree = SOURCE_ROOT; };
+		C793E9A47F71855472AB3F50 /* DemoData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoData.swift; sourceTree = "<group>"; };
 		CA957FFDAE406767BF42C997 /* LeaderboardsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderboardsView.swift; sourceTree = "<group>"; };
 		CC4BECD1510735366074F5F7 /* AppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModel.swift; sourceTree = "<group>"; };
 		CE80A81F50FB0B9DB0BB4326 /* DailyChallengeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyChallengeView.swift; sourceTree = "<group>"; };
@@ -85,6 +96,7 @@
 		E993C77A51AB0DB7C53AC73D /* AchievementText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementText.swift; sourceTree = "<group>"; };
 		EA3FB690B77D7C4DC18F0775 /* DebugDeals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugDeals.swift; sourceTree = "<group>"; };
 		EBF6619D6BBC6D08F809E11F /* Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Base.xcconfig; sourceTree = "<group>"; };
+		EF3A08B0D37E0ABA369A96C6 /* QuietSolitaireScreenshots.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = QuietSolitaireScreenshots.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF970EDAB95A7161AC1F8975 /* DayKeyFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayKeyFormat.swift; sourceTree = "<group>"; };
 		F695A72316A058BD4E12B1A2 /* AppClock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppClock.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -107,6 +119,7 @@
 			isa = PBXGroup;
 			children = (
 				DC4ACF55C8AEC4C3ABEEC573 /* QuietSolitaire.app */,
+				EF3A08B0D37E0ABA369A96C6 /* QuietSolitaireScreenshots.xctest */,
 				60DF0BA237D012B9707D7558 /* QuietSolitaireUITests.xctest */,
 			);
 			name = Products;
@@ -126,6 +139,14 @@
 				CA957FFDAE406767BF42C997 /* LeaderboardsView.swift */,
 			);
 			path = Leaderboards;
+			sourceTree = "<group>";
+		};
+		37834C467C9AA20CBE0FB387 /* Screenshots */ = {
+			isa = PBXGroup;
+			children = (
+				50DB51CB7B49EC9F8595D437 /* ScreenshotTests.swift */,
+			);
+			path = Screenshots;
 			sourceTree = "<group>";
 		};
 		3A5C2801723B3A144FF6B09A /* App */ = {
@@ -184,6 +205,7 @@
 			isa = PBXGroup;
 			children = (
 				EA3FB690B77D7C4DC18F0775 /* DebugDeals.swift */,
+				C793E9A47F71855472AB3F50 /* DemoData.swift */,
 			);
 			path = Debug;
 			sourceTree = "<group>";
@@ -238,6 +260,7 @@
 				3A5C2801723B3A144FF6B09A /* App */,
 				1E659627EA93B3D8DA33BD0F /* Config */,
 				6ED21B24B70179C716BFC04F /* Packages */,
+				37834C467C9AA20CBE0FB387 /* Screenshots */,
 				6A6E0E5434005DF03C4AD1D7 /* UITests */,
 				0B8A0B907B7EDE85D2C48FA4 /* Products */,
 			);
@@ -306,6 +329,24 @@
 			productReference = DC4ACF55C8AEC4C3ABEEC573 /* QuietSolitaire.app */;
 			productType = "com.apple.product-type.application";
 		};
+		75BA88FEACE063DD41B06EC0 /* QuietSolitaireScreenshots */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3D22B43AB4868B908770BBB1 /* Build configuration list for PBXNativeTarget "QuietSolitaireScreenshots" */;
+			buildPhases = (
+				73CF65D49D535FC0DE7010D9 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				708B4719AA3C1DB6B20E5775 /* PBXTargetDependency */,
+			);
+			name = QuietSolitaireScreenshots;
+			packageProductDependencies = (
+			);
+			productName = QuietSolitaireScreenshots;
+			productReference = EF3A08B0D37E0ABA369A96C6 /* QuietSolitaireScreenshots.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		DC5C824A42F8D41E623EEF80 /* QuietSolitaireUITests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0C10C0E35C5079B3C4A3392E /* Build configuration list for PBXNativeTarget "QuietSolitaireUITests" */;
@@ -336,6 +377,9 @@
 					7448B47C0E688473D9844461 = {
 						ProvisioningStyle = Automatic;
 					};
+					75BA88FEACE063DD41B06EC0 = {
+						TestTargetID = 7448B47C0E688473D9844461;
+					};
 					DC5C824A42F8D41E623EEF80 = {
 						TestTargetID = 7448B47C0E688473D9844461;
 					};
@@ -361,6 +405,7 @@
 			projectRoot = "";
 			targets = (
 				7448B47C0E688473D9844461 /* QuietSolitaire */,
+				75BA88FEACE063DD41B06EC0 /* QuietSolitaireScreenshots */,
 				DC5C824A42F8D41E623EEF80 /* QuietSolitaireUITests */,
 			);
 		};
@@ -397,6 +442,7 @@
 				0CE64CB3453CBA02E57F4B9F /* DailyChallengeView.swift in Sources */,
 				131F7D3E77753224A5F2B1C8 /* DayKeyFormat.swift in Sources */,
 				F121687F70C59D609E036983 /* DebugDeals.swift in Sources */,
+				946DB91DD115F572C5B35C3D /* DemoData.swift in Sources */,
 				2500234929CD206F22CCE94C /* FeedbackService.swift in Sources */,
 				CCC8414FB94FB1139C9BF469 /* GameModel.swift in Sources */,
 				72181FCA4E65A9316B5577A4 /* GameView.swift in Sources */,
@@ -419,6 +465,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		73CF65D49D535FC0DE7010D9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3B7A350D61A0DE0DF30C524C /* ScreenshotTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -426,6 +480,11 @@
 			isa = PBXTargetDependency;
 			target = 7448B47C0E688473D9844461 /* QuietSolitaire */;
 			targetProxy = 8F97777E0ED26A80F5ED278D /* PBXContainerItemProxy */;
+		};
+		708B4719AA3C1DB6B20E5775 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7448B47C0E688473D9844461 /* QuietSolitaire */;
+			targetProxy = B6B2152E49BFE7AEB43B2C41 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -530,6 +589,27 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_STRICT_CONCURRENCY = complete;
 				SWIFT_VERSION = 6.0;
+			};
+			name = Debug;
+		};
+		36ABD5C19B2B01F1CBA73B3A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.tavoohoh.quietsolitaire.screenshots;
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = QuietSolitaire;
 			};
 			name = Debug;
 		};
@@ -671,6 +751,27 @@
 			};
 			name = Debug;
 		};
+		C63FAB13E867AB6B7ACE5734 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.tavoohoh.quietsolitaire.screenshots;
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = QuietSolitaire;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -679,6 +780,15 @@
 			buildConfigurations = (
 				A8832887A66F9061668312BE /* Debug */,
 				911525F7263EAE59700FD302 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		3D22B43AB4868B908770BBB1 /* Build configuration list for PBXNativeTarget "QuietSolitaireScreenshots" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				36ABD5C19B2B01F1CBA73B3A /* Debug */,
+				C63FAB13E867AB6B7ACE5734 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;

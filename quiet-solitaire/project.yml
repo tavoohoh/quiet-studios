@@ -73,7 +73,24 @@ targets:
       base:
         GENERATE_INFOPLIST_FILE: YES
         PRODUCT_BUNDLE_IDENTIFIER: com.tavoohoh.quietsolitaire.uitests
+  QuietSolitaireScreenshots:
+    type: bundle.ui-testing
+    supportedDestinations: [iOS]
+    sources: [Screenshots]
+    dependencies:
+      - target: QuietSolitaire
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
+        PRODUCT_BUNDLE_IDENTIFIER: com.tavoohoh.quietsolitaire.screenshots
 schemes:
+  Screenshots:
+    build:
+      targets:
+        QuietSolitaire: all
+    test:
+      targets:
+        - QuietSolitaireScreenshots
   QuietSolitaire:
     build:
       targets:

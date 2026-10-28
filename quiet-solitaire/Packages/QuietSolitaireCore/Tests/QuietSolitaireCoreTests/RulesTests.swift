@@ -233,6 +233,16 @@ func table(stock: [String] = [], waste: [String] = [], foundations: [Int] = [0, 
         #expect(matched >= 26)
     }
 
+    /// Following hints wins: a draw hint leads to the card the solver wants, instead of a
+    /// new target after every draw.
+    @Test func followingHintsWins() throws {
+        var session = GameSession(seed: Deals.winnableSeed(startingAt: 42))
+        while !session.isWon, session.moves < 600, let move = GameSession.suggestion(for: session.state) {
+            session.play(move)
+        }
+        #expect(session.isWon, "after \(session.moves) moves")
+    }
+
     @Test func hintFollowsTheSolver() throws {
         let state = GameState.deal(seed: Deals.dailySeed(forDayKey: "2026-11-02"))
         let move = try #require(GameSession.suggestion(for: state))

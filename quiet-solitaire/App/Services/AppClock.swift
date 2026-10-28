@@ -5,6 +5,7 @@ import Foundation
 enum AppClock {
     static var now: Date {
         #if DEBUG
+        if let date = DemoData.date { return date }
         let arguments = ProcessInfo.processInfo.arguments
         if let i = arguments.firstIndex(of: "-date"), i + 1 < arguments.count,
            let date = ISO8601DateFormatter().date(from: arguments[i + 1]) {

@@ -70,9 +70,21 @@ struct LeaderboardsView: View {
         }
     }
 
-    private var isSignedIn: Bool { app.gameCenter.isAuthenticated }
+    private var isSignedIn: Bool {
+        #if DEBUG
+        if DemoData.isActive { return true }
+        #endif
+        return app.gameCenter.isAuthenticated
+    }
 
     private func load() async {
+        #if DEBUG
+        if DemoData.isActive {
+            let demo = DemoData.leaderboard(board)
+            state = .loaded(local: demo.local, top: demo.top)
+            return
+        }
+        #endif
         guard app.gameCenter.isAuthenticated else { return }
         state = .loading
         do {

@@ -54,8 +54,9 @@ struct Position {
 
     init(_ state: GameState) {
         foundations = state.foundations.map(\.count)
-        // Stock order then waste: deterministic, and order doesn't matter for reachability.
-        talon = state.stock.map(\.id) + state.waste.map(\.id)
+        // Sorted: order doesn't matter for reachability, and drawing mustn't change the
+        // search (hints would point at a different stock card after every draw).
+        talon = (state.stock + state.waste).map(\.id).sorted()
         down = state.tableau.map { $0.filter { !$0.isFaceUp }.map(\.card.id) }
         up = state.tableau.map { $0.filter(\.isFaceUp).map(\.card.id) }
     }

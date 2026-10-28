@@ -63,12 +63,23 @@ struct DailyChallengeView: View {
     }
 
     private func loadFriendsRank() async {
+        #if DEBUG
+        if DemoData.isActive { return friendsRank = 3 }
+        #endif
         guard app.gameCenter.isAuthenticated else { return friendsRank = nil }
         friendsRank = try? await app.gameCenter.entries(for: Leaderboard.daily.rawValue, friendsOnly: true).local?.rank
     }
 
-        private var countdown: Text {
-        Text(DailyKey.nextRollover(after: AppClock.now), style: .relative)
+        /// Live relative time; frozen in demo launches so screenshots don't depend on the clock.
+    private var countdown: Text {
+        let next = DailyKey.nextRollover(after: AppClock.now)
+        #if DEBUG
+        if DemoData.isActive {
+            let left = Duration.seconds(next.timeIntervalSince(AppClock.now))
+            return Text(left.formatted(.units(allowed: [.hours, .minutes], width: .abbreviated)))
+        }
+        #endif
+        return Text(next, style: .relative)
     }
 
     private func status(for dayKey: String) -> Text {
