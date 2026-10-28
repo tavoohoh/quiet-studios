@@ -1,10 +1,12 @@
+import QuietCore
 import QuietNumbersCore
+import QuietUI
 import SwiftUI
 
 /// Minimal leaderboards: pick a board, Global or Friends. Game Center does the ranking.
 struct LeaderboardsView: View {
     @Environment(AppModel.self) private var app
-    @Environment(\.appearance) private var appearance
+    @Environment(\.quietTheme) private var theme
     @Environment(\.horizontalSizeClass) private var sizeClass
     @State private var board = GameCenterService.Leaderboard.daily
     @State private var friendsOnly = false
@@ -44,7 +46,7 @@ struct LeaderboardsView: View {
             switch state {
             case .loading:
                 ProgressView()
-                    .tint(appearance.theme.primary)
+                    .tint(theme.primary)
                     .padding(.top, 40)
             case .failed:
                 Message(systemImage: "wifi.slash", title: "Couldn't load", text: "Check your connection and try again.")
@@ -60,7 +62,7 @@ struct LeaderboardsView: View {
                             }
                             Text("Scores from Game Center · updated just now")
                                 .font(.footnote)
-                                .foregroundStyle(appearance.theme.muted)
+                                .foregroundStyle(theme.muted)
                         }
                     }
                     .scrollIndicators(.hidden)
@@ -110,10 +112,9 @@ private struct EntryList: View {
 private struct EntryRow: View {
     let entry: GameCenterService.Entry
 
-    @Environment(\.appearance) private var appearance
+    @Environment(\.quietTheme) private var theme
 
     var body: some View {
-        let theme = appearance.theme
         HStack(spacing: 12) {
             Text(entry.rank, format: .number)
                 .font(.subheadline.weight(.heavy).monospacedDigit())
@@ -147,7 +148,6 @@ private struct EntryRow: View {
 
     /// Top three: 1 accent, 2 primary, 3 muted.
     private var medal: (fill: Color, text: Color)? {
-        let theme = appearance.theme
         switch entry.rank {
         case 1: return (theme.accent, theme.onAccent)
         case 2: return (theme.primary, theme.onPrimary)
@@ -167,10 +167,9 @@ private struct EntryRow: View {
 private struct SignedOutCard: View {
     let onSignIn: () -> Void
 
-    @Environment(\.appearance) private var appearance
+    @Environment(\.quietTheme) private var theme
 
     var body: some View {
-        let theme = appearance.theme
         ZStack(alignment: .top) {
             VStack(spacing: 0) {
                 ForEach([110, 80, 130, 90, 120, 70, 100, 85], id: \.self) { width in
@@ -223,20 +222,20 @@ private struct Message: View {
     let title: LocalizedStringKey
     let text: LocalizedStringKey?
 
-    @Environment(\.appearance) private var appearance
+    @Environment(\.quietTheme) private var theme
 
     var body: some View {
         VStack(spacing: 8) {
             Image(systemName: systemImage)
                 .font(.largeTitle)
-                .foregroundStyle(appearance.theme.muted)
+                .foregroundStyle(theme.muted)
             Text(title)
                 .font(.headline)
-                .foregroundStyle(appearance.theme.ink)
+                .foregroundStyle(theme.ink)
             if let text {
                 Text(text)
                     .font(.subheadline)
-                    .foregroundStyle(appearance.theme.muted)
+                    .foregroundStyle(theme.muted)
                     .multilineTextAlignment(.center)
             }
         }

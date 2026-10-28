@@ -1,7 +1,9 @@
 import QuietNumbersCore
+import QuietUI
 import SwiftUI
 
-/// Reads the player's choices and publishes them as `\.appearance`, tint and color scheme.
+/// Reads the player's choices and publishes them as the kit's `\.quietTheme`, `\.appearance`,
+/// tint and color scheme.
 /// The theme's ink is applied where numbers are drawn, not app-wide, so system button
 /// styles keep their own label colors.
 /// A choice that isn't unlocked (e.g. restored on a new device) falls back to the default.
@@ -16,8 +18,8 @@ struct AppearanceRoot: ViewModifier {
     func body(content: Content) -> some View {
         let colors = available(theme, or: .tealCoral).theme
         content
+            .environment(\.quietTheme, colors)
             .environment(\.appearance, Appearance(
-                theme: colors,
                 tileStyle: available(tileStyle, or: .plain),
                 numberFont: available(numberFont, or: .rounded),
                 clearEffect: available(clearEffect, or: .outline),

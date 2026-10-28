@@ -10,8 +10,9 @@ public enum DailyKey {
     public static let rolloverHour = 0
 
     /// `yyyy-MM-dd` of the challenge on at `date`: the device's local day, moved to the
-    /// next one from `rolloverHour` on (no shift at midnight).
-    public static func dayKey(for date: Date, timeZone: TimeZone = .current) -> String {
+    /// next one from `rolloverHour` on (no shift at midnight). `rolloverHour` can be
+    /// overridden for an evening change (and tests).
+    public static func dayKey(for date: Date, timeZone: TimeZone = .current, rolloverHour: Int = rolloverHour) -> String {
         let calendar = localCalendar(timeZone)
         var day = calendar.startOfDay(for: date)
         if rolloverHour > 0, calendar.component(.hour, from: date) >= rolloverHour {
@@ -22,7 +23,7 @@ public enum DailyKey {
     }
 
     /// When the challenge after the one on at `date` starts.
-    public static func nextRollover(after date: Date, timeZone: TimeZone = .current) -> Date {
+    public static func nextRollover(after date: Date, timeZone: TimeZone = .current, rolloverHour: Int = rolloverHour) -> Date {
         let calendar = localCalendar(timeZone)
         let today = calendar.date(bySettingHour: rolloverHour, minute: 0, second: 0, of: date)!
         return today > date ? today : calendar.date(byAdding: .day, value: 1, to: today)!

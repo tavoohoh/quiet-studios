@@ -37,16 +37,20 @@ Un solo target iOS (iPhone y iPad); en Mac con Apple silicon se ofrece la app de
 - Todos los tests (Core en iOS, app y UI): `xcodebuild test -project QuietNumbers.xcodeproj -scheme QuietNumbers -destination 'platform=iOS Simulator,name=iPhone 17'`.
 - Capturas de la App Store: `scripts/screenshots.sh [iphone] [ipad]` (esquema `Screenshots`, target `QuietNumbersScreenshots`) → `AppStore/screenshots/<iphone-6.9|ipad-13>/<en|es>/<light|dark>/`. Solo iPhone y iPad (decisión: sin capturas de Mac); el español sirve para es-MX y es-ES.
 - Imágenes de la App Store: `scripts/store-images.py` (después de `screenshots.sh`) compone los marcos del canvas (páginas "App Store 01–05": fondo, titular, callouts) alrededor de capturas reales → `AppStore/store-images/<iphone-6.9|ipad-13>/<en|es>/`. Las imágenes 1, 2 y 4 usan el tablero armado del canvas (`-storeScene 1|2|4`, `DemoData.StoreScene`) y sus callouts se anclan a las celdas reales. Sin combos ni textos que la app no tenga (en la 4, "Combo ×4 +120" pasó a "¡10 seguidas!").
-- Arte: `scripts/render-artwork.py` genera desde SVG el ícono (claro, oscuro, tinted y Gold), el lockup del splash (`SplashLockup`, también en la launch screen) y las insignias de Game Center (`AppStore/achievements/<id>.png`, 1024 sin alfa; en la app, redondas en `Assets.xcassets/Badges`, para Colección y el aviso de logro). `scripts/theme-colors.py` escribe los colorsets de los temas (`Assets.xcassets/Themes`, `AccentColor`, `LaunchBackground`) y falla si un texto queda bajo 4,5:1. Los valores vienen del canvas "Quiet Numbers · Diseño" (página 6, brief para Claude Code).
+- Arte: `scripts/render-artwork.py` genera desde SVG el ícono (claro, oscuro, tinted y Gold), el lockup del splash (`SplashLockup`, también en la launch screen) y las insignias de Game Center (`AppStore/achievements/<id>.png`, 1024 sin alfa; en la app, redondas en `Assets.xcassets/Badges`, para Colección y el aviso de logro). Los colores de los temas viven en QuietKit (`Palette`); su contraste (≥ 4,5:1) lo verifica `PaletteTests` (`cd ../QuietKit && swift test`). `AccentColor` y `LaunchBackground` siguen en el Asset Catalog porque la launch screen los necesita. Los valores vienen del canvas "Quiet Numbers · Diseño" (página 6, brief para Claude Code).
 - Metadatos: `fastlane/metadata/{en-US,es-MX,es-ES}`; validar con `scripts/validate-metadata.py`. Game Center: `AppStore/game-center.{md,json}`; verificar IDs con `scripts/check-game-center.py`.
 - UI test en simulador: `xcodebuild test -project QuietNumbers.xcodeproj -scheme QuietNumbers -destination 'platform=iOS Simulator,name=iPhone 17' -only-testing:QuietNumbersUITests`.
 - Argumentos DEBUG: `-demo` carga el estado fijo de las capturas (`App/Debug/DemoData.swift`: 14-nov-2026 10:00, partida a medias, racha de 8, leaderboards de ejemplo; en memoria); `-startGame` abre una partida directo; `-seedKey <texto>` hace el tablero determinista; `-boardValues 5,3,7,…` arranca con números exactos; `-slowEffects` pone los efectos en cámara lenta (×6) para inspeccionarlos. `-startGame` usa almacenamiento en memoria; `-uiTesting` usa un archivo propio (`UITests.store`) que `-resetStore` borra, para no tocar los datos reales. `-unlockAll` desbloquea todos los logros (QA y capturas).
 
 ## Arquitectura
 
-Dos capas: el paquete `QuietNumbersCore` (lógica pura y testeable) y la app SwiftUI que lo consume.
+Tres piezas: el paquete `QuietNumbersCore` (lógica pura y testeable), la app SwiftUI que lo consume, y **QuietKit** (`../QuietKit`, compartido por la familia; adoptado el 2026-10-28):
 
+- `QuietCore`: `SeededRandom`, `FNV1a`, `DailyKey` (clave del día, cambio a medianoche, ventana de 30 días, semilla) y `Streaks`, más `Palette`. `QuietNumbersCore` depende de él; `DailyChallenge` solo agrega lo propio (meta del día y `session(forDayKey:)`).
+- `QuietUI`: `Theme` (en `\.quietTheme`), componentes (`CapsuleButtonStyle`, `.screen`, `Segments`, `GroupSection`, `Toast`…), `Layout`, tipografía (`Font.score`, `Animation.quiet`, `EffectTiming`), `HapticsService`, `ToneService`, `GameCenterService` genérico y `SplashView`.
+- Lo que queda en Quiet Numbers: `ThemeChoice` → `Palette` (Petróleo y coral claro y oscuro = `Theme(.tealCoral, colorScheme:)`), `Appearance` (ficha, tipografía, efecto, números grandes), `Font.boardNumber`, `Layout.boardCell`, `FeedbackService` (eventos del juego → hápticos y notas del kit), la extensión de `GameCenterService` (IDs de clasificaciones y logros, `Snapshot` y su fusión) y todas las recompensas.
 - El Core **no importa** SwiftUI, SwiftData ni GameKit.
+- Si se cambia QuietKit, correr también sus tests y los de Quiet Solitaire (`../QuietKit` y `../quiet-solitaire`, ver su CLAUDE.md).
 - Los modelos del Core son `Codable` (se guardan en SwiftData y en partidas de Game Center).
 
 ```
@@ -62,11 +66,10 @@ quiet-numbers/
 │   │   ├── Collection/             # logros y personalización
 │   │   └── Settings/
 │   ├── Services/
-│   │   ├── GameCenterService.swift
+│   │   ├── GameCenterService.swift  # extensión del de QuietUI: IDs, Snapshot
 │   │   ├── PersistenceService.swift
-│   │   ├── HapticsService.swift
-│   │   └── SoundService.swift
-│   ├── DesignSystem/               # temas, colores, tipografía, estilos de ficha
+│   │   └── FeedbackService.swift    # hápticos y tonos del kit por evento
+│   ├── DesignSystem/               # ThemeChoice → Palette, recompensas, boardNumber, boardCell
 │   └── Resources/
 │       ├── Assets.xcassets
 │       ├── Localizable.xcstrings
@@ -79,8 +82,7 @@ quiet-numbers/
         │   ├── MatchRules.swift     # validación de parejas y conexiones
         │   ├── GameSession.swift    # +, pistas, puntaje, etapas, fin
         │   ├── BoardGenerator.swift
-        │   ├── SeededRandom.swift   # PRNG determinista
-        │   ├── DailyChallenge.swift # fecha → semilla → tablero
+        │   ├── DailyChallenge.swift # meta y sesión del día (fechas y semilla: DailyKey de QuietCore)
         │   └── Achievements.swift   # reglas de logros y desbloqueos
         └── Tests/QuietNumbersCoreTests/
 ```
@@ -119,7 +121,7 @@ Tablero de **9 columnas**; arranca con **42 números** del 1 al 9 (4 filas y med
 Tablero único por día, igual para todo el mundo, generado en el dispositivo sin servidor.
 
 - **Semilla:** clave del día `yyyy-MM-dd` → hash estable (FNV-1a).
-- **Cambio de día:** a la **medianoche de la zona horaria del dispositivo** (`DailyChallenge.rolloverHour = 0`, cambio del 2026-10-27 para poder jugar el reto a cualquier hora; antes 19:00). La clasificación `daily_challenge` recurre desde las 05:00 UTC, la medianoche de Colombia. La misma clave da el mismo tablero en todo el mundo, pero cada dispositivo la habilita según su reloj.
+- **Cambio de día:** a la **medianoche de la zona horaria del dispositivo** (`DailyKey.rolloverHour = 0` de QuietCore, cambio del 2026-10-27 para poder jugar el reto a cualquier hora; antes 19:00). La clasificación `daily_challenge` recurre desde las 05:00 UTC, la medianoche de Colombia. La misma clave da el mismo tablero en todo el mundo, pero cada dispositivo la habilita según su reloj.
 - **PRNG:** propio y determinista (SplitMix64 o Xoshiro256). **Nunca** `SystemRandomNumberGenerator`. Evitar cualquier API cuyo resultado dependa de plataforma (p. ej. `Hasher`, `shuffled()` sin generador propio).
 - **Validación:** si el tablero no cumple el mínimo de parejas, avanzar la semilla de forma determinista hasta obtener uno válido.
 - **Formato (2026-10-27, idea de una probadora):** meta de puntos del día, 400–700 en pasos de 50 (`DailyChallenge.goal`, de un flujo aparte de la semilla para no cambiar los tableros). Se juegan etapas como en clásico, con tableros que también salen de la semilla (el generador solo avanza al crear un tablero, nunca con jugadas), así que son iguales para todos. El reto se completa **al llegar a la meta** (racha, calendario y logros en ese momento) y se puede seguir jugando por más puntaje; termina sin parejas ni +. La clasificación diaria recibe el puntaje al terminar o al salir del juego después de la meta. Retos guardados antes del cambio (`goal == nil`) siguen con la regla vieja: una etapa, completado al vaciarla. Un solo intento puntuable por día; se puede rejugar sin enviar puntaje.
@@ -187,8 +189,8 @@ Decisiones de implementación (fase 5):
 - "Monótono" se interpreta como 10 parejas seguidas de números iguales (4-4, 7-7…), no 10 veces el mismo dígito. Confirmado.
 - Las opciones por defecto (Petróleo y coral, Simple, SF Rounded, Contorno, Suave, ícono estándar) están siempre disponibles.
 - Rediseño 2026-10-26: los temas viejos se reemplazaron conservando el desbloqueo (Papel → Petróleo y coral, Pizarra → Salvia y arena, Arena → Índigo y durazno, Medianoche → Salvia y coral, Brasa → Alto contraste). La preferencia guardada se migra al arrancar (`ThemeChoice.migrateSavedChoice`).
-- Colores por rol (`Theme`: background, surface, surface2, ink, muted, primary, onPrimary, accent, ghost, separator) en el Asset Catalog (`TealCoralPrimary`, `SageSandInk`…). Solo Petróleo y coral tiene claro y oscuro: sigue al sistema, y sus variantes Claro y Oscuro (siempre disponibles, 2026-10-27) fijan un modo para quien quiere el juego distinto al teléfono; Salvia y arena, Salvia y coral y Alto contraste son solo claros, Índigo y durazno solo oscuro, y fuerzan ese esquema. Alto contraste además pone borde de 2 pt a las superficies y subraya los números agregados.
-- Los sonidos se sintetizan en el dispositivo (AVAudioEngine, sin archivos), categoría `.ambient` (respeta el modo silencio). Sonido y hápticos activados por defecto.
+- Colores por rol (`Theme` de QuietUI: background, surface, surface2, ink, muted, primary, onPrimary, accent, ghost, separator), definidos en `Palette` (QuietCore). Solo Petróleo y coral tiene claro y oscuro: sigue al sistema, y sus variantes Claro y Oscuro (siempre disponibles, 2026-10-27) fijan un modo para quien quiere el juego distinto al teléfono; Salvia y arena, Salvia y coral y Alto contraste son solo claros, Índigo y durazno solo oscuro, y fuerzan ese esquema. Alto contraste además pone borde de 2 pt a las superficies y subraya los números agregados.
+- Los sonidos se sintetizan en el dispositivo (`ToneService` de QuietUI, AVAudioEngine, sin archivos), categoría `.ambient` (respeta el modo silencio). Sonido y hápticos activados por defecto.
 - El ícono dorado funciona en iPhone y iPad (en Mac, la app de iPad no cambia de ícono).
 - Preferencias en `UserDefaults` (`@AppStorage`); progreso y logros en SwiftData (`StoredProgress`). Las partidas de práctica también cuentan para logros de juego.
 
@@ -196,7 +198,7 @@ Decisiones de implementación (fase 5):
 
 - Diseño cerrado en el canvas "Quiet Numbers · Diseño" (Claude Design, 2026-10-26); la página 6 es el brief con todos los valores.
 - **Paleta principal Petróleo y coral** (tema por defecto, claro y oscuro): primario `#0E6B78` / `#5BC2CF` (botones, selección, línea de unión, iconos), acento coral `#B9472F` / `#FF9A85` (números agregados con +, racha, elogios, rayos del tiro largo), fondo `#F3F7F8` / `#0F1A1D` (nunca blanco puro salvo Alto contraste). Ajustes por contraste frente al brief: primario de Salvia y arena `#387454` (era `#3E7A5A`) y surface2 de Salvia y coral `#EFEAE0` (era `#EDE7DC`).
-- Nada de colores fijos en vistas: todo sale de `appearance.theme`. Componentes en `DesignSystem/Components.swift` (botón cápsula de 56 pt, tarjetas, segmentos, secciones agrupadas, switch, toast, encabezado con botón redondo de volver; la barra de navegación del sistema va oculta).
+- Nada de colores fijos en vistas: todo sale de `\.quietTheme`. Componentes de QuietUI (botón cápsula de 56 pt, tarjetas, segmentos, secciones agrupadas, switch, toast, encabezado con botón redondo de volver; la barra de navegación del sistema va oculta).
 - SF Pro Rounded con `.monospacedDigit()`.
 - Tablero: celdas de (ancho − 48) / 9 × 46 pt (52 con "Números más grandes"; cuadradas en iPad), números de 27 pt (32). Fichas sin bordes, solo el número. Seleccionada: anillo de 40 pt, trazo 2 pt del primario sobre 14 % de relleno. Eliminada: `ghost`.
 - Animaciones (brief, sección 7; nada bloquea el siguiente toque): selección = anillo 0,6→1 con spring; pareja válida = línea de 120 ms; al llegar, cada número estalla en 8 rayos (15→25 pt, 260 ms; coral en tiro largo) y queda como fantasma; "+N" sale del punto medio de la pareja, sube 24 pt y se desvanece (600 ms) mientras el puntaje cuenta; inválida = ambos anillos en coral y sacudida de ±4 pt ×3 (240 ms); pista = anillo punteado que parpadea 2 veces; fila completa = se ilumina y colapsa en 280 ms; + = los números entran uno a uno (160 ms, 25 ms entre cada uno, máx. 1,2 s). Reduce Motion: sin rayos, flotantes ni sacudida; el par se funde en 150 ms.

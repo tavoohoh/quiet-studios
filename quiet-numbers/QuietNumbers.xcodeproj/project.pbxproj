@@ -11,13 +11,12 @@
 		0F74E3EDDCA32DA6C44BF7F5 /* TutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4BA742F911507670BC8C928 /* TutorialView.swift */; };
 		119422CC4A4C765B14A95825 /* PersistenceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3D9D0DAEED6E7CD8DA283B /* PersistenceService.swift */; };
 		199C20D362693CDF6837DCD6 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571AC2887AA56D2446FF163A /* CalendarView.swift */; };
-		1A6220A4BF47AFBE8F7D9CEF /* HapticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE40B331BB5C56022D43490D /* HapticsService.swift */; };
 		22A872E7DEBDD550391484A4 /* Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630EEE295069B81DE9BFF117 /* Layout.swift */; };
 		24EDA44D775CF8726B5F4747 /* DemoData.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE78A2F66517ED0214D8D09 /* DemoData.swift */; };
 		2570D98627055F191E8A2D96 /* Typography.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F24CF5C37A1787DE8516E1F /* Typography.swift */; };
-		26BD520F2CBABE86324C4B0A /* SoundService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF81F57210C7B0D19E1D747E /* SoundService.swift */; };
 		3CC92E0B77008BB80B4A299A /* GameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212A4F79BAB138C07EAFF774 /* GameModel.swift */; };
 		3DEAAB4C2D25066BDE8B2CCE /* ScreenshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C219A3C9F0EBBD5008E22FA5 /* ScreenshotTests.swift */; };
+		3E4753DB1F4E9B5F75AE8B01 /* QuietUI in Frameworks */ = {isa = PBXBuildFile; productRef = 7FD8D0F663E33ABF6771952D /* QuietUI */; };
 		4270BCE41D1DE3C65FE0DF16 /* AppClock.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF453855A9BBD21832512C8D /* AppClock.swift */; };
 		43E88AE9810B80FD897EFF08 /* GameTopBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8D9147C86ED9A3911F7A558 /* GameTopBar.swift */; };
 		4846625894F016126CA79570 /* GameFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD054FB39DD93C85ABA11C67 /* GameFeedback.swift */; };
@@ -27,13 +26,14 @@
 		5554FEE65B821D820A7D6CB5 /* DayKeyFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23C8A220045ED805473F40E1 /* DayKeyFormat.swift */; };
 		5970D45FBD88ACC4289A804A /* LeaderboardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAFD2AEC805CEB315AE9C1A9 /* LeaderboardsView.swift */; };
 		62356E8F3C696A26E37DDC38 /* CellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1945F8C8C9CC42DC822995A2 /* CellView.swift */; };
+		6473A9E313AD69AE9B19E9FA /* QuietCore in Frameworks */ = {isa = PBXBuildFile; productRef = F9BD3678F6E798F8295F7B13 /* QuietCore */; };
 		6B98C48F5C26BE03D6CA965D /* TutorialScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E73EF17D73A80220F36BCCD /* TutorialScript.swift */; };
 		6BF43A5E0C5928A2C4530C17 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D7992BC8FB7DE533207505 /* HomeView.swift */; };
 		7285EE1FA7F38A9D5CD2EB39 /* GameplayUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA9DDB21A2D6D9A16F979F4 /* GameplayUITests.swift */; };
 		757679F41159E358229E3201 /* QuietNumbersCore in Frameworks */ = {isa = PBXBuildFile; productRef = 7BE46ECC0AC3158A352BE22A /* QuietNumbersCore */; };
 		86A107AEE1484BD9F324B52D /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E88C14A830CC99167EB0AE /* SettingsView.swift */; };
 		87129F0138E40E6E7DC5D0A8 /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = FCF8950DD2148C3FE425D9C2 /* InfoPlist.xcstrings */; };
-		93DC3514D16DA813230185F5 /* Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA524CC8C87677E72E395ED4 /* Components.swift */; };
+		89DB86B584C82B5A52A7B493 /* FeedbackService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 496D713FFDA63910BD47EEF4 /* FeedbackService.swift */; };
 		94EE4038B4231F54FE822E0C /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D15AA4C99BAE2C8662B34C66 /* AppModel.swift */; };
 		94FB3710A69027408DFEBCAB /* AchievementText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3764A4EF9834602A85298448 /* AchievementText.swift */; };
 		A0C6754BBB6665903EB0C79A /* Rewards.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3D83326830FBDF44307316 /* Rewards.swift */; };
@@ -43,7 +43,6 @@
 		C76A0EF4AC629AB141D0567E /* TutorialUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A09277E42F272A31E40733F9 /* TutorialUITests.swift */; };
 		C8F42C0267E4DB6F52F5D3B0 /* PersistenceUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0B0675BDEA4B0A15DEB5B9C /* PersistenceUITests.swift */; };
 		CA8D59F009ED6245A35D3EB3 /* CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9194796821A907E01A268433 /* CollectionView.swift */; };
-		CEC9495919BAC770906D2E8A /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28A268268BA9BA7336C3C7A3 /* SplashView.swift */; };
 		DA2540312F92F096DF1016A9 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 57DBAC418C43449E8EE90E01 /* PrivacyInfo.xcprivacy */; };
 		E4F62B961783E757AF92439F /* QuietNumbersApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631019FDC57409A49740D79C /* QuietNumbersApp.swift */; };
 		E763D16DE3F2BD7B5DC82F95 /* BoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C33B49B32F0F2F2AA6714F78 /* BoardView.swift */; };
@@ -82,11 +81,11 @@
 		212A4F79BAB138C07EAFF774 /* GameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameModel.swift; sourceTree = "<group>"; };
 		22F6C4F6421B81585108D7D6 /* Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Base.xcconfig; sourceTree = "<group>"; };
 		23C8A220045ED805473F40E1 /* DayKeyFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayKeyFormat.swift; sourceTree = "<group>"; };
-		28A268268BA9BA7336C3C7A3 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		2A2F11A9E3ADE55BDF7FA2D0 /* CollectionUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionUITests.swift; sourceTree = "<group>"; };
 		3764A4EF9834602A85298448 /* AchievementText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementText.swift; sourceTree = "<group>"; };
 		395784F31889B14D1B911198 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		45997456AC4544131F86E156 /* AppearanceRoot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceRoot.swift; sourceTree = "<group>"; };
+		496D713FFDA63910BD47EEF4 /* FeedbackService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackService.swift; sourceTree = "<group>"; };
 		4A94485656D17DA81C15D259 /* DailyChallengeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyChallengeView.swift; sourceTree = "<group>"; };
 		5207218E375E6E70D497DCEB /* QuietNumbers.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = QuietNumbers.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		53C64A3C452C0B00769CC13A /* AppModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModelTests.swift; sourceTree = "<group>"; };
@@ -101,6 +100,7 @@
 		8C1754B3BB39F1EA843608A9 /* GameCenterService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameCenterService.swift; sourceTree = "<group>"; };
 		9194796821A907E01A268433 /* CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionView.swift; sourceTree = "<group>"; };
 		93E88C14A830CC99167EB0AE /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		966857076D3EF94AF0679012 /* QuietKit */ = {isa = PBXFileReference; lastKnownFileType = folder; name = QuietKit; path = ../QuietKit; sourceTree = SOURCE_ROOT; };
 		968B1216F9E240FF29A05782 /* TutorialScriptTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialScriptTests.swift; sourceTree = "<group>"; };
 		9ADB0BD18C8BA1112788571E /* QuietNumbersUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = QuietNumbersUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D43B0E90B906CECA845A9ED /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -112,13 +112,10 @@
 		B132EA3091340D64A3FED763 /* QuietNumbers.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = QuietNumbers.entitlements; sourceTree = "<group>"; };
 		B4BA742F911507670BC8C928 /* TutorialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialView.swift; sourceTree = "<group>"; };
 		B529A32088A2D117919279B6 /* QuietNumbersCore */ = {isa = PBXFileReference; lastKnownFileType = folder; name = QuietNumbersCore; path = Packages/QuietNumbersCore; sourceTree = SOURCE_ROOT; };
-		BF81F57210C7B0D19E1D747E /* SoundService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundService.swift; sourceTree = "<group>"; };
 		C219A3C9F0EBBD5008E22FA5 /* ScreenshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenshotTests.swift; sourceTree = "<group>"; };
 		C33B49B32F0F2F2AA6714F78 /* BoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardView.swift; sourceTree = "<group>"; };
 		CA3D83326830FBDF44307316 /* Rewards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rewards.swift; sourceTree = "<group>"; };
-		CA524CC8C87677E72E395ED4 /* Components.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Components.swift; sourceTree = "<group>"; };
 		D15AA4C99BAE2C8662B34C66 /* AppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModel.swift; sourceTree = "<group>"; };
-		DE40B331BB5C56022D43490D /* HapticsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticsService.swift; sourceTree = "<group>"; };
 		DEE78A2F66517ED0214D8D09 /* DemoData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoData.swift; sourceTree = "<group>"; };
 		EBDBE501E9033575A750824A /* QuietNumbersScreenshots.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = QuietNumbersScreenshots.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF453855A9BBD21832512C8D /* AppClock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppClock.swift; sourceTree = "<group>"; };
@@ -134,6 +131,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				757679F41159E358229E3201 /* QuietNumbersCore in Frameworks */,
+				6473A9E313AD69AE9B19E9FA /* QuietCore in Frameworks */,
+				3E4753DB1F4E9B5F75AE8B01 /* QuietUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -177,7 +176,6 @@
 				044ECDE25B449BC9452DE93B /* Home */,
 				768757C93D80A868FC169B4D /* Leaderboards */,
 				D0B567DBFC833C0E7224B7FB /* Settings */,
-				BA1291E66FFAF2B29F047F94 /* Splash */,
 				1990FDD6BD48190540B821A9 /* Tutorial */,
 			);
 			path = Features;
@@ -196,7 +194,6 @@
 			children = (
 				3764A4EF9834602A85298448 /* AchievementText.swift */,
 				45997456AC4544131F86E156 /* AppearanceRoot.swift */,
-				CA524CC8C87677E72E395ED4 /* Components.swift */,
 				23C8A220045ED805473F40E1 /* DayKeyFormat.swift */,
 				630EEE295069B81DE9BFF117 /* Layout.swift */,
 				CA3D83326830FBDF44307316 /* Rewards.swift */,
@@ -253,6 +250,7 @@
 		9605778C70DBA0393575ECC7 /* Packages */ = {
 			isa = PBXGroup;
 			children = (
+				966857076D3EF94AF0679012 /* QuietKit */,
 				B529A32088A2D117919279B6 /* QuietNumbersCore */,
 			);
 			path = Packages;
@@ -286,14 +284,6 @@
 			path = AppTests;
 			sourceTree = "<group>";
 		};
-		BA1291E66FFAF2B29F047F94 /* Splash */ = {
-			isa = PBXGroup;
-			children = (
-				28A268268BA9BA7336C3C7A3 /* SplashView.swift */,
-			);
-			path = Splash;
-			sourceTree = "<group>";
-		};
 		BD923680FBCD66C058A805E4 /* Collection */ = {
 			isa = PBXGroup;
 			children = (
@@ -306,10 +296,9 @@
 			isa = PBXGroup;
 			children = (
 				EF453855A9BBD21832512C8D /* AppClock.swift */,
+				496D713FFDA63910BD47EEF4 /* FeedbackService.swift */,
 				8C1754B3BB39F1EA843608A9 /* GameCenterService.swift */,
-				DE40B331BB5C56022D43490D /* HapticsService.swift */,
 				FF3D9D0DAEED6E7CD8DA283B /* PersistenceService.swift */,
-				BF81F57210C7B0D19E1D747E /* SoundService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -428,6 +417,8 @@
 			name = QuietNumbers;
 			packageProductDependencies = (
 				7BE46ECC0AC3158A352BE22A /* QuietNumbersCore */,
+				F9BD3678F6E798F8295F7B13 /* QuietCore */,
+				7FD8D0F663E33ABF6771952D /* QuietUI */,
 			);
 			productName = QuietNumbers;
 			productReference = 5207218E375E6E70D497DCEB /* QuietNumbers.app */;
@@ -464,6 +455,7 @@
 			mainGroup = 6AC6E25C50E8B71EBC664819;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
+				C12012554134A36067921D4F /* XCLocalSwiftPackageReference "../QuietKit" */,
 				5F51A2B54A885048DEDF17CB /* XCLocalSwiftPackageReference "Packages/QuietNumbersCore" */,
 			);
 			preferredProjectObjectVersion = 77;
@@ -506,16 +498,15 @@
 				199C20D362693CDF6837DCD6 /* CalendarView.swift in Sources */,
 				62356E8F3C696A26E37DDC38 /* CellView.swift in Sources */,
 				CA8D59F009ED6245A35D3EB3 /* CollectionView.swift in Sources */,
-				93DC3514D16DA813230185F5 /* Components.swift in Sources */,
 				AE09418FE17CF8B80C9985F2 /* DailyChallengeView.swift in Sources */,
 				5554FEE65B821D820A7D6CB5 /* DayKeyFormat.swift in Sources */,
 				24EDA44D775CF8726B5F4747 /* DemoData.swift in Sources */,
+				89DB86B584C82B5A52A7B493 /* FeedbackService.swift in Sources */,
 				519B949BF3219F0AFF0D1BE0 /* GameCenterService.swift in Sources */,
 				4846625894F016126CA79570 /* GameFeedback.swift in Sources */,
 				3CC92E0B77008BB80B4A299A /* GameModel.swift in Sources */,
 				43E88AE9810B80FD897EFF08 /* GameTopBar.swift in Sources */,
 				053BB0365C625243135874E4 /* GameView.swift in Sources */,
-				1A6220A4BF47AFBE8F7D9CEF /* HapticsService.swift in Sources */,
 				6BF43A5E0C5928A2C4530C17 /* HomeView.swift in Sources */,
 				22A872E7DEBDD550391484A4 /* Layout.swift in Sources */,
 				5970D45FBD88ACC4289A804A /* LeaderboardsView.swift in Sources */,
@@ -523,8 +514,6 @@
 				E4F62B961783E757AF92439F /* QuietNumbersApp.swift in Sources */,
 				A0C6754BBB6665903EB0C79A /* Rewards.swift in Sources */,
 				86A107AEE1484BD9F324B52D /* SettingsView.swift in Sources */,
-				26BD520F2CBABE86324C4B0A /* SoundService.swift in Sources */,
-				CEC9495919BAC770906D2E8A /* SplashView.swift in Sources */,
 				6B98C48F5C26BE03D6CA965D /* TutorialScript.swift in Sources */,
 				0F74E3EDDCA32DA6C44BF7F5 /* TutorialView.swift in Sources */,
 				2570D98627055F191E8A2D96 /* Typography.swift in Sources */,
@@ -960,12 +949,24 @@
 			isa = XCLocalSwiftPackageReference;
 			relativePath = Packages/QuietNumbersCore;
 		};
+		C12012554134A36067921D4F /* XCLocalSwiftPackageReference "../QuietKit" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ../QuietKit;
+		};
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
 		7BE46ECC0AC3158A352BE22A /* QuietNumbersCore */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = QuietNumbersCore;
+		};
+		7FD8D0F663E33ABF6771952D /* QuietUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = QuietUI;
+		};
+		F9BD3678F6E798F8295F7B13 /* QuietCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = QuietCore;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

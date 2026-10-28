@@ -49,6 +49,28 @@ import Testing
         #expect(DailyKey.nextRollover(after: date("2026-10-26T05:00:00Z"), timeZone: bogota) == date("2026-10-27T05:00:00Z"))
     }
 
+    @Test func dateRoundTripsThroughKey() throws {
+        let day = try #require(DailyKey.date(forDayKey: "2026-10-25"))
+        #expect(DailyKey.dayKey(for: day, timeZone: TimeZone(identifier: "UTC")!) == "2026-10-25")
+    }
+
+    @Test func theEveningBelongsToTheSameDay() {
+        #expect(DailyKey.dayKey(for: date("2026-10-26T00:30:00Z"), timeZone: bogota) == "2026-10-25")
+    }
+
+    @Test func rolloverHoldsAcrossDaylightSaving() {
+        // Madrid leaves summer time on 2026-10-25 at 03:00; midnight is still the change.
+        #expect(DailyKey.dayKey(for: date("2026-10-25T22:59:00Z"), timeZone: madrid) == "2026-10-25")
+        #expect(DailyKey.dayKey(for: date("2026-10-25T23:00:00Z"), timeZone: madrid) == "2026-10-26")
+    }
+
+    @Test func anEveningRolloverStillWorks() {
+        // A rollover hour other than midnight (Quiet Numbers used 19:00 before 2026-10-27).
+        #expect(DailyKey.dayKey(for: date("2026-10-25T23:59:00Z"), timeZone: bogota, rolloverHour: 19) == "2026-10-25")
+        #expect(DailyKey.dayKey(for: date("2026-10-26T00:00:00Z"), timeZone: bogota, rolloverHour: 19) == "2026-10-26")
+        #expect(DailyKey.nextRollover(after: date("2026-10-25T15:00:00Z"), timeZone: bogota, rolloverHour: 19) == date("2026-10-26T00:00:00Z"))
+    }
+
     @Test func weekdayIsMondayFirst() {
         #expect(DailyKey.weekday(ofDayKey: "2026-10-26") == 1) // Monday
         #expect(DailyKey.weekday(ofDayKey: "2026-10-27") == 2)
@@ -60,6 +82,8 @@ import Testing
         #expect(Streaks.current(completed: days, today: "2026-10-24") == 3)
         #expect(Streaks.current(completed: days, today: "2026-10-25") == 3)
         #expect(Streaks.current(completed: days, today: "2026-10-26") == 0)
+        #expect(Streaks.current(completed: [], today: "2026-10-26") == 0)
+        #expect(Streaks.longest(completed: []) == 0)
         let runs: Set = ["2026-09-29", "2026-09-30", "2026-10-01", "2026-10-02", "2026-10-10", "2026-10-11"]
         #expect(Streaks.longest(completed: runs) == 4)
     }

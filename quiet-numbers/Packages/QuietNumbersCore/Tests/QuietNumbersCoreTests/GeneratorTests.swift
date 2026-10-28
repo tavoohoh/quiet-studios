@@ -1,4 +1,5 @@
 import Foundation
+import QuietCore
 import Testing
 @testable import QuietNumbersCore
 
@@ -67,7 +68,7 @@ import Testing
     }
 
     @Test func dailyGoalIsStableAndInRange() {
-        let goals = (1...60).compactMap { DailyChallenge.dayKey("2026-10-01", addingDays: $0) }.map(DailyChallenge.goal(forDayKey:))
+        let goals = (1...60).compactMap { DailyKey.dayKey("2026-10-01", addingDays: $0) }.map(DailyChallenge.goal(forDayKey:))
         #expect(goals.allSatisfy { (400...700).contains($0) && $0.isMultiple(of: 50) })
         #expect(Set(goals).count > 3)
         #expect(DailyChallenge.goal(forDayKey: "2026-10-25") == DailyChallenge.goal(forDayKey: "2026-10-25"))

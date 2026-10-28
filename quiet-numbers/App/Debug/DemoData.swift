@@ -1,6 +1,8 @@
 #if DEBUG
+import QuietCore
 import Foundation
 import QuietNumbersCore
+import QuietUI
 
 /// `-demo`: a fixed, believable state for App Store screenshots, kept in memory only.
 /// Saturday 2026-11-14 at 10:00, a classic game halfway through, an 8-day daily streak

@@ -1,4 +1,5 @@
 import QuietNumbersCore
+import QuietUI
 import SwiftUI
 
 /// Interactive tutorial on the real board: each step rings the pair to play (like a hint),
@@ -16,6 +17,7 @@ struct TutorialView: View {
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.appearance) private var appearance
+    @Environment(\.quietTheme) private var theme
     @Environment(\.horizontalSizeClass) private var sizeClass
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
@@ -53,7 +55,7 @@ struct TutorialView: View {
             if !isFinished {
                 Button("Skip", action: onFinish)
                     .font(.headline)
-                    .foregroundStyle(appearance.theme.primary)
+                    .foregroundStyle(theme.primary)
                     .frame(minWidth: 48, minHeight: 48)
                     .accessibilityIdentifier("skipTutorial")
             }
@@ -67,7 +69,6 @@ struct TutorialView: View {
 
     @ViewBuilder
     private var explanation: some View {
-        let theme = appearance.theme
         VStack(alignment: .leading, spacing: 8) {
             if isFinished {
                 Text("You're ready")

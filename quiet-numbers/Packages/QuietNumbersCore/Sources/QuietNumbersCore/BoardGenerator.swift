@@ -1,3 +1,5 @@
+import QuietCore
+
 public enum BoardGenerator {
     /// Stage 1 (and every daily challenge).
     public static let initialCount = initialCount(forStage: 1)

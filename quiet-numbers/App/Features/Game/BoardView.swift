@@ -1,4 +1,5 @@
 import QuietNumbersCore
+import QuietUI
 import SwiftUI
 
 /// The grid. Rows are identified by their first cell: rows only ever leave whole,
@@ -13,6 +14,8 @@ struct BoardView: View {
     let onDragStart: (Cell) -> Void
 
     @Environment(\.appearance) private var appearance
+
+    @Environment(\.quietTheme) private var theme
     /// The number a drag started on, and where the finger is (in the grid's space).
     @State private var dragFromID: Int?
     @State private var dragLocation: CGPoint?
@@ -151,7 +154,7 @@ struct BoardView: View {
                 path.move(to: start)
                 path.addLine(to: location)
             }
-            .stroke(appearance.theme.primary.opacity(0.5), style: StrokeStyle(lineWidth: 3, lineCap: .round))
+            .stroke(theme.primary.opacity(0.5), style: StrokeStyle(lineWidth: 3, lineCap: .round))
             .allowsHitTesting(false)
             .accessibilityHidden(true)
         }
@@ -175,7 +178,7 @@ private struct MatchLineView: View {
     let line: MatchLine
     let cell: CGSize
 
-    @Environment(\.appearance) private var appearance
+    @Environment(\.quietTheme) private var theme
 
     @State private var progress: CGFloat = 0
 
@@ -184,7 +187,7 @@ private struct MatchLineView: View {
             ForEach(Array(line.segments.enumerated()), id: \.offset) { _, segment in
                 SegmentShape(segment: segment, scale: cell)
                     .trim(from: 0, to: progress)
-                    .stroke(appearance.theme.primary, style: StrokeStyle(lineWidth: width, lineCap: .round))
+                    .stroke(theme.primary, style: StrokeStyle(lineWidth: width, lineCap: .round))
             }
         }
         .opacity(opacity)
@@ -215,14 +218,14 @@ private struct PopView: View {
     /// 1 at the 46 pt row height.
     let scale: CGFloat
 
-    @Environment(\.appearance) private var appearance
+    @Environment(\.quietTheme) private var theme
     @State private var progress: CGFloat = 0
 
     private static let rays = 8
 
     var body: some View {
         AsteriskShape(rays: Self.rays, progress: progress)
-            .stroke(pop.isLongShot ? appearance.theme.accent : appearance.theme.primary,
+            .stroke(pop.isLongShot ? theme.accent : theme.primary,
                     style: StrokeStyle(lineWidth: 2.5 * scale, lineCap: .round))
             .frame(width: 54 * scale, height: 54 * scale)
             .opacity(1 - progress)
@@ -275,13 +278,13 @@ private struct SegmentShape: Shape {
 private struct RowWaveEffect: View {
     @State private var offset: CGFloat = 0
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    @Environment(\.appearance) private var appearance
+    @Environment(\.quietTheme) private var theme
 
     var body: some View {
         GeometryReader { geometry in
             let band = geometry.size.width * 0.45
             LinearGradient(
-                colors: [.clear, appearance.theme.primary.opacity(0.25), appearance.theme.primary.opacity(0.45), appearance.theme.primary.opacity(0.25), .clear],
+                colors: [.clear, theme.primary.opacity(0.25), theme.primary.opacity(0.45), theme.primary.opacity(0.25), .clear],
                 startPoint: .leading,
                 endPoint: .trailing
             )
@@ -307,14 +310,14 @@ private struct RowClearEffect: View {
 
     @State private var progress: CGFloat = 0
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    @Environment(\.appearance) private var appearance
+    @Environment(\.quietTheme) private var theme
 
     var body: some View {
         let shape = RoundedRectangle(cornerRadius: height * 0.35, style: .continuous).inset(by: 2)
         shape
             .trim(from: 0, to: progress)
-            .stroke(appearance.theme.primary, style: StrokeStyle(lineWidth: 2, lineCap: .round))
-            .background(shape.fill(appearance.theme.primary.opacity(0.14 * progress)))
+            .stroke(theme.primary, style: StrokeStyle(lineWidth: 2, lineCap: .round))
+            .background(shape.fill(theme.primary.opacity(0.14 * progress)))
             .allowsHitTesting(false)
             .accessibilityHidden(true)
             .onAppear {

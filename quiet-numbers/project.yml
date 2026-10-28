@@ -7,6 +7,8 @@ options:
 packages:
   QuietNumbersCore:
     path: Packages/QuietNumbersCore
+  QuietKit:
+    path: ../QuietKit
 settings:
   base:
     SWIFT_VERSION: "6.0"
@@ -21,6 +23,10 @@ targets:
     sources: [App]
     dependencies:
       - package: QuietNumbersCore
+      - package: QuietKit
+        product: QuietCore
+      - package: QuietKit
+        product: QuietUI
     info:
       path: App/Info.plist
       properties:

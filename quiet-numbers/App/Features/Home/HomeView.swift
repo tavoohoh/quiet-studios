@@ -1,5 +1,7 @@
+import QuietCore
 import GameKit
 import QuietNumbersCore
+import QuietUI
 import SwiftUI
 
 struct HomeView: View {
@@ -13,7 +15,7 @@ struct HomeView: View {
     }
 
     @Environment(AppModel.self) private var app
-    @Environment(\.appearance) private var appearance
+    @Environment(\.quietTheme) private var theme
     @Environment(\.horizontalSizeClass) private var sizeClass
     @State private var path: [Route] = []
 
@@ -30,13 +32,13 @@ struct HomeView: View {
                             .accessibilityHidden(true)
                         Text(verbatim: "Quiet Numbers")
                             .font(.system(.largeTitle, design: .rounded, weight: .heavy))
-                            .foregroundStyle(appearance.theme.ink)
+                            .foregroundStyle(theme.ink)
                             .multilineTextAlignment(.center)
                             .fixedSize(horizontal: false, vertical: true)
                             .accessibilityAddTraits(.isHeader)
                         Text("Your 5-minute break.")
                             .font(.body)
-                            .foregroundStyle(appearance.theme.muted)
+                            .foregroundStyle(theme.muted)
                     }
                     .padding(.top, 40)
                     VStack(spacing: 12) {
@@ -73,7 +75,7 @@ struct HomeView: View {
                 .padding(.bottom, 24)
                 .frame(maxWidth: .infinity)
             }
-            .background(appearance.theme.background)
+            .background(theme.background)
             .toolbar(.hidden, for: .navigationBar)
             .navigationDestination(for: Route.self) { route in
                 switch route {
@@ -170,7 +172,7 @@ private struct ActiveGameView: View {
 /// "Achievement unlocked" toast during play.
 private struct UnlockBanner: View {
     let achievement: Achievement
-    @Environment(\.appearance) private var appearance
+    @Environment(\.quietTheme) private var theme
 
     var body: some View {
         HStack(spacing: 12) {
@@ -181,10 +183,10 @@ private struct UnlockBanner: View {
             VStack(alignment: .leading, spacing: 2) {
                 Text("Achievement unlocked")
                     .font(.caption)
-                    .foregroundStyle(appearance.theme.muted)
+                    .foregroundStyle(theme.muted)
                 Text(achievement.title)
                     .font(.headline)
-                    .foregroundStyle(appearance.theme.ink)
+                    .foregroundStyle(theme.ink)
             }
         }
         .padding(.horizontal, 20)
@@ -201,7 +203,7 @@ private struct UnlockBanner: View {
 
 /// Leaderboards, Collection and Settings, in a capsule at the top right.
 private struct HomeMenu: View {
-    @Environment(\.appearance) private var appearance
+    @Environment(\.quietTheme) private var theme
 
     var body: some View {
         HStack(spacing: 0) {
@@ -219,7 +221,7 @@ private struct HomeMenu: View {
         NavigationLink(value: route) {
             Image(systemName: systemImage)
                 .font(.system(size: 21, weight: .medium))
-                .foregroundStyle(appearance.theme.primary)
+                .foregroundStyle(theme.primary)
                 .frame(width: 52, height: 52)
                 .contentShape(Rectangle())
         }
@@ -232,7 +234,7 @@ private struct HomeMenu: View {
 /// Today's challenge and the streak, as the first thing on Home.
 private struct DailyCard: View {
     @Environment(AppModel.self) private var app
-    @Environment(\.appearance) private var appearance
+    @Environment(\.quietTheme) private var theme
     let action: () -> Void
 
     var body: some View {
@@ -241,10 +243,10 @@ private struct DailyCard: View {
                 VStack(alignment: .leading, spacing: 3) {
                     Text("Daily Challenge")
                         .font(.headline)
-                        .foregroundStyle(appearance.theme.ink)
+                        .foregroundStyle(theme.ink)
                     status
                         .font(.subheadline)
-                        .foregroundStyle(appearance.theme.muted)
+                        .foregroundStyle(theme.muted)
                 }
                 .fixedSize(horizontal: false, vertical: true)
                 Spacer()
@@ -256,12 +258,12 @@ private struct DailyCard: View {
                         Image(systemName: "flame.fill")
                     }
                     .labelStyle(.titleAndIcon)
-                    .foregroundStyle(appearance.theme.accent)
+                    .foregroundStyle(theme.accent)
                     .accessibilityLabel(Text("\(app.currentStreak)-day streak"))
                 }
                 Image(systemName: "chevron.forward")
                     .font(.footnote.weight(.bold))
-                    .foregroundStyle(appearance.theme.muted)
+                    .foregroundStyle(theme.muted)
             }
             .padding(.horizontal, 20)
             .padding(.vertical, 18)
@@ -283,13 +285,13 @@ private struct DailyCard: View {
 /// Totals already kept in the player's progress: best classic score, best daily streak, games.
 private struct StatsRow: View {
     @Environment(AppModel.self) private var app
-    @Environment(\.appearance) private var appearance
+    @Environment(\.quietTheme) private var theme
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             Text("Your stats")
                 .font(.subheadline.bold())
-                .foregroundStyle(appearance.theme.muted)
+                .foregroundStyle(theme.muted)
                 .accessibilityAddTraits(.isHeader)
             HStack(spacing: 10) {
                 StatTile(value: app.progress.bestScore, label: "Best score")
@@ -304,18 +306,18 @@ private struct StatTile: View {
     let value: Int
     let label: LocalizedStringKey
 
-    @Environment(\.appearance) private var appearance
+    @Environment(\.quietTheme) private var theme
 
     var body: some View {
         VStack(alignment: .leading, spacing: 2) {
             Text(value, format: .number)
                 .font(.stat)
-                .foregroundStyle(appearance.theme.ink)
+                .foregroundStyle(theme.ink)
                 .lineLimit(1)
                 .minimumScaleFactor(0.6)
             Text(label)
                 .font(.footnote)
-                .foregroundStyle(appearance.theme.muted)
+                .foregroundStyle(theme.muted)
                 .lineLimit(1)
                 .minimumScaleFactor(0.8)
         }

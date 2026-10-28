@@ -1,4 +1,5 @@
 import QuietNumbersCore
+import QuietUI
 import SwiftUI
 
 struct GameView: View {
@@ -17,6 +18,7 @@ struct GameView: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.dismiss) private var dismiss
     @Environment(\.appearance) private var appearance
+    @Environment(\.quietTheme) private var theme
     @Environment(\.horizontalSizeClass) private var sizeClass
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
@@ -51,7 +53,7 @@ struct GameView: View {
                     Button("New Game", systemImage: "arrow.counterclockwise") { animate(onNewGame) }
                         .keyboardShortcut("n")
                 } label: {
-                    RoundIconLabel(systemImage: "ellipsis", tint: appearance.theme.primary)
+                    RoundIconLabel(systemImage: "ellipsis", tint: theme.primary)
                 }
                 .accessibilityLabel(Text("Menu"))
             }
@@ -115,12 +117,12 @@ struct GameView: View {
 private struct StageBanner: View {
     let stage: Int
 
-    @Environment(\.appearance) private var appearance
+    @Environment(\.quietTheme) private var theme
 
     var body: some View {
         Text("Stage \(stage)")
             .font(.system(.title, design: .rounded, weight: .heavy))
-            .foregroundStyle(appearance.theme.ink)
+            .foregroundStyle(theme.ink)
             .padding(.horizontal, 28)
             .padding(.vertical, 14)
             .background { SurfaceShape(shape: Capsule()) }
@@ -136,20 +138,20 @@ private struct GameOverView: View {
     let onNewGame: () -> Void
     let onHome: () -> Void
 
-    @Environment(\.appearance) private var appearance
+    @Environment(\.quietTheme) private var theme
 
     var body: some View {
         VStack(spacing: 20) {
             Text(session.isCompleted ? "Challenge complete" : "No moves left")
                 .font(.system(.title2, design: .rounded, weight: .heavy))
-                .foregroundStyle(appearance.theme.ink)
+                .foregroundStyle(theme.ink)
             VStack(spacing: 4) {
                 Text("Final score")
                     .font(.subheadline)
-                    .foregroundStyle(appearance.theme.muted)
+                    .foregroundStyle(theme.muted)
                 Text(session.score, format: .number)
                     .font(.score)
-                    .foregroundStyle(appearance.theme.ink)
+                    .foregroundStyle(theme.ink)
                 if isNewBest {
                     Toast(text: Text("New best score!"))
                         .padding(.top, 4)
@@ -157,7 +159,7 @@ private struct GameOverView: View {
                 if case .practice = kind {
                     Text("Not scored")
                         .font(.subheadline)
-                        .foregroundStyle(appearance.theme.muted)
+                        .foregroundStyle(theme.muted)
                 }
             }
             VStack(spacing: 10) {

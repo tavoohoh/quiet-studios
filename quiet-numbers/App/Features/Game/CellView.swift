@@ -1,4 +1,5 @@
 import QuietNumbersCore
+import QuietUI
 import SwiftUI
 
 struct CellView: View {
@@ -19,6 +20,7 @@ struct CellView: View {
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.appearance) private var appearance
+    @Environment(\.quietTheme) private var theme
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     @State private var hasEntered = false
 
@@ -27,7 +29,7 @@ struct CellView: View {
             Text(verbatim: "\(cell.value)")
                 .font(.boardNumber(size: size.height * numberScale, design: appearance.numberFont.design))
                 .foregroundStyle(numberColor)
-                .underline(cell.isAdded && !cell.isCleared && appearance.theme.isHighContrast, color: appearance.theme.accent)
+                .underline(cell.isAdded && !cell.isCleared && theme.isHighContrast, color: theme.accent)
                 .frame(width: size.width, height: size.height)
                 .background { tile }
                 .background { ring }
@@ -70,7 +72,7 @@ extension CellView {
     @ViewBuilder
     private var ring: some View {
         if isSelected || isMissed {
-            let color = isMissed ? appearance.theme.accent : appearance.theme.primary
+            let color = isMissed ? theme.accent : theme.primary
             Circle()
                 .fill(color.opacity(0.14))
                 .strokeBorder(color, lineWidth: 2)
@@ -88,9 +90,9 @@ extension CellView {
             case .plain:
                 EmptyView()
             case .circle:
-                Circle().fill(appearance.theme.ink.opacity(0.07)).frame(width: ringDiameter, height: ringDiameter)
+                Circle().fill(theme.ink.opacity(0.07)).frame(width: ringDiameter, height: ringDiameter)
             case .outline:
-                Circle().strokeBorder(appearance.theme.ink.opacity(0.25), lineWidth: 1)
+                Circle().strokeBorder(theme.ink.opacity(0.25), lineWidth: 1)
                     .frame(width: ringDiameter - 4, height: ringDiameter - 4)
             }
         }
@@ -98,10 +100,10 @@ extension CellView {
 
     /// Ghosts stay faintly visible; numbers added with + use the accent so the originals stand out.
     private var numberColor: Color {
-        if cell.isCleared { return appearance.theme.ghost }
-        if isMissed { return appearance.theme.accent }
-        if isSelected { return appearance.theme.primary }
-        return cell.isAdded ? appearance.theme.accent : appearance.theme.ink
+        if cell.isCleared { return theme.ghost }
+        if isMissed { return theme.accent }
+        if isSelected { return theme.primary }
+        return cell.isAdded ? theme.accent : theme.ink
     }
 }
 
@@ -110,13 +112,13 @@ private struct HintRing: View {
     let diameter: CGFloat
     let nudges: Int
 
-    @Environment(\.appearance) private var appearance
+    @Environment(\.quietTheme) private var theme
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @State private var blinks = 0
 
     var body: some View {
         Circle()
-            .strokeBorder(appearance.theme.primary, style: StrokeStyle(lineWidth: 2, dash: [4, 3]))
+            .strokeBorder(theme.primary, style: StrokeStyle(lineWidth: 2, dash: [4, 3]))
             .frame(width: diameter, height: diameter)
             .keyframeAnimator(initialValue: 1.0, trigger: blinks) { content, opacity in
                 content.opacity(opacity)

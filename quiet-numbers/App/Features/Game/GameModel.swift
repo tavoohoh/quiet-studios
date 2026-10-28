@@ -1,6 +1,7 @@
 import Foundation
 import Observation
 import QuietNumbersCore
+import QuietUI
 import SwiftUI
 
 /// A score delta shown briefly next to the score ("+4", "-3").

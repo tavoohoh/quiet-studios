@@ -7,8 +7,11 @@ let package = Package(
     products: [
         .library(name: "QuietNumbersCore", targets: ["QuietNumbersCore"]),
     ],
+    dependencies: [
+        .package(path: "../../../QuietKit"),
+    ],
     targets: [
-        .target(name: "QuietNumbersCore"),
-        .testTarget(name: "QuietNumbersCoreTests", dependencies: ["QuietNumbersCore"]),
+        .target(name: "QuietNumbersCore", dependencies: [.product(name: "QuietCore", package: "QuietKit")]),
+        .testTarget(name: "QuietNumbersCoreTests", dependencies: ["QuietNumbersCore", .product(name: "QuietCore", package: "QuietKit")]),
     ]
 )

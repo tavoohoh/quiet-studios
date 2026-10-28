@@ -1,10 +1,11 @@
 import QuietNumbersCore
+import QuietUI
 import SwiftUI
 
 /// Achievements and the cosmetics they unlock. Locked items show how to get them.
 struct CollectionView: View {
     @Environment(AppModel.self) private var app
-    @Environment(\.appearance) private var appearance
+    @Environment(\.quietTheme) private var colors
     @Environment(\.horizontalSizeClass) private var sizeClass
     @AppStorage(PreferenceKey.theme) private var theme = ThemeChoice.tealCoral
     @AppStorage(PreferenceKey.tileStyle) private var tileStyle = TileStyle.plain
@@ -25,7 +26,7 @@ struct CollectionView: View {
                 RewardSection(title: "Numbers", selection: $numberFont, progress: app.progress) { font in
                     Text(verbatim: "12")
                         .font(.system(size: 20, weight: .bold, design: font.design))
-                        .foregroundStyle(appearance.theme.ink)
+                        .foregroundStyle(colors.ink)
                         .frame(width: 36, alignment: .leading)
                 }
                 RewardSection(title: "Row clear", selection: $clearEffect, progress: app.progress)
@@ -60,7 +61,7 @@ private struct RewardSection<R: Reward, Preview: View>: View {
     let progress: PlayerProgress
     @ViewBuilder let preview: (R) -> Preview
 
-    @Environment(\.appearance) private var appearance
+    @Environment(\.quietTheme) private var theme
 
     var body: some View {
         GroupSection(title) {
@@ -74,21 +75,21 @@ private struct RewardSection<R: Reward, Preview: View>: View {
                             .opacity(isUnlocked ? 1 : 0.5)
                         VStack(alignment: .leading, spacing: 2) {
                             Text(item.title)
-                                .foregroundStyle(isUnlocked ? appearance.theme.ink : appearance.theme.muted)
+                                .foregroundStyle(isUnlocked ? theme.ink : theme.muted)
                             if let detail = detail(for: item, isUnlocked: isUnlocked) {
                                 Text(detail)
                                     .font(.subheadline)
-                                    .foregroundStyle(appearance.theme.muted)
+                                    .foregroundStyle(theme.muted)
                             }
                         }
                         Spacer(minLength: 8)
                         if !isUnlocked {
                             Image(systemName: "lock")
-                                .foregroundStyle(appearance.theme.muted)
+                                .foregroundStyle(theme.muted)
                         } else if item == selection {
                             Image(systemName: "checkmark")
                                 .fontWeight(.bold)
-                                .foregroundStyle(appearance.theme.primary)
+                                .foregroundStyle(theme.primary)
                         }
                     }
                     .padding(.vertical, 10)
@@ -120,14 +121,14 @@ extension RewardSection where Preview == EmptyView {
 private struct ThemeSwatch: View {
     let theme: Theme
 
-    @Environment(\.appearance) private var appearance
+    @Environment(\.quietTheme) private var colors
     @Environment(\.colorScheme) private var colorScheme
 
     var body: some View {
         ZStack(alignment: .leading) {
             Circle().fill(theme.primary).frame(width: 24, height: 24)
             Circle().fill(theme.accent).frame(width: 24, height: 24)
-                .overlay { Circle().stroke(appearance.theme.surface, lineWidth: 2) }
+                .overlay { Circle().stroke(colors.surface, lineWidth: 2) }
                 .offset(x: 12)
         }
         // Single-mode themes show their own colors whatever the current scheme.
@@ -141,18 +142,18 @@ private struct ThemeSwatch: View {
 private struct TilePreview: View {
     let style: TileStyle
 
-    @Environment(\.appearance) private var appearance
+    @Environment(\.quietTheme) private var theme
 
     var body: some View {
         Text(verbatim: "7")
             .font(.system(size: 19, weight: .semibold, design: .rounded))
-            .foregroundStyle(appearance.theme.ink)
+            .foregroundStyle(theme.ink)
             .frame(width: 34, height: 34)
             .background {
                 switch style {
                 case .plain: EmptyView()
-                case .circle: Circle().fill(appearance.theme.surface2)
-                case .outline: Circle().strokeBorder(appearance.theme.muted, lineWidth: 1.5)
+                case .circle: Circle().fill(theme.surface2)
+                case .outline: Circle().strokeBorder(theme.muted, lineWidth: 1.5)
                 }
             }
             .accessibilityHidden(true)
@@ -163,7 +164,7 @@ private struct AchievementRow: View {
     let achievement: Achievement
     let progress: Double
 
-    @Environment(\.appearance) private var appearance
+    @Environment(\.quietTheme) private var theme
 
     var body: some View {
         HStack(spacing: 14) {
@@ -177,19 +178,19 @@ private struct AchievementRow: View {
             VStack(alignment: .leading, spacing: 4) {
                 Text(achievement.title)
                     .font(.headline)
-                    .foregroundStyle(appearance.theme.ink)
+                    .foregroundStyle(theme.ink)
                 Text(achievement.condition)
                     .font(.subheadline)
-                    .foregroundStyle(appearance.theme.muted)
+                    .foregroundStyle(theme.muted)
                 if progress > 0, progress < 1, achievement.target > 1 {
                     ProgressView(value: progress)
-                        .tint(appearance.theme.primary)
+                        .tint(theme.primary)
                 }
             }
             Spacer(minLength: 8)
             if progress >= 1 {
                 Image(systemName: "checkmark.seal.fill")
-                    .foregroundStyle(appearance.theme.primary)
+                    .foregroundStyle(theme.primary)
             }
         }
         .padding(.vertical, 10)

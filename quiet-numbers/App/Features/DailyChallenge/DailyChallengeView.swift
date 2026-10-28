@@ -1,4 +1,6 @@
+import QuietCore
 import QuietNumbersCore
+import QuietUI
 import SwiftUI
 
 /// Today's challenge, streaks, and the calendar of past days.
@@ -6,7 +8,7 @@ struct DailyChallengeView: View {
     let onPlay: (String) -> Void
 
     @Environment(AppModel.self) private var app
-    @Environment(\.appearance) private var appearance
+    @Environment(\.quietTheme) private var theme
     @Environment(\.horizontalSizeClass) private var sizeClass
     @State private var month = AppClock.now
     /// Today's place among Game Center friends, when signed in.
@@ -34,11 +36,11 @@ struct DailyChallengeView: View {
                     )
                     Text("Next challenge in \(countdown)")
                         .font(.subheadline)
-                        .foregroundStyle(appearance.theme.muted)
+                        .foregroundStyle(theme.muted)
                         .padding(.top, 4)
                     Text("Past days are practice: they don't count toward your streak.")
                         .font(.footnote)
-                        .foregroundStyle(appearance.theme.muted)
+                        .foregroundStyle(theme.muted)
                         .multilineTextAlignment(.center)
                         .fixedSize(horizontal: false, vertical: true)
                         .padding(.bottom, 2)
@@ -70,7 +72,7 @@ struct DailyChallengeView: View {
 
     /// Live relative time; frozen in demo launches so screenshots don't depend on the clock.
     private var countdown: Text {
-        let next = DailyChallenge.nextRollover(after: AppClock.now)
+        let next = DailyKey.nextRollover(after: AppClock.now)
         #if DEBUG
         if DemoData.isActive {
             let left = Duration.seconds(next.timeIntervalSince(AppClock.now))
@@ -106,10 +108,10 @@ private struct TodayCard: View {
     let friendsRank: Int?
     let onPlay: () -> Void
 
-    @Environment(\.appearance) private var appearance
+    @Environment(\.quietTheme) private var theme
 
     var body: some View {
-        let onPrimary = appearance.theme.onPrimary
+        let onPrimary = theme.onPrimary
         VStack(alignment: .leading, spacing: 14) {
             ViewThatFits(in: .horizontal) {
                 HStack(spacing: 10) {
@@ -136,17 +138,17 @@ private struct TodayCard: View {
             }
         }
         .padding(18)
-        .background(appearance.theme.primary, in: RoundedRectangle(cornerRadius: 26, style: .continuous))
+        .background(theme.primary, in: RoundedRectangle(cornerRadius: 26, style: .continuous))
     }
 
     private var heading: some View {
         VStack(alignment: .leading, spacing: 2) {
             date
                 .font(.subheadline)
-                .foregroundStyle(appearance.theme.onPrimary.opacity(0.85))
+                .foregroundStyle(theme.onPrimary.opacity(0.85))
             status
                 .font(.system(.title3, design: .rounded, weight: .heavy))
-                .foregroundStyle(appearance.theme.onPrimary)
+                .foregroundStyle(theme.onPrimary)
         }
         .accessibilityElement(children: .combine)
     }
@@ -162,7 +164,7 @@ private struct StatTile<Value: View>: View {
     var showsFlame = false
     @ViewBuilder let value: Value
 
-    @Environment(\.appearance) private var appearance
+    @Environment(\.quietTheme) private var theme
 
     var body: some View {
         VStack(alignment: .leading, spacing: 2) {
@@ -170,7 +172,7 @@ private struct StatTile<Value: View>: View {
                 if showsFlame {
                     Image(systemName: "flame.fill")
                         .font(.subheadline)
-                        .foregroundStyle(appearance.theme.onPrimary.opacity(0.85))
+                        .foregroundStyle(theme.onPrimary.opacity(0.85))
                 }
                 value
                     .font(.stat)
@@ -183,11 +185,11 @@ private struct StatTile<Value: View>: View {
                 .minimumScaleFactor(0.8)
                 .opacity(0.85)
         }
-        .foregroundStyle(appearance.theme.onPrimary)
+        .foregroundStyle(theme.onPrimary)
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.horizontal, 12)
         .padding(.vertical, 10)
-        .background(appearance.theme.onPrimary.opacity(0.12), in: RoundedRectangle(cornerRadius: 16, style: .continuous))
+        .background(theme.onPrimary.opacity(0.12), in: RoundedRectangle(cornerRadius: 16, style: .continuous))
         .accessibilityElement(children: .combine)
     }
 }

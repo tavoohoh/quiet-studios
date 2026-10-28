@@ -1,4 +1,6 @@
+import QuietCore
 import QuietNumbersCore
+import QuietUI
 import SwiftUI
 
 /// A cosmetic option in the Collection. Some are free; the rest unlock with an achievement.
@@ -46,17 +48,25 @@ enum ThemeChoice: String, Reward {
         return nil
     }
 
+    /// The kit's palette behind this choice. Teal & Coral Light and Dark are Teal & Coral
+    /// pinned to one mode.
+    var palette: Palette {
+        switch self {
+        case .tealCoral, .tealCoralLight, .tealCoralDark: .tealCoral
+        case .sageSand: .sageSand
+        case .indigoPeach: .indigoPeach
+        case .sageCoral: .sageCoral
+        case .highContrast: .highContrast
+        }
+    }
+
     /// Teal & Coral follows the system, or stays light or dark whatever the device uses;
     /// the others have a single mode of their own.
     var theme: Theme {
         switch self {
-        case .tealCoral: Theme(assetPrefix: "TealCoral", colorScheme: nil)
-        case .tealCoralLight: Theme(assetPrefix: "TealCoral", colorScheme: .light)
-        case .tealCoralDark: Theme(assetPrefix: "TealCoral", colorScheme: .dark)
-        case .sageSand: Theme(assetPrefix: "SageSand", colorScheme: .light)
-        case .indigoPeach: Theme(assetPrefix: "IndigoPeach", colorScheme: .dark)
-        case .sageCoral: Theme(assetPrefix: "SageCoral", colorScheme: .light)
-        case .highContrast: Theme(assetPrefix: "HighContrast", colorScheme: .light, isHighContrast: true)
+        case .tealCoralLight: Theme(palette, colorScheme: .light)
+        case .tealCoralDark: Theme(palette, colorScheme: .dark)
+        default: Theme(palette)
         }
     }
 
@@ -149,54 +159,9 @@ enum AppIconChoice: String, Reward {
     var iconName: String? { self == .gold ? "AppIcon-Gold" : nil }
 }
 
-/// Colors for a theme, by role. Values live in the asset catalog (`scripts/theme-colors.py`).
-struct Theme {
-    /// Screen background.
-    let background: Color
-    /// Cards, list rows, round buttons.
-    let surface: Color
-    /// Secondary buttons, segment tracks, switches when off.
-    let surface2: Color
-    /// Text and board numbers.
-    let ink: Color
-    /// Secondary text.
-    let muted: Color
-    /// Main buttons, selection, bar icons.
-    let primary: Color
-    /// Text on `primary`.
-    let onPrimary: Color
-    /// Numbers added with +, streaks, praise.
-    let accent: Color
-    /// Cleared numbers, still faintly visible.
-    let ghost: Color
-    let separator: Color
-    /// Single-mode themes force their scheme so system controls match.
-    let colorScheme: ColorScheme?
-    /// Surfaces get a border and added numbers are underlined, so nothing depends on color alone.
-    let isHighContrast: Bool
-
-    init(assetPrefix prefix: String, colorScheme: ColorScheme?, isHighContrast: Bool = false) {
-        background = Color("\(prefix)Background")
-        surface = Color("\(prefix)Surface")
-        surface2 = Color("\(prefix)Surface2")
-        ink = Color("\(prefix)Ink")
-        muted = Color("\(prefix)Muted")
-        primary = Color("\(prefix)Primary")
-        onPrimary = Color("\(prefix)OnPrimary")
-        accent = Color("\(prefix)Accent")
-        ghost = Color("\(prefix)Ghost")
-        separator = Color("\(prefix)Separator")
-        self.colorScheme = colorScheme
-        self.isHighContrast = isHighContrast
-    }
-
-    /// Text on `accent` (the background reads well on every theme's accent).
-    var onAccent: Color { background }
-}
-
-/// The player's chosen cosmetics, read by every screen.
+/// The player's chosen cosmetics for the board, read by every screen. The colors are the
+/// kit's `\.quietTheme`.
 struct Appearance {
-    var theme: Theme = ThemeChoice.tealCoral.theme
     var tileStyle: TileStyle = .plain
     var numberFont: NumberFont = .rounded
     var clearEffect: ClearEffect = .outline

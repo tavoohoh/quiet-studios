@@ -185,7 +185,9 @@
             "value": "Atrás"
           }
         }
-      }
+      },
+      "extractionState": "manual",
+      "comment": "QuietKit's back button (.screen); not in the app's own sources."
     },
     "Best %@": {
       "localizations": {

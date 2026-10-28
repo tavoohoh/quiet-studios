@@ -1,3 +1,4 @@
+import QuietUI
 import SwiftUI
 
 /// "+4": appears at the middle of the matched pair, rises 24 pt and fades.
@@ -7,15 +8,15 @@ struct FloatingPointsView: View {
     let cell: CGSize
     let onDone: () -> Void
 
-    @Environment(\.appearance) private var appearance
+    @Environment(\.quietTheme) private var theme
     @State private var risen = false
     @State private var isShown = false
 
     var body: some View {
         Text(points.amount, format: .number.sign(strategy: .always()))
             .font(.system(size: cell.height * 0.6, weight: .heavy, design: .rounded).monospacedDigit())
-            .foregroundStyle(appearance.theme.primary)
-            .shadow(color: appearance.theme.background, radius: 2)
+            .foregroundStyle(theme.primary)
+            .shadow(color: theme.background, radius: 2)
             .fixedSize()
             .opacity(isShown ? (risen ? 0 : 1) : 0)
             .offset(y: risen ? -24 : 0)

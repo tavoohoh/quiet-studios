@@ -1,3 +1,5 @@
+import QuietCore
+
 /// Point values. Initial values from the brief; tweak here.
 public struct Scoring: Codable, Hashable, Sendable {
     public var adjacentPair = 1

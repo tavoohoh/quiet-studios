@@ -37,7 +37,7 @@ Cada app vive en su propio directorio en la raíz, con su propio `CLAUDE.md` que
 
 - `quiet-numbers/` — puzzle de números (emparejar iguales o que sumen 10). Primera app de la familia.
 - `quiet-solitaire/` — solitario clásico (Klondike, robar 1). Segunda app, jugable en el simulador.
-- `QuietKit/` — paquete compartido: `QuietCore` (PRNG, día del reto, rachas, paleta de temas) y `QuietUI` (tema, componentes, hápticos, tonos, Game Center, splash). Lo usa Quiet Solitaire; Quiet Numbers lo adopta en su 1.1.
+- `QuietKit/` — paquete compartido: `QuietCore` (PRNG, día del reto, rachas, paleta de temas) y `QuietUI` (tema, componentes, hápticos, tonos, Game Center, splash). Lo usan Quiet Solitaire y Quiet Numbers (migrado el 2026-10-28, para su 1.1; sin cambios visibles ni en los tableros de cada fecha).
 
 ## Cómo trabajamos
 

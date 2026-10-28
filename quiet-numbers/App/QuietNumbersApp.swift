@@ -1,3 +1,4 @@
+import QuietUI
 import SwiftUI
 
 @main

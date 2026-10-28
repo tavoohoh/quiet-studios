@@ -1,4 +1,6 @@
+import QuietCore
 import QuietNumbersCore
+import QuietUI
 import SwiftUI
 
 /// Month grid of daily challenges. Completed days are filled, played ones outlined, past
@@ -13,7 +15,7 @@ struct CalendarView: View {
     let inProgress: Set<String>
     let onSelect: (String) -> Void
 
-    @Environment(\.appearance) private var appearance
+    @Environment(\.quietTheme) private var theme
     @Environment(\.horizontalSizeClass) private var sizeClass
 
     private let calendar = Calendar.current
@@ -28,12 +30,12 @@ struct CalendarView: View {
                     Image(systemName: "chevron.backward")
                         .frame(width: 44, height: 44)
                 }
-                .foregroundStyle(appearance.theme.primary)
+                .foregroundStyle(theme.primary)
                 .accessibilityLabel(Text("Previous month"))
                 Spacer()
                 Text(month, format: .dateTime.month(.wide).year())
                     .font(.headline)
-                    .foregroundStyle(appearance.theme.ink)
+                    .foregroundStyle(theme.ink)
                 Spacer()
                 Button {
                     shiftMonth(by: 1)
@@ -41,7 +43,7 @@ struct CalendarView: View {
                     Image(systemName: "chevron.forward")
                         .frame(width: 44, height: 44)
                 }
-                .foregroundStyle(isCurrentMonth ? appearance.theme.ghost : appearance.theme.primary)
+                .foregroundStyle(isCurrentMonth ? theme.ghost : theme.primary)
                 .disabled(isCurrentMonth)
                 .accessibilityLabel(Text("Next month"))
             }
@@ -55,7 +57,7 @@ struct CalendarView: View {
                     case .weekday(let index):
                         Text(weekdaySymbols[index])
                             .font(.footnote.weight(.semibold))
-                            .foregroundStyle(appearance.theme.muted)
+                            .foregroundStyle(theme.muted)
                             .frame(maxWidth: .infinity)
                             .padding(.bottom, 6)
                     case .blank:
@@ -131,7 +133,7 @@ struct CalendarView: View {
     }
 
     private func isPlayable(_ key: String) -> Bool {
-        guard let oldest = DailyChallenge.dayKey(todayKey, addingDays: -DailyChallenge.replayWindow) else { return false }
+        guard let oldest = DailyKey.dayKey(todayKey, addingDays: -DailyKey.replayWindow) else { return false }
         return key <= todayKey && key >= oldest
     }
 }
@@ -152,7 +154,7 @@ private struct DayCell: View {
     let onSelect: (String) -> Void
 
     @Environment(\.horizontalSizeClass) private var sizeClass
-    @Environment(\.appearance) private var appearance
+    @Environment(\.quietTheme) private var theme
 
     var body: some View {
         let isRegular = sizeClass == .regular
@@ -167,24 +169,24 @@ private struct DayCell: View {
                 .frame(width: circle, height: circle)
                 .background {
                     if record?.isCompleted == true {
-                        Circle().fill(appearance.theme.primary)
+                        Circle().fill(theme.primary)
                     } else if isPracticed {
-                        Circle().fill(appearance.theme.primary.opacity(0.22))
+                        Circle().fill(theme.primary.opacity(0.22))
                     } else if record?.isFinished == true {
-                        Circle().strokeBorder(appearance.theme.primary, lineWidth: 1.5)
+                        Circle().strokeBorder(theme.primary, lineWidth: 1.5)
                     }
                 }
                 .overlay {
                     if isToday {
                         Circle()
-                            .strokeBorder(appearance.theme.accent, lineWidth: 2)
+                            .strokeBorder(theme.accent, lineWidth: 2)
                             .padding(-4)
                     }
                 }
                 .overlay(alignment: .bottom) {
                     if isInProgress {
                         Circle()
-                            .fill(record?.isCompleted == true ? appearance.theme.onPrimary : appearance.theme.accent)
+                            .fill(record?.isCompleted == true ? theme.onPrimary : theme.accent)
                             .frame(width: 5, height: 5)
                             .padding(.bottom, isRegular ? 7 : 5)
                     }
@@ -211,7 +213,7 @@ private struct DayCell: View {
                 let start = joinsPrevious ? 0 : mid
                 let end = joinsNext ? geometry.size.width : mid
                 Rectangle()
-                    .fill(appearance.theme.primary.opacity(0.2))
+                    .fill(theme.primary.opacity(0.2))
                     .frame(width: end - start, height: height)
                     .offset(x: start, y: (geometry.size.height - height) / 2)
             }
@@ -219,10 +221,10 @@ private struct DayCell: View {
     }
 
     private var foreground: Color {
-        if record?.isCompleted == true { return appearance.theme.onPrimary }
-        if isToday { return appearance.theme.accent }
-        if isPracticed { return appearance.theme.primary }
-        return isPlayable ? appearance.theme.ink : appearance.theme.muted.opacity(0.6)
+        if record?.isCompleted == true { return theme.onPrimary }
+        if isToday { return theme.accent }
+        if isPracticed { return theme.primary }
+        return isPlayable ? theme.ink : theme.muted.opacity(0.6)
     }
 
     private var accessibilityStatus: Text {

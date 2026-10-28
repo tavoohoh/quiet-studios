@@ -1,6 +1,8 @@
+import QuietCore
 import Foundation
 import Observation
 import QuietNumbersCore
+import QuietUI
 
 /// Which game is on screen, and whether it counts.
 enum GameKind: Equatable {
@@ -28,7 +30,7 @@ final class AppModel {
     /// Newly unlocked achievements waiting to be announced, oldest first.
     private(set) var pendingUnlocks: [Achievement] = []
 
-    init(persistence: PersistenceService, gameCenter: GameCenterService = GameCenterService()) {
+    init(persistence: PersistenceService, gameCenter: GameCenterService = .quietNumbers()) {
         self.persistence = persistence
         self.gameCenter = gameCenter
         progress = persistence.loadProgress()
@@ -45,7 +47,7 @@ final class AppModel {
         }
         #endif
         refreshSavedGames()
-        if let oldest = DailyChallenge.dayKey(todayKey, addingDays: -DailyChallenge.replayWindow) {
+        if let oldest = DailyKey.dayKey(todayKey, addingDays: -DailyKey.replayWindow) {
             persistence.deletePractice(before: oldest)
         }
         gameCenter.onAuthenticated = { [weak self] in self?.syncGameCenter() }
@@ -88,7 +90,7 @@ final class AppModel {
         if let today = persistence.dailies[todayKey], today.isFinished || today.isCompleted {
             await gameCenter.submit(today.score, to: .daily)
         }
-        await gameCenter.save(.init(progress: progress, dailies: persistence.dailies))
+        await gameCenter.save(GameCenterService.Snapshot(progress: progress, dailies: persistence.dailies))
     }
 
     // MARK: Reset
@@ -157,7 +159,7 @@ final class AppModel {
 
     // MARK: Daily
 
-    var todayKey: String { DailyChallenge.dayKey(for: AppClock.now) }
+    var todayKey: String { DailyKey.dayKey(for: AppClock.now) }
 
     var currentStreak: Int { Streaks.current(completed: persistence.completedDays, today: todayKey) }
     var longestStreak: Int { Streaks.longest(completed: persistence.completedDays) }

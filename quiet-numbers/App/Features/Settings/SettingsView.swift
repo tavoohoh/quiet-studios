@@ -1,10 +1,11 @@
+import QuietUI
 import SwiftUI
 
 struct SettingsView: View {
     @AppStorage(PreferenceKey.soundEnabled) private var soundEnabled = true
     @AppStorage(PreferenceKey.hapticsEnabled) private var hapticsEnabled = true
     @AppStorage(PreferenceKey.largerNumbers) private var largerNumbers = false
-    @Environment(\.appearance) private var appearance
+    @Environment(\.quietTheme) private var theme
     @Environment(\.horizontalSizeClass) private var sizeClass
     @Environment(AppModel.self) private var app
     @State private var confirmsReset = false
@@ -36,7 +37,7 @@ struct SettingsView: View {
                 GroupSection("Privacy") {
                     Text("Quiet Numbers doesn't collect any data. Your games, streaks and achievements stay on this device. If you sign in to Game Center, your scores and achievements are shared with Apple's Game Center and your progress is saved in your iCloud.")
                         .font(.subheadline)
-                        .foregroundStyle(appearance.theme.muted)
+                        .foregroundStyle(theme.muted)
                         .fixedSize(horizontal: false, vertical: true)
                         .padding(.vertical, 14)
                 }
@@ -45,7 +46,7 @@ struct SettingsView: View {
                     GroupSection {
                         Button { confirmsReset = true } label: {
                             Text("Reset Progress…")
-                                .foregroundStyle(appearance.theme.accent)
+                                .foregroundStyle(theme.accent)
                                 .frame(maxWidth: .infinity, minHeight: 54, alignment: .leading)
                                 .contentShape(Rectangle())
                         }
@@ -54,15 +55,15 @@ struct SettingsView: View {
                     }
                     Text("Deletes games, daily results, streaks, achievements and unlocked rewards, here and in iCloud.")
                         .font(.footnote)
-                        .foregroundStyle(appearance.theme.muted)
+                        .foregroundStyle(theme.muted)
                         .padding(.horizontal, 16)
                 }
 
                 GroupSection {
                     HStack {
-                        Text("Version").foregroundStyle(appearance.theme.ink)
+                        Text("Version").foregroundStyle(theme.ink)
                         Spacer()
-                        Text(verbatim: Self.version).foregroundStyle(appearance.theme.muted)
+                        Text(verbatim: Self.version).foregroundStyle(theme.muted)
                     }
                     .accessibilityElement(children: .combine)
                 }
@@ -103,22 +104,22 @@ private struct SettingsRow: View {
     let title: Text
     var detail: Text?
 
-    @Environment(\.appearance) private var appearance
+    @Environment(\.quietTheme) private var theme
 
     var body: some View {
         HStack(spacing: 12) {
             VStack(alignment: .leading, spacing: 2) {
-                title.foregroundStyle(appearance.theme.ink)
+                title.foregroundStyle(theme.ink)
                 if let detail {
                     detail
                         .font(.subheadline)
-                        .foregroundStyle(appearance.theme.muted)
+                        .foregroundStyle(theme.muted)
                 }
             }
             Spacer()
             Image(systemName: "chevron.forward")
                 .font(.footnote.weight(.bold))
-                .foregroundStyle(appearance.theme.muted)
+                .foregroundStyle(theme.muted)
         }
         .padding(.vertical, 10)
         .contentShape(Rectangle())

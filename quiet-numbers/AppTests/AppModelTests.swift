@@ -1,3 +1,4 @@
+import QuietCore
 import Foundation
 import QuietNumbersCore
 import Testing
@@ -41,7 +42,7 @@ import Testing
 
     @Test func pastDaysArePractice() throws {
         let app = makeApp()
-        let yesterday = try #require(DailyChallenge.dayKey(app.todayKey, addingDays: -1))
+        let yesterday = try #require(DailyKey.dayKey(app.todayKey, addingDays: -1))
         app.playDaily(yesterday)
         #expect(app.activeKind == .practice(dayKey: yesterday))
         #expect(app.persistence.dailies[yesterday] == nil)
@@ -50,7 +51,7 @@ import Testing
     @Test func streakCountsCompletedDaysOnly() throws {
         let app = makeApp()
         let today = app.todayKey
-        let yesterday = try #require(DailyChallenge.dayKey(today, addingDays: -1))
+        let yesterday = try #require(DailyKey.dayKey(today, addingDays: -1))
         app.persistence.finishDaily(yesterday, score: 50, isCompleted: true)
         #expect(app.currentStreak == 1)
         app.persistence.finishDaily(today, score: 10, isCompleted: false)
@@ -138,7 +139,7 @@ import Testing
     @Test func practiceIsSavedAndResumed() throws {
         let persistence = PersistenceService(store: .inMemory)
         let app = AppModel(persistence: persistence)
-        let day = try #require(DailyChallenge.dayKey(app.todayKey, addingDays: -3))
+        let day = try #require(DailyKey.dayKey(app.todayKey, addingDays: -3))
         app.playDaily(day)
         let game = try #require(app.activeGame)
         let pair = try #require(MatchRules.validPairs(on: game.session.board).first)

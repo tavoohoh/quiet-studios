@@ -1,4 +1,5 @@
 import QuietNumbersCore
+import QuietUI
 import SwiftUI
 
 /// Score and stage, with praise as a toast on the right. Actions live in `GameActionBar`;
@@ -9,6 +10,8 @@ struct GameTopBar: View {
     let subtitle: Text
 
     @Environment(\.appearance) private var appearance
+
+    @Environment(\.quietTheme) private var theme
     @ScaledMetric(relativeTo: .largeTitle) private var scoreSize: CGFloat = 44
 
     var body: some View {
@@ -17,7 +20,7 @@ struct GameTopBar: View {
                 HStack(alignment: .firstTextBaseline, spacing: 8) {
                     Text(model.displayedScore, format: .number)
                         .font(.score(size: min(scoreSize, 60), design: appearance.numberFont.design))
-                        .foregroundStyle(appearance.theme.ink)
+                        .foregroundStyle(theme.ink)
                         .contentTransition(.numericText(value: Double(model.displayedScore)))
                         .accessibilityLabel(Text("Score"))
                         .accessibilityIdentifier("score")
@@ -26,7 +29,7 @@ struct GameTopBar: View {
                 }
                 subtitle
                     .font(.counter)
-                    .foregroundStyle(appearance.theme.muted)
+                    .foregroundStyle(theme.muted)
             }
             Spacer(minLength: 0)
             ZStack {
@@ -94,14 +97,14 @@ struct GameActionBar: View {
 private struct ScoreChangeLabel: View {
     let model: GameModel
 
-    @Environment(\.appearance) private var appearance
+    @Environment(\.quietTheme) private var theme
 
     var body: some View {
         ZStack {
             if let change = model.scoreChange {
                 Text(change.amount, format: .number.sign(strategy: .always()))
                     .font(.system(.title3, design: .rounded, weight: .semibold).monospacedDigit())
-                    .foregroundStyle(change.amount > 0 ? appearance.theme.primary : appearance.theme.muted)
+                    .foregroundStyle(change.amount > 0 ? theme.primary : theme.muted)
                     .id(change.id)
                     .transition(.asymmetric(
                         insertion: .opacity.combined(with: .offset(y: 14)).combined(with: .scale(scale: 1.4)),
@@ -127,7 +130,7 @@ private struct CounterButton: View {
     let action: () -> Void
 
     @Environment(\.isEnabled) private var isEnabled
-    @Environment(\.appearance) private var appearance
+    @Environment(\.quietTheme) private var theme
 
     var body: some View {
         Button(action: action) {
@@ -144,7 +147,7 @@ private struct CounterButton: View {
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
-        .foregroundStyle(appearance.theme.primary)
+        .foregroundStyle(theme.primary)
         .opacity(isEnabled ? 1 : 0.35)
         .accessibilityLabel(Text(label))
         .accessibilityValue(value)
