@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Resultado de búsqueda · __APP__</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#0E6B78}a:hover{color:#0A525C}
+</style>
+</helmet>
+<div style="width: 1720px; height: 720px; box-sizing: border-box; padding: 48px 56px; background: #F3F7F8; color: #16201F; font-family: -apple-system, 'SF Pro Text', system-ui, sans-serif; display: flex; flex-direction: column; gap: 24px">
+  <div style="display: flex; align-items: baseline; justify-content: space-between">
+    <h2 style="margin: 0; font-family: ui-rounded, 'SF Pro Rounded', Nunito, system-ui, sans-serif; font-size: 32px; font-weight: 800">{{title}}</h2>
+    <span style="font-size: 16px; color: #5E6F72">{{note}}</span>
+  </div>
+  <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px">
+    <sc-for list="{{items}}" as="i" hint-placeholder-count="2">
+      <div style="display: flex; flex-direction: column; gap: 10px">
+        <img src="{{i.src}}" alt="{{i.label}}" style="width: 100%; aspect-ratio: {{ratio}}; border-radius: 14px">
+        <span style="font-size: 15px; color: #5E6F72">{{i.label}}</span>
+      </div>
+    </sc-for>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1720,"height":720}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      title: 'Resultado de búsqueda',
+      note: '3:2 · 3840 × 2560 · TODO: script que lo genera',
+      ratio: '3840 / 2560',
+      items: [
+        { src: '/_blob/TODO', label: 'English · "TODO"' },
+        { src: '/_blob/TODO', label: 'Español · "TODO"' },
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Pantalla · Clasificaciones</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#0E6B78}a:hover{color:#0A525C}
+</style>
+</helmet>
+<div style="width: 900px; height: 1060px; box-sizing: border-box; padding: 40px; background: #E3EEF0; color: #16201F; font-family: -apple-system, 'SF Pro Text', system-ui, sans-serif; display: flex; flex-direction: column; gap: 24px">
+  <div style="display: flex; flex-direction: column; gap: 4px">
+    <h2 style="margin: 0; font-family: ui-rounded, 'SF Pro Rounded', Nunito, system-ui, sans-serif; font-size: 28px; font-weight: 800">{{title}}</h2>
+    <span style="font-size: 15px; color: #5E6F72">{{note}}</span>
+  </div>
+  <div style="display: flex; gap: 40px">
+    <sc-for list="{{shots}}" as="s" hint-placeholder-count="2">
+      <div style="display: flex; flex-direction: column; gap: 8px">
+        <img src="{{s.src}}" alt="{{title}}, {{s.label}}" style="width: 390px; height: 847px; border-radius: 40px; box-shadow: 0 10px 30px rgba(14, 107, 120, 0.18)">
+        <span style="font-size: 14px; font-weight: 600; color: #5E6F72">{{s.label}}</span>
+      </div>
+    </sc-for>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":900,"height":1060}}'>
+class Component extends DCLogic {
+  renderVals() {
+    // Capturas de design-screens.sh (iPhone 6.9", inglés): light/05-*.png y dark/05-*.png.
+    return {
+      title: 'Clasificaciones',
+      note: 'TODO: qué muestra esta pantalla en este juego.',
+      shots: [
+        { src: '/_blob/TODO', label: 'Claro' },
+        { src: '/_blob/TODO', label: 'Oscuro' },
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>

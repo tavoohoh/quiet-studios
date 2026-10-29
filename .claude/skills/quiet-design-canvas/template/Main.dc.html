@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>__APP__ · Overview</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#0E6B78}a:hover{color:#0A525C}
+</style>
+</helmet>
+<div style="width: 1280px; height: 870px; box-sizing: border-box; padding: 64px; background: #F3F7F8; color: #16201F; font-family: -apple-system, 'SF Pro Text', system-ui, sans-serif; display: flex; flex-direction: column; gap: 24px">
+  <div style="display: flex; align-items: center; gap: 28px">
+    <img src="{{icon}}" alt="Ícono de __APP__" style="width: 120px; height: 120px; border-radius: 27px">
+    <div style="display: flex; flex-direction: column; gap: 8px">
+      <h1 style="margin: 0; font-family: ui-rounded, 'SF Pro Rounded', Nunito, system-ui, sans-serif; font-size: 64px; line-height: 1; font-weight: 900; letter-spacing: -0.015em">__APP__</h1>
+      <p style="margin: 0; font-size: 22px; color: #5E6F72">{{tagline}}</p>
+    </div>
+  </div>
+  <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px">
+    <div style="padding: 28px; border-radius: 24px; background: #FFFFFF; display: flex; flex-direction: column; gap: 14px">
+      <h2 style="margin: 0; font-family: ui-rounded, 'SF Pro Rounded', Nunito, system-ui, sans-serif; font-size: 24px; font-weight: 800">En este canvas</h2>
+      <div style="display: flex; flex-direction: column; gap: 10px; font-size: 17px; line-height: 1.4">
+        <span><b>App Store:</b> ícono, capturas de iPhone y iPad en inglés y español, header, búsqueda y las insignias de los logros.</span>
+        <span><b>Screens:</b> cada pantalla de la app actual, en claro y oscuro.</span>
+        <span><b>Styles:</b> color, tipografía, medidas y movimiento propios del juego.</span>
+        <span><b>Components:</b> las piezas que solo tiene este juego.</span>
+      </div>
+    </div>
+    <div style="padding: 28px; border-radius: 24px; background: #FFFFFF; display: flex; flex-direction: column; gap: 14px">
+      <h2 style="margin: 0; font-family: ui-rounded, 'SF Pro Rounded', Nunito, system-ui, sans-serif; font-size: 24px; font-weight: 800">Lo hereda de Quiet Studios</h2>
+      <p style="margin: 0; font-size: 17px; line-height: 1.4">Temas y colores por rol, tipografía, botones, tarjetas, segmentos, toast, ajustes, hápticos, sonido, splash y la estructura de pantallas. No se repite aquí: está en el <a href="https://claude.ai/artifact/59yz1mHLFU3u3jvSfugf7B">sistema de diseño de Quiet Studios</a>.</p>
+    </div>
+    <div style="padding: 28px; border-radius: 24px; background: #FFFFFF; display: flex; flex-direction: column; gap: 14px">
+      <h2 style="margin: 0; font-family: ui-rounded, 'SF Pro Rounded', Nunito, system-ui, sans-serif; font-size: 24px; font-weight: 800">Lo propio del juego</h2>
+      <div style="display: flex; flex-direction: column; gap: 10px; font-size: 17px; line-height: 1.4">
+        <sc-for list="{{own}}" as="o" hint-placeholder-count="3"><span>{{o}}</span></sc-for>
+      </div>
+    </div>
+    <div style="padding: 28px; border-radius: 24px; background: #FFFFFF; display: flex; flex-direction: column; gap: 14px">
+      <h2 style="margin: 0; font-family: ui-rounded, 'SF Pro Rounded', Nunito, system-ui, sans-serif; font-size: 24px; font-weight: 800">Datos</h2>
+      <div style="display: grid; grid-template-columns: 150px minmax(0, 1fr); row-gap: 8px; font-size: 16px; line-height: 1.35">
+        <sc-for list="{{facts}}" as="f" hint-placeholder-count="6"><span style="color: #5E6F72">{{f.k}}</span><span>{{f.v}}</span></sc-for>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":870}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      icon: '/_blob/TODO',
+      tagline: 'TODO: la mecánica en una frase.',
+      own: [
+        'TODO: el tablero o la pieza principal y sus estados.',
+        'TODO: lo que el juego agrega a la estructura de Quiet Studios.',
+        'TODO: cómo es su reto diario.',
+      ],
+      facts: [
+        { k: 'En la tienda', v: 'TODO' },
+        { k: 'Subtítulo', v: 'TODO' },
+        { k: 'Bundle ID', v: 'com.tavoohoh.TODO' },
+        { k: 'Versiones', v: 'TODO' },
+        { k: 'Código', v: 'quiet-TODO/ en tavoohoh/quiet-studios' },
+        { k: 'Imágenes', v: 'TODO: scripts que generan las imágenes' },
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>

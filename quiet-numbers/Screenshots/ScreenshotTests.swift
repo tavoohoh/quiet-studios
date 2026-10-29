@@ -74,6 +74,43 @@ final class ScreenshotTests: XCTestCase {
         }
     }
 
+    /// Every screen of the app for the design canvas (page "Screens"), run once per appearance by
+    /// `scripts/design-screens.sh`. Not part of the App Store set (`screenshots.sh` skips it).
+    @MainActor
+    func testDesignScreens() {
+        let app = launch()
+        capture(app, "01-home")
+        tap(app.buttons["continue"])
+        XCTAssertTrue(app.staticTexts["score"].waitForExistence(timeout: 5))
+        capture(app, "02-game")
+        goBack(app)
+        tap(app.buttons["daily"])
+        sleep(1)
+        capture(app, "04-daily")
+        goBack(app)
+        tap(app.buttons["leaderboards"])
+        sleep(1)
+        capture(app, "05-leaderboards")
+        goBack(app)
+        tap(app.buttons["collection"])
+        sleep(1)
+        capture(app, "06-collection")
+        goBack(app)
+        tap(app.buttons["settings"])
+        sleep(1)
+        capture(app, "07-settings")
+        app.terminate()
+
+        // The summary sheet: today's challenge, one pair from its goal.
+        let summary = XCUIApplication()
+        summary.launchArguments = ["-startGame", "-summaryScene", "-AppleLanguages", "(\(language))"]
+        summary.launch()
+        tap(summary.buttons["cell-0"])
+        tap(summary.buttons["cell-1"])
+        sleep(4)
+        capture(summary, "03-summary")
+    }
+
     private var language: String { ProcessInfo.processInfo.environment["QN_LANGUAGE"] ?? "en" }
 
     @MainActor

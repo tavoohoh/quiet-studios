@@ -13,7 +13,10 @@ set -euo pipefail
 
 cd "$(dirname "$0")/.."
 ROOT="$PWD"
-OUT="$ROOT/AppStore/screenshots"
+OUT="${OUT:-$ROOT/AppStore/screenshots}"
+# The design captures (scripts/design-screens.sh) run alone; the App Store set skips them.
+FILTER=(-skip-testing:QuietNumbersScreenshots/ScreenshotTests/testDesignScreens)
+[[ -n "${ONLY_TESTING:-}" ]] && FILTER=(-only-testing:"$ONLY_TESTING")
 WORK="$(mktemp -d)"
 trap 'rm -rf "$WORK"' EXIT
 
@@ -45,7 +48,7 @@ run_tests() { # destination-folder language appearance xcodebuild-destination
     echo "▸ $(basename "$(dirname "$(dirname "$folder")")")/$(basename "$(dirname "$folder")")/$(basename "$folder")"
     TEST_RUNNER_QN_LANGUAGE="$language" \
         xcodebuild test -project QuietNumbers.xcodeproj -scheme Screenshots \
-        -destination "$destination" -resultBundlePath "$result" -quiet >/dev/null
+        -destination "$destination" -resultBundlePath "$result" "${FILTER[@]}" -quiet >/dev/null
     rm -rf "$WORK/attachments" && mkdir -p "$folder"
     xcrun xcresulttool export attachments --path "$result" --output-path "$WORK/attachments" >/dev/null
     python3 - "$WORK/attachments" "$folder" <<'PY'

@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Logros de __APP__</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#0E6B78}a:hover{color:#0A525C}
+</style>
+</helmet>
+<div style="width: 1720px; height: 620px; box-sizing: border-box; padding: 48px 56px; background: #F3F7F8; color: #16201F; font-family: -apple-system, 'SF Pro Text', system-ui, sans-serif; display: flex; flex-direction: column; gap: 24px">
+  <div style="display: flex; align-items: baseline; justify-content: space-between">
+    <h2 style="margin: 0; font-family: ui-rounded, 'SF Pro Rounded', Nunito, system-ui, sans-serif; font-size: 32px; font-weight: 800">{{title}}</h2>
+    <span style="font-size: 16px; color: #5E6F72">{{note}}</span>
+  </div>
+  <div style="display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 28px 20px">
+    <sc-for list="{{badges}}" as="b" hint-placeholder-count="11">
+      <div style="display: flex; flex-direction: column; gap: 8px">
+        <img src="{{b.src}}" alt="{{b.name}}" style="width: 112px; height: 112px; border-radius: 56px">
+        <span style="font-size: 17px; font-weight: 700">{{b.name}}</span>
+        <span style="font-size: 14px; line-height: 1.35; color: #16201F">{{b.condition}}</span>
+        <span style="font-size: 13px; line-height: 1.35; color: #5E6F72">{{b.reward}}</span>
+      </div>
+    </sc-for>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1720,"height":620}}'>
+class Component extends DCLogic {
+  renderVals() {
+    // Un logro por entrada de AppStore/game-center.json, en español. Los ocultos llevan "(oculto)".
+    return {
+      title: 'Logros de Game Center',
+      note: '1024 sin alfa, Game Center los recorta redondos · AppStore/game-center.json',
+      badges: [
+        { src: '/_blob/TODO', name: 'TODO', condition: 'TODO', reward: 'TODO' },
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>

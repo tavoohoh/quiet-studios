@@ -118,9 +118,17 @@ struct HomeView: View {
     /// Screenshots and UI tests: `-startGame` opens a game right away;
     /// `-seedKey <text>` makes its board deterministic and
     /// `-boardValues 5,3,7,…` starts from exact numbers.
+    /// `-summaryScene` opens today's challenge one pair (cells 0 and 1) from its goal, for the summary sheet.
     private func startDebugGameIfRequested() {
         let arguments = ProcessInfo.processInfo.arguments
         guard arguments.contains("-startGame"), path.isEmpty else { return }
+        if arguments.contains("-summaryScene") {
+            let board = Board(values: [5, 5, 3, 8, 1, 6, 2, 9, 4, 7, 1, 3, 6, 2, 8, 4, 9, 7])
+            let session = GameSession(board: board, mode: .daily(dayKey: app.todayKey), stage: 3, score: 549, goal: 550)
+            app.start(GameModel(session: session), as: .daily(dayKey: app.todayKey))
+            path = [.game]
+            return
+        }
         func value(after flag: String) -> String? {
             guard let i = arguments.firstIndex(of: flag), i + 1 < arguments.count else { return nil }
             return arguments[i + 1]

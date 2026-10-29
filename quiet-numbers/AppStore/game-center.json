@@ -247,8 +247,8 @@
       "hidden": true,
       "achievableMoreThanOnce": false,
       "reward": {
-        "en": "Hidden: hints cost 3 outside the scored daily challenge",
-        "es": "Oculta: pistas a 3 fuera del reto diario puntuable"
+        "en": "Hidden: hints cost 3 in classic games only",
+        "es": "Oculta: pistas a 3 solo en clásico"
       },
       "name": {
         "en": "In the Red",

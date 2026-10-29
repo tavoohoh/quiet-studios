@@ -1,0 +1,237 @@
+{
+  "v": 3,
+  "createdOnFiles": {
+    "v": 1,
+    "at": "__DATE__"
+  },
+  "title": "__APP__",
+  "launch": {
+    "view": "canvas",
+    "page": "overview"
+  },
+  "pages": [
+    {
+      "id": "overview",
+      "name": "Overview"
+    },
+    {
+      "id": "appstore",
+      "name": "App Store"
+    },
+    {
+      "id": "screens",
+      "name": "Screens"
+    },
+    {
+      "id": "styles",
+      "name": "Styles"
+    },
+    {
+      "id": "components",
+      "name": "Components"
+    }
+  ],
+  "boards": {
+    "Main.dc.html": {
+      "x": 0,
+      "y": 0,
+      "w": 1280,
+      "h": 870,
+      "title": "Overview",
+      "page": "overview"
+    },
+    "StoreIcons.dc.html": {
+      "x": 0,
+      "y": 0,
+      "w": 1720,
+      "h": 450,
+      "title": "Ícono",
+      "page": "appstore"
+    },
+    "StoreIPhoneEN.dc.html": {
+      "x": 0,
+      "y": 570,
+      "w": 1720,
+      "h": 860,
+      "title": "iPhone · English",
+      "page": "appstore"
+    },
+    "StoreIPhoneES.dc.html": {
+      "x": 0,
+      "y": 1550,
+      "w": 1720,
+      "h": 860,
+      "title": "iPhone · Español",
+      "page": "appstore"
+    },
+    "StoreIPadEN.dc.html": {
+      "x": 0,
+      "y": 2530,
+      "w": 1720,
+      "h": 600,
+      "title": "iPad · English",
+      "page": "appstore"
+    },
+    "StoreIPadES.dc.html": {
+      "x": 0,
+      "y": 3250,
+      "w": 1720,
+      "h": 600,
+      "title": "iPad · Español",
+      "page": "appstore"
+    },
+    "StoreHeader.dc.html": {
+      "x": 0,
+      "y": 3970,
+      "w": 1720,
+      "h": 540,
+      "title": "Header de la ficha 21:9 · English y Español",
+      "page": "appstore"
+    },
+    "StoreSearch.dc.html": {
+      "x": 0,
+      "y": 4630,
+      "w": 1720,
+      "h": 720,
+      "title": "Resultado de búsqueda 3:2 · English y Español",
+      "page": "appstore"
+    },
+    "StoreAchievements.dc.html": {
+      "x": 0,
+      "y": 5470,
+      "w": 1720,
+      "h": 620,
+      "title": "Logros",
+      "page": "appstore"
+    },
+    "ScreenHome.dc.html": {
+      "x": 0,
+      "y": 0,
+      "w": 900,
+      "h": 1060,
+      "title": "Inicio",
+      "page": "screens"
+    },
+    "ScreenGame.dc.html": {
+      "x": 980,
+      "y": 0,
+      "w": 900,
+      "h": 1060,
+      "title": "Partida",
+      "page": "screens"
+    },
+    "ScreenSummary.dc.html": {
+      "x": 1960,
+      "y": 0,
+      "w": 900,
+      "h": 1060,
+      "title": "Resumen de partida",
+      "page": "screens"
+    },
+    "ScreenDaily.dc.html": {
+      "x": 0,
+      "y": 1180,
+      "w": 900,
+      "h": 1060,
+      "title": "Reto diario",
+      "page": "screens"
+    },
+    "ScreenLeaderboards.dc.html": {
+      "x": 980,
+      "y": 1180,
+      "w": 900,
+      "h": 1060,
+      "title": "Clasificaciones",
+      "page": "screens"
+    },
+    "ScreenCollection.dc.html": {
+      "x": 1960,
+      "y": 1180,
+      "w": 900,
+      "h": 1060,
+      "title": "Colección",
+      "page": "screens"
+    },
+    "ScreenSettings.dc.html": {
+      "x": 0,
+      "y": 2360,
+      "w": 900,
+      "h": 1060,
+      "title": "Ajustes",
+      "page": "screens"
+    },
+    "StylesColor.dc.html": {
+      "x": 0,
+      "y": 0,
+      "w": 1280,
+      "h": 640,
+      "title": "Color en el juego",
+      "page": "styles"
+    },
+    "StylesType.dc.html": {
+      "x": 1360,
+      "y": 0,
+      "w": 1280,
+      "h": 640,
+      "title": "Tipografía del juego",
+      "page": "styles"
+    },
+    "StylesMetrics.dc.html": {
+      "x": 0,
+      "y": 760,
+      "w": 1280,
+      "h": 640,
+      "title": "Medidas",
+      "page": "styles"
+    },
+    "StylesMotion.dc.html": {
+      "x": 1360,
+      "y": 760,
+      "w": 1280,
+      "h": 640,
+      "title": "Movimiento",
+      "page": "styles"
+    },
+    "CompExample.dc.html": {
+      "x": 0,
+      "y": 0,
+      "w": 1280,
+      "h": 300,
+      "title": "TODO",
+      "page": "components"
+    }
+  },
+  "order": [
+    "Main.dc.html",
+    "StoreIcons.dc.html",
+    "StoreIPhoneEN.dc.html",
+    "StoreIPhoneES.dc.html",
+    "StoreIPadEN.dc.html",
+    "StoreIPadES.dc.html",
+    "StoreHeader.dc.html",
+    "StoreSearch.dc.html",
+    "StoreAchievements.dc.html",
+    "ScreenHome.dc.html",
+    "ScreenGame.dc.html",
+    "ScreenSummary.dc.html",
+    "ScreenDaily.dc.html",
+    "ScreenLeaderboards.dc.html",
+    "ScreenCollection.dc.html",
+    "ScreenSettings.dc.html",
+    "StylesColor.dc.html",
+    "StylesType.dc.html",
+    "StylesMetrics.dc.html",
+    "StylesMotion.dc.html",
+    "CompExample.dc.html"
+  ],
+  "notes": {},
+  "designSystems": [
+    {
+      "title": "Quiet Studios",
+      "namespace": "quiet-studios",
+      "artifact": "https://claude.ai/artifact/59yz1mHLFU3u3jvSfugf7B",
+      "version": null,
+      "copiedAt": "__DATE__"
+    }
+  ]
+}

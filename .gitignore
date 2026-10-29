@@ -39,3 +39,6 @@ AuthKey_*.p8
 
 # Python
 __pycache__/
+
+# Claude Code: local settings stay on this machine
+.claude/settings.local.json

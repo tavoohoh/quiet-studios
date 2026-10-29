@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>App Store · iPad · Español</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#0E6B78}a:hover{color:#0A525C}
+</style>
+</helmet>
+<div style="width: 1720px; height: 600px; box-sizing: border-box; padding: 48px 56px; background: #F3F7F8; color: #16201F; font-family: -apple-system, 'SF Pro Text', system-ui, sans-serif; display: flex; flex-direction: column; gap: 24px">
+  <div style="display: flex; align-items: baseline; justify-content: space-between">
+    <h2 style="margin: 0; font-family: ui-rounded, 'SF Pro Rounded', Nunito, system-ui, sans-serif; font-size: 32px; font-weight: 800">{{title}}</h2>
+    <span style="font-size: 16px; color: #5E6F72">{{note}}</span>
+  </div>
+  <div style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 24px">
+    <sc-for list="{{shots}}" as="s" hint-placeholder-count="5">
+      <div style="display: flex; flex-direction: column; gap: 10px">
+        <img src="{{s.src}}" alt="{{s.label}}" style="width: 100%; aspect-ratio: {{ratio}}; border-radius: {{radius}}; box-shadow: 0 6px 20px rgba(14, 107, 120, 0.12)">
+        <span style="font-size: 15px; color: #5E6F72">{{s.label}}</span>
+      </div>
+    </sc-for>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1720,"height":600}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      title: 'iPad · Español',
+      note: '13" · 2064 × 2752 · TODO: script que las genera',
+      ratio: '2064 / 2752',
+      radius: '12px',
+      shots: [1, 2, 3, 4, 5].map((n) => ({ src: '/_blob/TODO', label: '0' + n + ' · TODO: titular' })),
+    };
+  }
+}
+</script>
+</body>
+</html>

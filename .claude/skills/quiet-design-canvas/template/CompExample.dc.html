@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Componente · TODO</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#0E6B78}a:hover{color:#0A525C}
+</style>
+</helmet>
+<div style="width: 1280px; height: 300px; box-sizing: border-box; padding: 48px; background: #E3EEF0; color: #16201F; font-family: -apple-system, 'SF Pro Text', system-ui, sans-serif; display: flex; flex-direction: column; gap: 24px">
+  <div style="display: flex; flex-direction: column; gap: 4px">
+    <h2 style="margin: 0; font-family: ui-rounded, 'SF Pro Rounded', Nunito, system-ui, sans-serif; font-size: 30px; font-weight: 800">{{title}}</h2>
+    <span style="font-size: 15px; color: #5E6F72">{{note}}</span>
+  </div>
+  <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px">
+    <sc-for list="{{panels}}" as="p" hint-placeholder-count="2">
+      <div style="padding: 24px 32px; border-radius: 24px; background: {{p.bg}}; color: {{p.ink}}; display: flex; align-items: center; justify-content: center; gap: 16px">
+        <span style="padding: 14px 28px; border-radius: 999px; background: {{p.surface}}; font-family: ui-rounded, 'SF Pro Rounded', Nunito, system-ui, sans-serif; font-size: 24px; font-weight: 800">TODO</span>
+      </div>
+    </sc-for>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":300}}'>
+class Component extends DCLogic {
+  renderVals() {
+    // Petróleo y coral (tema por defecto de Quiet Studios). Cambiar solo si el juego usa otro por defecto.
+    const light = { bg: '#F3F7F8', surface: '#FFFFFF', surface2: '#E3EEF0', ink: '#16201F', muted: '#5E6F72', sep: '#E3EAEC', primary: '#0E6B78', onPrimary: '#FFFFFF', accent: '#B9472F', ghost: '#CFD8DA' };
+    const dark = { bg: '#0F1A1D', surface: '#172629', surface2: '#1F3236', ink: '#E8F1F2', muted: '#8A9DA0', sep: '#263A3E', primary: '#5BC2CF', onPrimary: '#062327', accent: '#FF9A85', ghost: '#2C3A3D' };
+    // Copiar este artboard por cada pieza propia (CompBoard, CompCard…) y dibujarla con datos reales.
+    return {
+      title: 'TODO: nombre del componente en el código',
+      note: 'TODO: dónde aparece, estados y qué lo hace propio del juego.',
+      panels: [light, dark],
+    };
+  }
+}
+</script>
+</body>
+</html>

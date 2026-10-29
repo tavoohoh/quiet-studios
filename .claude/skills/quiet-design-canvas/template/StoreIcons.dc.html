@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Ícono de __APP__</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#0E6B78}a:hover{color:#0A525C}
+</style>
+</helmet>
+<div style="width: 1720px; height: 450px; box-sizing: border-box; padding: 48px 56px; background: #F3F7F8; color: #16201F; font-family: -apple-system, 'SF Pro Text', system-ui, sans-serif; display: flex; flex-direction: column; gap: 24px">
+  <div style="display: flex; align-items: baseline; justify-content: space-between">
+    <h2 style="margin: 0; font-family: ui-rounded, 'SF Pro Rounded', Nunito, system-ui, sans-serif; font-size: 32px; font-weight: 800">{{title}}</h2>
+    <span style="font-size: 16px; color: #5E6F72">{{note}}</span>
+  </div>
+  <div style="display: flex; gap: 48px">
+    <sc-for list="{{icons}}" as="i" hint-placeholder-count="4">
+      <div style="display: flex; flex-direction: column; gap: 12px; align-items: center">
+        <span style="padding: 16px; border-radius: 32px; background: {{i.backdrop}}; display: flex"><img src="{{i.src}}" alt="{{i.label}}" style="width: 200px; height: 200px; border-radius: 45px"></span>
+        <span style="font-size: 17px; font-weight: 600">{{i.label}}</span>
+        <span style="font-size: 14px; color: #5E6F72">{{i.note}}</span>
+      </div>
+    </sc-for>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1720,"height":450}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      title: 'Ícono',
+      note: '1024 × 1024 sin alfa · TODO: script que lo genera',
+      icons: [
+        { src: '/_blob/TODO', label: 'Estándar', note: 'Modo claro', backdrop: 'transparent' },
+        { src: '/_blob/TODO', label: 'Oscuro', note: 'Modo oscuro de iOS', backdrop: 'transparent' },
+        { src: '/_blob/TODO', label: 'Tinted', note: 'Íconos teñidos de iOS (se ve sobre fondo oscuro)', backdrop: '#1C1C1E' },
+        { src: '/_blob/TODO', label: 'Dorado', note: 'Recompensa de Centenario', backdrop: 'transparent' },
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>
