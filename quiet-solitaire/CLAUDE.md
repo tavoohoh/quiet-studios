@@ -233,7 +233,7 @@ Cada fase termina con su criterio de aceptación cumplido antes de pasar a la si
 | 3. Persistencia y reto diario | 🟡 Implementado (SwiftData como Quiet Numbers, reto con solución garantizada, racha, calendario, dificultad de la semana); falta verificar en dispositivo. |
 | 4. Game Center | 🟡 13 logros y 3 clasificaciones creados en App Store Connect (2026-10-28, `scripts/setup-game-center.py`); falta activarlos en la versión y verificar envío y sincronización en el dispositivo. |
 | 5. Recompensas y colección | 🟡 Mazos (6), reversos (5), tableros (5), efecto de victoria e ícono dorado, con sus desbloqueos; falta revisión en dispositivo. |
-| 6. Pulido y lanzamiento | 🟡 Inglés y español completos (206 textos). Tutorial interactivo hecho. Instalada en iPhone 16 Pro (2026-10-27). Ficha subida por la API y build 1.0 (1) subido a TestFlight (2026-10-28). Falta: capturas, metadatos, insignias de Game Center, TestFlight. Auditoría de VoiceOver: pospuesta (decisión del usuario). |
+| 6. Pulido y lanzamiento | 🟡 Inglés y español completos (206 textos). Tutorial interactivo hecho. Instalada en iPhone 16 Pro (2026-10-27). Ficha subida por la API y builds 1.0 (1) y 1.0 (2) subidos a TestFlight (2026-10-28). Falta: capturas, metadatos, insignias de Game Center, TestFlight. Auditoría de VoiceOver: pospuesta (decisión del usuario). |
 
 ## Preguntas abiertas
 
