@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Búsqueda A · La regla</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#FFFFFF}a:hover{color:#FFFFFF}
+</style>
+</helmet>
+<div style="width: 1200px; height: 800px; position: relative; overflow: hidden; background: #0E6B78; color: #FFFFFF; font-family: ui-rounded, 'SF Pro Rounded', Nunito, system-ui, sans-serif">
+<div style="position: absolute; left: 80px; top: 150px; width: 560px; display: flex; flex-direction: column; gap: 36px">
+  <h1 style="margin: 0; font-size: 68px; line-height: 1.02; font-weight: 900; letter-spacing: -0.015em">Match equal pairs<br>or <span style="color: #FFC2B5">make 10.</span></h1>
+  <div style="display: flex; flex-direction: column; gap: 22px">
+    <div style="display: flex; align-items: center; gap: 14px"><span style="width: 92px; height: 92px; border-radius: 46px; display: flex; align-items: center; justify-content: center; font-size: 60px; font-weight: 900; background: #FFFFFF; color: #0E6B78; ">4</span><span style="width: 40px; height: 4px; border-radius: 2px; background: #FFFFFF"></span><span style="width: 92px; height: 92px; border-radius: 46px; display: flex; align-items: center; justify-content: center; font-size: 60px; font-weight: 900; background: #FFFFFF; color: #0E6B78; ">4</span></div>
+    <div style="display: flex; align-items: center; gap: 14px"><span style="width: 92px; height: 92px; border-radius: 46px; display: flex; align-items: center; justify-content: center; font-size: 60px; font-weight: 900; background: #B9472F; color: #FFFFFF; ">3</span><span style="width: 40px; height: 4px; border-radius: 2px; background: #FFC2B5"></span><span style="width: 92px; height: 92px; border-radius: 46px; display: flex; align-items: center; justify-content: center; font-size: 60px; font-weight: 900; background: #B9472F; color: #FFFFFF; ">7</span><span style="margin-left: 10px; font-size: 44px; font-weight: 900; color: #FFC2B5">= 10</span></div>
+  </div>
+</div>
+<div style="position: absolute; left: 720px; top: 90px; width: 360px; height: 710px; overflow: hidden;">
+  <div style="width: 360px; height: 794px; box-sizing: border-box; padding: 8px; border-radius: 54px; background: #0A1416; box-shadow: 0 30px 70px rgba(2, 30, 36, 0.35)">
+    <div style="width: 100%; height: 778px; border-radius: 47px; overflow: hidden; background: #F3F7F8; color: #16201F; box-sizing: border-box; padding: 22px 18px 0; display: flex; flex-direction: column; font-family: ui-rounded, 'SF Pro Rounded', Nunito, system-ui, sans-serif">
+      <div style="display: flex; flex-direction: column; gap: 2px">
+        <span style="font-size: 43px; line-height: 1; font-weight: 800; font-variant-numeric: tabular-nums">1,240</span>
+        <span style="font-size: 16px; font-weight: 600; color: #5E6F72">Stage 2 · Best 2,480</span>
+      </div>
+      <div style="margin-top: 12px; display: flex">
+        <sc-for list="{{digits}}" as="g" hint-placeholder-count="9">
+          <span style="flex: 1; text-align: center; font-size: 16px; font-weight: 800; color: {{g.color}}; text-decoration: {{g.line}}">{{g.d}}</span>
+        </sc-for>
+      </div>
+      <div style="margin-top: 10px; display: grid; grid-template-columns: repeat(9, minmax(0, 1fr)); grid-auto-rows: 41px">
+        <sc-for list="{{cells}}" as="c" hint-placeholder-count="54">
+          <div style="display: flex; align-items: center; justify-content: center">
+            <span style="width: 31px; height: 31px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 23px; font-weight: {{c.w}}; font-variant-numeric: tabular-nums; color: {{c.color}}; background: {{c.bg}}; box-shadow: {{c.ring}}">{{c.n}}</span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+</div>
+<div style="display: {{safe}}; position: absolute; left: 100px; top: 70px; width: 1000px; height: 660px; box-sizing: border-box; border: 2px dashed rgba(255,255,255,0.7); border-radius: 6px; pointer-events: none">
+  <span style="position: absolute; left: 8px; top: 6px; font-family: -apple-system, system-ui, sans-serif; font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.7)">Zona central (aprox.; ajustar con la plantilla de Apple)</span>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"showSafe":{"editor":"boolean","default":true,"label":"Mostrar zona central"},"$preview":{"width":1200,"height":800}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const rows = [
+      [9, 7, 1, 7, 1, 9, 3, 5, 8],
+      [2, 1, 9, 7, 4, 8, 8, 3, 8],
+      [2, 8, 9, 6, 6, 5, 1, 5, 6],
+      [5, 5, 8, 9, 1, 3, 7, 1, 1],
+      [7, 1, 9, 3, 5, 6, 8, 8, 3],
+      [8, 9, 6, 6, 5, 1, 5, 9, 5],
+    ];
+    const ghosts = [0, 2, 3, 8, 9, 10, 11, 13, 18, 19, 21, 22, 27, 28, 30, 31, 34, 35, 37, 40, 45, 46, 47];
+    const sel = [32, 33];
+    const t = {primary: '#0E6B78', selBg: 'rgba(14, 107, 120, 0.16)', ghost: '#CFD8DA', ink: '#16201F', muted: '#5E6F72', accent: '#B9472F'};
+    const flat = rows.flat();
+    const cells = flat.map((n, i) => {
+      if (sel.includes(i)) return { n, color: t.primary, bg: t.selBg, ring: '0 0 0 2px ' + t.primary, w: 800 };
+      if (ghosts.includes(i)) return { n, color: t.ghost, bg: 'transparent', ring: 'none', w: 500 };
+      return { n, color: i >= 45 ? t.accent : t.ink, bg: 'transparent', ring: 'none', w: 500 };
+    });
+    const left = new Set(flat.filter((n, i) => !ghosts.includes(i)));
+    const digits = [1, 2, 3, 4, 5, 6, 7, 8, 9].map(d => ({ d, color: left.has(d) ? t.muted : t.ghost, line: left.has(d) ? 'none' : 'line-through' }));
+    const p = this.props;
+    return { cells, digits, safe: p.showSafe === false ? 'none' : 'block' };
+  }
+}
+</script>
+</body>
+</html>

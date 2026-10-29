@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Figura</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="position: relative; width: {{p.w}}px; height: {{p.h}}px">
+  <sc-if value="{{p.vector}}" hint-placeholder-val="{{true}}">
+    <svg viewBox="0 0 40 40" preserveAspectRatio="xMidYMax meet" aria-hidden="true" style="position: absolute; inset: 0; width: 100%; height: 100%">
+      <path d="{{p.robe}}" fill="{{p.color}}"></path>
+      <path d="M15 27.6L20 34l5-6.4c-1.5-.4-3.2-.6-5-.6s-3.5.2-5 .6Z" fill="#FFFFFF"></path>
+      <path d="M11 31.5Q20 37.5 29 31.5" fill="none" stroke="#E3B341" stroke-width="1.4"></path>
+      <rect x="17.5" y="22" width="5" height="6" fill="#EDC29A"></rect>
+    </svg>
+    <sc-if value="{{p.isQ}}" hint-placeholder-val="{{false}}">
+      <svg viewBox="0 0 40 40" preserveAspectRatio="xMidYMax meet" aria-hidden="true" style="position: absolute; inset: 0; width: 100%; height: 100%">
+        <path d="M11 17C11 9 15 6 20 6s9 3 9 11l1 11-5-2v-9H15v9l-5 2Z" fill="#8A4B2A"></path>
+      </svg>
+    </sc-if>
+    <svg viewBox="0 0 40 40" preserveAspectRatio="xMidYMax meet" aria-hidden="true" style="position: absolute; inset: 0; width: 100%; height: 100%">
+      <ellipse cx="20" cy="17" rx="6" ry="7" fill="#EDC29A"></ellipse>
+      <circle cx="17.6" cy="16.6" r="0.85" fill="#1B1B1B"></circle>
+      <circle cx="22.4" cy="16.6" r="0.85" fill="#1B1B1B"></circle>
+      <path d="M18.4 20.6Q20 21.8 21.6 20.6" fill="none" stroke="#1B1B1B" stroke-width="0.7" stroke-linecap="round"></path>
+    </svg>
+    <sc-if value="{{p.isK}}" hint-placeholder-val="{{false}}">
+      <svg viewBox="0 0 40 40" preserveAspectRatio="xMidYMax meet" aria-hidden="true" style="position: absolute; inset: 0; width: 100%; height: 100%">
+        <path d="M14.2 18.5c.3 5.5 2.8 8 5.8 8s5.5-2.5 5.8-8c-1.3 2.5-3.3 3.1-5.8 3.1s-4.5-.6-5.8-3.1Z" fill="#DAD2C4"></path>
+        <path d="M13 12V5l3.3 3L20 3.5 23.7 8 27 5v7Z" fill="#E3B341" stroke="#1B1B1B" stroke-width="0.6" stroke-linejoin="round"></path>
+        <circle cx="20" cy="9.6" r="1.1" fill="{{p.color}}"></circle>
+      </svg>
+    </sc-if>
+    <sc-if value="{{p.isQ}}" hint-placeholder-val="{{false}}">
+      <svg viewBox="0 0 40 40" preserveAspectRatio="xMidYMax meet" aria-hidden="true" style="position: absolute; inset: 0; width: 100%; height: 100%">
+        <path d="M14 13c1-3.5 3.5-4.5 6-4.5s5 1 6 4.5c-2-1.5-4-2-6-2s-4 .5-6 2Z" fill="#8A4B2A"></path>
+        <path d="M14.5 10.5l1-4.5L18 8l2-3 2 3 2.5-2 1 4.5Z" fill="#E3B341" stroke="#1B1B1B" stroke-width="0.6" stroke-linejoin="round"></path>
+      </svg>
+    </sc-if>
+    <sc-if value="{{p.isJ}}" hint-placeholder-val="{{false}}">
+      <svg viewBox="0 0 40 40" preserveAspectRatio="xMidYMax meet" aria-hidden="true" style="position: absolute; inset: 0; width: 100%; height: 100%">
+        <path d="M14 13v5h1.5v-5ZM24.5 13v5H26v-5Z" fill="#6B4A2E"></path>
+        <path d="M12.5 12.5C12.5 7 16 5 20.5 5S28 7.5 28 11Z" fill="#3B5BA5"></path>
+        <path d="M26 7c3-4 6-4 8-5" fill="none" stroke="#E3B341" stroke-width="1.4" stroke-linecap="round"></path>
+      </svg>
+    </sc-if>
+  </sc-if>
+  <sc-if value="{{p.pixel}}" hint-placeholder-val="{{false}}">
+    <svg viewBox="0 0 11 14" preserveAspectRatio="xMidYMax meet" aria-hidden="true" style="position: absolute; inset: 0; width: 100%; height: 100%; shape-rendering: crispEdges">
+      <path d="{{p.px.r}}" fill="{{p.color}}"></path>
+      <path d="{{p.px.g}}" fill="#DFB43A"></path>
+      <path d="{{p.px.s}}" fill="#E9B98C"></path>
+      <path d="{{p.px.h}}" fill="{{p.hair}}"></path>
+      <path d="{{p.px.b}}" fill="#3F5FA8"></path>
+      <path d="{{p.px.k}}" fill="#222034"></path>
+    </svg>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"rank":{"editor":"enum","options":["K","Q","J"],"default":"K"},"look":{"editor":"enum","options":["vector","classic","pixel"],"default":"vector"},"color":{"editor":"color","default":"#D7322A"},"w":{"editor":"int","min":16,"max":400,"default":160},"h":{"editor":"int","min":16,"max":400,"default":160},"$preview":{"width":160,"height":160}}'>
+const GRIDS = {
+  K: [
+    '.g..g.g..g.',
+    '.ggggggggg.',
+    '.gg.grg.gg.',
+    '..sssssss..',
+    '..sksssks..',
+    '..sssssss..',
+    '..shhhhhs..',
+    '..hhhhhhh..',
+    '...hhhhh...',
+    '....hhh....',
+    '.rrrrgrrrr.',
+    'rrrrrgrrrrr',
+    'rrrrrgrrrrr',
+    'rrrrrgrrrrr'
+  ],
+  Q: [
+    '...g.g.g...',
+    '...ggggg...',
+    '..hhhhhhh..',
+    '.hsssssssh.',
+    '.hsksssksh.',
+    '.hsssssssh.',
+    '.hsssrsssh.',
+    '.hh.sss.hh.',
+    '.hh..s..hh.',
+    '.hh.....hh.',
+    '..rrrgrrr..',
+    '.rrrrgrrrr.',
+    'rrrrrgrrrrr',
+    'rrrrrgrrrrr'
+  ],
+  J: [
+    '.........g.',
+    '...bbbbbg..',
+    '..bbbbbbb..',
+    '.bbbbbbbbb.',
+    '..hsssssh..',
+    '..sksssks..',
+    '..sssssss..',
+    '..sssrsss..',
+    '...sssss...',
+    '....sss....',
+    '..rrrgrrr..',
+    '.rrrrgrrrr.',
+    'rrrrrgrrrrr',
+    'rrrrrgrrrrr'
+  ]
+};
+const HAIR = { K: '#D9D0C0', Q: '#8A4B2A', J: '#6B4A2E' };
+
+class Component extends DCLogic {
+  paths(grid) {
+    const out = { r: '', g: '', s: '', h: '', b: '', k: '' };
+    grid.forEach((row, y) => {
+      for (let x = 0; x < row.length; x++) {
+        const ch = row[x];
+        if (out[ch] !== undefined) out[ch] += 'M' + x + ' ' + y + 'h1v1h-1z';
+      }
+    });
+    Object.keys(out).forEach((k) => { if (!out[k]) out[k] = 'M0 0'; });
+    return out;
+  }
+  renderVals() {
+    const rank = GRIDS[this.props.rank] ? this.props.rank : 'K';
+    const look = this.props.look ?? 'vector';
+    return {
+      p: {
+        w: Number(this.props.w ?? 160), h: Number(this.props.h ?? 160),
+        color: this.props.color ?? '#D7322A',
+        vector: look !== 'pixel', pixel: look === 'pixel',
+        isK: rank === 'K', isQ: rank === 'Q', isJ: rank === 'J',
+        hair: HAIR[rank], px: this.paths(GRIDS[rank]),
+        // Classic halves meet at the card's center line: square shoulders read as a card, a dome reads as a blob.
+        robe: look === 'classic' ? 'M5 40V33.5C5 29.5 11 27 20 27s15 2.5 15 6.5V40Z' : 'M4 40C5 31 11 27 20 27S35 31 36 40Z'
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>

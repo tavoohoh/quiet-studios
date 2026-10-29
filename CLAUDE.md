@@ -42,12 +42,9 @@ Cada app vive en su propio directorio en la raíz, con su propio `CLAUDE.md` que
 ## Diseño
 
 - **Sistema de diseño de Quiet Studios:** https://claude.ai/artifact/59yz1mHLFU3u3jvSfugf7B (tokens de color por tema, tipografía, componentes de QuietUI, pantallas que se repiten, reglas de la App Store, logos). Lo genera el código de `QuietKit`; si no coinciden, manda el código y se actualiza el artefacto.
-- **Cada app tiene dos artefactos**, con sus links en la primera línea de su `CLAUDE.md` (decisión 2026-10-29):
-  - **Sistema de diseño** (tipo "Design System", `Quiet <App> · Sistema de diseño`), con la misma estructura que el de Quiet Studios: lo propio del juego (tokens, componentes como la celda o la carta, guía) y sus assets (íconos, insignias, imágenes de la tienda). Hereda todo lo demás del de Quiet Studios.
-  - **Canvas** (tipo "Design", `Quiet <App> · Diseño`): mocks, animaciones, propuestas y arte de la tienda, con las páginas estándar de `.claude/skills/quiet-design-canvas`.
-  - Una app nueva no empieza a programar pantallas sin los dos.
-- Links: Quiet Numbers [sistema de diseño](https://claude.ai/artifact/Aax49mxVrB93wQghnC2Scx) y [canvas](https://claude.ai/artifact/9GbZHUxhTZPMznhag8dtj4) · Quiet Solitaire [sistema de diseño](https://claude.ai/artifact/RejZUocVbapjFepmuzdixP) y [canvas](https://claude.ai/artifact/S5U6E4QDFsqpmrj4kvHrGL).
-- **Respaldos:** con cada versión aprobada en la App Store se exportan los artefactos de esa app (canvas y sistema de diseño) como HTML a `quiet-<app>/design/backups/<versión>/` (procedimiento en `quiet-release`). Los artefactos son privados: para compartirlos, menú Share.
+- **Cada app tiene un solo artefacto de diseño:** un canvas (tipo "Design", título `Quiet <App>`) con 5 páginas: Overview, App Store, Screens, Styles y Components. Solo lleva lo propio del juego; nada que ya esté en el sistema de Quiet Studios (decisión 2026-10-29). Plantilla, QA y procedimiento en `.claude/skills/quiet-design-canvas`. Su link va en la primera línea del `CLAUDE.md` de la app. Una app nueva no empieza a programar pantallas sin él.
+- Links: [Quiet Numbers](https://claude.ai/artifact/3Z4eY31mrvGeqPvR8hUaZL) · [Quiet Solitaire](https://claude.ai/artifact/EwWvXPwMtEVpx47drg2AJV). Los artefactos anteriores (un sistema de diseño y un canvas por app) se borraron el 2026-10-29; sus archivos están en `quiet-<app>/design/backups/pre-plantilla-2026-10-29/`.
+- **Respaldos:** con cada versión aprobada en la App Store se exporta el canvas de esa app como HTML a `quiet-<app>/design/backups/<versión>/` (procedimiento en `quiet-release`). Los artefactos son privados: para compartirlos, menú Share.
 
 ## Estudio
 
@@ -56,7 +53,7 @@ Cada app vive en su propio directorio en la raíz, con su propio `CLAUDE.md` que
 
 ## Skills para agentes
 
-En `.claude/skills/`: `quiet-new-app` (crear una app), `quiet-project-structure` (estructura y convenciones de código), `quiet-design-canvas` (canvas de un juego: páginas y contenido), `quiet-ui` (componentes, pantallas y patrones) y `quiet-release` (TestFlight, ficha, Game Center, web). Al cambiar una forma de trabajar, actualizar la skill correspondiente en el mismo cambio.
+En `.claude/skills/`: `quiet-new-app` (crear una app), `quiet-project-structure` (estructura y convenciones de código), `quiet-design-canvas` (canvas de un juego: páginas y contenido), `quiet-ui` (componentes, pantallas y patrones) `quiet-release` (TestFlight, ficha, Game Center, web) y `quiet-backlog` (backlog de cada juego en `quiet-<app>/BACKLOG.md`). Al cambiar una forma de trabajar, actualizar la skill correspondiente en el mismo cambio.
 
 ## Cómo trabajamos
 

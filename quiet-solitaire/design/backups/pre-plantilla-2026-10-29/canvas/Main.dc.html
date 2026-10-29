@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Mazo Quiet</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800&amp;display=swap">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="width: 1440px; height: 1320px; box-sizing: border-box; padding: 64px; background: #FFFFFF; color: #16201F; font-family: ui-rounded, 'SF Pro Rounded', Nunito, system-ui, sans-serif; display: flex; flex-direction: column; gap: 28px">
+  <div style="display: flex; flex-direction: column; gap: 10px">
+    <h1 style="margin: 0; font-size: 44px; font-weight: 800; letter-spacing: -0.02em">Mazo Quiet</h1>
+    <p style="margin: 0; max-width: 860px; font-size: 18px; line-height: 1.5; color: #5E6F72">Índice arriba a la izquierda para que se lea en la cascada; un solo palo grande abajo. Las figuras llevan un emblema geométrico en un panel, sin ilustraciones. Los palos rojos usan el coral del tema.</p>
+  </div>
+
+  <div style="background: #F3F7F8; border-radius: 28px; padding: 32px 40px; display: flex; flex-direction: column; gap: 20px">
+    <div style="font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #5E6F72">Petróleo y coral · claro</div>
+    <div style="display: flex; gap: 24px; align-items: flex-start">
+      <sc-for list="{{lightRow}}" as="it" hint-placeholder-count="9">
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 12px; width: 112px">
+          <dc-import name="Card" kind="{{it.kind}}" rank="{{it.rank}}" suit="{{it.suit}}" glyph="{{it.glyph}}" theme="teal-light" w="112" hint-size="112px,157px"></dc-import>
+          <div style="font-size: 13px; font-weight: 600; color: #5E6F72; text-align: center">{{it.label}}</div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <div style="background: #0F1A1D; border-radius: 28px; padding: 32px 40px; display: flex; flex-direction: column; gap: 20px">
+    <div style="font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #8A9DA0">Petróleo y coral · oscuro</div>
+    <div style="display: flex; gap: 24px; align-items: flex-start">
+      <sc-for list="{{lightRow}}" as="it" hint-placeholder-count="9">
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 12px; width: 112px">
+          <dc-import name="Card" kind="{{it.kind}}" rank="{{it.rank}}" suit="{{it.suit}}" glyph="{{it.glyph}}" theme="teal-dark" w="112" hint-size="112px,157px"></dc-import>
+          <div style="font-size: 13px; font-weight: 600; color: #8A9DA0; text-align: center">{{it.label}}</div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <div style="display: flex; gap: 24px; align-items: stretch; flex-grow: 1">
+    <div style="width: 380px; box-sizing: border-box; background: #F3F7F8; border-radius: 28px; padding: 32px; display: flex; flex-direction: column; gap: 20px">
+      <div style="display: flex; flex-direction: column; gap: 6px">
+        <div style="font-size: 20px; font-weight: 800">Cascada a tamaño real</div>
+        <div style="font-size: 14px; line-height: 1.45; color: #5E6F72">48 × 67 pt en iPhone (7 columnas). Boca abajo asoman 9 pt; boca arriba 22 pt, lo justo para el índice.</div>
+      </div>
+      <div style="display: flex; gap: 40px; align-items: flex-start">
+        <div style="display: flex; flex-direction: column">
+          <sc-for list="{{cascadeSmall}}" as="cd" hint-placeholder-count="7">
+            <div style="margin-top: {{cd.mt}}px">
+              <dc-import name="Card" kind="{{cd.kind}}" rank="{{cd.rank}}" suit="{{cd.suit}}" theme="teal-light" w="48" hint-size="48px,67px"></dc-import>
+            </div>
+          </sc-for>
+        </div>
+        <div style="display: flex; flex-direction: column">
+          <sc-for list="{{cascadeLarge}}" as="cd" hint-placeholder-count="7">
+            <div style="margin-top: {{cd.mt}}px">
+              <dc-import name="Card" kind="{{cd.kind}}" rank="{{cd.rank}}" suit="{{cd.suit}}" theme="teal-light" w="96" hint-size="96px,134px"></dc-import>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+
+    <div style="width: 440px; box-sizing: border-box; background: #F3F7F8; border-radius: 28px; padding: 32px; display: flex; flex-direction: column; gap: 24px">
+      <div style="display: flex; flex-direction: column; gap: 6px">
+        <div style="font-size: 20px; font-weight: 800">Estados</div>
+        <div style="font-size: 14px; line-height: 1.45; color: #5E6F72">Seleccionada: anillo de 2 pt del primario y sube 3 pt. Pista: anillo punteado que parpadea 2 veces. Destino válido: el hueco se tiñe mientras arrastras.</div>
+      </div>
+      <div style="display: flex; gap: 28px; align-items: flex-start; padding-top: 8px">
+        <sc-for list="{{states}}" as="it" hint-placeholder-count="4">
+          <div style="display: flex; flex-direction: column; align-items: center; gap: 14px; width: 76px">
+            <dc-import name="Card" kind="{{it.kind}}" rank="{{it.rank}}" suit="{{it.suit}}" glyph="{{it.glyph}}" st="{{it.st}}" theme="teal-light" w="76" hint-size="76px,106px"></dc-import>
+            <div style="font-size: 13px; font-weight: 600; color: #5E6F72; text-align: center">{{it.label}}</div>
+          </div>
+        </sc-for>
+      </div>
+      <div style="font-size: 14px; line-height: 1.45; color: #5E6F72">Inválida: anillo coral y sacudida de ±4 pt ×3, como en Quiet Numbers. La carta vuelve a su sitio con un spring.</div>
+    </div>
+
+    <div style="flex-grow: 1; box-sizing: border-box; background: #F3F7F8; border-radius: 28px; padding: 32px; display: flex; flex-direction: column; gap: 20px">
+      <div style="display: flex; flex-direction: column; gap: 6px">
+        <div style="font-size: 20px; font-weight: 800">Accesibilidad, siempre disponibles</div>
+        <div style="font-size: 14px; line-height: 1.45; color: #5E6F72">Cuatro colores: cada palo distinto en tono y en luminosidad. Índice grande: rango y palo más grandes, palo central más chico.</div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 10px">
+        <div style="font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #5E6F72">Cuatro colores</div>
+        <div style="display: flex; gap: 12px">
+          <sc-for list="{{variants}}" as="it" hint-placeholder-count="4">
+            <dc-import name="Card" kind="face" rank="{{it.rank}}" suit="{{it.suit}}" deck="four" theme="teal-light" w="64" hint-size="64px,90px"></dc-import>
+          </sc-for>
+        </div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 10px">
+        <div style="font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #5E6F72">Índice grande</div>
+        <div style="display: flex; gap: 12px">
+          <sc-for list="{{variants}}" as="it" hint-placeholder-count="4">
+            <dc-import name="Card" kind="face" rank="{{it.rank}}" suit="{{it.suit}}" deck="big" theme="teal-light" w="64" hint-size="64px,90px"></dc-import>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1320}}'>
+class Component extends DCLogic {
+  cascade(w, down, up) {
+    const h = Math.round(w * 1.4);
+    const downStep = Math.round(w * 0.19);
+    const upStep = Math.round(w * 0.46);
+    const cards = [];
+    for (let i = 0; i < down; i++) cards.push({ kind: 'back', rank: 'A', suit: 's' });
+    up.forEach((c) => cards.push({ kind: 'face', rank: c[0], suit: c[1] }));
+    return cards.map((c, i) => {
+      if (i === 0) return { ...c, mt: 0 };
+      const prevStep = cards[i - 1].kind === 'back' ? downStep : upStep;
+      return { ...c, mt: prevStep - h };
+    });
+  }
+  renderVals() {
+    const up = [['K', 's'], ['Q', 'h'], ['J', 'c'], ['10', 'd']];
+    return {
+      lightRow: [
+        { kind: 'face', rank: 'A', suit: 's', glyph: 'none', label: 'As' },
+        { kind: 'face', rank: '7', suit: 'h', glyph: 'none', label: 'Número' },
+        { kind: 'face', rank: '10', suit: 'd', glyph: 'none', label: '10' },
+        { kind: 'face', rank: 'J', suit: 'c', glyph: 'none', label: 'J' },
+        { kind: 'face', rank: 'Q', suit: 'h', glyph: 'none', label: 'Q' },
+        { kind: 'face', rank: 'K', suit: 's', glyph: 'none', label: 'K' },
+        { kind: 'back', rank: 'A', suit: 's', glyph: 'none', label: 'Reverso' },
+        { kind: 'slot', rank: 'A', suit: 'd', glyph: 'd', label: 'Fundación vacía' },
+        { kind: 'slot', rank: 'A', suit: 's', glyph: 'stock', label: 'Mazo vacío' }
+      ],
+      cascadeSmall: this.cascade(48, 3, up),
+      cascadeLarge: this.cascade(96, 3, up),
+      states: [
+        { kind: 'face', rank: 'Q', suit: 'h', glyph: 'none', st: 'none', label: 'Normal' },
+        { kind: 'face', rank: 'Q', suit: 'h', glyph: 'none', st: 'selected', label: 'Seleccionada' },
+        { kind: 'face', rank: 'J', suit: 's', glyph: 'none', st: 'hint', label: 'Pista' },
+        { kind: 'slot', rank: 'A', suit: 'h', glyph: 'h', st: 'target', label: 'Destino válido' }
+      ],
+      variants: [
+        { rank: 'A', suit: 's' }, { rank: '7', suit: 'h' }, { rank: '10', suit: 'd' }, { rank: 'J', suit: 'c' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

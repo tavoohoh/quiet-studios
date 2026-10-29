@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Clasificaciones</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;600;700;800&amp;display=swap">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; position: relative; overflow: hidden; box-sizing: border-box; padding-top: 54px; background: #F3F7F8; color: #16201F; font-family: -apple-system, 'SF Pro Text', system-ui, sans-serif">
+  <div style="display: flex; justify-content: space-between; align-items: center; padding: 4px 20px 0">
+    <button type="button" aria-label="Volver" style="width: 48px; height: 48px; border: none; border-radius: 24px; background: #FFFFFF; display: flex; align-items: center; justify-content: center; padding: 0"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="#16201F" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+    <h1 style="margin: 0; font-size: 18px; font-weight: 700">Clasificaciones</h1>
+    <span style="width: 48px; height: 48px"></span>
+  </div>
+  <div style="display: flex; flex-direction: column; gap: 10px; padding: 14px 20px 0">
+    <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); padding: 3px; border-radius: 999px; background: #FFFFFF; font-size: 15px; font-weight: 600; text-align: center"><span style="padding: 9px 0; border-radius: 999px; background: #16201F; color: #FFFFFF">Hoy</span><span style="padding: 9px 0; border-radius: 999px; background: transparent; color: #5E6F72">Mejor puntaje</span><span style="padding: 9px 0; border-radius: 999px; background: transparent; color: #5E6F72">Racha</span></div>
+    <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); padding: 3px; border-radius: 999px; background: #FFFFFF; font-size: 15px; font-weight: 600; text-align: center"><span style="padding: 9px 0; border-radius: 999px; background: transparent; color: #5E6F72">Global</span><span style="padding: 9px 0; border-radius: 999px; background: #16201F; color: #FFFFFF">Amigos</span></div>
+    <div style="margin-top: 6px; padding: 6px; border-radius: 24px; background: #FFFFFF; display: flex; flex-direction: column">
+      <sc-for list="{{players}}" as="p" hint-placeholder-count="10">
+        <div style="display: flex; align-items: center; gap: 12px; height: 54px; padding: 0 12px; border-radius: 16px; background: {{p.rowBg}}">
+          <span style="width: 28px; height: 28px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 800; font-variant-numeric: tabular-nums; background: {{p.rankBg}}; color: {{p.rankColor}}">{{p.rank}}</span>
+          <span style="width: 34px; height: 34px; border-radius: 17px; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; background: {{p.avBg}}; color: #FFFFFF">{{p.initial}}</span>
+          <span style="flex-grow: 1; font-size: 17px; font-weight: {{p.w}}; color: {{p.nameColor}}">{{p.name}}</span>
+          <span style="font-family: ui-rounded, 'SF Pro Rounded', Nunito, system-ui, sans-serif; font-size: 18px; font-weight: {{p.w}}; font-variant-numeric: tabular-nums; color: {{p.nameColor}}">{{p.score}}</span>
+        </div>
+      </sc-for>
+    </div>
+    <span style="text-align: center; font-size: 12px; color: #5E6F72">Puntajes de Game Center · actualizado hace un momento</span>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const list = [['juli', '1.412'], ['tatita12', '1.398'], ['vale', '1.377'], ['guss', '1.361'], ['juanca', '1.340'], ['cori16', '1.336'], ['eliasb', '1.333'], ['mariadelsea', '1.318'], ['aleja', '1.296'], ['nova47', '1.281']];
+    const medals = [{ bg: '#B9472F', color: '#FFFFFF' }, { bg: '#0E6B78', color: '#FFFFFF' }, { bg: '#5E6F72', color: '#FFFFFF' }];
+    const avatars = ['#B9472F', '#0E6B78', '#4A5B5E', '#2E8A97', '#7A4B8C', '#B4503A', '#3E7A5A', '#A8542A', '#4A42D6', '#5E6F72'];
+    const players = list.map(([name, score], i) => {
+      const me = name === 'guss';
+      const m = medals[i];
+      return { rank: i + 1, name, score, initial: name[0].toUpperCase(), avBg: avatars[i], rankBg: m ? m.bg : 'transparent', rankColor: m ? m.color : '#5E6F72', rowBg: me ? 'rgba(14, 107, 120, 0.12)' : 'transparent', nameColor: me ? '#0E6B78' : '#16201F', w: me ? 800 : 500 };
+    });
+    return { players };
+  }
+}
+</script>
+</body>
+</html>

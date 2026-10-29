@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Juego</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800&amp;display=swap">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 844px; box-sizing: border-box; padding-top: 58px; overflow: hidden; background: {{t.bg}}; color: {{t.ink}}; font-family: ui-rounded, 'SF Pro Rounded', Nunito, system-ui, sans-serif">
+  <div style="display: flex; align-items: flex-start; justify-content: space-between; padding: 0 16px">
+    <button aria-label="Volver" style="width: 44px; height: 44px; border-radius: 22px; border: none; padding: 0; background: {{t.surface}}; display: flex; align-items: center; justify-content: center">
+      <svg viewBox="0 0 24 24" aria-hidden="true" style="width: 20px; height: 20px; fill: none; stroke: {{t.ink}}; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round"><path d="M15 5l-7 7 7 7"></path></svg>
+    </button>
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 2px">
+      <div style="font-size: 40px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.05; font-variant-numeric: tabular-nums">{{s.score}}</div>
+      <div style="font-size: 14px; font-weight: 600; color: {{t.muted}}">{{s.sub}}</div>
+    </div>
+    <button aria-label="Menú" style="width: 44px; height: 44px; border-radius: 22px; border: none; padding: 0; background: {{t.surface}}; display: flex; align-items: center; justify-content: center">
+      <svg viewBox="0 0 24 24" aria-hidden="true" style="width: 20px; height: 20px; fill: {{t.ink}}"><path d="M5 10.3a1.7 1.7 0 1 1 0 3.4 1.7 1.7 0 0 1 0-3.4zM12 10.3a1.7 1.7 0 1 1 0 3.4 1.7 1.7 0 0 1 0-3.4zM19 10.3a1.7 1.7 0 1 1 0 3.4 1.7 1.7 0 0 1 0-3.4z"></path></svg>
+    </button>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px; padding: 0 9px; margin-top: 22px">
+    <sc-for list="{{s.foundations}}" as="cd" hint-placeholder-count="4">
+      <dc-import name="Card" kind="{{cd.kind}}" rank="{{cd.rank}}" suit="{{cd.suit}}" glyph="{{cd.glyph}}" st="{{cd.st}}" theme="{{theme}}" deck="{{deck}}" back="{{back}}" w="48" hint-size="48px,67px"></dc-import>
+    </sc-for>
+    <div></div>
+    <dc-import name="Card" kind="{{s.waste.kind}}" rank="{{s.waste.rank}}" suit="{{s.waste.suit}}" glyph="{{s.waste.glyph}}" theme="{{theme}}" deck="{{deck}}" back="{{back}}" w="48" hint-size="48px,67px"></dc-import>
+    <div style="position: relative">
+      <dc-import name="Card" kind="{{s.stock.kind}}" glyph="{{s.stock.glyph}}" theme="{{theme}}" deck="{{deck}}" back="{{back}}" w="48" hint-size="48px,67px"></dc-import>
+      <sc-if value="{{s.showCount}}" hint-placeholder-val="{{true}}">
+        <div style="position: absolute; right: -5px; top: -7px; min-width: 20px; height: 20px; box-sizing: border-box; padding: 0 6px; border-radius: 10px; background: {{t.primary}}; color: {{t.onPrimary}}; font-size: 11px; font-weight: 800; display: flex; align-items: center; justify-content: center; font-variant-numeric: tabular-nums">{{s.stockCount}}</div>
+      </sc-if>
+    </div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px; padding: 0 9px; margin-top: 18px; align-items: start">
+    <sc-for list="{{s.cols}}" as="col" hint-placeholder-count="7">
+      <div style="display: flex; flex-direction: column">
+        <sc-for list="{{col.cards}}" as="cd" hint-placeholder-count="3">
+          <div style="margin-top: {{cd.mt}}px">
+            <dc-import name="Card" kind="{{cd.kind}}" rank="{{cd.rank}}" suit="{{cd.suit}}" glyph="{{cd.glyph}}" st="{{cd.st}}" theme="{{cd.theme}}" deck="{{cd.deck}}" back="{{cd.back}}" w="48" hint-size="48px,67px"></dc-import>
+          </div>
+        </sc-for>
+      </div>
+    </sc-for>
+  </div>
+
+  <div style="position: absolute; left: 0; right: 0; bottom: 34px; padding: 0 28px; display: flex; align-items: flex-start; justify-content: space-between">
+    <button style="display: flex; flex-direction: column; align-items: center; gap: 6px; border: none; padding: 0; background: none; font-family: inherit; color: {{t.muted}}">
+      <span style="width: 56px; height: 56px; border-radius: 28px; background: {{t.surface}}; display: flex; align-items: center; justify-content: center">
+        <svg viewBox="0 0 24 24" aria-hidden="true" style="width: 22px; height: 22px; fill: none; stroke: {{t.ink}}; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round"><path d="M9 14L4 9l5-5M4 9h10.5a5.5 5.5 0 0 1 0 11H11"></path></svg>
+      </span>
+      <span style="font-size: 12px; font-weight: 700">Deshacer</span>
+    </button>
+    <sc-if value="{{s.autoComplete}}" hint-placeholder-val="{{false}}">
+      <button style="height: 56px; padding: 0 28px; border-radius: 28px; border: none; background: {{t.primary}}; color: {{t.onPrimary}}; font-family: inherit; font-size: 17px; font-weight: 800">Autocompletar</button>
+    </sc-if>
+    <button style="display: flex; flex-direction: column; align-items: center; gap: 6px; border: none; padding: 0; background: none; font-family: inherit; color: {{t.muted}}">
+      <span style="width: 56px; height: 56px; border-radius: 28px; background: {{t.surface}}; display: flex; align-items: center; justify-content: center">
+        <svg viewBox="0 0 24 24" aria-hidden="true" style="width: 22px; height: 22px; fill: none; stroke: {{t.ink}}; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"></path></svg>
+      </span>
+      <span style="font-size: 12px; font-weight: 700">Pista</span>
+    </button>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["teal-light","teal-dark","sage-sand","indigo-peach","sage-coral","contrast"],"default":"teal-light"},"scene":{"editor":"enum","options":["mid","end"],"default":"mid"},"deck":{"editor":"enum","options":["quiet","line","serif","four","big"],"default":"quiet"},"back":{"editor":"enum","options":["theme","coral","night","linen","gold"],"default":"theme"},"$preview":{"width":390,"height":844}}'>
+const UI = {
+  'teal-light': { bg: '#F3F7F8', surface: '#FFFFFF', ink: '#16201F', muted: '#5E6F72', primary: '#0E6B78', onPrimary: '#FFFFFF' },
+  'teal-dark': { bg: '#0F1A1D', surface: '#172629', ink: '#E8F1F2', muted: '#8A9DA0', primary: '#5BC2CF', onPrimary: '#062327' },
+  'sage-sand': { bg: '#F6F4EE', surface: '#FFFFFF', ink: '#1F2622', muted: '#5F665F', primary: '#387454', onPrimary: '#FFFFFF' },
+  'indigo-peach': { bg: '#13121F', surface: '#1C1B2C', ink: '#ECEBF7', muted: '#9593AE', primary: '#9A98FF', onPrimary: '#15133A' },
+  'sage-coral': { bg: '#F7F3EC', surface: '#FFFFFF', ink: '#1E2420', muted: '#646A64', primary: '#4D7157', onPrimary: '#FFFFFF' },
+  'contrast': { bg: '#FFFFFF', surface: '#E6EEF9', ink: '#000000', muted: '#3A3A3C', primary: '#003F91', onPrimary: '#FFFFFF' }
+};
+const H = 67, DOWN = 9, UP = 22;
+
+class Component extends DCLogic {
+  face(rank, suit, st) { return { kind: 'face', rank: rank, suit: suit, glyph: 'none', st: st || 'none' }; }
+  slot(glyph) { return { kind: 'slot', rank: 'A', suit: 's', glyph: glyph, st: 'none' }; }
+  column(down, up, extra) {
+    const cards = [];
+    for (let i = 0; i < down; i++) cards.push({ kind: 'back', rank: 'A', suit: 's', glyph: 'none', st: 'none' });
+    up.forEach((c) => cards.push(this.face(c[0], c[1], c[2])));
+    if (cards.length === 0) cards.push(this.slot('none'));
+    return {
+      cards: cards.map((c, i) => ({
+        ...c, ...extra,
+        mt: i === 0 ? 0 : (cards[i - 1].kind === 'back' ? DOWN : UP) - H
+      }))
+    };
+  }
+  renderVals() {
+    const theme = this.props.theme ?? 'teal-light';
+    const deck = this.props.deck ?? 'quiet';
+    const back = this.props.back ?? 'theme';
+    const extra = { theme: theme, deck: deck, back: back };
+    const end = (this.props.scene ?? 'mid') === 'end';
+    const s = end ? {
+      score: '1.180',
+      sub: '112 movimientos · Mejor 1.240',
+      foundations: [this.face('9', 's'), this.face('8', 'h'), this.face('9', 'd'), this.face('9', 'c')],
+      waste: this.slot('none'),
+      stock: this.slot('stock'),
+      showCount: false, stockCount: '',
+      autoComplete: true,
+      cols: [
+        this.column(0, [['K', 's'], ['Q', 'h'], ['J', 'c'], ['10', 'd']], extra),
+        this.column(0, [['K', 'h'], ['Q', 'c'], ['J', 'd'], ['10', 's'], ['9', 'h']], extra),
+        this.column(0, [], extra),
+        this.column(0, [['K', 'd'], ['Q', 's'], ['J', 'h'], ['10', 'c']], extra),
+        this.column(0, [], extra),
+        this.column(0, [['K', 'c'], ['Q', 'd'], ['J', 's'], ['10', 'h']], extra),
+        this.column(0, [], extra)
+      ]
+    } : {
+      score: '420',
+      sub: '34 movimientos · Mejor 1.240',
+      foundations: [this.face('3', 's'), this.face('A', 'h'), this.slot('d'), this.face('2', 'c')],
+      waste: this.face('9', 'd'),
+      stock: { kind: 'back', glyph: 'none' },
+      showCount: true, stockCount: '5',
+      autoComplete: false,
+      cols: [
+        this.column(0, [['K', 's'], ['Q', 'h'], ['J', 'c'], ['10', 'd']], extra),
+        this.column(1, [['8', 'c'], ['7', 'h']], extra),
+        this.column(2, [['Q', 'd'], ['J', 's']], extra),
+        this.column(3, [['6', 's'], ['5', 'd'], ['4', 'c']], extra),
+        this.column(4, [['10', 'h', 'target']], extra),
+        this.column(5, [['9', 's', 'hint'], ['8', 'h'], ['7', 'c'], ['6', 'h']], extra),
+        this.column(6, [['5', 's']], extra)
+      ]
+    };
+    return { t: UI[theme] || UI['teal-light'], s: s, theme: theme, deck: deck, back: back };
+  }
+}
+</script>
+</body>
+</html>

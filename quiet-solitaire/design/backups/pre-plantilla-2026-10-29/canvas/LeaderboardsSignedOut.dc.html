@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Clasificaciones sin sesión</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;600;700;800&amp;display=swap">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; position: relative; overflow: hidden; box-sizing: border-box; padding-top: 54px; background: #F3F7F8; color: #16201F; font-family: -apple-system, 'SF Pro Text', system-ui, sans-serif">
+  <div style="display: flex; justify-content: space-between; align-items: center; padding: 4px 20px 0">
+    <button type="button" aria-label="Volver" style="width: 48px; height: 48px; border: none; border-radius: 24px; background: #FFFFFF; display: flex; align-items: center; justify-content: center; padding: 0"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="#16201F" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+    <h1 style="margin: 0; font-size: 18px; font-weight: 700">Clasificaciones</h1>
+    <span style="width: 48px; height: 48px"></span>
+  </div>
+  <div style="display: flex; flex-direction: column; gap: 10px; padding: 14px 20px 0">
+    <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); padding: 3px; border-radius: 999px; background: #FFFFFF; font-size: 15px; font-weight: 600; text-align: center"><span style="padding: 9px 0; border-radius: 999px; background: #16201F; color: #FFFFFF">Hoy</span><span style="padding: 9px 0; border-radius: 999px; background: transparent; color: #5E6F72">Mejor puntaje</span><span style="padding: 9px 0; border-radius: 999px; background: transparent; color: #5E6F72">Racha</span></div>
+    <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); padding: 3px; border-radius: 999px; background: #FFFFFF; font-size: 15px; font-weight: 600; text-align: center"><span style="padding: 9px 0; border-radius: 999px; background: #16201F; color: #FFFFFF">Global</span><span style="padding: 9px 0; border-radius: 999px; background: transparent; color: #5E6F72">Amigos</span></div>
+    <div style="position: relative; margin-top: 6px; padding: 6px; border-radius: 24px; background: #FFFFFF; display: flex; flex-direction: column; height: 520px; box-sizing: border-box; overflow: hidden">
+      <div style="opacity: 0.7">
+        <sc-for list="{{rows}}" as="r" hint-placeholder-count="10">
+          <div style="display: flex; align-items: center; gap: 12px; height: 50px; padding: 0 12px"><span style="width: 28px; height: 28px; border-radius: 14px; background: #E3EEF0"></span><span style="width: 34px; height: 34px; border-radius: 17px; background: #E3EEF0"></span><span style="flex-grow: 1"><span style="display: block; width: {{r}}px; height: 12px; border-radius: 6px; background: #E3EEF0"></span></span><span style="width: 36px; height: 12px; border-radius: 6px; background: #E3EEF0"></span></div>
+        </sc-for>
+      </div>
+      <div style="position: absolute; left: 16px; right: 16px; top: 130px; padding: 26px 22px; border-radius: 24px; background: #FFFFFF; box-shadow: 0 0 0 1px #E3EAEC, 0 20px 40px rgba(15, 26, 29, 0.12); display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center">
+        <span style="width: 56px; height: 56px; border-radius: 28px; background: rgba(14, 107, 120, 0.12); display: flex; align-items: center; justify-content: center"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 4h8v5a4 4 0 0 1-8 0V4zM8 6H5a3 3 0 0 0 3 4M16 6h3a3 3 0 0 1-3 4M12 13v4M8.5 20h7M10 17h4v3h-4z" fill="none" stroke="#0E6B78" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+        <h2 style="margin: 0; font-size: 20px; font-weight: 700">Juega con amigos</h2>
+        <p style="margin: 0; font-size: 15px; line-height: 1.4; color: #5E6F72">Inicia sesión en Game Center para ver las clasificaciones. Tu progreso se guarda en este dispositivo de todos modos.</p>
+        <button type="button" style="margin-top: 6px; height: 48px; padding: 0 24px; border: none; border-radius: 999px; background: #0E6B78; color: #FFFFFF; font-family: inherit; font-size: 16px; font-weight: 700">Abrir Ajustes</button>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return { rows: [110, 80, 130, 90, 120, 70, 100, 85, 115, 95] };
+  }
+}
+</script>
+</body>
+</html>

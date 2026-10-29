@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Reto diario</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800&amp;display=swap">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; padding: 58px 16px 0; background: #F3F7F8; color: #16201F; font-family: ui-rounded, 'SF Pro Rounded', Nunito, system-ui, sans-serif; display: flex; flex-direction: column; gap: 12px">
+  <div style="position: relative; height: 44px; display: flex; align-items: center; justify-content: center">
+    <button aria-label="Volver" style="position: absolute; left: 0; top: 0; width: 44px; height: 44px; border-radius: 22px; border: none; padding: 0; background: #FFFFFF; display: flex; align-items: center; justify-content: center">
+      <svg viewBox="0 0 24 24" aria-hidden="true" style="width: 20px; height: 20px; fill: none; stroke: #16201F; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round"><path d="M15 5l-7 7 7 7"></path></svg>
+    </button>
+    <span style="font-size: 17px; font-weight: 800">Reto diario</span>
+  </div>
+
+  <div style="background: #0E6B78; color: #FFFFFF; border-radius: 24px; padding: 18px; display: flex; flex-direction: column; gap: 14px">
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px">
+      <div style="display: flex; flex-direction: column; gap: 2px">
+        <span style="font-size: 14px; font-weight: 600; color: rgba(255,255,255,0.82)">martes, 27 de octubre</span>
+        <span style="font-size: 21px; font-weight: 800">Aún no lo juegas</span>
+      </div>
+      <button style="height: 44px; padding: 0 22px; border: none; border-radius: 22px; background: #B9472F; color: #FFFFFF; font-family: inherit; font-size: 17px; font-weight: 800">Jugar</button>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px">
+      <div style="background: rgba(255,255,255,0.14); border-radius: 14px; padding: 10px 12px; display: flex; flex-direction: column; gap: 2px">
+        <span style="display: flex; align-items: center; gap: 3px; font-size: 22px; font-weight: 800"><svg viewBox="0 0 24 24" aria-hidden="true" style="width: 16px; height: 16px; fill: #FFFFFF"><path d="M12 3c1 3.5 5 5.5 5 10a5 5 0 0 1-10 0c0-2 1-3.5 2-4.5.3 1.6 1.2 2.5 2.2 2.5C11 8.5 11 6 12 3z"></path></svg>8</span>
+        <span style="font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.85)">Racha</span>
+      </div>
+      <div style="background: rgba(255,255,255,0.14); border-radius: 14px; padding: 10px 12px; display: flex; flex-direction: column; gap: 2px">
+        <span style="font-size: 22px; font-weight: 800">12</span>
+        <span style="font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.85)">Mejor racha</span>
+      </div>
+      <div style="background: rgba(255,255,255,0.14); border-radius: 14px; padding: 10px 12px; display: flex; flex-direction: column; gap: 2px">
+        <span style="font-size: 22px; font-weight: 800">#3</span>
+        <span style="font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.85)">Amigos</span>
+      </div>
+    </div>
+  </div>
+
+  <div style="background: #FFFFFF; border-radius: 24px; padding: 14px 16px; display: flex; flex-direction: column; gap: 10px">
+    <div style="display: flex; justify-content: space-between; align-items: baseline">
+      <span style="font-size: 15px; font-weight: 800">Dificultad de la semana</span>
+      <span style="font-size: 13px; font-weight: 700; color: #0E6B78">Hoy: Fácil</span>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px; align-items: end">
+      <sc-for list="{{week}}" as="d" hint-placeholder-count="7">
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 6px">
+          <div style="height: 36px; display: flex; align-items: flex-end">
+            <div style="width: 22px; height: {{d.bar}}px; border-radius: 6px; background: {{d.color}}"></div>
+          </div>
+          <span style="font-size: 12px; font-weight: 700; color: {{d.label}}">{{d.day}}</span>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <div style="background: #FFFFFF; border-radius: 24px; padding: 14px 12px 16px; display: flex; flex-direction: column; gap: 6px">
+    <div style="display: flex; align-items: center; justify-content: space-between; padding: 0 6px 4px">
+      <button aria-label="Mes anterior" style="width: 32px; height: 32px; border: none; background: none; padding: 0; display: flex; align-items: center; justify-content: center">
+        <svg viewBox="0 0 24 24" aria-hidden="true" style="width: 18px; height: 18px; fill: none; stroke: #0E6B78; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round"><path d="M15 5l-7 7 7 7"></path></svg>
+      </button>
+      <span style="font-size: 16px; font-weight: 800">Octubre de 2026</span>
+      <button aria-label="Mes siguiente" style="width: 32px; height: 32px; border: none; background: none; padding: 0; display: flex; align-items: center; justify-content: center">
+        <svg viewBox="0 0 24 24" aria-hidden="true" style="width: 18px; height: 18px; fill: none; stroke: #CFD8DA; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round"><path d="M9 5l7 7-7 7"></path></svg>
+      </button>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr))">
+      <sc-for list="{{weekdays}}" as="wd" hint-placeholder-count="7">
+        <span style="text-align: center; font-size: 12px; font-weight: 700; color: #5E6F72">{{wd}}</span>
+      </sc-for>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); row-gap: 6px">
+      <sc-for list="{{cells}}" as="c" hint-placeholder-count="35">
+        <div style="position: relative; height: 40px; display: flex; align-items: center; justify-content: center">
+          <div style="position: absolute; top: 4px; bottom: 4px; left: {{c.bandL}}; right: {{c.bandR}}; background: {{c.band}}"></div>
+          <div style="position: relative; width: 36px; height: 36px; box-sizing: border-box; border-radius: 18px; background: {{c.bg}}; border: {{c.border}}; color: {{c.fg}}; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: {{c.weight}}; font-variant-numeric: tabular-nums">{{c.n}}</div>
+        </div>
+      </sc-for>
+    </div>
+    <div style="text-align: center; font-size: 13px; font-weight: 600; color: #5E6F72; padding-top: 6px">Próximo reto en 9 h</div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const levels = [1, 1, 2, 2, 2, 3, 4];
+    const days = ['L', 'M', 'M', 'J', 'V', 'S', 'D'];
+    const week = days.map((d, i) => ({
+      day: d,
+      bar: 6 + levels[i] * 7,
+      color: i === 1 ? '#0E6B78' : '#CFE0E3',
+      label: i === 1 ? '#0E6B78' : '#5E6F72'
+    }));
+    const done = [5, 6, 7, 12, 13, 19, 20, 21, 22, 23, 24, 25, 26];
+    const isDone = (n) => done.indexOf(n) >= 0;
+    const lead = 4;
+    const cells = [];
+    for (let i = 0; i < 35; i++) {
+      const n = i - lead + 1;
+      if (n < 1 || n > 31) { cells.push({ n: '', bg: 'transparent', border: 'none', fg: '#16201F', weight: 600, band: 'transparent', bandL: '50%', bandR: '50%' }); continue; }
+      const col = i % 7;
+      const left = isDone(n) && isDone(n - 1) && col > 0;
+      const right = isDone(n) && isDone(n + 1) && col < 6;
+      let cell = { n: n, bg: 'transparent', border: 'none', fg: '#16201F', weight: 600 };
+      if (isDone(n)) cell = { n: n, bg: '#0E6B78', border: 'none', fg: '#FFFFFF', weight: 800 };
+      if (n === 27) cell = { n: n, bg: 'transparent', border: '2px solid #B9472F', fg: '#B9472F', weight: 800 };
+      if (n > 27) cell = { n: n, bg: 'transparent', border: 'none', fg: '#B4C0C3', weight: 600 };
+      cells.push({ ...cell, band: left || right ? '#D7E7EA' : 'transparent', bandL: left ? '0' : '50%', bandR: right ? '0' : '50%' });
+    }
+    return { week: week, weekdays: ['D', 'L', 'M', 'M', 'J', 'V', 'S'], cells: cells };
+  }
+}
+</script>
+</body>
+</html>

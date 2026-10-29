@@ -4,7 +4,7 @@ HOW TO PLAY
 Pair numbers that are equal (4 and 4) or add up to ten (3 and 7). A pair can sit side by side in any direction, on the same line with only cleared cells between them, or run from the end of one row to the start of the next. Empty a row and it disappears. Out of pairs? Tap + to copy the remaining numbers to the end of the board, up to five times per board. Clear the board to reach the next stage.
 
 A NEW CHALLENGE EVERY DAY
-A score goal every day, with the same boards for everyone. Reach it to keep your streak going, then play on for a higher score. Missed a day? Replay the last 30 days for practice, and pick up where you left off.
+A score goal every day, with the same boards for everyone. Reach it to keep your streak going; on the daily leaderboard, ties go to the faster time. Missed a day? Play any of the last 30 days to fill it in, and pick up where you left off.
 
 PLAY AT YOUR PACE
 • Unlimited hints, for a few points.

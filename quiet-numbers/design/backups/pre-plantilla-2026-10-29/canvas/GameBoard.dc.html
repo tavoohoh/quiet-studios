@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Quiet Numbers · partida</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;600;700;800;900&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#5BC2CF}a:hover{color:#8ED6DF}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; position: relative; overflow: hidden; background: #0F1A1D; color: #E8F1F2; font-family: -apple-system, 'SF Pro Text', system-ui, sans-serif">
+  <div style="position: relative; height: 54px; display: flex; justify-content: space-between; align-items: center; padding: 0 30px 0 44px; font-size: 17px; font-weight: 600; color: #E8F1F2">
+    <span style="font-variant-numeric: tabular-nums">9:41</span>
+    <span style="position: absolute; left: 50%; top: 11px; width: 125px; height: 37px; margin-left: -62px; border-radius: 19px; background: #000000"></span>
+    <span style="display: flex; align-items: center; gap: 6px">
+      <svg width="18" height="12" viewBox="0 0 17 11" aria-hidden="true"><rect x="0" y="7" width="3" height="4" rx="1" fill="#E8F1F2"></rect><rect x="4.5" y="5" width="3" height="6" rx="1" fill="#E8F1F2"></rect><rect x="9" y="2.5" width="3" height="8.5" rx="1" fill="#E8F1F2"></rect><rect x="13.5" y="0" width="3" height="11" rx="1" fill="#E8F1F2"></rect></svg>
+      <svg width="17" height="12" viewBox="0 0 15 11" aria-hidden="true"><path d="M7.5 2.2c2.2 0 4.2.8 5.7 2.2l1.1-1.1A9.6 9.6 0 0 0 7.5.6 9.6 9.6 0 0 0 .7 3.3l1.1 1.1a8 8 0 0 1 5.7-2.2zm0 3.2c1.3 0 2.5.5 3.4 1.3l1.1-1.1a6.4 6.4 0 0 0-9 0l1.1 1.1c.9-.8 2.1-1.3 3.4-1.3zm0 3.2c.5 0 .9.2 1.2.5L7.5 10.3 6.3 9.1c.3-.3.7-.5 1.2-.5z" fill="#E8F1F2"></path></svg>
+      <svg width="27" height="13" viewBox="0 0 25 12" aria-hidden="true"><rect x="0.5" y="0.5" width="21" height="11" rx="3.5" fill="none" stroke="#E8F1F2" stroke-opacity="0.4"></rect><rect x="2" y="2" width="16" height="8" rx="2" fill="#E8F1F2"></rect><path d="M23 4v4c.8-.3 1.3-1.1 1.3-2s-.5-1.7-1.3-2z" fill="#E8F1F2" fill-opacity="0.4"></path></svg>
+    </span>
+  </div>
+  <div style="display: flex; justify-content: space-between; align-items: center; padding: 4px 20px 0">
+    <button type="button" aria-label="Back" style="width: 48px; height: 48px; border: none; border-radius: 24px; background: #172629; display: flex; align-items: center; justify-content: center; padding: 0"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="#E8F1F2" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+    <button type="button" aria-label="More" style="width: 48px; height: 48px; border: none; border-radius: 24px; background: #172629; display: flex; align-items: center; justify-content: center; padding: 0"><svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="none" stroke="#5BC2CF" stroke-width="1.8"></circle><circle cx="7.5" cy="12" r="1.4" fill="#5BC2CF"></circle><circle cx="12" cy="12" r="1.4" fill="#5BC2CF"></circle><circle cx="16.5" cy="12" r="1.4" fill="#5BC2CF"></circle></svg></button>
+  </div>
+  <div style="display: flex; justify-content: space-between; align-items: flex-end; padding: 14px 24px 0">
+    <div style="display: flex; flex-direction: column; gap: 4px">
+      <span style="font-family: ui-rounded, 'SF Pro Rounded', Nunito, system-ui, sans-serif; font-size: 44px; line-height: 1; font-weight: 800; font-variant-numeric: tabular-nums">1,240</span>
+      <span style="font-size: 15px; font-weight: 500; color: #8A9DA0">Stage 2 · Best 2,480</span>
+    </div>
+  </div>
+  <div style="position: relative; margin: 20px 24px 0; width: 342px; height: 460px">
+    <svg width="342" height="460" viewBox="0 0 342 460" aria-hidden="true" style="position: absolute; left: 0; top: 0"></svg>
+    <div style="position: relative; display: grid; grid-template-columns: repeat(9, minmax(0, 1fr)); grid-auto-rows: 46px">
+      <sc-for list="{{cells}}" as="c" hint-placeholder-count="90">
+        <div style="display: flex; align-items: center; justify-content: center">
+          <span style="width: 40px; height: 40px; border-radius: 20px; display: flex; align-items: center; justify-content: center; font-family: ui-rounded, 'SF Pro Rounded', Nunito, system-ui, sans-serif; font-size: 27px; font-weight: 500; font-variant-numeric: tabular-nums; color: {{c.color}}; background: {{c.bg}}; box-shadow: {{c.ring}}">{{c.n}}</span>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+  <div style="position: absolute; left: 0; right: 0; bottom: 44px; display: flex; justify-content: space-around; padding: 0 24px">
+    <button type="button" aria-label="Undo" style="border: none; background: transparent; padding: 6px 18px; display: flex; flex-direction: column; align-items: center; gap: 4px; color: #5BC2CF; font-family: inherit; font-size: 15px; font-weight: 600"><svg width="28" height="28" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 14L4 9l5-5M4 9h10.5a5.5 5.5 0 0 1 0 11H11" fill="none" stroke="#5BC2CF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg><span>Undo</span></button>
+    <button type="button" aria-label="Add numbers, 4 left" style="border: none; background: transparent; padding: 6px 18px; display: flex; flex-direction: column; align-items: center; gap: 4px; color: #5BC2CF; font-family: inherit; font-size: 15px; font-weight: 600"><svg width="28" height="28" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" fill="none" stroke="#5BC2CF" stroke-width="2.4" stroke-linecap="round"></path></svg><span>4</span></button>
+    <button type="button" aria-label="Hint, costs 3 points" style="border: none; background: transparent; padding: 6px 18px; display: flex; flex-direction: column; align-items: center; gap: 4px; color: #5BC2CF; font-family: inherit; font-size: 15px; font-weight: 600"><svg width="28" height="28" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2V16h5v-.1c0-.8.4-1.5 1-2A6 6 0 0 0 12 3z" fill="none" stroke="#5BC2CF" stroke-width="1.9" stroke-linejoin="round"></path></svg><span>−3</span></button>
+  </div>
+  <span style="position: absolute; left: 50%; bottom: 8px; width: 134px; height: 5px; margin-left: -67px; border-radius: 3px; background: #E8F1F2; opacity: 0.7"></span>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const rows = [[9, 7, 1, 7, 1, 9, 3, 5, 8], [2, 1, 9, 7, 4, 8, 8, 3, 8], [2, 8, 9, 4, 6, 5, 1, 5, 4], [5, 5, 8, 9, 1, 3, 7, 1, 1], [7, 1, 9, 3, 5, 4, 8, 8, 3], [8, 9, 4, 6, 5, 1, 5, 4, 5], [5, 8, 3, 7, 7, 1, 9, 3, 5], [4, 8, 8, 3, 8, 9, 5, 1, 5], [4, 8, 3, 7, 7, 9, 3, 4, 8], [8, 3, 4, 6, 1, 5, 4, 3, 7]];
+    const ghosts = [0, 2, 3, 8, 9, 10, 11, 12, 18, 19, 21, 22, 27, 28, 30, 31, 34, 35, 37, 40, 45, 46, 47, 48, 49, 53, 54, 55, 64, 73];
+    const sel = [1];
+    const cells = rows.flat().map((n, i) => {
+      if (sel.includes(i)) return { n, color: '#5BC2CF', bg: 'rgba(91, 194, 207, 0.14)', ring: '0 0 0 2px #5BC2CF' };
+      if (ghosts.includes(i)) return { n, color: '#2C3A3D', bg: 'transparent', ring: 'none' };
+      return { n, color: i >= 36 ? '#FF9A85' : '#E8F1F2', bg: 'transparent', ring: 'none' };
+    });
+    return { cells };
+  }
+}
+</script>
+</body>
+</html>

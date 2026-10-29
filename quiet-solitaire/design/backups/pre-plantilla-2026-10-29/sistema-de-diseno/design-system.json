@@ -1,0 +1,390 @@
+{
+  "v": 3,
+  "layout": "files",
+  "createdOnFiles": {
+    "v": 1,
+    "at": "2026-10-29T17:08:14Z"
+  },
+  "title": "Quiet Solitaire · Sistema de diseño",
+  "namespace": "QuietSolitaire",
+  "libraries": [],
+  "sections": {},
+  "groups": [
+    "Icons",
+    "Badges",
+    "Store"
+  ],
+  "assetGroups": {
+    "Icons": {
+      "name": "Icons",
+      "tile": "m",
+      "order": [
+        "quiet-solitaire-icon.png",
+        "quiet-solitaire-icon-dark.png",
+        "quiet-solitaire-icon-tinted.png",
+        "quiet-solitaire-icon-gold.png",
+        "quiet-solitaire-icon-gold-dark.png"
+      ],
+      "files": {
+        "quiet-solitaire-icon.png": {
+          "name": "quiet-solitaire-icon.png",
+          "blob": "d07bf943a5da508533608c53f8491d24",
+          "size": 21539,
+          "type": "image/png"
+        },
+        "quiet-solitaire-icon-dark.png": {
+          "name": "quiet-solitaire-icon-dark.png",
+          "blob": "82182e4b7c2493e05359c8df7f4aa020",
+          "size": 22780,
+          "type": "image/png"
+        },
+        "quiet-solitaire-icon-tinted.png": {
+          "name": "quiet-solitaire-icon-tinted.png",
+          "blob": "b80ed364ff2f37daf1eb42794ac07b7e",
+          "size": 19490,
+          "type": "image/png"
+        },
+        "quiet-solitaire-icon-gold.png": {
+          "name": "quiet-solitaire-icon-gold.png",
+          "blob": "b5755348e279e7bc471a5b62e8bb4eb3",
+          "size": 22707,
+          "type": "image/png"
+        },
+        "quiet-solitaire-icon-gold-dark.png": {
+          "name": "quiet-solitaire-icon-gold-dark.png",
+          "blob": "b5d1aa8e90631a89e480e7c5483aa389",
+          "size": 23364,
+          "type": "image/png"
+        }
+      }
+    },
+    "Badges": {
+      "name": "Badges",
+      "tile": "s",
+      "order": [
+        "qs_first_win.png",
+        "qs_no_undo.png",
+        "qs_no_hints.png",
+        "qs_one_pass.png",
+        "qs_ten_wins.png",
+        "qs_consistency.png",
+        "qs_habit.png",
+        "qs_ladder.png",
+        "qs_centennial.png",
+        "qs_night_owl.png",
+        "qs_fifty_wins.png",
+        "qs_economy.png",
+        "qs_in_the_red.png"
+      ],
+      "files": {
+        "qs_first_win.png": {
+          "name": "qs_first_win.png",
+          "blob": "9253f6d124dfb9c33d47b6617874c081",
+          "size": 14680,
+          "type": "image/png"
+        },
+        "qs_no_undo.png": {
+          "name": "qs_no_undo.png",
+          "blob": "7c96c14f61a4f9f736a763ab0398fbe7",
+          "size": 17209,
+          "type": "image/png"
+        },
+        "qs_no_hints.png": {
+          "name": "qs_no_hints.png",
+          "blob": "0bf4745215e7c92a3174ea53597afb59",
+          "size": 19240,
+          "type": "image/png"
+        },
+        "qs_one_pass.png": {
+          "name": "qs_one_pass.png",
+          "blob": "03c1222a88ecbb8d87ea6209bda4a26a",
+          "size": 16943,
+          "type": "image/png"
+        },
+        "qs_ten_wins.png": {
+          "name": "qs_ten_wins.png",
+          "blob": "02dee30a357f3dc6c73146b0a4bdf52b",
+          "size": 18810,
+          "type": "image/png"
+        },
+        "qs_consistency.png": {
+          "name": "qs_consistency.png",
+          "blob": "97f4ed8b3c16c2105bf774fbb8a01076",
+          "size": 17127,
+          "type": "image/png"
+        },
+        "qs_habit.png": {
+          "name": "qs_habit.png",
+          "blob": "ba2f75405f4890c70467137e215f9067",
+          "size": 15387,
+          "type": "image/png"
+        },
+        "qs_ladder.png": {
+          "name": "qs_ladder.png",
+          "blob": "324ce3c410ceb12beb3aa8f34d9690a5",
+          "size": 13457,
+          "type": "image/png"
+        },
+        "qs_centennial.png": {
+          "name": "qs_centennial.png",
+          "blob": "71370e82feef672a10e27d33a5c1f46d",
+          "size": 19002,
+          "type": "image/png"
+        },
+        "qs_night_owl.png": {
+          "name": "qs_night_owl.png",
+          "blob": "a91fad9eeb3fb111b30d7ed5f1deb9a2",
+          "size": 19630,
+          "type": "image/png"
+        },
+        "qs_fifty_wins.png": {
+          "name": "qs_fifty_wins.png",
+          "blob": "8d401060c46e85206f4d61f17c2edf18",
+          "size": 19624,
+          "type": "image/png"
+        },
+        "qs_economy.png": {
+          "name": "qs_economy.png",
+          "blob": "6e47a068068f3cfd745fd16d376fb202",
+          "size": 15643,
+          "type": "image/png"
+        },
+        "qs_in_the_red.png": {
+          "name": "qs_in_the_red.png",
+          "blob": "2f102043a6016956705bb632a7bf2aea",
+          "size": 12512,
+          "type": "image/png"
+        }
+      }
+    },
+    "Store": {
+      "name": "Store",
+      "tile": "l",
+      "order": [
+        "iphone-6.9/en/01-no-ads.png",
+        "iphone-6.9/en/02-daily.png",
+        "iphone-6.9/en/03-win.png",
+        "iphone-6.9/en/04-rewards.png",
+        "iphone-6.9/en/05-leaderboards.png",
+        "iphone-6.9/es/01-no-ads.png",
+        "iphone-6.9/es/02-daily.png",
+        "iphone-6.9/es/03-win.png",
+        "iphone-6.9/es/04-rewards.png",
+        "iphone-6.9/es/05-leaderboards.png",
+        "iphone-6.3/en/01-no-ads.png",
+        "iphone-6.3/en/02-daily.png",
+        "iphone-6.3/en/03-win.png",
+        "iphone-6.3/en/04-rewards.png",
+        "iphone-6.3/en/05-leaderboards.png",
+        "iphone-6.3/es/01-no-ads.png",
+        "iphone-6.3/es/02-daily.png",
+        "iphone-6.3/es/03-win.png",
+        "iphone-6.3/es/04-rewards.png",
+        "iphone-6.3/es/05-leaderboards.png",
+        "ipad-13/en/01-no-ads.png",
+        "ipad-13/en/02-daily.png",
+        "ipad-13/en/03-win.png",
+        "ipad-13/en/04-rewards.png",
+        "ipad-13/en/05-leaderboards.png",
+        "ipad-13/es/01-no-ads.png",
+        "ipad-13/es/02-daily.png",
+        "ipad-13/es/03-win.png",
+        "ipad-13/es/04-rewards.png",
+        "ipad-13/es/05-leaderboards.png"
+      ],
+      "files": {
+        "iphone-6.9/en/01-no-ads.png": {
+          "name": "iphone-6.9/en/01-no-ads.png",
+          "blob": "c630cae2c6293ec53d6bc1fbe8e04246",
+          "size": 305813,
+          "type": "image/png"
+        },
+        "iphone-6.9/en/02-daily.png": {
+          "name": "iphone-6.9/en/02-daily.png",
+          "blob": "c967ba64e175d800bb47dc2d8bbe82b9",
+          "size": 329040,
+          "type": "image/png"
+        },
+        "iphone-6.9/en/03-win.png": {
+          "name": "iphone-6.9/en/03-win.png",
+          "blob": "c25aa339ce1ebfebe22ae1171bc24f5a",
+          "size": 452581,
+          "type": "image/png"
+        },
+        "iphone-6.9/en/04-rewards.png": {
+          "name": "iphone-6.9/en/04-rewards.png",
+          "blob": "90f23d7563e2a3d99ac0659ce2e94136",
+          "size": 187736,
+          "type": "image/png"
+        },
+        "iphone-6.9/en/05-leaderboards.png": {
+          "name": "iphone-6.9/en/05-leaderboards.png",
+          "blob": "cc1ee703fa1cd19829aa865077836a9d",
+          "size": 275878,
+          "type": "image/png"
+        },
+        "iphone-6.9/es/01-no-ads.png": {
+          "name": "iphone-6.9/es/01-no-ads.png",
+          "blob": "28a6f6a2a4229b3f2c839db92a4a6220",
+          "size": 309546,
+          "type": "image/png"
+        },
+        "iphone-6.9/es/02-daily.png": {
+          "name": "iphone-6.9/es/02-daily.png",
+          "blob": "ca379e77d35d71da978373ec661879b5",
+          "size": 330671,
+          "type": "image/png"
+        },
+        "iphone-6.9/es/03-win.png": {
+          "name": "iphone-6.9/es/03-win.png",
+          "blob": "f3edb10db12811be137657d2e34afea6",
+          "size": 490292,
+          "type": "image/png"
+        },
+        "iphone-6.9/es/04-rewards.png": {
+          "name": "iphone-6.9/es/04-rewards.png",
+          "blob": "8d1fcd56cf28ab23cd600df4e70f536f",
+          "size": 195343,
+          "type": "image/png"
+        },
+        "iphone-6.9/es/05-leaderboards.png": {
+          "name": "iphone-6.9/es/05-leaderboards.png",
+          "blob": "fc7f0d7113804bd6e021be27592d4e4b",
+          "size": 281031,
+          "type": "image/png"
+        },
+        "iphone-6.3/en/01-no-ads.png": {
+          "name": "iphone-6.3/en/01-no-ads.png",
+          "blob": "a852b1f7fb36be9914f279dc24ac5c0a",
+          "size": 449430,
+          "type": "image/png"
+        },
+        "iphone-6.3/en/02-daily.png": {
+          "name": "iphone-6.3/en/02-daily.png",
+          "blob": "74c956e9cc3c85cca6f23b69d02178de",
+          "size": 468661,
+          "type": "image/png"
+        },
+        "iphone-6.3/en/03-win.png": {
+          "name": "iphone-6.3/en/03-win.png",
+          "blob": "d61c908f65b5ee0a5513186b39e5bbc7",
+          "size": 607922,
+          "type": "image/png"
+        },
+        "iphone-6.3/en/04-rewards.png": {
+          "name": "iphone-6.3/en/04-rewards.png",
+          "blob": "2950d4974296d651d88bbe0d6bf50923",
+          "size": 341458,
+          "type": "image/png"
+        },
+        "iphone-6.3/en/05-leaderboards.png": {
+          "name": "iphone-6.3/en/05-leaderboards.png",
+          "blob": "c50254acb8892975e6387c76b967b5ed",
+          "size": 406088,
+          "type": "image/png"
+        },
+        "iphone-6.3/es/01-no-ads.png": {
+          "name": "iphone-6.3/es/01-no-ads.png",
+          "blob": "72a0196fa3a4549542d8a56313fb050a",
+          "size": 471055,
+          "type": "image/png"
+        },
+        "iphone-6.3/es/02-daily.png": {
+          "name": "iphone-6.3/es/02-daily.png",
+          "blob": "819c01280794c6f7c6515b70904dd406",
+          "size": 479481,
+          "type": "image/png"
+        },
+        "iphone-6.3/es/03-win.png": {
+          "name": "iphone-6.3/es/03-win.png",
+          "blob": "62de48bc6b23c785ea45076d0d8dae5e",
+          "size": 668630,
+          "type": "image/png"
+        },
+        "iphone-6.3/es/04-rewards.png": {
+          "name": "iphone-6.3/es/04-rewards.png",
+          "blob": "c49337315a9d7efb279f1751b57aa2b3",
+          "size": 353505,
+          "type": "image/png"
+        },
+        "iphone-6.3/es/05-leaderboards.png": {
+          "name": "iphone-6.3/es/05-leaderboards.png",
+          "blob": "f9d42de39f11708775c26684041c70a6",
+          "size": 419040,
+          "type": "image/png"
+        },
+        "ipad-13/en/01-no-ads.png": {
+          "name": "ipad-13/en/01-no-ads.png",
+          "blob": "f64a533e6a84a6206552bbfd72e3e05c",
+          "size": 330449,
+          "type": "image/png"
+        },
+        "ipad-13/en/02-daily.png": {
+          "name": "ipad-13/en/02-daily.png",
+          "blob": "88d6a804833874498ffe807d77a376f1",
+          "size": 277786,
+          "type": "image/png"
+        },
+        "ipad-13/en/03-win.png": {
+          "name": "ipad-13/en/03-win.png",
+          "blob": "cf10baf7b8c47b1798ab5c84e370dc59",
+          "size": 465992,
+          "type": "image/png"
+        },
+        "ipad-13/en/04-rewards.png": {
+          "name": "ipad-13/en/04-rewards.png",
+          "blob": "fb946af67b74e45a2467836a2d1b10ce",
+          "size": 201148,
+          "type": "image/png"
+        },
+        "ipad-13/en/05-leaderboards.png": {
+          "name": "ipad-13/en/05-leaderboards.png",
+          "blob": "cd005ff048c910d9a67dac39bfb08b82",
+          "size": 220293,
+          "type": "image/png"
+        },
+        "ipad-13/es/01-no-ads.png": {
+          "name": "ipad-13/es/01-no-ads.png",
+          "blob": "0f43abc54b66a54a3526e83cdf7f0381",
+          "size": 340190,
+          "type": "image/png"
+        },
+        "ipad-13/es/02-daily.png": {
+          "name": "ipad-13/es/02-daily.png",
+          "blob": "1452868ca914deb12fc9f07d54064f5a",
+          "size": 283714,
+          "type": "image/png"
+        },
+        "ipad-13/es/03-win.png": {
+          "name": "ipad-13/es/03-win.png",
+          "blob": "6cad5a9236bdb70e6b54e0cf8bd51adb",
+          "size": 503253,
+          "type": "image/png"
+        },
+        "ipad-13/es/04-rewards.png": {
+          "name": "ipad-13/es/04-rewards.png",
+          "blob": "769dada225a2a00b687fd0edf02e5862",
+          "size": 215682,
+          "type": "image/png"
+        },
+        "ipad-13/es/05-leaderboards.png": {
+          "name": "ipad-13/es/05-leaderboards.png",
+          "blob": "875836267a9b73b532f8fd426aa83cdd",
+          "size": 223727,
+          "type": "image/png"
+        }
+      }
+    }
+  },
+  "blobs": {},
+  "docs": {
+    "readme": "project/README.md",
+    "sections": []
+  },
+  "lastChange": {
+    "by": "Gustavo Santamaria",
+    "at": "2026-10-29T17:44:30Z",
+    "via": "Claude Code",
+    "note": "Galería App Store como componente (las imágenes no se ven en markdown)"
+  }
+}

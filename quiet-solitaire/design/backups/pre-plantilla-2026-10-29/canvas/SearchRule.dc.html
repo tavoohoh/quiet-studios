@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Búsqueda A · La regla</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&amp;display=swap">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="width: 1200px; height: 800px; position: relative; overflow: hidden; background: #F3F7F8; color: #16201F; font-family: ui-rounded, 'SF Pro Rounded', Nunito, system-ui, sans-serif"><div style="position: absolute; left: 640px; top: 70px; transform: rotate(0deg); "><dc-import name="Card" kind="face" rank="A" suit="s" glyph="none" st="none" theme="teal-light" deck="quiet" back="theme" w="96" hint-size="96px,134px"></dc-import></div><div style="position: absolute; left: 752px; top: 70px; transform: rotate(0deg); "><dc-import name="Card" kind="face" rank="A" suit="h" glyph="none" st="none" theme="teal-light" deck="quiet" back="theme" w="96" hint-size="96px,134px"></dc-import></div><div style="position: absolute; left: 864px; top: 70px; transform: rotate(0deg); "><dc-import name="Card" kind="slot" rank="A" suit="d" glyph="d" st="none" theme="teal-light" deck="quiet" back="theme" w="96" hint-size="96px,134px"></dc-import></div><div style="position: absolute; left: 976px; top: 70px; transform: rotate(0deg); "><dc-import name="Card" kind="face" rank="A" suit="c" glyph="none" st="none" theme="teal-light" deck="quiet" back="theme" w="96" hint-size="96px,134px"></dc-import></div><div style="position: absolute; left: 760px; top: 230px; transform: rotate(0deg); box-shadow: 0 4px 14px rgba(15,26,29,0.12); border-radius: 13px"><dc-import name="Card" kind="face" rank="K" suit="s" glyph="none" st="none" theme="teal-light" deck="quiet" back="theme" w="128" hint-size="128px,179px"></dc-import></div><div style="position: absolute; left: 760px; top: 292px; transform: rotate(0deg); box-shadow: 0 4px 14px rgba(15,26,29,0.12); border-radius: 13px"><dc-import name="Card" kind="face" rank="Q" suit="h" glyph="none" st="none" theme="teal-light" deck="quiet" back="theme" w="128" hint-size="128px,179px"></dc-import></div><div style="position: absolute; left: 760px; top: 354px; transform: rotate(0deg); box-shadow: 0 4px 14px rgba(15,26,29,0.12); border-radius: 13px"><dc-import name="Card" kind="face" rank="J" suit="c" glyph="none" st="none" theme="teal-light" deck="quiet" back="theme" w="128" hint-size="128px,179px"></dc-import></div><div style="position: absolute; left: 760px; top: 416px; transform: rotate(0deg); box-shadow: 0 4px 14px rgba(15,26,29,0.12); border-radius: 13px"><dc-import name="Card" kind="face" rank="10" suit="d" glyph="none" st="none" theme="teal-light" deck="quiet" back="theme" w="128" hint-size="128px,179px"></dc-import></div><div style="position: absolute; left: 760px; top: 478px; transform: rotate(0deg); box-shadow: 0 4px 14px rgba(15,26,29,0.12); border-radius: 13px"><dc-import name="Card" kind="face" rank="9" suit="s" glyph="none" st="none" theme="teal-light" deck="quiet" back="theme" w="128" hint-size="128px,179px"></dc-import></div><div style="position: absolute; left: 760px; top: 540px; transform: rotate(0deg); box-shadow: 0 4px 14px rgba(15,26,29,0.12); border-radius: 13px"><dc-import name="Card" kind="face" rank="8" suit="h" glyph="none" st="none" theme="teal-light" deck="quiet" back="theme" w="128" hint-size="128px,179px"></dc-import></div><div style="position: absolute; left: 110px; top: 200px; width: 470px; display: flex; flex-direction: column; gap: 18px">
+  <h1 style="margin: 0; font-size: 60px; line-height: 1.04; font-weight: 900; letter-spacing: -0.015em">Red on black.<br><span style="color: #0E6B78">Ace to King.</span></h1>
+  <p style="margin: 0; font-size: 24px; line-height: 1.35; font-weight: 700; color: #5E6F72">Classic Klondike, draw one. Tap a card and it goes where it fits.</p>
+  <div style="display: flex; gap: 10px; margin-top: 8px"><span style="padding: 10px 16px; border-radius: 999px; background: #FFFFFF; font-size: 18px; font-weight: 800; color: #0E6B78">No ads</span><span style="padding: 10px 16px; border-radius: 999px; background: #FFFFFF; font-size: 18px; font-weight: 800; color: #0E6B78">Daily challenge</span></div>
+</div><div style="display: {{safe}}; position: absolute; left: 100px; top: 70px; width: 1000px; height: 660px; box-sizing: border-box; border: 2px dashed rgba(14,107,120,0.6); border-radius: 6px; pointer-events: none">
+  <span style="position: absolute; left: 8px; top: 6px; font-family: -apple-system, system-ui, sans-serif; font-size: 12px; font-weight: 600; color: rgba(14,107,120,0.6)">Zona central (aprox.; ajustar con la plantilla de Apple)</span>
+</div></div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"showSafe": {"editor": "boolean", "default": true, "label": "Mostrar zona central"}, "$preview": {"width": 1200, "height": 800}}'>
+
+class Component extends DCLogic {
+  renderVals() { return { safe: this.props.showSafe === false ? 'none' : 'block' }; }
+}
+</script>
+</body>
+</html>

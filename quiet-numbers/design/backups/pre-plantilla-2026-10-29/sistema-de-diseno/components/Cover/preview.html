@@ -1,0 +1,43 @@
+<!-- @dsCard height=288 -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+body { margin: 0; background: var(--background); }
+.cover { position: relative; width: 960px; height: 288px; overflow: hidden; background: var(--background); }
+.name { position: absolute; left: 40px; bottom: 36px; width: 440px; display: flex; flex-direction: column; gap: 10px; }
+.name h1 { margin: 0; font-family: var(--font-rounded); font-weight: 800; font-size: 88px; line-height: 0.95; letter-spacing: -0.02em; color: var(--ink); }
+.name p { margin: 0; font-family: var(--font-text); font-size: 14px; line-height: 20px; color: var(--muted); }
+.slab { fill: var(--primary); }
+.pill { fill: var(--accent); }
+.tint { fill: var(--surface2); }
+.num { fill: var(--on-primary); opacity: 0.4; }
+.ghost { fill: var(--on-primary); opacity: 0.15; }
+.hit { fill: var(--accent); }
+.bar { stroke: var(--accent); stroke-width: 6; stroke-linecap: round; }
+</style>
+</head>
+<body>
+<div class="cover">
+<svg width="960" height="288" viewBox="0 0 960 288" aria-hidden="true" style="position: absolute; left: 0; top: 0">
+<!--
+blocks: primary slab 400×312 (radius-card 24, bleeds top and right), accent pill 120×48 (radius-capsule), surface2 tile 96×96 (radius-card).
+arrangement: one wide slab with satellites, right of x = 500.
+pattern: the board itself, a 6 × 4 grid of number discs at a 56 px pitch (cell-height + space), some faded like cleared numbers, one pair in accent joined by a bar: the match.
+steps and radii: space-12, cell-height; radius-card 24, radius-cell 50%, radius-capsule.
+-->
+<rect class="slab" x="520" y="-24" width="464" height="264" rx="24"></rect>
+<rect class="tint" x="500" y="236" width="96" height="96" rx="24"></rect>
+<rect class="pill" x="640" y="248" width="120" height="48" rx="24"></rect>
+<circle class="ghost" cx="560" cy="60" r="14"></circle><circle class="num" cx="616" cy="60" r="14"></circle><circle class="num" cx="672" cy="60" r="14"></circle><circle class="ghost" cx="728" cy="60" r="14"></circle><circle class="num" cx="784" cy="60" r="14"></circle><circle class="num" cx="840" cy="60" r="14"></circle><circle class="num" cx="560" cy="116" r="14"></circle><circle class="num" cx="616" cy="116" r="14"></circle><circle class="hit" cx="672" cy="116" r="14"></circle><circle class="num" cx="728" cy="116" r="14"></circle><circle class="hit" cx="784" cy="116" r="14"></circle><circle class="ghost" cx="840" cy="116" r="14"></circle><circle class="num" cx="560" cy="172" r="14"></circle><circle class="ghost" cx="616" cy="172" r="14"></circle><circle class="num" cx="672" cy="172" r="14"></circle><circle class="num" cx="728" cy="172" r="14"></circle><circle class="ghost" cx="784" cy="172" r="14"></circle><circle class="num" cx="840" cy="172" r="14"></circle><circle class="ghost" cx="560" cy="228" r="14"></circle><circle class="num" cx="616" cy="228" r="14"></circle><circle class="num" cx="672" cy="228" r="14"></circle><circle class="ghost" cx="728" cy="228" r="14"></circle><circle class="num" cx="784" cy="228" r="14"></circle><circle class="num" cx="840" cy="228" r="14"></circle>
+<line class="bar" x1="690" y1="116" x2="762" y2="116"></line>
+</svg>
+<div class="name">
+<h1>Quiet<br>Numbers</h1>
+<p>Junta números iguales o que sumen 10. Tu pausa de 5 minutos.</p>
+</div>
+</div>
+<script>/* cover */</script>
+</body>
+</html>

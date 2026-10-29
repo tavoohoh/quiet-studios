@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Colección</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800&amp;display=swap">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; padding: 58px 16px 0; overflow: hidden; background: #F3F7F8; color: #16201F; font-family: ui-rounded, 'SF Pro Rounded', Nunito, system-ui, sans-serif; display: flex; flex-direction: column; gap: 10px">
+  <div style="position: relative; height: 44px; flex-shrink: 0; display: flex; align-items: center; justify-content: center">
+    <button aria-label="Volver" style="position: absolute; left: 0; top: 0; width: 44px; height: 44px; border-radius: 22px; border: none; padding: 0; background: #FFFFFF; display: flex; align-items: center; justify-content: center">
+      <svg viewBox="0 0 24 24" aria-hidden="true" style="width: 20px; height: 20px; fill: none; stroke: #16201F; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round"><path d="M15 5l-7 7 7 7"></path></svg>
+    </button>
+    <span style="font-size: 17px; font-weight: 800">Colección</span>
+  </div>
+
+  <div style="font-size: 15px; font-weight: 700; color: #5E6F72; padding: 4px 4px 0">Mazo</div>
+  <div style="background: #FFFFFF; border-radius: 22px; padding: 0 16px; flex-shrink: 0">
+    <sc-for list="{{decks}}" as="d" hint-placeholder-count="6">
+      <div style="display: flex; align-items: center; gap: 14px; min-height: 58px; border-bottom: {{d.sep}}">
+        <div style="opacity: {{d.fade}}">
+          <dc-import name="Card" kind="face" rank="A" suit="h" deck="{{d.deck}}" theme="teal-light" w="30" hint-size="30px,42px"></dc-import>
+        </div>
+        <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 1px; padding: 8px 0">
+          <span style="font-size: 16px; font-weight: 700; color: {{d.fg}}">{{d.name}}</span>
+          <sc-if value="{{d.hasSub}}" hint-placeholder-val="{{false}}">
+            <span style="font-size: 13px; font-weight: 600; color: #5E6F72">{{d.sub}}</span>
+          </sc-if>
+        </div>
+        <sc-if value="{{d.selected}}" hint-placeholder-val="{{false}}">
+          <svg viewBox="0 0 24 24" aria-hidden="true" style="width: 20px; height: 20px; fill: none; stroke: #0E6B78; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>
+        </sc-if>
+        <sc-if value="{{d.locked}}" hint-placeholder-val="{{false}}">
+          <svg viewBox="0 0 24 24" aria-hidden="true" style="width: 18px; height: 18px; fill: none; stroke: #8A9DA0; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round"><path d="M8 11V8a4 4 0 0 1 8 0v3M6 11h12v9H6z"></path></svg>
+        </sc-if>
+      </div>
+    </sc-for>
+  </div>
+
+  <div style="font-size: 15px; font-weight: 700; color: #5E6F72; padding: 6px 4px 0">Reverso</div>
+  <div style="background: #FFFFFF; border-radius: 22px; padding: 16px; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; flex-shrink: 0">
+    <sc-for list="{{backs}}" as="b" hint-placeholder-count="5">
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 8px">
+        <div style="position: relative; opacity: {{b.fade}}">
+          <dc-import name="Card" kind="back" back="{{b.back}}" st="{{b.st}}" theme="teal-light" w="44" hint-size="44px,62px"></dc-import>
+        </div>
+        <span style="font-size: 12px; font-weight: 700; color: {{b.fg}}">{{b.name}}</span>
+      </div>
+    </sc-for>
+  </div>
+
+  <div style="font-size: 15px; font-weight: 700; color: #5E6F72; padding: 6px 4px 0">Tablero</div>
+  <div style="background: #FFFFFF; border-radius: 22px; padding: 0 16px; flex-shrink: 0">
+    <sc-for list="{{themes}}" as="t" hint-placeholder-count="3">
+      <div style="display: flex; align-items: center; gap: 14px; height: 52px; border-bottom: 1px solid #E3EAEC">
+        <div style="display: flex">
+          <div style="width: 22px; height: 22px; border-radius: 11px; background: {{t.a}}"></div>
+          <div style="width: 22px; height: 22px; border-radius: 11px; background: {{t.b}}; margin-left: -6px; box-shadow: 0 0 0 2px #FFFFFF"></div>
+        </div>
+        <span style="flex-grow: 1; font-size: 16px; font-weight: 700">{{t.name}}</span>
+        <sc-if value="{{t.selected}}" hint-placeholder-val="{{false}}">
+          <svg viewBox="0 0 24 24" aria-hidden="true" style="width: 20px; height: 20px; fill: none; stroke: #0E6B78; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>
+        </sc-if>
+      </div>
+    </sc-for>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const decks = [
+      ['quiet', 'Quiet', '', true, false],
+      ['illus', 'Ilustrado', 'Completa 30 retos diarios seguidos.', false, true],
+      ['classic', 'Clásico', 'Gana sin reciclar el mazo.', false, true],
+      ['pixel', 'Pixel', 'Logro oculto.', false, true],
+      ['four', 'Cuatro colores', 'Siempre disponible para distinguir los palos.', false, false],
+      ['big', 'Índice grande', 'Siempre disponible para baja visión.', false, false]
+    ];
+    const backs = [['theme', 'Tema', false], ['coral', 'Coral', false], ['linen', 'Lino', true], ['night', 'Noche', true], ['gold', 'Dorado', true]];
+    return {
+      decks: decks.map((d, i) => ({
+        deck: d[0], name: d[1], sub: d[2], hasSub: d[2] !== '', selected: d[3], locked: d[4],
+        fade: d[4] ? 0.4 : 1, fg: d[4] ? '#8A9DA0' : '#16201F',
+        sep: i < decks.length - 1 ? '1px solid #E3EAEC' : 'none'
+      })),
+      backs: backs.map((b, i) => ({ back: b[0], name: b[1], fade: b[2] ? 0.4 : 1, fg: b[2] ? '#8A9DA0' : '#16201F', st: i === 0 ? 'selected' : 'none' })),
+      themes: [
+        { name: 'Petróleo y coral', a: '#0E6B78', b: '#B9472F', selected: true },
+        { name: 'Salvia y arena', a: '#387454', b: '#9A5B16', selected: false },
+        { name: 'Índigo y durazno', a: '#9A98FF', b: '#FFAE82', selected: false }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

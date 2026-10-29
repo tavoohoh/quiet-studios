@@ -31,8 +31,8 @@ Cada app documenta sus comandos exactos en su CLAUDE.md ("Comandos" y "Publicaci
 - Textos en `fastlane/metadata/<locale>/` (en-US y es-MX; es-ES si la app lo usa); validar con `scripts/validate-metadata.py` y subir con el script de la app (`upload-metadata.py` en Solitaire) mostrando primero qué cambia y aplicando solo con permiso explícito.
 - Una versión en revisión no se edita: los cambios de texto van a la versión siguiente.
 - Capturas con `scripts/screenshots.sh` (no correrlo a la vez que el de otra app: comparten simuladores) e imágenes con `scripts/store-images.py` desde el canvas.
-- Header, búsqueda y universal (iOS 27+): medidas y reglas en `app-store.md` del sistema de diseño; propuestas en la página "Header y búsqueda" del canvas de la app. Lo elegido se guarda como HTML estático en `AppStore/creative/` y se exporta con `scripts/creative-assets.py`. Se suben por la API con `scripts/creative-upload.py` (biblioteca de assets: reservar `appAssetLibraryImages` con categoría `CREATIVE_ASSETS`, subir las partes, `uploaded: true`; luego `appAssetLibraryPlacements` `PRODUCT_PAGE_HEADER_ASSET` / `APP_STORE_SEARCH_RESULTS_ASSET` por localización de una versión editable). Una versión en revisión no admite colocarlas.
-- Al cambiar cualquier imagen de la tienda, subirla también al sistema de diseño de la app (Assets › Store) y actualizar su sección "Galería App Store".
+- Header, búsqueda y universal (iOS 27+): medidas y reglas en `app-store.md` del sistema de diseño; propuestas en un artefacto aparte (lo elegido entra a la página App Store del canvas). Lo elegido se guarda como HTML estático en `AppStore/creative/` y se exporta con `scripts/creative-assets.py`. Se suben por la API con `scripts/creative-upload.py` (biblioteca de assets: reservar `appAssetLibraryImages` con categoría `CREATIVE_ASSETS`, subir las partes, `uploaded: true`; luego `appAssetLibraryPlacements` `PRODUCT_PAGE_HEADER_ASSET` / `APP_STORE_SEARCH_RESULTS_ASSET` por localización de una versión editable). Una versión en revisión no admite colocarlas.
+- Al cambiar cualquier imagen de la tienda, subirla al canvas de la app (página App Store), anotar su id en `design/canvas-assets.tsv` y correr el QA (`quiet-design-canvas`).
 - Reglas: apto 4+, sin precios ni descuentos, sin URLs ni ©, nada que la app no tenga, localizado en/es. Excepción (decisión 2026-10-29): los juegos gratis para siempre pueden decir "Gratis siempre" / "Always free" en las capturas (p. ej. la imagen 04 de Quiet Numbers); el header y la búsqueda no lo dicen.
 
 ## Game Center
@@ -49,9 +49,7 @@ Todo cambio por la API (nombres, precios, textos, grupos de beta) es visible par
 
 ## Respaldo de diseño (cada versión aprobada)
 
-Cuando Apple aprueba una versión, exportar los dos artefactos de esa app (canvas y sistema de diseño) a `quiet-<app>/design/backups/<versión>/`:
-- Canvas: leer con la herramienta Artifact cada archivo de `project/` (`canvas.json` y cada `.dc.html`, que ya son HTML) y guardarlos tal cual; agregar un `index.html` simple que liste los artboards por página con su título.
-- Sistema de diseño: `project/README.md`, las demás secciones `.md`, `tokens.json`, `design-system.json` y cada `components/<Comp>/preview.html`; los assets se respaldan desde el repo (ya están ahí).
+Cuando Apple aprueba una versión, exportar el canvas de esa app a `quiet-<app>/design/backups/<versión>/`: leer con la herramienta Artifact cada archivo de `project/` (`canvas.json` y cada `.dc.html`, que ya son HTML) y guardarlos tal cual; agregar un `index.html` simple que liste los artboards por página con su título. Las imágenes se respaldan desde el repo (ya están ahí; `design/canvas-assets.tsv` dice cuál es cuál).
 - Commit "Quiet <App>: respaldo de diseño <versión>" cuando el usuario lo pida.
 
 ## Después de publicar

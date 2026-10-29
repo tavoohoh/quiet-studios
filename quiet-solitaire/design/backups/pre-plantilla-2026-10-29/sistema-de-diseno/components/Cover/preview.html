@@ -1,0 +1,35 @@
+<!-- @dsCard height=288 -->
+<style>
+  body { margin: 0; background: var(--background); }
+  .cover { position: relative; width: 960px; height: 288px; overflow: hidden; background: var(--background); }
+  .primary { fill: var(--primary); }
+  .back { fill: var(--back-theme); }
+  .accent { fill: var(--accent); }
+  .ink { fill: var(--ink); }
+  .tint { fill: var(--surface2); }
+  .face { fill: var(--surface); stroke: var(--ghost); stroke-width: 1; }
+  .card { rx: 9.6px; }
+  .name { position: absolute; left: 48px; bottom: 40px; width: 420px; margin: 0; font: 900 80px/0.95 var(--font-rounded); letter-spacing: -0.02em; color: var(--ink); }
+  .tag { position: absolute; left: 48px; bottom: 16px; width: 420px; margin: 0; font: 400 14px/18px var(--font-text); color: var(--muted); }
+</style>
+<div class="cover">
+  <!--
+    blocks: primary slab 288×288 bleeding off top/right, surface2 tint 120 wide, back-theme and accent as cards 96×134 (card-width×2, ratio 1.4), ink as one card.
+    arrangement: a tableau column cascading down-right over the slab, cards stepping by step-face-down×2 (18) then step-face-up×2 (44).
+    pattern: a literal motif, the card silhouette at card-radius (10 % of width); the system's whole identity is the card on a quiet table.
+    steps and radii: card-width 48 ×2, card-height 67 ×2, card-gap 6 ×2, card-radius 10 %.
+  -->
+  <svg width="960" height="288" viewBox="0 0 960 288" aria-hidden="true" style="position:absolute;inset:0">
+    <rect class="tint" x="540" y="0" width="132" height="288"></rect>
+    <rect class="primary" x="672" y="0" width="288" height="288"></rect>
+    <rect class="card back" x="564" y="22" width="96" height="134"></rect>
+    <rect class="card back" x="564" y="40" width="96" height="134"></rect>
+    <rect class="card face" x="564" y="58" width="96" height="134"></rect>
+    <rect class="card accent" x="696" y="40" width="96" height="134"></rect>
+    <rect class="card face" x="696" y="84" width="96" height="134"></rect>
+    <rect class="card ink" x="804" y="102" width="96" height="134"></rect>
+    <rect class="card face" x="804" y="146" width="96" height="134"></rect>
+  </svg>
+  <h1 class="name">Quiet<br>Solitaire</h1>
+  <p class="tag">Klondike de siempre, sin anuncios. Cada reparto se puede ganar.</p>
+</div>

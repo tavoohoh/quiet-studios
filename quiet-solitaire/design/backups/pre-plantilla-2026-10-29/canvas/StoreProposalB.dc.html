@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>App Store · propuesta B</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&amp;display=swap">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="width: 2560px; height: 1260px; box-sizing: border-box; padding: 56px 64px; background: #FFFFFF; color: #16201F; font-family: ui-rounded, 'SF Pro Rounded', Nunito, system-ui, sans-serif; display: flex; flex-direction: column; gap: 32px">
+<div style="display: flex; flex-direction: column; gap: 8px"><h1 style="margin: 0; font-size: 40px; font-weight: 800; letter-spacing: -0.02em">App Store · propuesta B (iPhone 6.9")</h1><p style="margin: 0; font-size: 17px; line-height: 1.5; color: #5E6F72; max-width: 1800px">Una idea por imagen, con un color de fondo distinto cada una (los 4 temas de la familia + coral) y callouts sobre cartas reales. Escala 1/3 de 1320 × 2868. Mocks del canvas en español; las finales salen de capturas reales con <code>scripts/screenshots.sh</code> y <code>store-images.py</code>, en en-US y es-MX. Diferencias con la actual (arriba): un mensaje nuevo, «Cada partida tiene salida», y el multiplicador de tiempo. Solo cosas que el juego tiene.</p></div>
+<div style="display: flex; gap: 40px"><div style="display: flex; flex-direction: column; gap: 12px"><div style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 18px; font-weight: 800">01 · Clásico. Sin anuncios.</span><span style="font-size: 14px; font-weight: 600; color: #5E6F72">en: “Klondike classic. No ads.”</span></div><div style="position: relative; width: 440px; height: 956px; overflow: hidden; border-radius: 18px; background: #0E6B78; color: #FFFFFF; font-family: ui-rounded, 'SF Pro Rounded', Nunito, system-ui, sans-serif; box-shadow: 0 2px 10px rgba(15,26,29,0.12)">
+  <div style="position: absolute; left: 32px; right: 32px; top: 52px; display: flex; flex-direction: column; gap: 12px">
+    <h2 style="margin: 0; font-size: 40px; line-height: 1.04; font-weight: 900; letter-spacing: -0.015em">Solitario clásico. <span style="color: #FFC2B5">Nada más.</span></h2>
+    <p style="margin: 0; font-size: 18px; line-height: 1.3; font-weight: 700; opacity: 0.82">Sin anuncios, sin compras, sin rastreo.</p>
+  </div>
+  <div style="position: absolute; left: 42px; top: 236px; width: 356px; height: 720px; overflow: hidden">
+  <div style="width: 356px; height: 752px; box-sizing: border-box; padding: 8px; border-radius: 52px; background: #0A1416; box-shadow: 0 30px 70px rgba(2, 30, 36, 0.35)">
+    <div style="width: 340px; height: 736px; border-radius: 44px; overflow: hidden; position: relative">
+      <div style="width: 390px; height: 844px; transform: scale(0.8718); transform-origin: 0 0"><dc-import name="Game" theme="teal-light" scene="mid" deck="quiet" back="theme" hint-size="390px,844px"></dc-import></div>
+    </div>
+  </div>
+</div>
+  <div style="position: absolute; left: 210px; top: 470px; padding: 10px 18px; border-radius: 999px; background: #FFFFFF; color: #0E6B78; box-shadow: 0 14px 30px rgba(2, 30, 36, 0.3); font-size: 22px; font-weight: 900; white-space: nowrap">Toca y va a su lugar</div><div style="position: absolute; left: 30px; top: 640px; padding: 10px 18px; border-radius: 999px; background: #B9472F; color: #FFFFFF; box-shadow: 0 14px 30px rgba(2, 30, 36, 0.3); font-size: 22px; font-weight: 900; white-space: nowrap">Mueve escaleras enteras</div>
+</div></div><div style="display: flex; flex-direction: column; gap: 12px"><div style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 18px; font-weight: 800">02 · Todas se pueden ganar</span><span style="font-size: 14px; font-weight: 600; color: #5E6F72">en: “Every deal can be won.”</span></div><div style="position: relative; width: 440px; height: 956px; overflow: hidden; border-radius: 18px; background: #F3F7F8; color: #16201F; font-family: ui-rounded, 'SF Pro Rounded', Nunito, system-ui, sans-serif; box-shadow: 0 2px 10px rgba(15,26,29,0.12)">
+  <div style="position: absolute; left: 32px; right: 32px; top: 52px; display: flex; flex-direction: column; gap: 12px">
+    <h2 style="margin: 0; font-size: 40px; line-height: 1.04; font-weight: 900; letter-spacing: -0.015em">Cada partida <span style="color: #0E6B78">tiene salida.</span></h2>
+    <p style="margin: 0; font-size: 18px; line-height: 1.3; font-weight: 700; opacity: 0.82">La app revisa cada reparto en tu iPhone antes de dártelo.</p>
+  </div>
+  <div style="position: absolute; left: 42px; top: 236px; width: 356px; height: 720px; overflow: hidden">
+  <div style="width: 356px; height: 752px; box-sizing: border-box; padding: 8px; border-radius: 52px; background: #0A1416; box-shadow: 0 30px 70px rgba(2, 30, 36, 0.35)">
+    <div style="width: 340px; height: 736px; border-radius: 44px; overflow: hidden; position: relative">
+      <div style="width: 390px; height: 844px; transform: scale(0.8718); transform-origin: 0 0"><dc-import name="Game" theme="teal-light" scene="end" deck="quiet" back="theme" hint-size="390px,844px"></dc-import></div>
+    </div>
+  </div>
+</div>
+  <div style="position: absolute; left: 230px; top: 860px; padding: 10px 18px; border-radius: 999px; background: #0E6B78; color: #FFFFFF; box-shadow: 0 14px 30px rgba(2, 30, 36, 0.2); font-size: 22px; font-weight: 900; white-space: nowrap">Autocompletar</div><div style="position: absolute; left: 34px; top: 420px; padding: 10px 18px; border-radius: 999px; background: #FFFFFF; color: #0E6B78; box-shadow: 0 14px 30px rgba(2, 30, 36, 0.14); font-size: 22px; font-weight: 900; white-space: nowrap">✓ Con solución</div>
+</div></div><div style="display: flex; flex-direction: column; gap: 12px"><div style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 18px; font-weight: 800">03 · Reto diario</span><span style="font-size: 14px; font-weight: 600; color: #5E6F72">en: “A new deal every day.”</span></div><div style="position: relative; width: 440px; height: 956px; overflow: hidden; border-radius: 18px; background: #0F1A1D; color: #E8F1F2; font-family: ui-rounded, 'SF Pro Rounded', Nunito, system-ui, sans-serif; box-shadow: 0 2px 10px rgba(15,26,29,0.12)">
+  <div style="position: absolute; left: 32px; right: 32px; top: 52px; display: flex; flex-direction: column; gap: 12px">
+    <h2 style="margin: 0; font-size: 40px; line-height: 1.04; font-weight: 900; letter-spacing: -0.015em">Un reparto nuevo <span style="color: #FF9A85">cada día.</span></h2>
+    <p style="margin: 0; font-size: 18px; line-height: 1.3; font-weight: 700; opacity: 0.82">El mismo para todos. Fácil el lunes, experto el domingo.</p>
+  </div>
+  <div style="position: absolute; left: 42px; top: 236px; width: 356px; height: 720px; overflow: hidden">
+  <div style="width: 356px; height: 752px; box-sizing: border-box; padding: 8px; border-radius: 52px; background: #0A1416; box-shadow: 0 30px 70px rgba(2, 30, 36, 0.35)">
+    <div style="width: 340px; height: 736px; border-radius: 44px; overflow: hidden; position: relative">
+      <div style="width: 390px; height: 844px; transform: scale(0.8718); transform-origin: 0 0"><dc-import name="Daily" hint-size="390px,844px"></dc-import></div>
+    </div>
+  </div>
+</div>
+  <div style="position: absolute; left: 250px; top: 400px; padding: 10px 18px; border-radius: 999px; background: #FF9A85; color: #0F1A1D; box-shadow: 0 14px 30px rgba(0,0,0,0.4); font-size: 22px; font-weight: 900; white-space: nowrap">Racha de 8</div>
+</div></div><div style="display: flex; flex-direction: column; gap: 12px"><div style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 18px; font-weight: 800">04 · Victoria</span><span style="font-size: 14px; font-weight: 600; color: #5E6F72">en: “Win fast, score up to ×2.”</span></div><div style="position: relative; width: 440px; height: 956px; overflow: hidden; border-radius: 18px; background: #B9472F; color: #FFFFFF; font-family: ui-rounded, 'SF Pro Rounded', Nunito, system-ui, sans-serif; box-shadow: 0 2px 10px rgba(15,26,29,0.12)">
+  <div style="position: absolute; left: 32px; right: 32px; top: 52px; display: flex; flex-direction: column; gap: 12px">
+    <h2 style="margin: 0; font-size: 40px; line-height: 1.04; font-weight: 900; letter-spacing: -0.015em">Gana rápido, <span style="color: #FFE0D8">suma hasta ×2.</span></h2>
+    <p style="margin: 0; font-size: 18px; line-height: 1.3; font-weight: 700; opacity: 0.82">El tiempo multiplica tu puntaje. Y siempre hay fuegos artificiales.</p>
+  </div>
+  <div style="position: absolute; left: 42px; top: 236px; width: 356px; height: 720px; overflow: hidden">
+  <div style="width: 356px; height: 752px; box-sizing: border-box; padding: 8px; border-radius: 52px; background: #0A1416; box-shadow: 0 30px 70px rgba(2, 30, 36, 0.35)">
+    <div style="width: 340px; height: 736px; border-radius: 44px; overflow: hidden; position: relative">
+      <div style="width: 390px; height: 844px; transform: scale(0.8718); transform-origin: 0 0"><dc-import name="Win" hint-size="390px,844px"></dc-import></div>
+    </div>
+  </div>
+</div>
+  <svg width="440" height="956" viewBox="0 0 440 956" aria-hidden="true" style="position: absolute; left: 0; top: 0; pointer-events: none"><line x1="376.0" y1="300.0" x2="406.0" y2="300.0" stroke="#FFD8CF" stroke-width="4" stroke-linecap="round"/><line x1="374.4" y1="306.9" x2="401.4" y2="320.0" stroke="#FFD8CF" stroke-width="4" stroke-linecap="round"/><line x1="370.0" y1="312.5" x2="388.7" y2="336.0" stroke="#FFD8CF" stroke-width="4" stroke-linecap="round"/><line x1="363.6" y1="315.6" x2="370.2" y2="344.8" stroke="#FFD8CF" stroke-width="4" stroke-linecap="round"/><line x1="356.4" y1="315.6" x2="349.8" y2="344.8" stroke="#FFD8CF" stroke-width="4" stroke-linecap="round"/><line x1="350.0" y1="312.5" x2="331.3" y2="336.0" stroke="#FFD8CF" stroke-width="4" stroke-linecap="round"/><line x1="345.6" y1="306.9" x2="318.6" y2="320.0" stroke="#FFD8CF" stroke-width="4" stroke-linecap="round"/><line x1="344.0" y1="300.0" x2="314.0" y2="300.0" stroke="#FFD8CF" stroke-width="4" stroke-linecap="round"/><line x1="345.6" y1="293.1" x2="318.6" y2="280.0" stroke="#FFD8CF" stroke-width="4" stroke-linecap="round"/><line x1="350.0" y1="287.5" x2="331.3" y2="264.0" stroke="#FFD8CF" stroke-width="4" stroke-linecap="round"/><line x1="356.4" y1="284.4" x2="349.8" y2="255.2" stroke="#FFD8CF" stroke-width="4" stroke-linecap="round"/><line x1="363.6" y1="284.4" x2="370.2" y2="255.2" stroke="#FFD8CF" stroke-width="4" stroke-linecap="round"/><line x1="370.0" y1="287.5" x2="388.7" y2="264.0" stroke="#FFD8CF" stroke-width="4" stroke-linecap="round"/><line x1="374.4" y1="293.1" x2="401.4" y2="280.0" stroke="#FFD8CF" stroke-width="4" stroke-linecap="round"/><line x1="96.0" y1="330.0" x2="118.0" y2="330.0" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round"/><line x1="94.4" y1="336.0" x2="113.4" y2="347.0" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round"/><line x1="90.0" y1="340.4" x2="101.0" y2="359.4" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round"/><line x1="84.0" y1="342.0" x2="84.0" y2="364.0" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round"/><line x1="78.0" y1="340.4" x2="67.0" y2="359.4" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round"/><line x1="73.6" y1="336.0" x2="54.6" y2="347.0" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round"/><line x1="72.0" y1="330.0" x2="50.0" y2="330.0" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round"/><line x1="73.6" y1="324.0" x2="54.6" y2="313.0" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round"/><line x1="78.0" y1="319.6" x2="67.0" y2="300.6" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round"/><line x1="84.0" y1="318.0" x2="84.0" y2="296.0" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round"/><line x1="90.0" y1="319.6" x2="101.0" y2="300.6" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round"/><line x1="94.4" y1="324.0" x2="113.4" y2="313.0" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round"/><line x1="260.0" y1="420.0" x2="278.0" y2="420.0" stroke="#E3B341" stroke-width="3" stroke-linecap="round"/><line x1="258.7" y1="425.0" x2="274.2" y2="434.0" stroke="#E3B341" stroke-width="3" stroke-linecap="round"/><line x1="255.0" y1="428.7" x2="264.0" y2="444.2" stroke="#E3B341" stroke-width="3" stroke-linecap="round"/><line x1="250.0" y1="430.0" x2="250.0" y2="448.0" stroke="#E3B341" stroke-width="3" stroke-linecap="round"/><line x1="245.0" y1="428.7" x2="236.0" y2="444.2" stroke="#E3B341" stroke-width="3" stroke-linecap="round"/><line x1="241.3" y1="425.0" x2="225.8" y2="434.0" stroke="#E3B341" stroke-width="3" stroke-linecap="round"/><line x1="240.0" y1="420.0" x2="222.0" y2="420.0" stroke="#E3B341" stroke-width="3" stroke-linecap="round"/><line x1="241.3" y1="415.0" x2="225.8" y2="406.0" stroke="#E3B341" stroke-width="3" stroke-linecap="round"/><line x1="245.0" y1="411.3" x2="236.0" y2="395.8" stroke="#E3B341" stroke-width="3" stroke-linecap="round"/><line x1="250.0" y1="410.0" x2="250.0" y2="392.0" stroke="#E3B341" stroke-width="3" stroke-linecap="round"/><line x1="255.0" y1="411.3" x2="264.0" y2="395.8" stroke="#E3B341" stroke-width="3" stroke-linecap="round"/><line x1="258.7" y1="415.0" x2="274.2" y2="406.0" stroke="#E3B341" stroke-width="3" stroke-linecap="round"/></svg><div style="position: absolute; left: 250px; top: 600px; padding: 10px 18px; border-radius: 999px; background: #FFFFFF; color: #B9472F; box-shadow: 0 14px 30px rgba(90, 25, 10, 0.35); font-size: 22px; font-weight: 900; white-space: nowrap">Tiempo ×1,8</div>
+</div></div><div style="display: flex; flex-direction: column; gap: 12px"><div style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 18px; font-weight: 800">05 · Recompensas</span><span style="font-size: 14px; font-weight: 600; color: #5E6F72">en: “Earn decks, backs and boards.”</span></div><div style="position: relative; width: 440px; height: 956px; overflow: hidden; border-radius: 18px; background: #13121F; color: #ECEBF7; font-family: ui-rounded, 'SF Pro Rounded', Nunito, system-ui, sans-serif; box-shadow: 0 2px 10px rgba(15,26,29,0.12)">
+  <div style="position: absolute; left: 32px; right: 32px; top: 52px; display: flex; flex-direction: column; gap: 12px">
+    <h2 style="margin: 0; font-size: 40px; line-height: 1.04; font-weight: 900; letter-spacing: -0.015em">Gana mazos, <span style="color: #FFAE82">reversos y tableros.</span></h2>
+    <p style="margin: 0; font-size: 18px; line-height: 1.3; font-weight: 700; opacity: 0.82">Se desbloquean jugando, nunca pagando.</p>
+  </div>
+  <div style="position: absolute; left: 42px; top: 236px; width: 356px; height: 720px; overflow: hidden">
+  <div style="width: 356px; height: 752px; box-sizing: border-box; padding: 8px; border-radius: 52px; background: #0A1416; box-shadow: 0 30px 70px rgba(2, 30, 36, 0.35)">
+    <div style="width: 340px; height: 736px; border-radius: 44px; overflow: hidden; position: relative">
+      <div style="width: 390px; height: 844px; transform: scale(0.8718); transform-origin: 0 0"><dc-import name="Game" theme="indigo-peach" scene="mid" deck="pixel" back="night" hint-size="390px,844px"></dc-import></div>
+    </div>
+  </div>
+</div>
+  <div style="position: absolute; left: 60px; top: 781px; transform: rotate(-12deg); box-shadow: 0 16px 30px rgba(0,0,0,0.35); border-radius: 8px"><dc-import name="Card" kind="face" rank="A" suit="h" glyph="none" st="none" theme="indigo-peach" deck="quiet" back="theme" w="96" hint-size="96px,134px"></dc-import></div><div style="position: absolute; left: 142px; top: 767px; transform: rotate(-4deg); box-shadow: 0 16px 30px rgba(0,0,0,0.35); border-radius: 8px"><dc-import name="Card" kind="face" rank="A" suit="h" glyph="none" st="none" theme="indigo-peach" deck="illus" back="theme" w="96" hint-size="96px,134px"></dc-import></div><div style="position: absolute; left: 224px; top: 767px; transform: rotate(4deg); box-shadow: 0 16px 30px rgba(0,0,0,0.35); border-radius: 8px"><dc-import name="Card" kind="face" rank="A" suit="h" glyph="none" st="none" theme="indigo-peach" deck="classic" back="theme" w="96" hint-size="96px,134px"></dc-import></div><div style="position: absolute; left: 306px; top: 781px; transform: rotate(12deg); box-shadow: 0 16px 30px rgba(0,0,0,0.35); border-radius: 8px"><dc-import name="Card" kind="face" rank="A" suit="h" glyph="none" st="none" theme="indigo-peach" deck="pixel" back="theme" w="96" hint-size="96px,134px"></dc-import></div>
+</div></div></div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview": {"width": 2560, "height": 1260}}'>
+
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

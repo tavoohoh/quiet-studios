@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Universal 16:9 · header y búsqueda</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#FFFFFF}a:hover{color:#FFFFFF}
+</style>
+</helmet>
+<div style="width: 1280px; height: 720px; position: relative; overflow: hidden; background: #0E6B78; color: #FFFFFF; font-family: ui-rounded, 'SF Pro Rounded', Nunito, system-ui, sans-serif">
+<div style="position: absolute; left: 0; right: 0; top: 70px; display: flex; flex-direction: column; align-items: center; gap: 10px">
+  <span style="font-size: 22px; font-weight: 800; letter-spacing: 0.04em; color: rgba(255, 255, 255, 0.85)">Quiet Numbers</span>
+  <h1 style="margin: 0; font-size: 64px; line-height: 1; font-weight: 900; letter-spacing: -0.015em">Match pairs. Make 10. <span style="color: #FFC2B5">Breathe.</span></h1>
+</div>
+<div style="position: absolute; left: 470px; top: 230px; width: 340px; height: 490px; overflow: hidden;">
+  <div style="width: 340px; height: 750px; box-sizing: border-box; padding: 8px; border-radius: 51px; background: #0A1416; box-shadow: 0 30px 70px rgba(2, 30, 36, 0.35)">
+    <div style="width: 100%; height: 734px; border-radius: 44px; overflow: hidden; background: #F3F7F8; color: #16201F; box-sizing: border-box; padding: 22px 18px 0; display: flex; flex-direction: column; font-family: ui-rounded, 'SF Pro Rounded', Nunito, system-ui, sans-serif">
+      <div style="display: flex; flex-direction: column; gap: 2px">
+        <span style="font-size: 41px; line-height: 1; font-weight: 800; font-variant-numeric: tabular-nums">1,240</span>
+        <span style="font-size: 15px; font-weight: 600; color: #5E6F72">Stage 2 · Best 2,480</span>
+      </div>
+      <div style="margin-top: 12px; display: flex">
+        <sc-for list="{{digits}}" as="g" hint-placeholder-count="9">
+          <span style="flex: 1; text-align: center; font-size: 15px; font-weight: 800; color: {{g.color}}; text-decoration: {{g.line}}">{{g.d}}</span>
+        </sc-for>
+      </div>
+      <div style="margin-top: 10px; display: grid; grid-template-columns: repeat(9, minmax(0, 1fr)); grid-auto-rows: 38px">
+        <sc-for list="{{cells}}" as="c" hint-placeholder-count="54">
+          <div style="display: flex; align-items: center; justify-content: center">
+            <span style="width: 29px; height: 29px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 21px; font-weight: {{c.w}}; font-variant-numeric: tabular-nums; color: {{c.color}}; background: {{c.bg}}; box-shadow: {{c.ring}}">{{c.n}}</span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+</div>
+<div style="position: absolute; left: 250px; top: 380px; padding: 14px 22px; border-radius: 999px; background: #FFFFFF; color: #0E6B78; box-shadow: 0 14px 30px rgba(2, 30, 36, 0.3); font-size: 30px; font-weight: 900">4 · 4</div>
+<div style="position: absolute; left: 850px; top: 470px; padding: 14px 22px; border-radius: 999px; background: #B9472F; color: #FFFFFF; box-shadow: 0 14px 30px rgba(90, 25, 10, 0.4); font-size: 30px; font-weight: 900">3 + 7 = 10</div>
+<div style="display: {{safe}}; position: absolute; left: 160px; top: 90px; width: 960px; height: 540px; box-sizing: border-box; border: 2px dashed rgba(255,255,255,0.7); border-radius: 6px; pointer-events: none">
+  <span style="position: absolute; left: 8px; top: 6px; font-family: -apple-system, system-ui, sans-serif; font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.7)">Zona central (aprox.; ajustar con la plantilla de Apple)</span>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"showSafe":{"editor":"boolean","default":true,"label":"Mostrar zona central"},"$preview":{"width":1280,"height":720}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const rows = [
+      [9, 7, 1, 7, 1, 9, 3, 5, 8],
+      [2, 1, 9, 7, 4, 8, 8, 3, 8],
+      [2, 8, 9, 6, 6, 5, 1, 5, 6],
+      [5, 5, 8, 9, 1, 3, 7, 1, 1],
+      [7, 1, 9, 3, 5, 6, 8, 8, 3],
+      [8, 9, 6, 6, 5, 1, 5, 9, 5],
+    ];
+    const ghosts = [0, 2, 3, 8, 9, 10, 11, 13, 18, 19, 21, 22, 27, 28, 30, 31, 34, 35, 37, 40, 45, 46, 47];
+    const sel = [32, 33];
+    const t = {primary: '#0E6B78', selBg: 'rgba(14, 107, 120, 0.16)', ghost: '#CFD8DA', ink: '#16201F', muted: '#5E6F72', accent: '#B9472F'};
+    const flat = rows.flat();
+    const cells = flat.map((n, i) => {
+      if (sel.includes(i)) return { n, color: t.primary, bg: t.selBg, ring: '0 0 0 2px ' + t.primary, w: 800 };
+      if (ghosts.includes(i)) return { n, color: t.ghost, bg: 'transparent', ring: 'none', w: 500 };
+      return { n, color: i >= 45 ? t.accent : t.ink, bg: 'transparent', ring: 'none', w: 500 };
+    });
+    const left = new Set(flat.filter((n, i) => !ghosts.includes(i)));
+    const digits = [1, 2, 3, 4, 5, 6, 7, 8, 9].map(d => ({ d, color: left.has(d) ? t.muted : t.ghost, line: left.has(d) ? 'none' : 'line-through' }));
+    const p = this.props;
+    return { cells, digits, safe: p.showSafe === false ? 'none' : 'block' };
+  }
+}
+</script>
+</body>
+</html>

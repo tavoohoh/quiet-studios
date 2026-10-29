@@ -22,7 +22,7 @@ Antes de nada leer `CLAUDE.md` de la raíz (filosofía y reglas de la familia) y
 
 ## 2. Diseño
 
-Crear los dos artefactos de la app (sistema de diseño y canvas) con la skill `quiet-design-canvas`. El diseño se cierra antes de escribir pantallas; sus links van en el CLAUDE.md de la app. Revisar `studio/roadmap.md`: el juego debe tener modo libre y retos diarios como los demás.
+Crear el canvas de diseño de la app con la plantilla de la skill `quiet-design-canvas`. El diseño se cierra antes de escribir pantallas; sus links van en el CLAUDE.md de la app. Revisar `studio/roadmap.md`: el juego debe tener modo libre y retos diarios como los demás.
 
 ## 3. Proyecto
 

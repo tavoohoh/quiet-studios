@@ -1,0 +1,381 @@
+{
+  "v": 3,
+  "createdOnFiles": {
+    "v": 1,
+    "at": "2026-10-27T15:00:00Z"
+  },
+  "title": "Quiet Solitaire · Diseño",
+  "launch": {
+    "view": "canvas",
+    "page": "paleta"
+  },
+  "pages": [
+    {
+      "id": "paleta",
+      "name": "1 · Paleta"
+    },
+    {
+      "id": "marca",
+      "name": "2 · Logo y splash"
+    },
+    {
+      "id": "arte",
+      "name": "3 · Arte del juego"
+    },
+    {
+      "id": "mocks",
+      "name": "4 · Mocks del juego"
+    },
+    {
+      "id": "logros",
+      "name": "5 · Logros y recompensas"
+    },
+    {
+      "id": "appstore",
+      "name": "6 · App Store"
+    },
+    {
+      "id": "headers",
+      "name": "7 · Header y búsqueda"
+    },
+    {
+      "id": "brief",
+      "name": "8 · Brief para Claude Code"
+    }
+  ],
+  "boards": {
+    "Palette.dc.html": {
+      "x": 0,
+      "y": 0,
+      "w": 1640,
+      "h": 1060,
+      "title": "Paleta: Petróleo y coral, tableros y suitRed",
+      "page": "paleta"
+    },
+    "Logo.dc.html": {
+      "x": 0,
+      "y": 0,
+      "w": 1640,
+      "h": 900,
+      "title": "Ícono actual (claro, oscuro, tinted, Gold) y splash",
+      "page": "marca"
+    },
+    "IconProposals.dc.html": {
+      "x": 0,
+      "y": 1020,
+      "w": 1640,
+      "h": 1120,
+      "title": "Ícono · propuestas B, C y D",
+      "page": "marca"
+    },
+    "Main.dc.html": {
+      "x": 0,
+      "y": 0,
+      "w": 1440,
+      "h": 1320,
+      "title": "Mazo Quiet",
+      "page": "arte"
+    },
+    "Card.dc.html": {
+      "x": 1520,
+      "y": 0,
+      "w": 120,
+      "h": 168,
+      "title": "Carta (componente)",
+      "page": "arte"
+    },
+    "Decks.dc.html": {
+      "x": 0,
+      "y": 1720,
+      "w": 1440,
+      "h": 1200,
+      "title": "Mazos desbloqueables · iteración 2",
+      "page": "arte"
+    },
+    "Portrait.dc.html": {
+      "x": 1520,
+      "y": 1720,
+      "w": 160,
+      "h": 160,
+      "title": "Figura (componente)",
+      "page": "arte"
+    },
+    "Game.dc.html": {
+      "x": 0,
+      "y": 0,
+      "w": 390,
+      "h": 844,
+      "title": "Juego · claro",
+      "page": "mocks"
+    },
+    "GameDark.dc.html": {
+      "x": 470,
+      "y": 0,
+      "w": 390,
+      "h": 844,
+      "title": "Juego · oscuro, autocompletar",
+      "page": "mocks"
+    },
+    "GameIndigo.dc.html": {
+      "x": 940,
+      "y": 0,
+      "w": 390,
+      "h": 844,
+      "title": "Juego · Índigo, Pixel y Noche",
+      "page": "mocks"
+    },
+    "Home.dc.html": {
+      "x": 0,
+      "y": 1244,
+      "w": 390,
+      "h": 844,
+      "title": "Inicio",
+      "page": "mocks"
+    },
+    "Daily.dc.html": {
+      "x": 470,
+      "y": 1244,
+      "w": 390,
+      "h": 844,
+      "title": "Reto diario",
+      "page": "mocks"
+    },
+    "Leaderboards.dc.html": {
+      "x": 940,
+      "y": 1244,
+      "w": 390,
+      "h": 844,
+      "title": "Clasificaciones · amigos",
+      "page": "mocks"
+    },
+    "LeaderboardsSignedOut.dc.html": {
+      "x": 1410,
+      "y": 1244,
+      "w": 390,
+      "h": 844,
+      "title": "Clasificaciones · sin Game Center",
+      "page": "mocks"
+    },
+    "Collection.dc.html": {
+      "x": 1880,
+      "y": 1244,
+      "w": 390,
+      "h": 844,
+      "title": "Colección",
+      "page": "mocks"
+    },
+    "Settings.dc.html": {
+      "x": 2350,
+      "y": 1244,
+      "w": 390,
+      "h": 844,
+      "title": "Ajustes",
+      "page": "mocks"
+    },
+    "Win.dc.html": {
+      "x": 2820,
+      "y": 1244,
+      "w": 390,
+      "h": 844,
+      "title": "Victoria",
+      "page": "mocks"
+    },
+    "StoreBadges.dc.html": {
+      "x": 0,
+      "y": 0,
+      "w": 1640,
+      "h": 760,
+      "title": "Insignias de Game Center (13)",
+      "page": "logros"
+    },
+    "Unlocks.dc.html": {
+      "x": 0,
+      "y": 1160,
+      "w": 1440,
+      "h": 980,
+      "title": "Desbloqueables: reversos, tableros y efectos",
+      "page": "logros"
+    },
+    "StoreIPhone.dc.html": {
+      "x": 0,
+      "y": 0,
+      "w": 2324,
+      "h": 2210,
+      "title": "App Store · iPhone (actual, publicada)",
+      "page": "appstore"
+    },
+    "StoreIPad.dc.html": {
+      "x": 0,
+      "y": 2330,
+      "w": 2324,
+      "h": 1500,
+      "title": "App Store · iPad (actual, publicada)",
+      "page": "appstore"
+    },
+    "StoreProposalB.dc.html": {
+      "x": 2480,
+      "y": 0,
+      "w": 2560,
+      "h": 1260,
+      "title": "App Store · propuesta B (iPhone)",
+      "page": "appstore"
+    },
+    "HeaderCalm.dc.html": {
+      "x": 0,
+      "y": 0,
+      "w": 1280,
+      "h": 549,
+      "title": "Header A · Cartas en calma (21:9)",
+      "page": "headers"
+    },
+    "HeaderGame.dc.html": {
+      "x": 1360,
+      "y": 0,
+      "w": 1280,
+      "h": 549,
+      "title": "Header B · El juego (21:9)",
+      "page": "headers"
+    },
+    "SearchRule.dc.html": {
+      "x": 0,
+      "y": 669,
+      "w": 1200,
+      "h": 800,
+      "title": "Búsqueda A · La regla (3:2)",
+      "page": "headers"
+    },
+    "SearchDaily.dc.html": {
+      "x": 1280,
+      "y": 669,
+      "w": 1200,
+      "h": 800,
+      "title": "Búsqueda B · Reto diario, oscuro (3:2)",
+      "page": "headers"
+    },
+    "Universal.dc.html": {
+      "x": 0,
+      "y": 1589,
+      "w": 1280,
+      "h": 720,
+      "title": "Universal · un solo asset para ambos (16:9)",
+      "page": "headers"
+    },
+    "Brief.dc.html": {
+      "x": 0,
+      "y": 0,
+      "w": 1280,
+      "h": 4400,
+      "title": "Brief para Claude Code",
+      "page": "brief"
+    }
+  },
+  "order": [
+    "Palette.dc.html",
+    "Logo.dc.html",
+    "IconProposals.dc.html",
+    "Main.dc.html",
+    "Card.dc.html",
+    "Decks.dc.html",
+    "Portrait.dc.html",
+    "Game.dc.html",
+    "GameDark.dc.html",
+    "GameIndigo.dc.html",
+    "Home.dc.html",
+    "Daily.dc.html",
+    "Leaderboards.dc.html",
+    "LeaderboardsSignedOut.dc.html",
+    "Collection.dc.html",
+    "Settings.dc.html",
+    "Win.dc.html",
+    "StoreBadges.dc.html",
+    "Unlocks.dc.html",
+    "StoreIPhone.dc.html",
+    "StoreIPad.dc.html",
+    "StoreProposalB.dc.html",
+    "HeaderCalm.dc.html",
+    "HeaderGame.dc.html",
+    "SearchRule.dc.html",
+    "SearchDaily.dc.html",
+    "Universal.dc.html",
+    "Brief.dc.html"
+  ],
+  "notes": {
+    "t1": {
+      "x": 0,
+      "y": -300,
+      "text": "Quiet Solitaire · cartas",
+      "kind": "title1",
+      "maxW": 1640,
+      "page": "arte"
+    },
+    "t4": {
+      "x": 0,
+      "y": 1420,
+      "text": "Mazos nuevos: Ilustrado, Clásico, Pixel",
+      "kind": "title1",
+      "maxW": 1680,
+      "page": "arte"
+    },
+    "t2": {
+      "x": 0,
+      "y": -300,
+      "text": "Pantalla de juego",
+      "kind": "title1",
+      "maxW": 1330,
+      "page": "mocks"
+    },
+    "t5": {
+      "x": 0,
+      "y": 944,
+      "text": "Pantallas",
+      "kind": "title1",
+      "maxW": 3210,
+      "page": "mocks"
+    },
+    "t3": {
+      "x": 0,
+      "y": 860,
+      "text": "Desbloqueables",
+      "kind": "title1",
+      "maxW": 1440,
+      "page": "logros"
+    },
+    "mockNote": {
+      "x": 1410,
+      "y": 0,
+      "w": 520,
+      "page": "mocks",
+      "fill": "teal",
+      "size": "m",
+      "text": "Pendiente: el juego ya muestra «Tiempo · Movimientos · Mejor» bajo el puntaje (decisión 2026-10-27); estos mocks todavía dicen «34 movimientos · Mejor 1.240». Falta también la fila de animaciones clave (ver Brief, sección 4)."
+    },
+    "iconNote": {
+      "x": 1720,
+      "y": 1020,
+      "w": 420,
+      "page": "marca",
+      "fill": "teal",
+      "size": "m",
+      "text": "Propuestas nuevas (2026-10-29). El ícono actual sigue en la app y en TestFlight hasta que elijas una; al elegir, se regenera con scripts/render-icon.py."
+    },
+    "storeNote": {
+      "x": 2480,
+      "y": 1340,
+      "w": 640,
+      "page": "appstore",
+      "fill": "teal",
+      "size": "m",
+      "text": "Propuesta B (2026-10-29), sin pisar la publicada. Al elegirla: ajustar scripts/store-images.py (fondos, titulares y callouts) y regenerar en-US y es-MX para iPhone 6.9\", 6.3\" e iPad 13\"."
+    },
+    "headerSpecs": {
+      "x": 1360,
+      "y": 1589,
+      "w": 560,
+      "page": "headers",
+      "fill": "teal",
+      "size": "m",
+      "text": "Medidas reales (Apple, iOS 27+):\n• Header 21:9: 3840 × 1646 px (jpg/png)\n• Búsqueda 3:2: 1920 × 1280 a 3840 × 2560 px (jpg/png)\n• Universal 16:9: 5244 × 2950 px (solo png)\n• Sin alfa. Video opcional: 5–30 s, 30/60 fps, en loop y sin sonido.\nReglas: una sola idea, punto focal al centro, frase corta, apto 4+, sin precios, URLs ni ©; localizar en/es.\nLos artboards están a escala; la línea punteada es la zona central aproximada. Referencia: en Quiet Numbers se eligieron Header A y Búsqueda B."
+    }
+  },
+  "designSystems": []
+}

@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Ajustes</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800&amp;display=swap">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; padding: 58px 16px 0; overflow: hidden; background: #F3F7F8; color: #16201F; font-family: ui-rounded, 'SF Pro Rounded', Nunito, system-ui, sans-serif; display: flex; flex-direction: column; gap: 10px">
+  <div style="position: relative; height: 44px; flex-shrink: 0; display: flex; align-items: center; justify-content: center">
+    <button aria-label="Volver" style="position: absolute; left: 0; top: 0; width: 44px; height: 44px; border-radius: 22px; border: none; padding: 0; background: #FFFFFF; display: flex; align-items: center; justify-content: center">
+      <svg viewBox="0 0 24 24" aria-hidden="true" style="width: 20px; height: 20px; fill: none; stroke: #16201F; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round"><path d="M15 5l-7 7 7 7"></path></svg>
+    </button>
+    <span style="font-size: 17px; font-weight: 800">Ajustes</span>
+  </div>
+
+  <div style="font-size: 15px; font-weight: 700; color: #5E6F72; padding: 4px 4px 0">Juego</div>
+  <div style="background: #FFFFFF; border-radius: 22px; padding: 0 16px; flex-shrink: 0">
+    <sc-for list="{{toggles}}" as="t" hint-placeholder-count="5">
+      <div style="display: flex; align-items: center; gap: 12px; min-height: 52px; border-bottom: {{t.sep}}">
+        <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 1px; padding: 8px 0">
+          <span style="font-size: 16px; font-weight: 700">{{t.name}}</span>
+          <sc-if value="{{t.hasSub}}" hint-placeholder-val="{{false}}">
+            <span style="font-size: 13px; font-weight: 600; color: #5E6F72">{{t.sub}}</span>
+          </sc-if>
+        </div>
+        <button aria-label="{{t.name}}" aria-pressed="{{t.pressed}}" style="width: 51px; height: 31px; border: none; border-radius: 16px; padding: 2px; background: {{t.track}}; display: flex; justify-content: {{t.align}}">
+          <span style="width: 27px; height: 27px; border-radius: 14px; background: #FFFFFF; box-shadow: 0 1px 3px rgba(0,0,0,0.2)"></span>
+        </button>
+      </div>
+    </sc-for>
+  </div>
+
+  <div style="font-size: 15px; font-weight: 700; color: #5E6F72; padding: 6px 4px 0">Cuenta</div>
+  <div style="background: #FFFFFF; border-radius: 22px; padding: 0 16px; flex-shrink: 0">
+    <div style="display: flex; align-items: center; gap: 10px; height: 52px; border-bottom: 1px solid #E3EAEC">
+      <span style="flex-grow: 1; font-size: 16px; font-weight: 700">Game Center</span>
+      <span style="font-size: 15px; font-weight: 600; color: #5E6F72">Sin sesión</span>
+      <svg viewBox="0 0 24 24" aria-hidden="true" style="width: 14px; height: 14px; fill: none; stroke: #8A9DA0; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round"><path d="M9 5l7 7-7 7"></path></svg>
+    </div>
+    <div style="display: flex; align-items: center; gap: 10px; height: 52px">
+      <span style="flex-grow: 1; font-size: 16px; font-weight: 700">Cómo jugar</span>
+      <svg viewBox="0 0 24 24" aria-hidden="true" style="width: 14px; height: 14px; fill: none; stroke: #8A9DA0; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round"><path d="M9 5l7 7-7 7"></path></svg>
+    </div>
+  </div>
+
+  <div style="font-size: 15px; font-weight: 700; color: #5E6F72; padding: 6px 4px 0">Privacidad</div>
+  <div style="background: #FFFFFF; border-radius: 22px; padding: 14px 16px; font-size: 14px; line-height: 1.45; color: #5E6F72; flex-shrink: 0">Quiet Solitaire no recolecta ningún dato. Tus partidas, rachas y logros se quedan en este dispositivo. Si inicias sesión en Game Center, tus puntajes y logros se comparten con Game Center de Apple y tu progreso se guarda en tu iCloud.</div>
+
+  <div style="background: #FFFFFF; border-radius: 22px; padding: 0 16px; flex-shrink: 0; margin-top: 6px">
+    <div style="display: flex; align-items: center; height: 52px; border-bottom: 1px solid #E3EAEC">
+      <span style="font-size: 16px; font-weight: 700; color: #B9472F">Restablecer progreso…</span>
+    </div>
+    <div style="display: flex; align-items: center; height: 52px">
+      <span style="flex-grow: 1; font-size: 16px; font-weight: 700">Versión</span>
+      <span style="font-size: 15px; font-weight: 600; color: #5E6F72">1.0</span>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const items = [
+      ['Sonido', '', true], ['Hápticos', '', true], ['Tocar para mover', 'La carta va sola a su mejor sitio.', true],
+      ['Solo partidas con solución', 'Cada reparto clásico se puede ganar.', true], ['Modo zurdo', 'Mazo y descarte a la izquierda.', false]
+    ];
+    return {
+      toggles: items.map((t, i) => ({
+        name: t[0], sub: t[1], hasSub: t[1] !== '', pressed: t[2] ? 'true' : 'false',
+        track: t[2] ? '#0E6B78' : '#CFD8DA', align: t[2] ? 'flex-end' : 'flex-start',
+        sep: i < items.length - 1 ? '1px solid #E3EAEC' : 'none'
+      }))
+    };
+  }
+}
+</script>
+</body>
+</html>

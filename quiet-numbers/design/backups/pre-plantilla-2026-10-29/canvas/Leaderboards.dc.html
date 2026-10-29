@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Quiet Numbers · leaderboards</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;600;700;800;900&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#5BC2CF}a:hover{color:#8ED6DF}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; position: relative; overflow: hidden; background: #0F1A1D; color: #E8F1F2; font-family: -apple-system, 'SF Pro Text', system-ui, sans-serif">
+  <div style="position: relative; height: 54px; display: flex; justify-content: space-between; align-items: center; padding: 0 30px 0 44px; font-size: 17px; font-weight: 600; color: #E8F1F2">
+    <span style="font-variant-numeric: tabular-nums">9:41</span>
+    <span style="position: absolute; left: 50%; top: 11px; width: 125px; height: 37px; margin-left: -62px; border-radius: 19px; background: #000000"></span>
+    <span style="display: flex; align-items: center; gap: 6px">
+      <svg width="18" height="12" viewBox="0 0 17 11" aria-hidden="true"><rect x="0" y="7" width="3" height="4" rx="1" fill="#E8F1F2"></rect><rect x="4.5" y="5" width="3" height="6" rx="1" fill="#E8F1F2"></rect><rect x="9" y="2.5" width="3" height="8.5" rx="1" fill="#E8F1F2"></rect><rect x="13.5" y="0" width="3" height="11" rx="1" fill="#E8F1F2"></rect></svg>
+      <svg width="17" height="12" viewBox="0 0 15 11" aria-hidden="true"><path d="M7.5 2.2c2.2 0 4.2.8 5.7 2.2l1.1-1.1A9.6 9.6 0 0 0 7.5.6 9.6 9.6 0 0 0 .7 3.3l1.1 1.1a8 8 0 0 1 5.7-2.2zm0 3.2c1.3 0 2.5.5 3.4 1.3l1.1-1.1a6.4 6.4 0 0 0-9 0l1.1 1.1c.9-.8 2.1-1.3 3.4-1.3zm0 3.2c.5 0 .9.2 1.2.5L7.5 10.3 6.3 9.1c.3-.3.7-.5 1.2-.5z" fill="#E8F1F2"></path></svg>
+      <svg width="27" height="13" viewBox="0 0 25 12" aria-hidden="true"><rect x="0.5" y="0.5" width="21" height="11" rx="3.5" fill="none" stroke="#E8F1F2" stroke-opacity="0.4"></rect><rect x="2" y="2" width="16" height="8" rx="2" fill="#E8F1F2"></rect><path d="M23 4v4c.8-.3 1.3-1.1 1.3-2s-.5-1.7-1.3-2z" fill="#E8F1F2" fill-opacity="0.4"></path></svg>
+    </span>
+  </div>
+  <div style="display: flex; justify-content: space-between; align-items: center; padding: 4px 20px 0">
+    <button type="button" aria-label="Back" style="width: 48px; height: 48px; border: none; border-radius: 24px; background: #172629; display: flex; align-items: center; justify-content: center; padding: 0"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="#E8F1F2" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+    <h1 style="margin: 0; font-size: 18px; font-weight: 700">Leaderboards</h1>
+    <span style="width: 48px; height: 48px"></span>
+  </div>
+  <div style="display: flex; flex-direction: column; gap: 10px; padding: 14px 20px 0">
+    <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); padding: 3px; border-radius: 999px; background: #172629; font-size: 15px; font-weight: 600; text-align: center"><span style="padding: 9px 0; border-radius: 999px; background: #E8F1F2; color: #0F1A1D">Today</span><span style="padding: 9px 0; border-radius: 999px; background: transparent; color: #A9B9BB">Best score</span><span style="padding: 9px 0; border-radius: 999px; background: transparent; color: #A9B9BB">Streak</span></div>
+    <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); padding: 3px; border-radius: 999px; background: #172629; font-size: 15px; font-weight: 600; text-align: center"><span style="padding: 9px 0; border-radius: 999px; background: transparent; color: #A9B9BB">Global</span><span style="padding: 9px 0; border-radius: 999px; background: #E8F1F2; color: #0F1A1D">Friends</span></div>
+    <div style="margin-top: 6px; padding: 6px; border-radius: 24px; background: #172629; display: flex; flex-direction: column">
+      <sc-for list="{{players}}" as="p" hint-placeholder-count="10">
+        <div style="display: flex; align-items: center; gap: 12px; height: 54px; padding: 0 12px; border-radius: 16px; background: {{p.rowBg}}">
+          <span style="width: 28px; height: 28px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 800; font-variant-numeric: tabular-nums; background: {{p.rankBg}}; color: {{p.rankColor}}">{{p.rank}}</span>
+          <span style="width: 34px; height: 34px; border-radius: 17px; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; background: {{p.avBg}}; color: #FFFFFF">{{p.initial}}</span>
+          <span style="flex-grow: 1; font-size: 17px; font-weight: {{p.w}}; color: {{p.nameColor}}">{{p.name}}</span>
+          <span style="font-family: ui-rounded, 'SF Pro Rounded', Nunito, system-ui, sans-serif; font-size: 18px; font-weight: {{p.w}}; font-variant-numeric: tabular-nums; color: {{p.nameColor}}">{{p.score}}</span>
+        </div>
+      </sc-for>
+    </div>
+    <span style="text-align: center; font-size: 13px; color: #8A9DA0">Scores from Game Center · updated just now</span>
+  </div>
+  <span style="position: absolute; left: 50%; bottom: 8px; width: 134px; height: 5px; margin-left: -67px; border-radius: 3px; background: #E8F1F2; opacity: 0.7"></span>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const list = [['juli', 412], ['tatita12', 398], ['vale', 377], ['guss', 361], ['juanca', 340], ['cori16', 336], ['eliasb', 333], ['mariadelsea', 318], ['aleja', 296], ['nova47', 281]];
+    const medals = [{ bg: '#FF9A85', color: '#2A0E06' }, { bg: '#5BC2CF', color: '#062327' }, { bg: '#C9D6D8', color: '#16201F' }];
+    const avatars = ['#B9472F', '#0E6B78', '#4A5B5E', '#2E8A97', '#7A4B8C', '#B4503A', '#3E7A5A', '#A8542A', '#4A42D6', '#5E6F72'];
+    const players = list.map(([name, score], i) => {
+      const me = name === 'guss';
+      const m = medals[i];
+      return { rank: i + 1, name, score, initial: name[0].toUpperCase(), avBg: avatars[i], rankBg: m ? m.bg : 'transparent', rankColor: m ? m.color : '#8A9DA0', rowBg: me ? 'rgba(91, 194, 207, 0.16)' : 'transparent', nameColor: me ? '#5BC2CF' : '#E8F1F2', w: me ? 800 : 500 };
+    });
+    return { players };
+  }
+}
+</script>
+</body>
+</html>

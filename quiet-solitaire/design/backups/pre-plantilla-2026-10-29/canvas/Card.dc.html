@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Carta</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800&amp;family=Silkscreen:wght@400;700&amp;display=swap">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="position: relative; box-sizing: border-box; width: {{c.w}}px; height: {{c.h}}px; border-radius: {{c.r}}px; background-color: {{c.bg}}; background-image: {{c.pattern}}; background-size: {{c.patternSize}}; border: {{c.border}}; box-shadow: {{c.shadow}}; outline: {{c.outline}}; outline-offset: 2px; transform: translateY({{c.lift}}px); clip-path: {{c.clip}}; overflow: hidden; font-family: {{c.font}}">
+  <sc-if value="{{c.isSlot}}" hint-placeholder-val="{{false}}">
+    <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center">
+      <sc-if value="{{c.slotSuit}}" hint-placeholder-val="{{false}}">
+        <svg viewBox="0 0 24 24" aria-hidden="true" style="width: {{c.slotSize}}px; height: {{c.slotSize}}px; fill: {{c.glyphColor}}"><path d="{{c.slotPath}}"></path></svg>
+      </sc-if>
+      <sc-if value="{{c.slotKing}}" hint-placeholder-val="{{false}}">
+        <span style="font-size: {{c.slotSize}}px; font-weight: 800; color: {{c.glyphColor}}; line-height: 1">K</span>
+      </sc-if>
+      <sc-if value="{{c.slotStock}}" hint-placeholder-val="{{false}}">
+        <svg viewBox="0 0 24 24" aria-hidden="true" style="width: {{c.slotSize}}px; height: {{c.slotSize}}px; fill: none; stroke: {{c.glyphColor}}; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round"><path d="M19 12a7 7 0 1 1-2.05-4.95M19 4.5V8h-3.5"></path></svg>
+      </sc-if>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{c.isBack}}" hint-placeholder-val="{{false}}">
+    <div style="position: absolute; inset: {{c.inset}}px; border: {{c.frameW}}px solid {{c.backLine}}; border-radius: {{c.innerR}}px"></div>
+    <div style="position: absolute; left: {{c.markX}}px; top: {{c.markY}}px; width: {{c.mark}}px; height: {{c.mark}}px; box-sizing: border-box; border: {{c.frameW}}px solid {{c.backMark}}; border-radius: 50%; display: flex; align-items: center; justify-content: center; gap: {{c.barGap}}px">
+      <div style="width: {{c.barW}}px; height: {{c.barH}}px; border-radius: 2px; background: {{c.backMark}}"></div>
+      <div style="width: {{c.barW}}px; height: {{c.barH}}px; border-radius: 2px; background: {{c.backMark}}"></div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{c.isModern}}" hint-placeholder-val="{{true}}">
+    <div style="position: absolute; left: {{c.indexX}}px; top: {{c.indexY}}px; display: flex; align-items: center; gap: {{c.indexGap}}px">
+      <sc-if value="{{c.textRank}}" hint-placeholder-val="{{true}}">
+        <span style="font-size: {{c.rankSize}}px; font-weight: {{c.rankWeight}}; letter-spacing: {{c.rankTrack}}em; line-height: 1; color: {{c.color}}; font-variant-numeric: tabular-nums">{{c.rank}}</span>
+      </sc-if>
+      <sc-if value="{{c.pixelRank}}" hint-placeholder-val="{{false}}">
+        <svg viewBox="0 0 {{c.rankCols}} 5" aria-hidden="true" style="width: {{c.rankW}}px; height: {{c.rankH}}px; fill: {{c.color}}; shape-rendering: crispEdges"><path d="{{c.rankPath}}"></path></svg>
+      </sc-if>
+      <svg viewBox="{{c.suitBox}}" aria-hidden="true" style="width: {{c.smallSize}}px; height: {{c.smallSize}}px; fill: {{c.color}}; shape-rendering: {{c.render}}"><path d="{{c.suitPath}}"></path></svg>
+    </div>
+    <sc-if value="{{c.isEmblem}}" hint-placeholder-val="{{false}}">
+      <div style="position: absolute; left: {{c.panelX}}px; top: {{c.panelY}}px; width: {{c.panelW}}px; height: {{c.panelH}}px; border-radius: {{c.innerR}}px; background: {{c.panel}}; display: flex; align-items: center; justify-content: center">
+        <svg viewBox="0 0 24 24" aria-hidden="true" style="width: {{c.emblem}}px; height: {{c.emblem}}px; fill: none; stroke: {{c.color}}; stroke-width: 1.7; stroke-linejoin: round; stroke-linecap: round"><path d="{{c.emblemPath}}"></path></svg>
+      </div>
+    </sc-if>
+    <sc-if value="{{c.isPortrait}}" hint-placeholder-val="{{false}}">
+      <div style="position: absolute; left: {{c.panelX}}px; top: {{c.portY}}px; width: {{c.panelW}}px; height: {{c.portH}}px; border-radius: {{c.innerR}}px; background: {{c.panel}}; overflow: hidden">
+        <dc-import name="Portrait" rank="{{c.rank}}" look="{{c.portLook}}" color="{{c.color}}" w="{{c.panelW}}" h="{{c.portH}}" hint-size="{{c.portHint}}"></dc-import>
+      </div>
+    </sc-if>
+    <sc-if value="{{c.isPip}}" hint-placeholder-val="{{true}}">
+      <svg viewBox="{{c.suitBox}}" aria-hidden="true" style="position: absolute; left: {{c.pipX}}px; top: {{c.pipY}}px; width: {{c.pip}}px; height: {{c.pip}}px; fill: {{c.color}}; shape-rendering: {{c.render}}"><path d="{{c.suitPath}}"></path></svg>
+    </sc-if>
+  </sc-if>
+
+  <sc-if value="{{c.isClassic}}" hint-placeholder-val="{{false}}">
+    <div style="position: absolute; left: {{c.cIndexX}}px; top: {{c.cIndexY}}px; width: {{c.cIndexW}}px; display: flex; flex-direction: column; align-items: center; gap: 1px">
+      <span style="font-family: Georgia, 'Times New Roman', serif; font-size: {{c.cRankSize}}px; font-weight: 700; letter-spacing: {{c.rankTrack}}em; line-height: 1; color: {{c.color}}">{{c.rank}}</span>
+      <svg viewBox="0 0 24 24" aria-hidden="true" style="width: {{c.cSuitSize}}px; height: {{c.cSuitSize}}px; fill: {{c.color}}"><path d="{{c.suitPath}}"></path></svg>
+    </div>
+    <div style="position: absolute; right: {{c.cIndexX}}px; bottom: {{c.cIndexY}}px; width: {{c.cIndexW}}px; display: flex; flex-direction: column; align-items: center; gap: 1px; transform: rotate(180deg)">
+      <span style="font-family: Georgia, 'Times New Roman', serif; font-size: {{c.cRankSize}}px; font-weight: 700; letter-spacing: {{c.rankTrack}}em; line-height: 1; color: {{c.color}}">{{c.rank}}</span>
+      <svg viewBox="0 0 24 24" aria-hidden="true" style="width: {{c.cSuitSize}}px; height: {{c.cSuitSize}}px; fill: {{c.color}}"><path d="{{c.suitPath}}"></path></svg>
+    </div>
+    <sc-for list="{{c.pips}}" as="pp" hint-placeholder-count="0">
+      <svg viewBox="0 0 24 24" aria-hidden="true" style="position: absolute; left: {{pp.x}}px; top: {{pp.y}}px; width: {{pp.s}}px; height: {{pp.s}}px; fill: {{c.color}}; transform: rotate({{pp.rot}}deg)"><path d="{{c.suitPath}}"></path></svg>
+    </sc-for>
+    <sc-if value="{{c.classicCourt}}" hint-placeholder-val="{{false}}">
+      <div style="position: absolute; left: {{c.frameX}}px; top: {{c.frameY}}px; width: {{c.frameWd}}px; height: {{c.frameHt}}px; box-sizing: border-box; border: 1px solid {{c.color}}; background: #FBF6EA; display: flex; flex-direction: column; overflow: hidden">
+        <div style="height: {{c.halfH}}px; border-bottom: 1px solid {{c.color}}">
+          <dc-import name="Portrait" rank="{{c.rank}}" look="classic" color="{{c.color}}" w="{{c.halfW}}" h="{{c.halfH}}" hint-size="{{c.halfHint}}"></dc-import>
+        </div>
+        <div style="height: {{c.halfH}}px; transform: rotate(180deg)">
+          <dc-import name="Portrait" rank="{{c.rank}}" look="classic" color="{{c.color}}" w="{{c.halfW}}" h="{{c.halfH}}" hint-size="{{c.halfHint}}"></dc-import>
+        </div>
+      </div>
+    </sc-if>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"kind":{"editor":"enum","options":["face","back","slot"],"default":"face"},"rank":{"editor":"enum","options":["A","2","3","4","5","6","7","8","9","10","J","Q","K"],"default":"A"},"suit":{"editor":"enum","options":["s","h","d","c"],"default":"s"},"glyph":{"editor":"enum","options":["none","s","h","d","c","K","stock"],"default":"none"},"theme":{"editor":"enum","options":["teal-light","teal-dark","sage-sand","indigo-peach","sage-coral","contrast"],"default":"teal-light"},"deck":{"editor":"enum","options":["quiet","illus","classic","pixel","four","big"],"default":"quiet"},"back":{"editor":"enum","options":["theme","coral","night","linen","gold"],"default":"theme"},"st":{"editor":"enum","options":["none","selected","hint","target"],"default":"none"},"w":{"editor":"int","min":32,"max":240,"default":120},"$preview":{"width":120,"height":168}}'>
+const THEMES = {
+  'teal-light': { surface: '#FFFFFF', ink: '#16201F', red: '#B9472F', primary: '#0E6B78', panel: '#E3EEF0', cardBorder: '#D6E1E3', bw: 1, shadow: '0 1px 2px rgba(15,26,29,0.10)', lift: '0 10px 20px rgba(15,26,29,0.18)', back: '#0E6B78', slot: '#E3EBED', glyph: '#C3CFD2', target: '#CFE6E9', four: { s: '#16201F', h: '#B9472F', d: '#0E6B78', c: '#3B7A3A' } },
+  'teal-dark': { surface: '#1A2C30', ink: '#E8F1F2', red: '#FF9A85', primary: '#5BC2CF', panel: '#22383D', cardBorder: '#2A4146', bw: 1, shadow: '0 1px 2px rgba(0,0,0,0.40)', lift: '0 12px 24px rgba(0,0,0,0.50)', back: '#1D5961', slot: '#16252A', glyph: '#2E4246', target: '#1B3E44', four: { s: '#E8F1F2', h: '#FF9A85', d: '#5BC2CF', c: '#8CCB84' } },
+  'sage-sand': { surface: '#FFFFFF', ink: '#1F2622', red: '#B4503A', primary: '#387454', panel: '#ECE9E0', cardBorder: '#E0DCD1', bw: 1, shadow: '0 1px 2px rgba(40,35,20,0.10)', lift: '0 10px 20px rgba(40,35,20,0.18)', back: '#387454', slot: '#ECE8DE', glyph: '#D2CDC0', target: '#DCE9DF', four: { s: '#1F2622', h: '#B4503A', d: '#2F5F8A', c: '#387454' } },
+  'indigo-peach': { surface: '#232238', ink: '#ECEBF7', red: '#FFAE82', primary: '#9A98FF', panel: '#2C2A44', cardBorder: '#34324E', bw: 1, shadow: '0 1px 2px rgba(0,0,0,0.45)', lift: '0 12px 24px rgba(0,0,0,0.55)', back: '#3A3878', slot: '#1B1A2B', glyph: '#36344E', target: '#2C2B52', four: { s: '#ECEBF7', h: '#FFAE82', d: '#9A98FF', c: '#8FD3A4' } },
+  'sage-coral': { surface: '#FFFFFF', ink: '#1E2420', red: '#B4503A', primary: '#4D7157', panel: '#EFEAE0', cardBorder: '#E3DDD0', bw: 1, shadow: '0 1px 2px rgba(40,35,20,0.10)', lift: '0 10px 20px rgba(40,35,20,0.18)', back: '#4D7157', slot: '#EEE8DD', glyph: '#D6D0C4', target: '#DDE6DE', four: { s: '#1E2420', h: '#B4503A', d: '#2F5F8A', c: '#4D7157' } },
+  'contrast': { surface: '#FFFFFF', ink: '#000000', red: '#B3001B', primary: '#003F91', panel: '#E6EEF9', cardBorder: '#000000', bw: 2, shadow: 'none', lift: '0 0 0 rgba(0,0,0,0)', back: '#003F91', slot: '#E6E6EA', glyph: '#8E8E93', target: '#D6E2F5', four: { s: '#000000', h: '#B3001B', d: '#003F91', c: '#1B6E20' } }
+};
+// Decks with their own face colors: they ignore the theme's card face.
+const FIXED = {
+  illus: { surface: '#FFFFFF', ink: '#1B1B1B', red: '#D7322A', panel: '#F5EFE3', cardBorder: '#D5D5D5', bw: 1 },
+  classic: { surface: '#FFFFFF', ink: '#111111', red: '#C8102E', panel: '#FBF6EA', cardBorder: '#B5B5B5', bw: 1 },
+  pixel: { surface: '#F4F1E6', ink: '#222034', red: '#AC3232', panel: '#E6DFCB', cardBorder: '#222034', bw: 2 }
+};
+const SUITS = {
+  s: { red: false, path: 'M12 2.5c-1.8 2.6-8.5 7-8.5 11.3 0 2.6 2 4.4 4.3 4.4 1.4 0 2.6-.6 3.3-1.6-.2 1.9-.9 3.4-2.3 4.9h6.4c-1.4-1.5-2.1-3-2.3-4.9.7 1 1.9 1.6 3.3 1.6 2.3 0 4.3-1.8 4.3-4.4 0-4.3-6.7-8.7-8.5-11.3z' },
+  h: { red: true, path: 'M12 20.5c-.4 0-7.9-4.9-9.4-9.6C1.5 7.6 3.6 4.5 6.8 4.5c2.1 0 3.7 1.2 5.2 3.1 1.5-1.9 3.1-3.1 5.2-3.1 3.2 0 5.3 3.1 4.2 6.4-1.5 4.7-9 9.6-9.4 9.6z' },
+  d: { red: true, path: 'M12 2.8c2.4 3.4 4.9 6.3 7.6 9.2-2.7 2.9-5.2 5.8-7.6 9.2-2.4-3.4-4.9-6.3-7.6-9.2 2.7-2.9 5.2-5.8 7.6-9.2z' },
+  c: { red: false, path: 'M12 3a4.1 4.1 0 0 0-3.7 5.9A4.1 4.1 0 1 0 10.6 16c-.3 1.9-1 3.4-2.3 4.9h7.4c-1.3-1.5-2-3-2.3-4.9a4.1 4.1 0 1 0 2.3-7.1A4.1 4.1 0 0 0 12 3z' }
+};
+const PIXEL_SUITS = {
+  s: ['....x....', '...xxx...', '..xxxxx..', '.xxxxxxx.', 'xxxxxxxxx', 'xxxxxxxxx', '.xx.x.xx.', '....x....', '..xxxxx..'],
+  h: ['.........', '.xx...xx.', 'xxxx.xxxx', 'xxxxxxxxx', 'xxxxxxxxx', '.xxxxxxx.', '..xxxxx..', '...xxx...', '....x....'],
+  d: ['....x....', '...xxx...', '..xxxxx..', '.xxxxxxx.', 'xxxxxxxxx', '.xxxxxxx.', '..xxxxx..', '...xxx...', '....x....'],
+  c: ['...xxx...', '..xxxxx..', '...xxx...', '.xx.x.xx.', 'xxxxxxxxx', 'xxxxxxxxx', '.xx.x.xx.', '....x....', '..xxxxx..']
+};
+const EMBLEMS = {
+  K: 'M4.5 18h15M5.2 18L4 9.2l4.6 3.4L12 7l3.4 5.6L20 9.2 18.8 18M4 6.3a1.1 1.1 0 1 1 0 2.2 1.1 1.1 0 1 1 0-2.2zM12 4.1a1.1 1.1 0 1 1 0 2.2 1.1 1.1 0 1 1 0-2.2zM20 6.3a1.1 1.1 0 1 1 0 2.2 1.1 1.1 0 1 1 0-2.2z',
+  Q: 'M5 18h14M5.6 18L5 10.2c2.2 2 4 1.6 4.8-.9C10.4 7.4 11.1 6.5 12 6.5s1.6.9 2.2 2.8c.8 2.5 2.6 2.9 4.8.9L18.4 18M12 2.6a1.2 1.2 0 1 1 0 2.4 1.2 1.2 0 1 1 0-2.4z',
+  J: 'M12 4.5l6.5 2.4v5c0 3.9-2.8 6.3-6.5 7.3-3.7-1-6.5-3.4-6.5-7.3v-5zM12 8.5v7M9 11.5h6'
+};
+const L = 0.39, C = 0.5, R = 0.61;
+const PIPS = {
+  '2': [[C, .2], [C, .8]],
+  '3': [[C, .2], [C, .5], [C, .8]],
+  '4': [[L, .2], [R, .2], [L, .8], [R, .8]],
+  '5': [[L, .2], [R, .2], [C, .5], [L, .8], [R, .8]],
+  '6': [[L, .2], [R, .2], [L, .5], [R, .5], [L, .8], [R, .8]],
+  '7': [[L, .2], [R, .2], [C, .35], [L, .5], [R, .5], [L, .8], [R, .8]],
+  '8': [[L, .2], [R, .2], [C, .35], [L, .5], [R, .5], [C, .65], [L, .8], [R, .8]],
+  '9': [[L, .2], [R, .2], [L, .4], [R, .4], [C, .5], [L, .6], [R, .6], [L, .8], [R, .8]],
+  '10': [[L, .2], [R, .2], [C, .3], [L, .4], [R, .4], [L, .6], [R, .6], [C, .7], [L, .8], [R, .8]]
+};
+const BACKS = {
+  theme: { bg: null, pattern: 'repeating-linear-gradient(45deg, rgba(255,255,255,0.07) 0px 1px, transparent 1px 6px)', size: 'auto', line: 'rgba(255,255,255,0.32)', mark: 'rgba(255,255,255,0.62)' },
+  coral: { bg: '#B9472F', pattern: 'repeating-linear-gradient(0deg, rgba(255,255,255,0.09) 0px 1px, transparent 1px 5px)', size: 'auto', line: 'rgba(255,255,255,0.34)', mark: 'rgba(255,255,255,0.7)' },
+  night: { bg: '#1B2140', pattern: 'radial-gradient(rgba(255,255,255,0.26) 0.8px, transparent 1.3px)', size: '9px 9px', line: 'rgba(255,212,154,0.35)', mark: 'rgba(255,212,154,0.85)' },
+  linen: { bg: '#E4D8C0', pattern: 'repeating-linear-gradient(45deg, rgba(90,70,40,0.10) 0px 1px, transparent 1px 5px), repeating-linear-gradient(-45deg, rgba(90,70,40,0.10) 0px 1px, transparent 1px 5px)', size: 'auto', line: 'rgba(90,70,40,0.35)', mark: 'rgba(90,70,40,0.62)' },
+  gold: { bg: '#9A7628', pattern: 'repeating-linear-gradient(45deg, rgba(255,240,200,0.13) 0px 1px, transparent 1px 6px)', size: 'auto', line: 'rgba(255,236,190,0.55)', mark: 'rgba(255,236,190,0.9)' }
+};
+
+const PIXEL_GLYPHS = {
+  A: ['.x.', 'x.x', 'xxx', 'x.x', 'x.x'], '2': ['xx.', '..x', '.x.', 'x..', 'xxx'], '3': ['xx.', '..x', '.x.', '..x', 'xx.'],
+  '4': ['x.x', 'x.x', 'xxx', '..x', '..x'], '5': ['xxx', 'x..', 'xx.', '..x', 'xx.'], '6': ['.xx', 'x..', 'xxx', 'x.x', 'xxx'],
+  '7': ['xxx', '..x', '.x.', '.x.', '.x.'], '8': ['xxx', 'x.x', 'xxx', 'x.x', 'xxx'], '9': ['xxx', 'x.x', 'xxx', '..x', 'xx.'],
+  '1': ['.x.', 'xx.', '.x.', '.x.', 'xxx'], '0': ['xxx', 'x.x', 'x.x', 'x.x', 'xxx'],
+  J: ['..x', '..x', '..x', 'x.x', '.x.'], Q: ['.x.', 'x.x', 'x.x', 'xx.', '.xx'], K: ['x.x', 'x.x', 'xx.', 'x.x', 'x.x']
+};
+function pixelRank(rank) {
+  const rows = ['', '', '', '', ''];
+  rank.split('').forEach((ch, i) => PIXEL_GLYPHS[ch].forEach((r, y) => { rows[y] += (i > 0 ? '.' : '') + r; }));
+  return rows;
+}
+
+function bitmapPath(rows) {
+  let d = '';
+  rows.forEach((row, y) => {
+    for (let x = 0; x < row.length; x++) if (row[x] === 'x') d += 'M' + x + ' ' + y + 'h1v1h-1z';
+  });
+  return d;
+}
+
+class Component extends DCLogic {
+  renderVals() {
+    const p = this.props;
+    const T = THEMES[p.theme] || THEMES['teal-light'];
+    const deck = p.deck ?? 'quiet';
+    const F = FIXED[deck] || T;
+    const w = Number(p.w ?? 120);
+    const h = Math.round(w * 1.4);
+    const pixel = deck === 'pixel';
+    const classic = deck === 'classic';
+    const r = pixel ? 0 : Math.max(4, Math.round(w * (classic ? 0.07 : 0.1)));
+    const kind = p.kind ?? 'face';
+    const suit = SUITS[p.suit] ? p.suit : 's';
+    const rank = p.rank ?? 'A';
+    const st = p.st ?? 'none';
+    const glyph = p.glyph ?? 'none';
+    const color = deck === 'four' ? T.four[suit] : (SUITS[suit].red ? F.red : F.ink);
+    const big = deck === 'big';
+    const court = rank === 'J' || rank === 'Q' || rank === 'K';
+    const ace = rank === 'A';
+    const face = kind === 'face';
+
+    let bg = F.surface;
+    let pattern = 'none';
+    let patternSize = 'auto';
+    let border = F.bw + 'px solid ' + F.cardBorder;
+    let shadow = T.shadow;
+    let outline = 'none';
+    let lift = 0;
+    const B = BACKS[p.back] || BACKS.theme;
+    if (kind === 'back') {
+      bg = B.bg || T.back;
+      pattern = B.pattern;
+      patternSize = B.size;
+      border = p.theme === 'contrast' ? '2px solid #000000' : 'none';
+    }
+    if (kind === 'slot') {
+      bg = st === 'target' ? T.target : T.slot;
+      border = p.theme === 'contrast' ? '2px dashed #000000' : 'none';
+      shadow = 'none';
+    }
+    if (st === 'selected') { outline = '2px solid ' + T.primary; shadow = T.lift; lift = -3; }
+    if (st === 'hint') { outline = '2px dashed ' + T.primary; }
+    if (st === 'target' && kind !== 'slot') { outline = '2px solid ' + T.primary + '73'; }
+
+    // Pixel deck: notched corners, one "pixel" wide.
+    const u = Math.max(2, Math.round(w / 30));
+    const e = 'calc(100% - ' + u + 'px)';
+    const clip = pixel && face && st === 'none'
+      ? `polygon(${u}px 0, ${e} 0, ${e} ${u}px, 100% ${u}px, 100% ${e}, ${e} ${e}, ${e} 100%, ${u}px 100%, ${u}px ${e}, 0 ${e}, 0 ${u}px, ${u}px ${u}px)`
+      : 'none';
+
+    const pip = Math.round(w * (ace ? 0.6 : (big ? 0.4 : 0.5)));
+    const panelX = Math.round(w * 0.08);
+    const panelY = Math.round(h * (big ? 0.4 : 0.34));
+    const panelW = w - panelX * 2;
+    const panelH = h - panelY - panelX;
+    const portY = panelY;
+    const portH = panelH;
+    const mark = Math.round(w * 0.34);
+    const frameW = Math.max(1, Math.round(w * 0.016 * 10) / 10);
+
+    // Classic layout.
+    const cs = Math.round(w * 0.16);
+    const pips = classic && face && PIPS[rank] ? PIPS[rank].map((q) => ({
+      x: Math.round(q[0] * w - cs / 2), y: Math.round(q[1] * h - cs / 2), s: cs, rot: q[1] > 0.5 ? 180 : 0
+    })) : (classic && face && ace ? [{ x: Math.round((w - w * 0.42) / 2), y: Math.round((h - w * 0.42) / 2), s: Math.round(w * 0.42), rot: 0 }] : []);
+    const frameX = Math.round(w * 0.25);
+    const frameY = Math.round(h * 0.09);
+    const frameWd = w - frameX * 2;
+    const frameHt = h - frameY * 2;
+    const halfH = Math.floor((frameHt - 3) / 2);
+
+    const suitKey = kind === 'slot' && SUITS[glyph] ? glyph : suit;
+
+    return {
+      c: {
+        w: w, h: h, r: r, bg: bg, pattern: pattern, patternSize: patternSize, border: border, shadow: shadow, outline: outline, lift: lift, clip: clip,
+        font: pixel ? "Silkscreen, ui-monospace, monospace" : "ui-rounded, 'SF Pro Rounded', Nunito, system-ui, sans-serif",
+        isFace: face, isBack: kind === 'back', isSlot: kind === 'slot',
+        isModern: face && !classic, isClassic: face && classic,
+        isEmblem: face && !classic && court && !(deck === 'illus' || pixel),
+        isPortrait: face && court && (deck === 'illus' || pixel),
+        isPip: face && !classic && !court,
+        portLook: pixel ? 'pixel' : 'vector',
+        rank: rank, color: color,
+        textRank: !pixel, pixelRank: pixel,
+        rankCols: pixelRank(rank)[0].length, rankPath: bitmapPath(pixelRank(rank)),
+        rankH: Math.round(w * 0.05) * 5, rankW: Math.round(w * 0.05) * pixelRank(rank)[0].length,
+        rankSize: Math.round(w * (big ? 0.42 : (pixel ? 0.28 : (deck === 'illus' ? 0.36 : 0.34)))),
+        rankWeight: pixel ? 700 : (deck === 'illus' ? 800 : 700),
+        rankTrack: rank === '10' ? (pixel ? -0.12 : -0.07) : -0.01,
+        indexX: Math.round(w * 0.08), indexY: Math.round(w * (pixel ? 0.09 : 0.07)), indexGap: Math.max(1, Math.round(w * 0.025)),
+        smallSize: Math.round(w * (big ? 0.3 : 0.24)),
+        suitBox: pixel ? '0 0 9 9' : '0 0 24 24',
+        suitPath: pixel ? bitmapPath(PIXEL_SUITS[suitKey]) : SUITS[suitKey].path,
+        slotPath: SUITS[suitKey].path,
+        render: pixel ? 'crispEdges' : 'auto',
+        pip: pip, pipX: Math.round((w - pip) / 2), pipY: panelY + Math.round((panelH - pip) / 2),
+        panel: F.panel, panelX: panelX, panelY: panelY, panelW: panelW, panelH: panelH,
+        portY: portY, portH: portH, portHint: panelW + 'px,' + portH + 'px',
+        emblem: Math.round(Math.min(panelW, panelH) * 0.72), emblemPath: EMBLEMS[rank] || EMBLEMS.K,
+        innerR: pixel ? 0 : Math.max(3, Math.round(r * 0.6)),
+        inset: Math.round(w * 0.08), frameW: frameW,
+        backLine: B.line, backMark: B.mark,
+        mark: mark, markX: Math.round((w - mark) / 2), markY: Math.round((h - mark) / 2),
+        barW: Math.max(1.5, Math.round(w * 0.035 * 10) / 10), barH: Math.round(mark * 0.36), barGap: Math.max(2, Math.round(mark * 0.14)),
+        slotSuit: SUITS[glyph] ? true : false, slotKing: glyph === 'K', slotStock: glyph === 'stock',
+        slotSize: Math.round(w * 0.42), glyphColor: T.glyph,
+        cIndexX: Math.round(w * 0.03), cIndexY: Math.round(w * 0.05), cIndexW: Math.round(w * 0.22),
+        cRankSize: Math.round(w * 0.23), cSuitSize: Math.round(w * 0.15),
+        pips: pips, classicCourt: classic && face && court,
+        frameX: frameX, frameY: frameY, frameWd: frameWd, frameHt: frameHt,
+        halfW: frameWd - 2, halfH: halfH, halfHint: (frameWd - 2) + 'px,' + halfH + 'px'
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>

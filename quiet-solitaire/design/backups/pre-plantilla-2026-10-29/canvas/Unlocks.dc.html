@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Desbloqueables</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800&amp;display=swap">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="width: 1440px; height: 980px; box-sizing: border-box; padding: 64px; background: #FFFFFF; color: #16201F; font-family: ui-rounded, 'SF Pro Rounded', Nunito, system-ui, sans-serif; display: flex; flex-direction: column; gap: 40px">
+  <div style="display: flex; flex-direction: column; gap: 10px">
+    <h1 style="margin: 0; font-size: 44px; font-weight: 800; letter-spacing: -0.02em">Mazos, reversos y tableros</h1>
+    <p style="margin: 0; max-width: 860px; font-size: 18px; line-height: 1.5; color: #5E6F72">Todo se gana jugando y nada cambia la jugabilidad. Se elige en Colección; lo bloqueado muestra su logro. Los tableros son los mismos temas de Quiet Numbers.</p>
+  </div>
+
+  <div style="display: flex; flex-direction: column; gap: 16px">
+    <h2 style="margin: 0; font-size: 22px; font-weight: 800">Mazos</h2>
+    <div style="display: flex; gap: 20px">
+      <sc-for list="{{decks}}" as="d" hint-placeholder-count="5">
+        <div style="width: 200px; box-sizing: border-box; background: #F3F7F8; border-radius: 20px; padding: 14px; display: flex; flex-direction: column; gap: 14px">
+          <div style="display: flex; gap: 8px">
+            <dc-import name="Card" kind="face" rank="A" suit="s" deck="{{d.deck}}" theme="teal-light" w="52" hint-size="52px,73px"></dc-import>
+            <dc-import name="Card" kind="face" rank="Q" suit="h" deck="{{d.deck}}" theme="teal-light" w="52" hint-size="52px,73px"></dc-import>
+            <dc-import name="Card" kind="face" rank="7" suit="d" deck="{{d.deck}}" theme="teal-light" w="52" hint-size="52px,73px"></dc-import>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 4px">
+            <div style="font-size: 17px; font-weight: 800">{{d.label}}</div>
+            <div style="display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: #5E6F72">
+              <sc-if value="{{d.locked}}" hint-placeholder-val="{{false}}">
+                <svg viewBox="0 0 24 24" aria-hidden="true" style="width: 14px; height: 14px; fill: none; stroke: #5E6F72; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round"><path d="M8 11V8a4 4 0 0 1 8 0v3M6 11h12v9H6z"></path></svg>
+              </sc-if>
+              <span>{{d.cond}}</span>
+            </div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <div style="display: flex; flex-direction: column; gap: 16px">
+    <h2 style="margin: 0; font-size: 22px; font-weight: 800">Reversos</h2>
+    <div style="display: flex; gap: 48px">
+      <sc-for list="{{backs}}" as="b" hint-placeholder-count="5">
+        <div style="display: flex; flex-direction: column; gap: 12px; width: 150px">
+          <dc-import name="Card" kind="back" back="{{b.back}}" theme="teal-light" w="96" hint-size="96px,134px"></dc-import>
+          <div style="display: flex; flex-direction: column; gap: 4px">
+            <div style="font-size: 17px; font-weight: 800">{{b.label}}</div>
+            <div style="display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: #5E6F72">
+              <sc-if value="{{b.locked}}" hint-placeholder-val="{{false}}">
+                <svg viewBox="0 0 24 24" aria-hidden="true" style="width: 14px; height: 14px; fill: none; stroke: #5E6F72; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round"><path d="M8 11V8a4 4 0 0 1 8 0v3M6 11h12v9H6z"></path></svg>
+              </sc-if>
+              <span>{{b.cond}}</span>
+            </div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <div style="display: flex; flex-direction: column; gap: 16px">
+    <h2 style="margin: 0; font-size: 22px; font-weight: 800">Tableros</h2>
+    <div style="display: flex; gap: 20px">
+      <sc-for list="{{boards}}" as="t" hint-placeholder-count="6">
+        <div style="display: flex; flex-direction: column; gap: 12px; width: 194px">
+          <div style="box-sizing: border-box; padding: 16px; border-radius: 18px; background: {{t.bg}}; border: {{t.border}}; display: flex; gap: 6px">
+            <dc-import name="Card" kind="slot" glyph="h" theme="{{t.theme}}" w="36" hint-size="36px,50px"></dc-import>
+            <dc-import name="Card" kind="face" rank="A" suit="s" theme="{{t.theme}}" w="36" hint-size="36px,50px"></dc-import>
+            <dc-import name="Card" kind="face" rank="7" suit="h" theme="{{t.theme}}" w="36" hint-size="36px,50px"></dc-import>
+            <dc-import name="Card" kind="back" theme="{{t.theme}}" w="36" hint-size="36px,50px"></dc-import>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 4px">
+            <div style="font-size: 17px; font-weight: 800">{{t.label}}</div>
+            <div style="display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: #5E6F72">
+              <sc-if value="{{t.locked}}" hint-placeholder-val="{{false}}">
+                <svg viewBox="0 0 24 24" aria-hidden="true" style="width: 14px; height: 14px; fill: none; stroke: #5E6F72; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round"><path d="M8 11V8a4 4 0 0 1 8 0v3M6 11h12v9H6z"></path></svg>
+              </sc-if>
+              <span>{{t.cond}}</span>
+            </div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":980}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      decks: [
+        { deck: 'quiet', label: 'Quiet', cond: 'Por defecto', locked: false },
+        { deck: 'illus', label: 'Ilustrado', cond: 'Hábito · 30 retos', locked: true },
+        { deck: 'classic', label: 'Clásico', cond: 'Una sola vuelta', locked: true },
+        { deck: 'pixel', label: 'Pixel', cond: 'Economía · oculto', locked: true },
+        { deck: 'four', label: 'Cuatro colores', cond: 'Accesibilidad · siempre', locked: false },
+        { deck: 'big', label: 'Índice grande', cond: 'Accesibilidad · siempre', locked: false }
+      ],
+      backs: [
+        { back: 'theme', label: 'Del tema', cond: 'Por defecto', locked: false },
+        { back: 'coral', label: 'Coral', cond: 'Sin vuelta atrás', locked: true },
+        { back: 'linen', label: 'Lino', cond: 'Escalera', locked: true },
+        { back: 'night', label: 'Noche', cond: 'Noctámbulo · oculto', locked: true },
+        { back: 'gold', label: 'Dorado', cond: 'Centenario', locked: true }
+      ],
+      boards: [
+        { theme: 'teal-light', bg: '#F3F7F8', border: 'none', label: 'Petróleo y coral', cond: 'Por defecto · claro', locked: false },
+        { theme: 'teal-dark', bg: '#0F1A1D', border: 'none', label: 'Petróleo y coral', cond: 'Por defecto · oscuro', locked: false },
+        { theme: 'sage-sand', bg: '#F6F4EE', border: 'none', label: 'Salvia y arena', cond: 'A pulso', locked: true },
+        { theme: 'indigo-peach', bg: '#13121F', border: 'none', label: 'Índigo y durazno', cond: 'Constancia · 7 retos', locked: true },
+        { theme: 'sage-coral', bg: '#F7F3EC', border: 'none', label: 'Salvia y coral', cond: 'Diez victorias', locked: true },
+        { theme: 'contrast', bg: '#FFFFFF', border: '2px solid #000000', label: 'Alto contraste', cond: 'Accesibilidad · siempre', locked: false }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

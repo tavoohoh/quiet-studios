@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Mazos desbloqueables</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800&amp;display=swap">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="width: 1440px; height: 1200px; box-sizing: border-box; padding: 64px; background: #FFFFFF; color: #16201F; font-family: ui-rounded, 'SF Pro Rounded', Nunito, system-ui, sans-serif; display: flex; flex-direction: column; gap: 24px">
+  <div style="display: flex; flex-direction: column; gap: 10px">
+    <h1 style="margin: 0; font-size: 44px; font-weight: 800; letter-spacing: -0.02em">Mazos desbloqueables · iteración 2</h1>
+    <p style="margin: 0; max-width: 900px; font-size: 18px; line-height: 1.5; color: #5E6F72">Tres mazos con personalidad propia: traen su color de cara y no siguen al tema (el tablero y el reverso sí). Figuras dibujadas para Quiet, no copiadas de ninguna baraja.</p>
+  </div>
+  <sc-for list="{{bands}}" as="b" hint-placeholder-count="3">
+    <div style="border-radius: 28px; padding: 32px 40px; background: {{b.bg}}; display: flex; gap: 40px; align-items: center">
+      <div style="width: 300px; display: flex; flex-direction: column; gap: 8px">
+        <div style="font-size: 28px; font-weight: 800; color: {{b.ink}}">{{b.name}}</div>
+        <div style="font-size: 13px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: {{b.muted}}">{{b.cond}}</div>
+        <div style="font-size: 15px; line-height: 1.5; color: {{b.muted}}">{{b.text}}</div>
+      </div>
+      <div style="display: flex; gap: 20px; align-items: flex-start">
+        <sc-for list="{{b.cards}}" as="cd" hint-placeholder-count="6">
+          <dc-import name="Card" kind="face" rank="{{cd.rank}}" suit="{{cd.suit}}" deck="{{b.deck}}" theme="{{b.theme}}" w="104" hint-size="104px,146px"></dc-import>
+        </sc-for>
+      </div>
+      <div style="display: flex; flex-direction: column; align-self: flex-start">
+        <sc-for list="{{b.cascade}}" as="cd" hint-placeholder-count="7">
+          <div style="margin-top: {{cd.mt}}px">
+            <dc-import name="Card" kind="{{cd.kind}}" rank="{{cd.rank}}" suit="{{cd.suit}}" deck="{{b.deck}}" theme="{{b.theme}}" back="{{b.back}}" w="48" hint-size="48px,67px"></dc-import>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </sc-for>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1200}}'>
+class Component extends DCLogic {
+  cascade(down, up) {
+    const cards = [];
+    for (let i = 0; i < down; i++) cards.push({ kind: 'back', rank: 'A', suit: 's' });
+    up.forEach((c) => cards.push({ kind: 'face', rank: c[0], suit: c[1] }));
+    return cards.map((c, i) => ({ ...c, mt: i === 0 ? 0 : (cards[i - 1].kind === 'back' ? 9 : 22) - 67 }));
+  }
+  renderVals() {
+    const cards = [{ rank: 'A', suit: 's' }, { rank: '7', suit: 'h' }, { rank: '10', suit: 'd' }, { rank: 'J', suit: 'c' }, { rank: 'Q', suit: 'h' }, { rank: 'K', suit: 's' }];
+    const up = [['K', 'h'], ['Q', 's'], ['J', 'd'], ['10', 'c']];
+    return {
+      bands: [
+        { deck: 'illus', theme: 'teal-dark', back: 'theme', bg: '#0F1A1D', ink: '#E8F1F2', muted: '#8A9DA0', name: 'Ilustrado', cond: 'Hábito · 30 retos seguidos', text: 'El estilo móvil de siempre: índice grande, un palo al centro y figuras de busto, planas y de colores. Cara blanca también en tableros oscuros.', cards: cards, cascade: this.cascade(3, up) },
+        { deck: 'classic', theme: 'teal-light', back: 'linen', bg: '#F3F7F8', ink: '#16201F', muted: '#5E6F72', name: 'Clásico', cond: 'Una sola vuelta', text: 'La baraja de mesa: índices en dos esquinas, palos repartidos según el número y figuras de doble cabeza en un marco. Índice más chico en iPhone.', cards: cards, cascade: this.cascade(3, up) },
+        { deck: 'pixel', theme: 'indigo-peach', back: 'night', bg: '#13121F', ink: '#ECEBF7', muted: '#9593AE', name: 'Pixel', cond: 'Economía · oculto', text: 'Palos y figuras dibujados a pixel (7×8 y 11×14), tipografía Silkscreen, esquinas escalonadas y cara crema. Primera iteración.', cards: cards, cascade: this.cascade(3, up) }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

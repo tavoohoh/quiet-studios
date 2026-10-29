@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Logros de Game Center</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#0E6B78}a:hover{color:#0A525C}
+</style>
+</helmet>
+<div style="width: 1440px; height: 1080px; box-sizing: border-box; padding: 64px; background: #F3F7F8; color: #16201F; font-family: ui-rounded, 'SF Pro Rounded', Nunito, system-ui, sans-serif; display: flex; flex-direction: column; gap: 40px">
+  <div style="display: flex; flex-direction: column; gap: 10px">
+    <p style="margin: 0; font-size: 15px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #6C6C70">Game Center · 11 logros</p>
+    <h1 style="margin: 0; font-size: 48px; font-weight: 800; letter-spacing: -0.01em">Un sistema de insignias</h1>
+    <p style="margin: 0; font-size: 19px; line-height: 1.5; color: #48484A; max-width: 920px">Círculo lleno con una onda tenue (eco del logo), ícono de trazo blanco y redondeado. Petróleo para los logros normales; noche con trazo turquesa para los ocultos; dorado (el del ícono Gold) para Centenario y coral para Números rojos. Se exportan a PNG de 1024×1024 sin transparencia.</p>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); row-gap: 36px; column-gap: 24px">
+    <sc-for list="{{badges}}" as="b" hint-placeholder-count="11">
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 12px; text-align: center">
+        <svg width="168" height="168" viewBox="0 0 100 100" role="img" aria-label="{{b.en}}">
+          <circle cx="50" cy="50" r="50" fill="{{b.bg}}"></circle>
+          <circle cx="50" cy="50" r="41" fill="none" stroke="{{b.ink}}" stroke-opacity="0.3" stroke-width="1.5"></circle>
+          <sc-for list="{{b.paths}}" as="p" hint-placeholder-count="3">
+            <path d="{{p.d}}" fill="{{p.fill}}" stroke="{{p.stroke}}" stroke-width="{{p.width}}" stroke-dasharray="{{p.dash}}" stroke-linecap="round" stroke-linejoin="round"></path>
+          </sc-for>
+        </svg>
+        <div style="display: flex; flex-direction: column; gap: 2px">
+          <span style="font-size: 18px; font-weight: 800">{{b.en}}</span>
+          <span style="font-size: 15px; color: #48484A">{{b.es}}</span>
+          <span style="font-size: 12px; color: #6C6C70; font-family: ui-monospace, Menlo, monospace">{{b.id}}{{b.hidden}}</span>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+
+  <div style="display: flex; align-items: center; gap: 28px; padding: 20px 28px; border-radius: 22px; background: #FFFFFF">
+    <span style="font-size: 15px; font-weight: 700; color: #48484A; flex-shrink: 0">Tamaño real en Game Center</span>
+    <div style="display: flex; gap: 14px; flex-wrap: wrap">
+      <sc-for list="{{badges}}" as="b" hint-placeholder-count="11">
+        <svg width="56" height="56" viewBox="0 0 100 100" role="img" aria-label="{{b.en}}">
+          <circle cx="50" cy="50" r="50" fill="{{b.bg}}"></circle>
+          <circle cx="50" cy="50" r="41" fill="none" stroke="{{b.ink}}" stroke-opacity="0.3" stroke-width="2"></circle>
+          <sc-for list="{{b.paths}}" as="p" hint-placeholder-count="3">
+            <path d="{{p.d}}" fill="{{p.fill}}" stroke="{{p.stroke}}" stroke-width="{{p.width}}" stroke-dasharray="{{p.dash}}" stroke-linecap="round" stroke-linejoin="round"></path>
+          </sc-for>
+        </svg>
+      </sc-for>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1080}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const circle = (cx, cy, r) => `M${cx - r} ${cy} a${r} ${r} 0 1 0 ${2 * r} 0 a${r} ${r} 0 1 0 ${-2 * r} 0`;
+    const line = (d, ink, width) => ({ d, fill: 'none', stroke: ink, width: width ?? 4.5, dash: 'none' });
+    const dot = (d, ink) => ({ d, fill: ink, stroke: 'none', width: 0, dash: 'none' });
+    const blue = '#0E6B78', night = '#0F1A1D', gold = '#A8741A', red = '#B9472F';
+    const white = '#FFFFFF', nightInk = '#5BC2CF';
+    const calendar = (ink) => [
+      line('M34 32 H66 a4 4 0 0 1 4 4 V68 a4 4 0 0 1 -4 4 H34 a4 4 0 0 1 -4 -4 V36 a4 4 0 0 1 4 -4 Z', ink),
+      line('M30 44 H70', ink, 3.5),
+      line('M41 27 V36 M59 27 V36', ink),
+    ];
+    const badge = (id, en, es, bg, ink, paths, hidden) => ({ id, en, es, bg, ink, paths, hidden: hidden ? ' · oculto' : '' });
+    return {
+      badges: [
+        badge('first_step', 'First Step', 'Primer paso', blue, white, [
+          line('M26 70 H42 V57 H57 V44 H74', white),
+          dot(circle(34, 61, 4.5), white),
+        ]),
+        badge('clean_slate', 'Clean Slate', 'Tabla rasa', blue, white, [
+          { d: 'M35 30 H65 a5 5 0 0 1 5 5 V65 a5 5 0 0 1 -5 5 H35 a5 5 0 0 1 -5 -5 V35 a5 5 0 0 1 5 -5 Z', fill: 'none', stroke: white, width: 4.5, dash: '7 7' },
+        ]),
+        badge('no_help', 'No Help', 'Sin ayuda', blue, white, [
+          line(circle(50, 44, 14), white),
+          line('M44 64 H56 M45.5 71 H54.5', white),
+          line('M31 28 L69 74', white),
+        ]),
+        badge('consistency', 'Consistency', 'Constancia', blue, white, [
+          ...calendar(white),
+          dot([38, 46, 54, 62].map((x) => circle(x, 54, 2.8)).join(' ') + ' ' + [38, 46, 54].map((x) => circle(x, 63, 2.8)).join(' '), white),
+        ]),
+        badge('habit', 'Habit', 'Hábito', blue, white, [
+          ...calendar(white),
+          line('M40 57 L47 64 L61 50', white),
+        ]),
+        badge('sweeper', 'Sweeper', 'Barrendero', blue, white, [
+          line('M26 41 H60 a8 8 0 1 0 -8 -8', white),
+          line('M26 52 H72', white),
+          line('M26 63 H54 a8 8 0 1 1 -8 8', white),
+        ]),
+        badge('stage_five', 'Stage 5', 'Etapa 5', blue, white, [
+          line('M62 29 H43 L40 48 C47 43 64 44 64 58 C64 72 47 76 38 68', white, 6),
+        ]),
+        badge('centennial', 'Centennial', 'Centenario', gold, white, [
+          line(circle(50, 42, 14), white),
+          dot(circle(50, 42, 5), white),
+          line('M43 55 L37 75 L45 70 L50 77 L55 70 L63 75 L57 55', white),
+        ]),
+        badge('night_owl', 'Night Owl', 'Noctámbulo', night, nightInk, [
+          line('M60 28 a22 22 0 1 0 14 38 a17 17 0 1 1 -14 -38 Z', nightInk),
+          line('M32 30 V40 M27 35 H37', nightInk, 3.5),
+          line('M30 56 V62 M27 59 H33', nightInk, 3),
+        ], true),
+        badge('monotone', 'Monotone', 'Monótono', night, nightInk, [
+          line('M31 42 H69 M31 58 H69', nightInk, 7),
+        ], true),
+        badge('in_the_red', 'In the Red', 'Números rojos', red, white, [
+          line('M30 50 H70', white, 8),
+        ], true),
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>

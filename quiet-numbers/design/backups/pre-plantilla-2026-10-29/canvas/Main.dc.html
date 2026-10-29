@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Paletas</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#0E6B78}a:hover{color:#0A525C}
+</style>
+</helmet>
+<div style="width: 1780px; height: 1010px; box-sizing: border-box; padding: 56px 64px; background: #FFFFFF; color: #1C1C1E; font-family: ui-rounded, 'SF Pro Rounded', Nunito, system-ui, sans-serif; display: flex; flex-direction: column; gap: 32px">
+  <div style="display: flex; flex-direction: column; gap: 10px">
+    <p style="margin: 0; font-size: 15px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #6C6C70">Paleta principal y temas</p>
+    <h1 style="margin: 0; font-size: 46px; font-weight: 800; letter-spacing: -0.01em">Calma, foco y algo que dé ganas de jugar</h1>
+    <p style="margin: 0; font-size: 18px; line-height: 1.5; color: #48484A; max-width: 980px">Petróleo y coral es la paleta principal de la app, la tienda y la marca. Es la única con modo claro y oscuro (sigue al iPhone). Las demás son temas de un solo modo: tres se ganan con logros y el de alto contraste (daltonismo y baja visión) está siempre disponible; de esas se usa solo la mitad marcada en la etiqueta. Todos los textos de color pasan 4,5:1 sobre su fondo.</p>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 20px; flex-grow: 1">
+    <sc-for list="{{options}}" as="o" hint-placeholder-count="5">
+      <div style="display: flex; flex-direction: column; gap: 16px; padding: 20px; border-radius: 24px; background: #F2F2F7; border: {{o.border}}">
+        <div style="display: flex; flex-direction: column; gap: 4px">
+          <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 8px">
+            <h2 style="margin: 0; font-size: 24px; font-weight: 800">{{o.name}}</h2>
+            <span style="font-size: 12px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; color: #6C6C70">{{o.tag}}</span>
+          </div>
+          <p style="margin: 0; font-size: 15px; color: #48484A">{{o.mood}}</p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
+          <div style="display: flex; flex-direction: column; gap: 5px">
+            <div style="display: flex; height: 44px; border-radius: 12px; overflow: hidden">
+              <div style="flex-grow: 1; background: {{o.pL}}"></div>
+              <div style="flex-grow: 1; background: {{o.pD}}"></div>
+            </div>
+            <span style="font-size: 13px; font-weight: 700">Primario</span>
+            <span style="font-size: 12px; color: #48484A">{{o.pL}} · {{o.pD}}</span>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 5px">
+            <div style="display: flex; height: 44px; border-radius: 12px; overflow: hidden">
+              <div style="flex-grow: 1; background: {{o.sL}}"></div>
+              <div style="flex-grow: 1; background: {{o.sD}}"></div>
+            </div>
+            <span style="font-size: 13px; font-weight: 700">Secundario</span>
+            <span style="font-size: 12px; color: #48484A">{{o.sL}} · {{o.sD}}</span>
+          </div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 10px; padding: 14px 10px 12px; border-radius: 16px; background: {{o.bgL}}">
+          <div style="display: grid; grid-template-columns: repeat(9, minmax(0, 1fr)); row-gap: 2px">
+            <sc-for list="{{o.lightCells}}" as="c" hint-placeholder-count="27">
+              <span style="height: 29px; display: flex; align-items: center; justify-content: center; border-radius: 15px; font-size: 18px; font-weight: 600; font-variant-numeric: tabular-nums; color: {{c.color}}; background: {{c.bg}}; text-decoration: {{c.deco}}; text-underline-offset: 4px; text-decoration-thickness: 2px">{{c.n}}</span>
+            </sc-for>
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: center; padding: 0 6px">
+            <span style="padding: 5px 12px; border-radius: 999px; font-size: 13px; font-weight: 800; color: {{o.sL}}; background: {{o.sPillL}}">Long shot!</span>
+            <span style="padding: 7px 18px; border-radius: 999px; font-size: 14px; font-weight: 800; color: #FFFFFF; background: {{o.pL}}">Play</span>
+          </div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 10px; padding: 14px 10px 12px; border-radius: 16px; background: {{o.bgD}}">
+          <div style="display: grid; grid-template-columns: repeat(9, minmax(0, 1fr)); row-gap: 2px">
+            <sc-for list="{{o.darkCells}}" as="c" hint-placeholder-count="27">
+              <span style="height: 29px; display: flex; align-items: center; justify-content: center; border-radius: 15px; font-size: 18px; font-weight: 600; font-variant-numeric: tabular-nums; color: {{c.color}}; background: {{c.bg}}; text-decoration: {{c.deco}}; text-underline-offset: 4px; text-decoration-thickness: 2px">{{c.n}}</span>
+            </sc-for>
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: center; padding: 0 6px">
+            <span style="padding: 5px 12px; border-radius: 999px; font-size: 13px; font-weight: 800; color: {{o.sD}}; background: {{o.sPillD}}">Long shot!</span>
+            <span style="padding: 7px 18px; border-radius: 999px; font-size: 14px; font-weight: 800; color: {{o.onPD}}; background: {{o.pD}}">Play</span>
+          </div>
+        </div>
+
+        <p style="margin: 0; font-size: 14px; line-height: 1.45; color: #3A3A3C">{{o.note}}</p>
+      </div>
+    </sc-for>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1780,"height":1010}}'>
+class Component extends DCLogic {
+  renderVals() {
+    // Rows 1-2: original numbers (ghosts and one selected pair); row 3: added with +.
+    const rows = [
+      [5, 3, 7, 4, 6, 1, 9, 2, 5],
+      [1, 3, 1, 3, 8, 3, 4, 2, 4],
+      [4, 8, 6, 2, 5, 8, 9, 7, 9],
+    ];
+    const ghosts = [1, 2, 13];
+    const selected = [4, 22];
+    const cells = (o, mode) => {
+      const light = mode === 'light';
+      const primary = light ? o.pL : o.pD;
+      const secondary = light ? o.sL : o.sD;
+      return rows.flat().map((n, i) => {
+        if (selected.includes(i)) return { n, color: primary, bg: primary + (light ? '24' : '38'), deco: 'none' };
+        if (ghosts.includes(i)) return { n, color: light ? o.ghostL : o.ghostD, bg: 'transparent', deco: 'none' };
+        const added = i >= 18;
+        return {
+          n,
+          color: added ? secondary : (light ? o.inkL : o.inkD),
+          bg: 'transparent',
+          deco: added && o.underline ? 'underline' : 'none',
+        };
+      });
+    };
+    const make = (o) => ({
+      ...o,
+      border: o.recommended ? '2px solid ' + o.pL : '2px solid transparent',
+      sPillL: o.sL + '1F',
+      sPillD: o.sD + '2E',
+      lightCells: cells(o, 'light'),
+      darkCells: cells(o, 'dark'),
+    });
+    return {
+      options: [
+        make({
+          name: 'Salvia y arena', tag: 'Solo claro', mood: 'Calma, naturaleza, papel.',
+          pL: '#3E7A5A', pD: '#7CC7A0', sL: '#9A5B16', sD: '#E6B36A', onPD: '#10241A',
+          bgL: '#F6F4EE', bgD: '#141A16', inkL: '#1F2622', inkD: '#ECEFE9', ghostL: '#D5D3CB', ghostD: '#333A35',
+          note: 'La más relajante: verde de hoja sobre un fondo de papel cálido, con arena tostada para los números agregados. Neutral y adulta.',
+        }),
+        make({
+          name: 'Petróleo y coral', tag: 'Claro y oscuro', recommended: true, mood: 'Foco con un acento cálido.',
+          pL: '#0E6B78', pD: '#5BC2CF', sL: '#B9472F', sD: '#FF9A85', onPD: '#062327',
+          bgL: '#F3F7F8', bgD: '#0F1A1D', inkL: '#16201F', inkD: '#E8F1F2', ghostL: '#CFD8DA', ghostD: '#2C3A3D',
+          note: 'El azul verdoso concentra sin enfriar; el coral le da energía y atractivo. Funciona igual de bien para cualquier público y se ve moderna en la tienda.',
+        }),
+        make({
+          name: 'Índigo y durazno', tag: 'Solo oscuro', mood: 'Serena, nocturna, premium.',
+          pL: '#4A42D6', pD: '#9A98FF', sL: '#A8542A', sD: '#FFAE82', onPD: '#15133A',
+          bgL: '#F5F4FB', bgD: '#13121F', inkL: '#1C1B2A', inkD: '#ECEBF7', ghostL: '#D6D4E3', ghostD: '#302E44',
+          note: 'Índigo profundo sobre lavanda muy tenue de fondo; el durazno separa los números agregados (la lavanda como acento se confundía con el índigo).',
+        }),
+        make({
+          name: 'Salvia y coral', tag: 'Solo claro', mood: 'Fresca, amable, con chispa.',
+          pL: '#4D7157', pD: '#A9CDB0', sL: '#B4503A', sD: '#FF9C84', onPD: '#13231A',
+          bgL: '#F7F3EC', bgD: '#161B17', inkL: '#1E2420', inkD: '#EEF1EC', ghostL: '#D9D4CA', ghostD: '#343B36',
+          note: 'Salvia apagado sobre crema cálida, con coral para los números agregados. Más suave y amable que Petróleo y coral, y más alegre que Salvia y arena.',
+        }),
+        make({
+          name: 'Alto contraste', tag: 'Solo claro', mood: 'Daltonismo y baja visión.', underline: true,
+          pL: '#003F91', pD: '#B5DAFF', sL: '#B85500', sD: '#E07B00', onPD: '#001A3D',
+          bgL: '#FFFFFF', bgD: '#000000', inkL: '#000000', inkD: '#FFFFFF', ghostL: '#B0B0B5', ghostD: '#5A5A5E',
+          note: 'Azul y naranja (el par más seguro con cualquier tipo de daltonismo), separados también por luminosidad. Los números agregados además van subrayados: no dependen solo del color.',
+        }),
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>

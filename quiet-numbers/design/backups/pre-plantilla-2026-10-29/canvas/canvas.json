@@ -1,0 +1,316 @@
+{
+  "v": 3,
+  "createdOnFiles": {
+    "v": 1,
+    "at": "2026-10-26T18:30:00Z"
+  },
+  "title": "Quiet Numbers · Diseño",
+  "launch": {
+    "view": "canvas",
+    "page": "paleta"
+  },
+  "pages": [
+    {
+      "id": "paleta",
+      "name": "1 · Paleta"
+    },
+    {
+      "id": "marca",
+      "name": "2 · Logo y splash"
+    },
+    {
+      "id": "arte",
+      "name": "3 · Arte del juego"
+    },
+    {
+      "id": "mocks",
+      "name": "4 · Mocks del juego"
+    },
+    {
+      "id": "logros",
+      "name": "5 · Logros y recompensas"
+    },
+    {
+      "id": "appstore",
+      "name": "6 · App Store"
+    },
+    {
+      "id": "headers",
+      "name": "7 · Header y búsqueda"
+    },
+    {
+      "id": "brief",
+      "name": "8 · Brief para Claude Code"
+    }
+  ],
+  "boards": {
+    "Main.dc.html": {
+      "x": 0,
+      "y": 0,
+      "w": 1780,
+      "h": 1010,
+      "title": "Paleta principal: Petróleo y coral + temas",
+      "page": "paleta"
+    },
+    "Logo.dc.html": {
+      "x": 0,
+      "y": 0,
+      "w": 1440,
+      "h": 1220,
+      "title": "quiet studios + ícono de Quiet Numbers (y Gold)",
+      "page": "marca"
+    },
+    "Splash.dc.html": {
+      "x": 1520,
+      "y": 0,
+      "w": 940,
+      "h": 1040,
+      "title": "Splash: claro y oscuro",
+      "page": "marca"
+    },
+    "Store1.dc.html": {
+      "x": 0,
+      "y": 0,
+      "w": 440,
+      "h": 956,
+      "title": "01 · Your 5-minute break",
+      "page": "appstore"
+    },
+    "Store2.dc.html": {
+      "x": 520,
+      "y": 0,
+      "w": 440,
+      "h": 956,
+      "title": "02 · Match. Pop. Clear.",
+      "page": "appstore"
+    },
+    "Store3.dc.html": {
+      "x": 1040,
+      "y": 0,
+      "w": 440,
+      "h": 956,
+      "title": "03 · Beat your friends",
+      "page": "appstore"
+    },
+    "Store4.dc.html": {
+      "x": 1560,
+      "y": 0,
+      "w": 440,
+      "h": 956,
+      "title": "04 · No ads. No purchases.",
+      "page": "appstore"
+    },
+    "Store5.dc.html": {
+      "x": 2080,
+      "y": 0,
+      "w": 440,
+      "h": 956,
+      "title": "05 · Leaderboards",
+      "page": "appstore"
+    },
+    "Badges.dc.html": {
+      "x": 0,
+      "y": 0,
+      "w": 1440,
+      "h": 1080,
+      "title": "Logros de Game Center: 11 insignias (petróleo y coral)",
+      "page": "logros"
+    },
+    "GameHome.dc.html": {
+      "x": 0,
+      "y": 0,
+      "w": 390,
+      "h": 844,
+      "title": "Inicio",
+      "page": "mocks",
+      "is_interactive": true
+    },
+    "GameBoard.dc.html": {
+      "x": 470,
+      "y": 0,
+      "w": 390,
+      "h": 844,
+      "title": "Partida · selección",
+      "page": "mocks"
+    },
+    "GameLongShot.dc.html": {
+      "x": 940,
+      "y": 0,
+      "w": 390,
+      "h": 844,
+      "title": "Partida · long shot",
+      "page": "mocks"
+    },
+    "DailyChallenge.dc.html": {
+      "x": 1410,
+      "y": 0,
+      "w": 390,
+      "h": 844,
+      "title": "Reto diario",
+      "page": "mocks"
+    },
+    "Leaderboards.dc.html": {
+      "x": 1880,
+      "y": 0,
+      "w": 390,
+      "h": 844,
+      "title": "Leaderboards · amigos",
+      "page": "mocks"
+    },
+    "LeaderboardsSignedOut.dc.html": {
+      "x": 2350,
+      "y": 0,
+      "w": 390,
+      "h": 844,
+      "title": "Leaderboards · sin Game Center",
+      "page": "mocks"
+    },
+    "Collection.dc.html": {
+      "x": 2820,
+      "y": 0,
+      "w": 390,
+      "h": 844,
+      "title": "Colección",
+      "page": "mocks"
+    },
+    "Settings.dc.html": {
+      "x": 3290,
+      "y": 0,
+      "w": 390,
+      "h": 844,
+      "title": "Ajustes",
+      "page": "mocks"
+    },
+    "Animations.dc.html": {
+      "x": 0,
+      "y": 0,
+      "w": 1800,
+      "h": 1380,
+      "title": "Animaciones: juntar números",
+      "page": "arte"
+    },
+    "GameHomeLight.dc.html": {
+      "x": 0,
+      "y": 964,
+      "w": 390,
+      "h": 844,
+      "title": "Inicio · tema claro",
+      "page": "mocks",
+      "is_interactive": true
+    },
+    "GameBoardLight.dc.html": {
+      "x": 470,
+      "y": 964,
+      "w": 390,
+      "h": 844,
+      "title": "Partida · tema claro",
+      "page": "mocks"
+    },
+    "Themes.dc.html": {
+      "x": 0,
+      "y": 1130,
+      "w": 1800,
+      "h": 1380,
+      "title": "Temas: principal claro y oscuro + 4 de un modo",
+      "page": "paleta"
+    },
+    "Brief.dc.html": {
+      "x": 0,
+      "y": 0,
+      "w": 1280,
+      "h": 8760,
+      "title": "Brief para Claude Code",
+      "page": "brief",
+      "is_interactive": true
+    },
+    "HeaderCalm.dc.html": {
+      "x": 0,
+      "y": 0,
+      "w": 1280,
+      "h": 549,
+      "title": "Header A · Números en calma (21:9) · elegido",
+      "page": "headers"
+    },
+    "HeaderPhone.dc.html": {
+      "x": 1360,
+      "y": 0,
+      "w": 1280,
+      "h": 549,
+      "title": "Header B · El juego (21:9)",
+      "page": "headers"
+    },
+    "SearchRule.dc.html": {
+      "x": 0,
+      "y": 669,
+      "w": 1200,
+      "h": 800,
+      "title": "Búsqueda A · La regla (3:2)",
+      "page": "headers"
+    },
+    "SearchDaily.dc.html": {
+      "x": 1280,
+      "y": 669,
+      "w": 1200,
+      "h": 800,
+      "title": "Búsqueda B · Reto diario, oscuro (3:2) · elegida",
+      "page": "headers"
+    },
+    "Universal.dc.html": {
+      "x": 0,
+      "y": 1589,
+      "w": 1280,
+      "h": 720,
+      "title": "Universal · un solo asset para ambos (16:9)",
+      "page": "headers"
+    }
+  },
+  "order": [
+    "Main.dc.html",
+    "Logo.dc.html",
+    "Splash.dc.html",
+    "Store1.dc.html",
+    "Store2.dc.html",
+    "Store3.dc.html",
+    "Store4.dc.html",
+    "Store5.dc.html",
+    "Badges.dc.html",
+    "GameHome.dc.html",
+    "GameBoard.dc.html",
+    "GameLongShot.dc.html",
+    "DailyChallenge.dc.html",
+    "Leaderboards.dc.html",
+    "LeaderboardsSignedOut.dc.html",
+    "Collection.dc.html",
+    "Settings.dc.html",
+    "Animations.dc.html",
+    "GameHomeLight.dc.html",
+    "GameBoardLight.dc.html",
+    "Themes.dc.html",
+    "HeaderCalm.dc.html",
+    "HeaderPhone.dc.html",
+    "SearchRule.dc.html",
+    "SearchDaily.dc.html",
+    "Universal.dc.html",
+    "Brief.dc.html"
+  ],
+  "notes": {
+    "headerSpecs": {
+      "x": 1360,
+      "y": 1589,
+      "w": 560,
+      "page": "headers",
+      "fill": "teal",
+      "size": "m",
+      "text": "Medidas reales (Apple, iOS 27+):\n• Header 21:9: 3840 × 1646 px (jpg/png)\n• Búsqueda 3:2: 1920 × 1280 a 3840 × 2560 px (jpg/png)\n• Universal 16:9: 5244 × 2950 px (solo png)\n• Sin alfa. Video opcional: 5–30 s, 30/60 fps, en loop y sin sonido.\nReglas: una sola idea, punto focal al centro, frase corta, apto 4+, sin precios, URLs ni ©; localizar en/es.\nLos artboards están a escala; la línea punteada es la zona central aproximada."
+    }
+  },
+  "designSystems": [
+    {
+      "title": "Quiet Numbers",
+      "namespace": "quiet-numbers",
+      "artifact": "https://claude.ai/artifact/Aax49mxVrB93wQghnC2Scx",
+      "version": null,
+      "copiedAt": "2026-10-29T17:35:00Z"
+    }
+  ]
+}

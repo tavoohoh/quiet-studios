@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Victoria</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800&amp;display=swap">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 844px; box-sizing: border-box; padding-top: 58px; overflow: hidden; background: #F3F7F8; color: #16201F; font-family: ui-rounded, 'SF Pro Rounded', Nunito, system-ui, sans-serif">
+  <div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px; padding: 0 9px; margin-top: 88px">
+    <sc-for list="{{kings}}" as="k" hint-placeholder-count="4">
+      <dc-import name="Card" kind="face" rank="K" suit="{{k}}" theme="teal-light" w="48" hint-size="48px,67px"></dc-import>
+    </sc-for>
+  </div>
+
+  <div style="position: absolute; left: 0; right: 0; bottom: 0; background: #FFFFFF; border-radius: 32px 32px 0 0; padding: 28px 20px 40px; box-shadow: 0 -8px 30px rgba(15,26,29,0.08); display: flex; flex-direction: column; gap: 18px">
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 4px">
+      <span style="font-size: 17px; font-weight: 800; color: #5E6F72">¡Ganaste!</span>
+      <span style="font-size: 56px; font-weight: 800; letter-spacing: -0.03em; line-height: 1.05; font-variant-numeric: tabular-nums">1.430</span>
+      <span style="margin-top: 4px; padding: 5px 12px; border-radius: 14px; background: #FBE9E4; color: #B9472F; font-size: 14px; font-weight: 800">¡Nuevo récord!</span>
+    </div>
+
+    <div style="background: #F3F7F8; border-radius: 20px; padding: 4px 16px">
+      <sc-for list="{{rows}}" as="r" hint-placeholder-count="4">
+        <div style="display: flex; justify-content: space-between; align-items: center; height: 40px; border-bottom: {{r.sep}}">
+          <span style="font-size: 15px; font-weight: 600; color: #5E6F72">{{r.k}}</span>
+          <span style="font-size: 16px; font-weight: 800; font-variant-numeric: tabular-nums">{{r.v}}</span>
+        </div>
+      </sc-for>
+    </div>
+
+    <div style="display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-radius: 20px; border: 1.5px solid #E3EEF0">
+      <div style="width: 44px; height: 44px; border-radius: 22px; background: #0E6B78; display: flex; align-items: center; justify-content: center">
+        <svg viewBox="0 0 24 24" aria-hidden="true" style="width: 22px; height: 22px; fill: none; stroke: #FFFFFF; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round"><path d="M12 15a6 6 0 1 0 0-12 6 6 0 0 0 0 12zM8.5 14l-1.5 7 5-3 5 3-1.5-7"></path></svg>
+      </div>
+      <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 1px">
+        <span style="font-size: 13px; font-weight: 700; color: #5E6F72">Logro desbloqueado · Economía</span>
+        <span style="font-size: 16px; font-weight: 800">Nuevo mazo: Pixel</span>
+      </div>
+      <dc-import name="Card" kind="face" rank="A" suit="h" deck="pixel" theme="teal-light" w="30" hint-size="30px,42px"></dc-import>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 10px">
+      <button style="height: 56px; border: none; border-radius: 28px; background: #0E6B78; color: #FFFFFF; font-family: inherit; font-size: 17px; font-weight: 800">Nueva partida</button>
+      <button style="height: 56px; border: none; border-radius: 28px; background: #E3EEF0; color: #0E6B78; font-family: inherit; font-size: 17px; font-weight: 800">Inicio</button>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const rows = [['Movimientos', '98'], ['Puntos de juego', '930'], ['Bono por pocos movimientos', '+500'], ['Pistas', '0']];
+    return {
+      kings: ['s', 'h', 'd', 'c'],
+      rows: rows.map((r, i) => ({ k: r[0], v: r[1], sep: i < rows.length - 1 ? '1px solid #E3EAEC' : 'none' }))
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,5 +1,7 @@
 # Quiet Solitaire
 
+**Canvas de diseño:** [Quiet Solitaire](https://claude.ai/artifact/EwWvXPwMtEVpx47drg2AJV) · Sistema de diseño de la familia: [Quiet Studios](https://claude.ai/artifact/59yz1mHLFU3u3jvSfugf7B)
+
 Solitario clásico (Klondike, robar 1): ordenar las 52 cartas en cuatro fundaciones del As al Rey. Gratis, sin anuncios, sin compras y sin recolectar datos. Segunda app de la familia Quiet (ver `../CLAUDE.md`).
 
 Nombre: **Quiet Solitaire** (decidido 2026-10-27). "Klondike" y "Solitaire" son nombres genéricos de la mecánica; nunca usar nombres, arte, reversos ni sonidos de Microsoft Solitaire u otras apps del género. La baraja francesa es de dominio público, pero el diseño de cartas es propio (canvas "Quiet Solitaire · Diseño").
@@ -226,7 +228,7 @@ Cada fase termina con su criterio de aceptación cumplido antes de pasar a la si
 
 | Fase | Estado |
 |---|---|
-| Diseño | 🟡 Canvas "Quiet Solitaire · Diseño" (https://claude.ai/artifact/S5U6E4QDFsqpmrj4kvHrGL). Aprobados: mazo por defecto, reversos y tableros. En revisión: mazos Ilustrado, Clásico y Pixel (iteración 2) y pantallas (Inicio, Reto diario, Clasificaciones, Colección, Ajustes, Victoria). |
+| Diseño | 🟡 Canvas [Quiet Solitaire](https://claude.ai/artifact/EwWvXPwMtEVpx47drg2AJV) (plantilla de 5 páginas desde el 2026-10-29; el canvas anterior, con las propuestas de header y búsqueda, está en `design/backups/pre-plantilla-2026-10-29/canvas/`). Aprobados: mazo por defecto, reversos y tableros. En revisión: mazos Ilustrado, Clásico y Pixel (iteración 2) y pantallas (Inicio, Reto diario, Clasificaciones, Colección, Ajustes, Victoria). |
 | 0. QuietKit | ✅ Hecha. `../QuietKit` compila y sus tests pasan; Quiet Numbers todavía no lo usa (se migra en su 1.1). |
 | 1. Motor | ✅ Hecha. Reglas, deshacer, puntaje, solver, reparto diario con dificultad por día, logros; 24 tests. Solver: 80 de 100 repartos al azar resueltos (máximo teórico ~82 %), ~30 ms por reparto en release. |
 | 2. Juego jugable | 🟡 Jugable en el simulador (tocar, arrastrar pilas, voltear, pistas, autocompletar, "sin salida", victoria con cascada). Falta probar en un iPhone real y en iPad. |

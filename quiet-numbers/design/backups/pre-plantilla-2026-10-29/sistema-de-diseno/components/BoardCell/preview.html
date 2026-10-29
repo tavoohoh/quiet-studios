@@ -1,0 +1,30 @@
+<!-- @dsCard group="Tablero" height=150 -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+body { margin: 0; background: var(--background); color: var(--ink); font-family: var(--font-text); }
+.wrap { padding: 20px; display: flex; flex-direction: column; gap: 14px; max-width: 420px; }
+.n { font-family: var(--font-rounded); font-size: 27px; font-variant-numeric: tabular-nums; }
+.cells { display: grid; grid-template-columns: repeat(6, 46px); gap: 6px; }
+.cell { width: 46px; height: 46px; display: flex; align-items: center; justify-content: center; position: relative; }
+.ring { position: absolute; width: 40px; height: 40px; border-radius: 50%; box-sizing: border-box; }
+.lbl { font-size: 11px; color: var(--muted); text-align: center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="cells">
+<div class="cell"><span class="n" style="color: var(--number);">7</span></div>
+<div class="cell"><span class="n" style="color: var(--number-added);">3</span></div>
+<div class="cell"><span class="ring" style="border: 2px solid var(--selection); background: color-mix(in srgb, var(--selection) 14%, transparent);"></span><span class="n" style="position: relative; color: var(--selection); font-weight: 700;">4</span></div>
+<div class="cell"><span class="ring" style="border: 2px dashed var(--selection);"></span><span class="n" style="position: relative;">6</span></div>
+<div class="cell"><span class="ring" style="border: 2px solid var(--miss); background: color-mix(in srgb, var(--miss) 14%, transparent);"></span><span class="n" style="position: relative;">8</span></div>
+<div class="cell"><span class="n" style="color: var(--number-cleared);">5</span></div>
+</div>
+<div class="cells lbl"><span>en juego</span><span>agregado</span><span>selección</span><span>pista</span><span>error</span><span>eliminado</span></div>
+</div>
+<script>/* static preview */</script>
+</body>
+</html>

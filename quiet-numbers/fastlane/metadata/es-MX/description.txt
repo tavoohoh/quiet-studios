@@ -4,7 +4,7 @@ CÓMO SE JUEGA
 Empareja números iguales (4 y 4) o que sumen diez (3 y 7). Una pareja puede estar junta en cualquier dirección, en la misma línea con solo casillas vacías entre ellas, o ir del final de una fila al inicio de la siguiente. Vacía una fila y desaparece. ¿Sin parejas? Toca + para copiar los números que quedan al final del tablero, hasta cinco veces por tablero. Vacía el tablero para pasar a la siguiente etapa.
 
 UN RETO NUEVO CADA DÍA
-Una meta de puntos cada día, con los mismos tableros para todos. Alcánzala para mantener tu racha y sigue jugando por más puntos. ¿Te perdiste uno? Juega los últimos 30 días como práctica y retoma donde lo dejaste.
+Una meta de puntos cada día, con los mismos tableros para todos. Alcánzala para mantener tu racha; en la clasificación diaria, a igual puntaje gana el menor tiempo. ¿Te perdiste uno? Juega cualquiera de los últimos 30 días para completarlo y retoma donde lo dejaste.
 
 JUEGA A TU RITMO
 • Pistas ilimitadas, por unos pocos puntos.

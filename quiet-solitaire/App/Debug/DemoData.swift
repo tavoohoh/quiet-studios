@@ -20,7 +20,11 @@ enum DemoData {
         + (6...13).map { (String(format: "2026-11-%02d", $0), 1_060 + $0 * 31) }
 
     static var progress: PlayerProgress {
-        var progress = PlayerProgress(unlocked: [.firstWin, .noUndo, .noHints, .onePass, .tenWins, .consistency, .ladder, .economy, .nightOwl])
+        // `-unlockAll` too: the design captures show every deck on the demo game.
+        let unlocked: Set<Achievement> = ProcessInfo.processInfo.arguments.contains("-unlockAll")
+            ? Set(Achievement.allCases)
+            : [.firstWin, .noUndo, .noHints, .onePass, .tenWins, .consistency, .ladder, .economy, .nightOwl]
+        var progress = PlayerProgress(unlocked: unlocked)
         for index in completedDays.indices {
             _ = progress.record(.dailyCompleted(currentStreak: min(index + 1, 11), localHour: 20))
         }
