@@ -133,7 +133,7 @@ final class AppModel {
         if let abandoned = persistence.loadGame(.classic), !abandoned.isOver {
             record(.classicAbandoned(score: abandoned.score, played: abandoned.hasMoves))
         }
-        let model = GameModel(session: GameSession(seed: .random(in: .min ... .max), scoring: unscoredScoring))
+        let model = GameModel(session: GameSession(seed: .random(in: .min ... .max), scoring: classicScoring))
         persistence.saveGame(model.session, in: .classic)
         classicStage = model.session.stage
         start(model, as: .classic)
@@ -141,9 +141,9 @@ final class AppModel {
 
     var hasClassicInProgress: Bool { classicStage != nil }
 
-    /// Classic and practice: "In the Red" makes hints cheaper (a hidden reward). The scored
-    /// daily challenge always uses `.standard`, so its leaderboard stays even.
-    var unscoredScoring: Scoring {
+    /// Classic only: "In the Red" makes hints cheaper (a hidden reward). Daily challenges,
+    /// scored or replayed, always use `.standard` (2026-10-29: a replay is still a challenge).
+    var classicScoring: Scoring {
         progress.unlocked.contains(.inTheRed) ? .cheapHints : .standard
     }
 
@@ -195,7 +195,7 @@ final class AppModel {
         } else if let saved = persistence.loadGame(.practice(dayKey: dayKey)), !saved.isOver {
             start(GameModel(session: saved), as: .practice(dayKey: dayKey))
         } else {
-            let session = DailyChallenge.session(forDayKey: dayKey, scoring: unscoredScoring)
+            let session = DailyChallenge.session(forDayKey: dayKey)
             start(GameModel(session: session), as: .practice(dayKey: dayKey))
         }
     }
@@ -231,8 +231,9 @@ final class AppModel {
             if game.session.isCompleted { completeDaily(dayKey, score: game.session.score) }
         case .practice(let dayKey):
             persistence.saveGame(game.session, in: .practice(dayKey: dayKey))
-            if game.session.isCompleted, !progress.practicedDays.contains(dayKey) {
-                record(.practiceCompleted(dayKey: dayKey))
+            if game.session.isCompleted {
+                if !progress.practicedDays.contains(dayKey) { record(.practiceCompleted(dayKey: dayKey)) }
+                fillDay(dayKey, with: game.session)
             }
         }
         if game.session.isOver { finish(game.session, kind) }
@@ -274,6 +275,16 @@ final class AppModel {
         guard isNew else { return }
         let hour = Calendar.current.component(.hour, from: AppClock.now)
         record(.dailyCompleted(currentStreak: currentStreak, localHour: hour))
+    }
+
+    /// A missed (or failed) day completed as practice fills the streak (2026-10-29). It
+    /// counts like a completed daily for achievements, but sends nothing to the daily board.
+    private func fillDay(_ dayKey: String, with session: GameSession) {
+        guard persistence.dailies[dayKey]?.isCompleted != true else { return }
+        persistence.fillDaily(dayKey, score: session.score, seconds: session.elapsedSeconds)
+        let hour = Calendar.current.component(.hour, from: AppClock.now)
+        // A filled gap can join two runs in the past, so the longest streak, not today's.
+        record(.dailyCompleted(currentStreak: longestStreak, localHour: hour))
     }
 
     private func refreshSavedGames() {

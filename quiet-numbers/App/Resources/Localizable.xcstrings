@@ -1115,12 +1115,12 @@
         }
       }
     },
-    "Past days are practice: they don't count toward your streak.": {
+    "Past days are practice: they don't score, but completing one counts toward your streak.": {
       "localizations": {
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Los días pasados son práctica: no cuentan para tu racha."
+            "value": "Los días pasados son práctica: no suman puntaje, pero completarlos cuenta para tu racha."
           }
         }
       }

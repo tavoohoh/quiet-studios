@@ -202,6 +202,26 @@ final class PersistenceService {
         reloadDailies()
     }
 
+    /// A day completed as practice counts as completed (streak, calendar). A scored attempt
+    /// that day keeps its score; a day never played takes the practice's.
+    func fillDaily(_ dayKey: String, score: Int, seconds: Int) {
+        let stored = storedDaily(dayKey) ?? {
+            let new = StoredDaily(dayKey: dayKey)
+            context.insert(new)
+            return new
+        }()
+        guard !stored.isCompleted else { return }
+        if !stored.isFinished {
+            stored.score = score
+            stored.seconds = seconds
+            stored.isFinished = true
+            stored.finishedAt = .now
+        }
+        stored.isCompleted = true
+        save()
+        reloadDailies()
+    }
+
     /// Adds daily results from another device, keeping the better result per day.
     func mergeDailies(_ remote: [String: DailyRecord]) {
         for (day, record) in remote {

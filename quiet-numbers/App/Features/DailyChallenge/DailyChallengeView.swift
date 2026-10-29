@@ -40,7 +40,7 @@ struct DailyChallengeView: View {
                         .font(.subheadline)
                         .foregroundStyle(theme.muted)
                         .padding(.top, 4)
-                    Text("Past days are practice: they don't count toward your streak.")
+                    Text("Past days are practice: they don't score, but completing one counts toward your streak.")
                         .font(.footnote)
                         .foregroundStyle(theme.muted)
                         .multilineTextAlignment(.center)

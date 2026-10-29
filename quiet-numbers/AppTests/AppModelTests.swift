@@ -112,7 +112,7 @@ import Testing
         #expect(app.progress.gamesPlayed == 1)
     }
 
-    @Test func inTheRedMakesHintsCheaperExceptInTheDaily() throws {
+    @Test func inTheRedMakesHintsCheaperOnlyInClassic() throws {
         let app = AppModel(persistence: PersistenceService(store: .inMemory))
         app.newClassic()
         #expect(try #require(app.activeGame).session.scoring.hintCost == 10)
@@ -121,9 +121,14 @@ import Testing
         #expect(try #require(app.activeGame).session.scoring.hintCost == 3)
         app.playDaily(app.todayKey)
         #expect(try #require(app.activeGame).session.scoring.hintCost == 10)
+        // A past day replayed as practice is still a daily challenge.
+        let past = try #require(DailyKey.dayKey(app.todayKey, addingDays: -2))
+        app.playDaily(past)
+        #expect(app.activeKind == .practice(dayKey: past))
+        #expect(try #require(app.activeGame).session.scoring.hintCost == 10)
     }
 
-    @Test func clearedPracticeMarksTheDayOnly() {
+    @Test func clearedPracticeMarksAndFillsTheDay() {
         let app = AppModel(persistence: PersistenceService(store: .inMemory))
         let day = "2026-10-01"
         let model = GameModel(session: GameSession(values: [4, 4], mode: .daily(dayKey: day), seed: 0))
@@ -133,8 +138,8 @@ import Testing
         app.sessionChanged()
         #expect(model.session.isCompleted)
         #expect(app.progress.practicedDays == [day])
-        #expect(app.persistence.dailies[day] == nil)
-        #expect(app.longestStreak == 0)
+        #expect(app.persistence.dailies[day]?.isCompleted == true)
+        #expect(app.longestStreak == 1)
     }
 
     @Test func practiceIsSavedAndResumed() throws {
@@ -356,5 +361,45 @@ import Testing
         let old = DailyRecord(score: 500, isFinished: true, isCompleted: true)
         #expect(slow.better(than: fast) == fast)
         #expect(old.better(than: slow) == slow)
+    }
+}
+
+@MainActor
+@Suite struct FilledDayTests {
+    /// Completes `dayKey` as practice on a board that reaches a goal of 2 in two moves.
+    private func completePractice(_ app: AppModel, _ dayKey: String) {
+        let model = GameModel(session: GameSession(board: Board(values: [4, 4, 1, 2, 1, 2, 1, 2, 3, 7]), mode: .daily(dayKey: dayKey), score: 0, goal: 2))
+        app.start(model, as: .practice(dayKey: dayKey))
+        model.tap(model.session.board.cells[0])
+        model.tap(model.session.board.cells[1])
+        model.tap(model.session.board.cells[8])
+        model.tap(model.session.board.cells[9])
+        app.sessionChanged()
+    }
+
+    @Test func completingAMissedDayFillsTheStreak() throws {
+        let app = AppModel(persistence: PersistenceService(store: .inMemory))
+        let today = app.todayKey
+        let yesterday = try #require(DailyKey.dayKey(today, addingDays: -1))
+        let before = try #require(DailyKey.dayKey(today, addingDays: -2))
+        app.persistence.finishDaily(before, score: 500, isCompleted: true)
+        app.persistence.finishDaily(today, score: 450, isCompleted: true)
+        #expect(app.currentStreak == 1)
+        completePractice(app, yesterday)
+        #expect(app.persistence.dailies[yesterday]?.isCompleted == true)
+        #expect(app.currentStreak == 3)
+        #expect(app.progress.dailiesCompleted == 1)
+        // Doing it again doesn't count twice.
+        completePractice(app, yesterday)
+        #expect(app.progress.dailiesCompleted == 1)
+    }
+
+    @Test func aFailedDayKeepsItsScoredResult() throws {
+        let app = AppModel(persistence: PersistenceService(store: .inMemory))
+        let day = try #require(DailyKey.dayKey(app.todayKey, addingDays: -4))
+        app.persistence.finishDaily(day, score: 310, isCompleted: false)
+        completePractice(app, day)
+        #expect(app.persistence.dailies[day]?.isCompleted == true)
+        #expect(app.persistence.dailies[day]?.score == 310)
     }
 }

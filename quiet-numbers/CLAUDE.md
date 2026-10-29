@@ -9,7 +9,7 @@ Nombre: **Quiet Numbers** (alternativa evaluada: "Diez"). Nunca usar "Number Mat
 - Sin anuncios, compras in-app, suscripciones ni tip jar.
 - Sin backend, analytics, crash reporters ni SDKs de terceros. Ninguna llamada de red propia.
 - 100% offline. Game Center es un extra que sincroniza al reconectar.
-- Recompensas solo cosméticas, ganadas con logros. Única excepción: el easter egg de "Números rojos" (pistas más baratas fuera del reto diario puntuable).
+- Recompensas solo cosméticas, ganadas con logros. Única excepción: el easter egg de "Números rojos" (pistas más baratas en clásico; nunca en retos diarios).
 - Sin identificadores propios, fingerprinting ni App Tracking Transparency.
 - Frameworks permitidos: SwiftUI, SwiftData, GameKit y StoreKit **solo** para `requestReview()`.
 
@@ -102,7 +102,7 @@ Tablero de **9 columnas**; arranca con **42 números** del 1 al 9 (4 filas y med
 - Celdas eliminadas quedan como "fantasma" (número tenue) hasta que su fila se vacía.
 - Fila vacía: desaparece, el tablero sube y da puntos extra.
 - Botón **+**: copia todos los números restantes, en orden, al final del tablero (regla estándar del género; se evaluó triplicar y se descartó). **Máximo 5 usos por tablero**; limpiar filas no devuelve usos (cambio del 2026-10-26). Sin parejas ni usos, la partida termina. Los números agregados se muestran en el acento coral del tema para distinguirlos de los originales.
-- **Pistas:** ilimitadas; resaltan una pareja válida y cuestan 10 puntos, **aunque el puntaje quede negativo** (cambio del 2026-10-26; da el logro "Números rojos"). Con "Números rojos" cuestan 3 en clásico y práctica (`Scoring.cheapHints`, `AppModel.unscoredScoring`); el reto diario puntuable siempre cobra 10. Cada partida guarda su `Scoring`, así que el cambio aplica desde la siguiente. Si no hay parejas, no cobran.
+- **Pistas:** ilimitadas; resaltan una pareja válida y cuestan 10 puntos, **aunque el puntaje quede negativo** (cambio del 2026-10-26; da el logro "Números rojos"). Con "Números rojos" cuestan 3 solo en clásico (`Scoring.cheapHints`, `AppModel.classicScoring`); los retos diarios, puntuables o repetidos como práctica, siempre cobran 10 (cambio del 2026-10-29, feedback del usuario: antes la práctica también cobraba 3). Cada partida guarda su `Scoring`, así que el cambio aplica desde la siguiente. Si no hay parejas, no cobran.
 - **Etapas:** vaciar el tablero pasa a la siguiente etapa con tablero nuevo; los usos de + se reinician. Cada etapa es más difícil (decisión 2026-10-26): números al inicio 42, 44, 48, 50 y 54 desde la etapa 5 (siempre pares, por `isPairable`); usos de + 5, 5, 4, 4 y 3; parejas al inicio 3–5, 2–4 y 2–3 desde la etapa 3 (decisión 2026-10-27; ver generación abajo); desde la etapa 3 cada pareja vale 1 punto más. El reto diario juega etapas hasta llegar a su meta (ver Reto diario).
 - **Resumen al terminar (2026-10-28, como la hoja de victoria de Quiet Solitaire):** hoja desde abajo con puntaje, meta (retos), tiempo, etapa, parejas, filas limpiadas, usos de +, pistas y los logros de la partida (en una tarjeta; sin avisos encima). Un reto completado (también en práctica) lleva antes los fuegos artificiales de QuietUI (`Fireworks`, nada con Reduce Motion); el clásico y un reto sin meta alcanzada, solo la hoja. El tiempo cuenta desde la primera jugada, por segundo con la partida en pantalla y la app activa; `GameModel` lo acumula y lo entrega a la sesión con cada jugada o al salir, para no guardar cada segundo. Estadísticas en `GameSession.stats` (opcional al decodificar; deshacer quita lo que sumó la jugada).
 - **Indicador de números (2026-10-28):** fila 1–9 sobre el tablero; un dígito que ya no queda en el tablero se tacha y se atenúa (vuelve con el tablero de la etapa siguiente).
@@ -132,7 +132,7 @@ Tablero único por día, igual para todo el mundo, generado en el dispositivo si
 - **Decisiones de implementación (fase 3):**
   - "Completar" un reto = llegar a su meta de puntos (antes: vaciar el tablero). Terminar sin llegar guarda el puntaje (cuenta como intento) pero no suma a la racha.
   - El intento puntuable empieza al tocar "Jugar" por primera vez ese día; si se sale a mitad, se reanuda (sigue puntuando).
-  - Repeticiones y días pasados son "Práctica": no cuentan para racha, clasificación ni logros de retos. Una práctica a medias se guarda por día (ranura `practice-<día>`; "Continue" y un punto en el calendario; al tocarla pregunta "Continuar / Empezar de nuevo", 2026-10-28) y se borra al terminar o al salir de la ventana de 30 días (2026-10-27). Un día pasado vaciado como práctica se marca con relleno suave (`PlayerProgress.practicedDays`, viaja con el progreso).
+  - Repeticiones y días pasados son "Práctica": no envían puntaje a la clasificación diaria. **Completar una práctica rellena ese día** (cambio del 2026-10-29, pedido del usuario; antes no contaba para nada): queda completado para la racha, el calendario y los logros de retos (`.dailyCompleted` con la racha más larga, porque un hueco rellenado puede unir dos rachas pasadas), una sola vez por día. Si ese día hubo un intento puntuable fallido, conserva su puntaje; si no se jugó, toma el de la práctica (`PersistenceService.fillDaily`). Pistas siempre a 10, como el reto puntuable. Una práctica a medias se guarda por día (ranura `practice-<día>`; "Continue" y un punto en el calendario; al tocarla pregunta "Continuar / Empezar de nuevo", 2026-10-28) y se borra al terminar o al salir de la ventana de 30 días (2026-10-27). Un día pasado vaciado como práctica se marca con relleno suave (`PlayerProgress.practicedDays`, viaja con el progreso).
 - **Test obligatorio:** la misma fecha produce siempre el mismo tablero en todos los dispositivos.
 
 ## Game Center
@@ -182,7 +182,7 @@ Toda recompensa es cosmética y nunca altera la jugabilidad ni el layout del tab
 | Centenario | Completar 100 retos diarios | Ícono alternativo dorado |
 | Noctámbulo | Completar un reto entre 00:00 y 04:00 | Tema Salvia y coral |
 | Monótono | 10 parejas seguidas del mismo número | Pack de sonido: marimba |
-| Números rojos | Llevar el puntaje por debajo de cero | Easter egg oculto: pistas a 3 en clásico y práctica (decisión 2026-10-26, opción B: el reto diario sigue a 10 para que su leaderboard sea parejo; `best_score` sí se beneficia, aceptado). No aparece en Colección. |
+| Números rojos | Llevar el puntaje por debajo de cero | Easter egg oculto: pistas a 3 solo en clásico (desde el 2026-10-29 tampoco en práctica; decisión 2026-10-26, opción B: el reto diario sigue a 10 para que su leaderboard sea parejo; `best_score` sí se beneficia, aceptado). No aparece en Colección. |
 
 El tema **Alto contraste** (accesibilidad) está siempre disponible, sin logro.
 
