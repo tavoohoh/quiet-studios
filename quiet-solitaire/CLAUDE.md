@@ -171,12 +171,14 @@ Mazos (2026-10-27, tras la primera revisión: Contorno y New York se parecían d
 | `qs_habit` | Hábito / Habit | Racha de 30 retos | Mazo Ilustrado |
 | `qs_ladder` | Escalera / Ladder | Tener una columna del Rey al As en el tableau | Reverso Lino |
 | `qs_centennial` | Centenario / Centennial | Ganar 100 partidas | Reverso Dorado + ícono dorado |
-| `qs_night_owl` | Noctámbulo / Night Owl | Ganar un reto entre 00:00 y 04:00 (oculto) | Reverso Noche |
+| `qs_night_owl` | Noctámbulo / Night Owl | Ganar un reto entre 00:00 y 04:00 | Reverso Noche |
 | `qs_fifty_wins` | Cincuenta / Fifty | Ganar 50 partidas | Efecto de victoria: cascada (las cartas caen y luego los fuegos) |
-| `qs_economy` | Economía / Economy | Ganar en menos de 100 movimientos (oculto) | Mazo Pixel |
+| `qs_economy` | Economía / Economy | Ganar en menos de 100 movimientos | Mazo Pixel |
 | `qs_in_the_red` | Números rojos / In the Red | Llevar el puntaje por debajo de cero (oculto) | Easter egg: pistas a 3 en clásico y práctica (el reto diario sigue a 10 para que su leaderboard sea parejo; `qs_best_score` sí se beneficia, aceptado como en Quiet Numbers). No aparece en Colección. Mismo premio que en Quiet Numbers (decidido 2026-10-27). |
 
-Siempre disponibles, sin logro: tema **Alto contraste**, mazo **Cuatro colores** y mazo **Índice grande** (accesibilidad).
+Siempre disponibles, sin logro: tema **Alto contraste**, mazo **Cuatro colores** y mazo **Índice grande** (accesibilidad), y los tableros **Petróleo y coral claro** y **oscuro** (2026-10-28, como Quiet Numbers): el de por defecto fijo en un modo aunque el iPhone use el otro.
+
+Noctámbulo y Economía eran ocultos; desde el 2026-10-28 muestran su condición en Colección y en Game Center (`showBeforeEarned`, actualizado con `scripts/setup-game-center.py --apply`), para que se sepa cómo ganar la recompensa. Solo Números rojos sigue oculto y no aparece en Colección.
 
 Categorías en Colección: mazo, reverso, tablero, efecto de victoria, pack de sonido, ícono.
 

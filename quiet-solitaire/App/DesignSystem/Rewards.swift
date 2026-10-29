@@ -21,11 +21,13 @@ extension Reward {
 
 /// The table: the family's palettes.
 enum BoardChoice: String, Reward {
-    case tealCoral, sageSand, indigoPeach, sageCoral, highContrast
+    case tealCoral, tealCoralLight, tealCoralDark, sageSand, indigoPeach, sageCoral, highContrast
 
     var title: LocalizedStringResource {
         switch self {
         case .tealCoral: "Teal & Coral"
+        case .tealCoralLight: "Teal & Coral Light"
+        case .tealCoralDark: "Teal & Coral Dark"
         case .sageSand: "Sage & Sand"
         case .indigoPeach: "Indigo & Peach"
         case .sageCoral: "Sage & Coral"
@@ -35,16 +37,37 @@ enum BoardChoice: String, Reward {
 
     var unlockedBy: Achievement? {
         switch self {
-        case .tealCoral, .highContrast: nil
+        case .tealCoral, .tealCoralLight, .tealCoralDark, .highContrast: nil
         case .sageSand: .noHints
         case .indigoPeach: .consistency
         case .sageCoral: .tenWins
         }
     }
 
-    var note: LocalizedStringResource? { self == .highContrast ? "Always available for low vision." : nil }
+    var note: LocalizedStringResource? {
+        // Separate returns: string extraction skips literals after the first case of a switch here.
+        if self == .tealCoral { return "Follows your device's light or dark mode." }
+        if self == .highContrast { return "Always available for low vision." }
+        return nil
+    }
 
-    var palette: Palette { Palette(rawValue: rawValue)! }
+    /// Teal & Coral Light and Dark are Teal & Coral pinned to one mode.
+    var palette: Palette {
+        switch self {
+        case .tealCoral, .tealCoralLight, .tealCoralDark: .tealCoral
+        default: Palette(rawValue: rawValue)!
+        }
+    }
+
+    /// Teal & Coral follows the system, or stays light or dark whatever the device uses;
+    /// the others have a single mode of their own.
+    var theme: Theme {
+        switch self {
+        case .tealCoralLight: Theme(palette, colorScheme: .light)
+        case .tealCoralDark: Theme(palette, colorScheme: .dark)
+        default: Theme(palette)
+        }
+    }
 }
 
 /// Card faces.

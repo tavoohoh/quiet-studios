@@ -38,7 +38,9 @@ public enum Achievement: String, CaseIterable, Codable, Sendable {
         }
     }
 
-    public var isHidden: Bool { self == .nightOwl || self == .economy || self == .inTheRed }
+    /// Hidden in Game Center until earned. Only the easter egg: the rest show their condition
+    /// so players know how to earn the reward.
+    public var isHidden: Bool { self == .inTheRed }
 }
 
 /// Something that happened in play, fed to `PlayerProgress`.

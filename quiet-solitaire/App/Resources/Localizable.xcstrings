@@ -801,6 +801,16 @@
         }
       }
     },
+    "Follows your device's light or dark mode.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sigue el modo claro u oscuro de tu dispositivo."
+          }
+        }
+      }
+    },
     "Four colors": {
       "localizations": {
         "es": {
@@ -907,26 +917,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "¡Corazones completos!"
-          }
-        }
-      }
-    },
-    "Hidden achievement": {
-      "localizations": {
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Logro oculto"
-          }
-        }
-      }
-    },
-    "Hidden achievement.": {
-      "localizations": {
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Logro oculto."
           }
         }
       }
@@ -1047,16 +1037,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Seguir jugando"
-          }
-        }
-      }
-    },
-    "Keep playing to find it.": {
-      "localizations": {
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Sigue jugando para encontrarlo."
           }
         }
       }
@@ -1857,6 +1837,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Petróleo y coral"
+          }
+        }
+      }
+    },
+    "Teal & Coral Dark": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Petróleo y coral oscuro"
+          }
+        }
+      }
+    },
+    "Teal & Coral Light": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Petróleo y coral claro"
           }
         }
       }

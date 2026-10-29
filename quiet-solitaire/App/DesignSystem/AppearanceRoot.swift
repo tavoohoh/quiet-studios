@@ -13,7 +13,7 @@ struct AppearanceRoot: ViewModifier {
     @AppStorage(PreferenceKey.leftHanded) private var leftHanded = false
 
     func body(content: Content) -> some View {
-        let theme = Theme(available(board, or: .tealCoral).palette)
+        let theme = available(board, or: .tealCoral).theme
         content
             .environment(\.quietTheme, theme)
             .environment(\.appearance, Appearance(

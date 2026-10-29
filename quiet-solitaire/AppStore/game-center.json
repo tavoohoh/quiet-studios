@@ -220,7 +220,7 @@
       "id": "qs_night_owl",
       "codeCase": "Achievement.nightOwl",
       "points": 40,
-      "hidden": true,
+      "hidden": false,
       "achievableMoreThanOnce": false,
       "reward": {
         "en": "Night back",
@@ -268,7 +268,7 @@
       "id": "qs_economy",
       "codeCase": "Achievement.economy",
       "points": 60,
-      "hidden": true,
+      "hidden": false,
       "achievableMoreThanOnce": false,
       "reward": {
         "en": "Pixel deck",

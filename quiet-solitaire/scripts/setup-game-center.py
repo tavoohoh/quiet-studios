@@ -3,10 +3,10 @@
 through the App Store Connect API (credentials: see scripts/asc.py).
 
     scripts/setup-game-center.py            # what would change
-    scripts/setup-game-center.py --apply    # create what's missing
+    scripts/setup-game-center.py --apply    # create what's missing, update visibility
 
 Idempotent: matches by vendor identifier and locale and only creates what's missing;
-it never edits or deletes. The app must already exist in App Store Connect.
+it never deletes and only edits whether an achievement shows before it is earned. The app must already exist in App Store Connect.
 """
 import json
 import pathlib
@@ -75,6 +75,15 @@ def achievements(detail_id, specs):
                 "showBeforeEarned": not spec["hidden"],
                 "repeatable": spec["achievableMoreThanOnce"],
             }, {"gameCenterDetail": relation("gameCenterDetails", detail_id)})["id"]
+        else:
+            current = asc.request("GET", f"/v1/gameCenterAchievements/{achievement_id}")["data"]["attributes"]
+            if current["showBeforeEarned"] != (not spec["hidden"]):
+                print(f"~ achievement {spec['id']}: {'hidden' if spec['hidden'] else 'shown'} before earned")
+                if APPLY:
+                    asc.request("PATCH", f"/v1/gameCenterAchievements/{achievement_id}", {"data": {
+                        "type": "gameCenterAchievements", "id": achievement_id,
+                        "attributes": {"showBeforeEarned": not spec["hidden"]},
+                    }})
         localizations = {} if achievement_id == "(dry run)" else {
             l["attributes"]["locale"]: l["id"]
             for l in asc.get_all(f"/v1/gameCenterAchievements/{achievement_id}/localizations?limit=50")
@@ -142,7 +151,7 @@ def main():
     detail_id = game_center_detail(apps[0]["id"])
     achievements(detail_id, spec["achievements"])
     leaderboards(detail_id, spec["leaderboards"])
-    print("Done." if APPLY else "Dry run; pass --apply to create.")
+    print("Done." if APPLY else "Dry run; pass --apply to make these changes.")
 
 
 if __name__ == "__main__":

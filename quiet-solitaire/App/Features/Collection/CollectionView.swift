@@ -22,7 +22,7 @@ struct CollectionView: View {
                 }
                 BackPicker(selection: $back, progress: app.progress)
                 RewardSection(title: "Board", selection: $board, progress: app.progress) { choice in
-                    PaletteSwatch(palette: choice.palette)
+                    PaletteSwatch(theme: choice.theme)
                 }
                 RewardSection(title: "Victory", selection: $victory, progress: app.progress)
                 RewardSection(title: "App icon", selection: $appIcon, progress: app.progress)
@@ -102,7 +102,7 @@ private struct RewardSection<R: Reward, Preview: View>: View {
     private func detail(for item: R, isUnlocked: Bool) -> LocalizedStringResource? {
         if let note = item.note { return note }
         guard !isUnlocked, let achievement = item.unlockedBy else { return nil }
-        return achievement.isHidden ? "Hidden achievement." : achievement.condition
+        return achievement.condition
     }
 }
 
@@ -164,7 +164,7 @@ private struct BackPicker: View {
                     .buttonStyle(.plain)
                     .disabled(!isUnlocked)
                     .accessibilityLabel(Text(back.title))
-                    .accessibilityValue(isUnlocked ? Text(verbatim: "") : Text(back.unlockedBy.map { $0.isHidden ? "Hidden achievement." : $0.condition } ?? ""))
+                    .accessibilityValue(isUnlocked ? Text(verbatim: "") : Text(back.unlockedBy?.condition ?? ""))
                     .accessibilityAddTraits(back == selection ? .isSelected : [])
                 }
             }
@@ -176,13 +176,12 @@ private struct BackPicker: View {
 
 /// A palette's primary and accent, as two overlapping dots.
 private struct PaletteSwatch: View {
-    let palette: Palette
+    let theme: Theme
 
     @Environment(\.quietTheme) private var current
     @Environment(\.colorScheme) private var colorScheme
 
     var body: some View {
-        let theme = Theme(palette)
         ZStack(alignment: .leading) {
             Circle().fill(theme.primary).frame(width: 24, height: 24)
             Circle().fill(theme.accent).frame(width: 24, height: 24)
@@ -203,19 +202,18 @@ private struct AchievementRow: View {
 
     var body: some View {
         let isUnlocked = progress >= 1
-        let isSecret = achievement.isHidden && !isUnlocked
         HStack(spacing: 14) {
-            Image(systemName: isSecret ? "questionmark" : achievement.systemImage)
+            Image(systemName: achievement.systemImage)
                 .font(.title3)
                 .foregroundStyle(isUnlocked ? theme.onPrimary : theme.muted)
                 .frame(width: 44, height: 44)
                 .background(isUnlocked ? theme.primary : theme.surface2, in: Circle())
                 .accessibilityHidden(true)
             VStack(alignment: .leading, spacing: 4) {
-                Text(isSecret ? "Hidden achievement" : achievement.title)
+                Text(achievement.title)
                     .font(.headline)
                     .foregroundStyle(theme.ink)
-                Text(isSecret ? "Keep playing to find it." : achievement.condition)
+                Text(achievement.condition)
                     .font(.subheadline)
                     .foregroundStyle(theme.muted)
                 if progress > 0, progress < 1, achievement.target > 1 {
