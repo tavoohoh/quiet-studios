@@ -327,7 +327,7 @@ import Testing
     }
 
     @Test func sameScoreGoesToTheFasterTime() {
-        let ranked = GameCenterService.rankedByTime([
+        let ranked = GameCenterService.rankedByScoreAndTime([
             entry("slow", rank: 1, score: 500, seconds: 300),
             entry("fast", rank: 1, score: 500, seconds: 120),
             entry("old", rank: 1, score: 500, seconds: nil),
@@ -336,8 +336,8 @@ import Testing
         ])
         #expect(ranked.map(\.id) == ["top", "fast", "twin", "slow", "old"])
         #expect(ranked.map(\.rank) == [1, 2, 2, 4, 5])
-        #expect(GameCenterService.seconds(of: ranked[1]) == 120)
-        #expect(GameCenterService.seconds(of: ranked[4]) == nil)
+        #expect(GameCenterService.dailySeconds(of: ranked[1]) == 120)
+        #expect(GameCenterService.dailySeconds(of: ranked[4]) == nil)
     }
 
     @Test func finishingADailyKeepsItsTime() throws {

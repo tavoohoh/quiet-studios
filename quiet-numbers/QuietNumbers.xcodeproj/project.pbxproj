@@ -8,7 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		053BB0365C625243135874E4 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E7798637C0A4A6CDA4DBB2 /* GameView.swift */; };
+		0A6F8008456DDF2D88E85F3E /* FriendProfileScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15D8E8DC19971AD50F6178DE /* FriendProfileScreen.swift */; };
 		0F74E3EDDCA32DA6C44BF7F5 /* TutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4BA742F911507670BC8C928 /* TutorialView.swift */; };
+		1053512FBE4E15D00E86AD07 /* PendingReminders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E83304CFB1145FE4DBAC1C /* PendingReminders.swift */; };
 		119422CC4A4C765B14A95825 /* PersistenceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3D9D0DAEED6E7CD8DA283B /* PersistenceService.swift */; };
 		199C20D362693CDF6837DCD6 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571AC2887AA56D2446FF163A /* CalendarView.swift */; };
 		22A872E7DEBDD550391484A4 /* Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630EEE295069B81DE9BFF117 /* Layout.swift */; };
@@ -37,6 +39,7 @@
 		89DB86B584C82B5A52A7B493 /* FeedbackService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 496D713FFDA63910BD47EEF4 /* FeedbackService.swift */; };
 		94EE4038B4231F54FE822E0C /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D15AA4C99BAE2C8662B34C66 /* AppModel.swift */; };
 		94FB3710A69027408DFEBCAB /* AchievementText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3764A4EF9834602A85298448 /* AchievementText.swift */; };
+		9E5BEA8D76537255FB525041 /* Reminders.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9A9177F33F708A29292790 /* Reminders.swift */; };
 		A0C6754BBB6665903EB0C79A /* Rewards.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3D83326830FBDF44307316 /* Rewards.swift */; };
 		AE09418FE17CF8B80C9985F2 /* DailyChallengeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A94485656D17DA81C15D259 /* DailyChallengeView.swift */; };
 		AEDA50AE1D918285F5991128 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FC76CAE1563A82F982ECB21E /* Assets.xcassets */; };
@@ -45,6 +48,7 @@
 		C8F42C0267E4DB6F52F5D3B0 /* PersistenceUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0B0675BDEA4B0A15DEB5B9C /* PersistenceUITests.swift */; };
 		CA8D59F009ED6245A35D3EB3 /* CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9194796821A907E01A268433 /* CollectionView.swift */; };
 		DA2540312F92F096DF1016A9 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 57DBAC418C43449E8EE90E01 /* PrivacyInfo.xcprivacy */; };
+		E13626598E7FBD9FC42A4422 /* ReminderUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23E4CB3A5344AF1C740A0ECE /* ReminderUITests.swift */; };
 		E4F62B961783E757AF92439F /* QuietNumbersApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631019FDC57409A49740D79C /* QuietNumbersApp.swift */; };
 		E763D16DE3F2BD7B5DC82F95 /* BoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C33B49B32F0F2F2AA6714F78 /* BoardView.swift */; };
 		E79894BADD43733A109B5546 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 395784F31889B14D1B911198 /* Localizable.xcstrings */; };
@@ -77,11 +81,13 @@
 
 /* Begin PBXFileReference section */
 		06E7798637C0A4A6CDA4DBB2 /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
+		15D8E8DC19971AD50F6178DE /* FriendProfileScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendProfileScreen.swift; sourceTree = "<group>"; };
 		1945F8C8C9CC42DC822995A2 /* CellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellView.swift; sourceTree = "<group>"; };
 		1F24CF5C37A1787DE8516E1F /* Typography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Typography.swift; sourceTree = "<group>"; };
 		212A4F79BAB138C07EAFF774 /* GameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameModel.swift; sourceTree = "<group>"; };
 		22F6C4F6421B81585108D7D6 /* Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Base.xcconfig; sourceTree = "<group>"; };
 		23C8A220045ED805473F40E1 /* DayKeyFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayKeyFormat.swift; sourceTree = "<group>"; };
+		23E4CB3A5344AF1C740A0ECE /* ReminderUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderUITests.swift; sourceTree = "<group>"; };
 		2A2F11A9E3ADE55BDF7FA2D0 /* CollectionUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionUITests.swift; sourceTree = "<group>"; };
 		3764A4EF9834602A85298448 /* AchievementText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementText.swift; sourceTree = "<group>"; };
 		395784F31889B14D1B911198 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
@@ -97,6 +103,7 @@
 		631019FDC57409A49740D79C /* QuietNumbersApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuietNumbersApp.swift; sourceTree = "<group>"; };
 		66D7992BC8FB7DE533207505 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		6767AD3F2C7296EC510EF3F8 /* QuietNumbers-Personal.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "QuietNumbers-Personal.entitlements"; sourceTree = "<group>"; };
+		77E83304CFB1145FE4DBAC1C /* PendingReminders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingReminders.swift; sourceTree = "<group>"; };
 		86B72A7C6607184099C42B8B /* QuietNumbersTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = QuietNumbersTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8C1754B3BB39F1EA843608A9 /* GameCenterService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameCenterService.swift; sourceTree = "<group>"; };
 		9194796821A907E01A268433 /* CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionView.swift; sourceTree = "<group>"; };
@@ -118,6 +125,7 @@
 		CA3D83326830FBDF44307316 /* Rewards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rewards.swift; sourceTree = "<group>"; };
 		D01628D4296D74542A4B3F7C /* GameClock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameClock.swift; sourceTree = "<group>"; };
 		D15AA4C99BAE2C8662B34C66 /* AppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModel.swift; sourceTree = "<group>"; };
+		DB9A9177F33F708A29292790 /* Reminders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reminders.swift; sourceTree = "<group>"; };
 		DEE78A2F66517ED0214D8D09 /* DemoData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoData.swift; sourceTree = "<group>"; };
 		EBDBE501E9033575A750824A /* QuietNumbersScreenshots.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = QuietNumbersScreenshots.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF453855A9BBD21832512C8D /* AppClock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppClock.swift; sourceTree = "<group>"; };
@@ -155,6 +163,7 @@
 				2A2F11A9E3ADE55BDF7FA2D0 /* CollectionUITests.swift */,
 				ABA9DDB21A2D6D9A16F979F4 /* GameplayUITests.swift */,
 				B0B0675BDEA4B0A15DEB5B9C /* PersistenceUITests.swift */,
+				23E4CB3A5344AF1C740A0ECE /* ReminderUITests.swift */,
 				A09277E42F272A31E40733F9 /* TutorialUITests.swift */,
 			);
 			path = UITests;
@@ -221,6 +230,7 @@
 		768757C93D80A868FC169B4D /* Leaderboards */ = {
 			isa = PBXGroup;
 			children = (
+				15D8E8DC19971AD50F6178DE /* FriendProfileScreen.swift */,
 				AAFD2AEC805CEB315AE9C1A9 /* LeaderboardsView.swift */,
 			);
 			path = Leaderboards;
@@ -302,6 +312,7 @@
 				496D713FFDA63910BD47EEF4 /* FeedbackService.swift */,
 				8C1754B3BB39F1EA843608A9 /* GameCenterService.swift */,
 				FF3D9D0DAEED6E7CD8DA283B /* PersistenceService.swift */,
+				DB9A9177F33F708A29292790 /* Reminders.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -344,6 +355,7 @@
 			isa = PBXGroup;
 			children = (
 				DEE78A2F66517ED0214D8D09 /* DemoData.swift */,
+				77E83304CFB1145FE4DBAC1C /* PendingReminders.swift */,
 			);
 			path = Debug;
 			sourceTree = "<group>";
@@ -505,6 +517,7 @@
 				5554FEE65B821D820A7D6CB5 /* DayKeyFormat.swift in Sources */,
 				24EDA44D775CF8726B5F4747 /* DemoData.swift in Sources */,
 				89DB86B584C82B5A52A7B493 /* FeedbackService.swift in Sources */,
+				0A6F8008456DDF2D88E85F3E /* FriendProfileScreen.swift in Sources */,
 				519B949BF3219F0AFF0D1BE0 /* GameCenterService.swift in Sources */,
 				2DC05A70B83F831A3B56E792 /* GameClock.swift in Sources */,
 				4846625894F016126CA79570 /* GameFeedback.swift in Sources */,
@@ -514,8 +527,10 @@
 				6BF43A5E0C5928A2C4530C17 /* HomeView.swift in Sources */,
 				22A872E7DEBDD550391484A4 /* Layout.swift in Sources */,
 				5970D45FBD88ACC4289A804A /* LeaderboardsView.swift in Sources */,
+				1053512FBE4E15D00E86AD07 /* PendingReminders.swift in Sources */,
 				119422CC4A4C765B14A95825 /* PersistenceService.swift in Sources */,
 				E4F62B961783E757AF92439F /* QuietNumbersApp.swift in Sources */,
+				9E5BEA8D76537255FB525041 /* Reminders.swift in Sources */,
 				A0C6754BBB6665903EB0C79A /* Rewards.swift in Sources */,
 				86A107AEE1484BD9F324B52D /* SettingsView.swift in Sources */,
 				6B98C48F5C26BE03D6CA965D /* TutorialScript.swift in Sources */,
@@ -548,6 +563,7 @@
 				4FEBF4CDF576A9ADE24F5480 /* CollectionUITests.swift in Sources */,
 				7285EE1FA7F38A9D5CD2EB39 /* GameplayUITests.swift in Sources */,
 				C8F42C0267E4DB6F52F5D3B0 /* PersistenceUITests.swift in Sources */,
+				E13626598E7FBD9FC42A4422 /* ReminderUITests.swift in Sources */,
 				C76A0EF4AC629AB141D0567E /* TutorialUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

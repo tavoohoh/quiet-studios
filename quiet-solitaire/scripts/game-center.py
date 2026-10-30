@@ -72,7 +72,7 @@ ACHIEVEMENTS = [
     ("inTheRed", 20, True, ("In the Red", "Números rojos"),
      ("Take your score below zero.", "Lleva tu puntaje por debajo de cero."),
      ("Your score went below zero. It happens.", "Tu puntaje bajó de cero. Pasa."),
-     ("Hidden: hints at 3 outside the daily challenge", "Oculta: pistas a 3 fuera del reto diario")),
+     ("Hidden: hints at 3 in classic games only", "Oculta: pistas a 3 solo en clásico")),
 ]
 
 LEADERBOARDS = [

@@ -32,6 +32,9 @@ targets:
       properties:
         CFBundleShortVersionString: $(MARKETING_VERSION)
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        # Daily reminder: the friends refresh (DailyReminders.friendsTaskID).
+        BGTaskSchedulerPermittedIdentifiers: [com.tavoohoh.quietnumbers.friends]
+        UIBackgroundModes: [fetch]
         # Same background and lockup as SplashView, in light and dark.
         UILaunchScreen:
           UIColorName: LaunchBackground

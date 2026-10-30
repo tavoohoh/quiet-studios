@@ -39,39 +39,21 @@ extension GameCenterService {
 
     /// Today's result, with its time as the score's context (0 = unknown, as from 1.0).
     func submitDaily(_ record: DailyRecord) async {
-        await submit(record.score, to: Leaderboard.daily.rawValue, always: true, context: record.seconds.map { $0 + 1 } ?? 0)
+        await submit(record.score, to: Leaderboard.daily.rawValue, always: true, context: Self.dailyContext(seconds: record.seconds))
     }
 
-    /// The daily board breaks ties by time, faster first; Game Center itself only ranks by
-    /// score, so the order and ranks are redone here (exact within the page loaded).
+    /// The daily board breaks ties by time, faster first (the kit's `dailyEntries`); Game
+    /// Center itself only ranks by score.
     func entries(for leaderboard: Leaderboard, friendsOnly: Bool) async throws -> (local: Entry?, top: [Entry]) {
-        let result = try await entries(for: leaderboard.rawValue, friendsOnly: friendsOnly)
-        guard leaderboard == .daily else { return result }
-        let top = Self.rankedByTime(result.top)
-        return (top.first(where: \.isLocalPlayer) ?? result.local, top)
+        leaderboard == .daily
+            ? try await dailyEntries(for: leaderboard.rawValue, friendsOnly: friendsOnly)
+            : try await entries(for: leaderboard.rawValue, friendsOnly: friendsOnly)
     }
 
-    /// Higher score first, then less time; no time (context 0) goes last among its score.
-    /// Same score and time share a rank (1, 2, 2, 4).
-    static func rankedByTime(_ entries: [Entry]) -> [Entry] {
-        func key(_ entry: Entry) -> (Int, Int) { (-entry.score, entry.context == 0 ? .max : entry.context) }
-        let sorted = entries.enumerated().sorted { a, b in
-            key(a.element) != key(b.element) ? key(a.element) < key(b.element) : a.offset < b.offset
-        }.map(\.element)
-        let first = entries.map(\.rank).min() ?? 1
-        var ranked: [Entry] = []
-        for (index, entry) in sorted.enumerated() {
-            let rank = ranked.last.map { key($0) == key(entry) ? $0.rank : first + index } ?? first
-            ranked.append(Entry(id: entry.id, rank: rank, name: entry.name, score: entry.score,
-                                isLocalPlayer: entry.isLocalPlayer, context: entry.context))
-        }
-        return ranked
-    }
-
-    /// Time played that came with a daily score, if any.
-    static func seconds(of entry: Entry) -> Int? {
-        entry.context > 0 ? entry.context - 1 : nil
-    }
+    /// The three boards a friend's profile compares.
+    static let friendBoards = FriendBoards(
+        daily: Leaderboard.daily.rawValue, best: Leaderboard.bestScore.rawValue, streak: Leaderboard.longestStreak.rawValue
+    )
 
     /// The snapshot stored in the player's iCloud, merging any conflicting copies.
     func fetchSnapshot() async -> Snapshot? {

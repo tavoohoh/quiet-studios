@@ -13,7 +13,7 @@ Los mismos de Quiet Numbers:
 - Sin anuncios, compras in-app, suscripciones ni tip jar.
 - Sin backend, analytics, crash reporters ni SDKs de terceros. Ninguna llamada de red propia.
 - 100% offline. Game Center es un extra que sincroniza al reconectar.
-- Recompensas solo cosméticas, ganadas con logros. Única excepción, igual que en Quiet Numbers: el easter egg de "Números rojos" (pistas más baratas fuera del reto diario puntuable).
+- Recompensas solo cosméticas, ganadas con logros. Única excepción, igual que en Quiet Numbers: el easter egg de "Números rojos" (pistas más baratas solo en clásico; nunca en retos diarios).
 - Sin identificadores propios, fingerprinting ni App Tracking Transparency.
 - Frameworks permitidos: SwiftUI, SwiftData, GameKit y StoreKit **solo** para `requestReview()`.
 - El tiempo se muestra y, al ganar, multiplica el puntaje (decisión 2026-10-27, tomando como referencia otra app del género).
@@ -38,7 +38,7 @@ Un solo target iOS (iPhone y iPad), un bundle ID. Proyecto generado con XcodeGen
 - El `.xcodeproj` se genera desde `project.yml` con XcodeGen: `xcodegen generate` tras agregar o mover archivos. No editar el `.pbxproj` a mano.
 - **Correr en un iPhone:** `Config/Local.xcconfig` (ignorado por git) lleva el Team ID; abrir `QuietSolitaire.xcodeproj`, elegir el iPhone y correr. Con un Personal Team, usar un bundle ID propio y `App/QuietSolitaire-Personal.entitlements` (ver `Config/Local.xcconfig.example`).
 - Tests del Core: `cd Packages/QuietSolitaireCore && swift test` (`-c release` para que el solver corra rápido). Tests de QuietKit: `cd ../QuietKit && swift test`.
-- Todos los tests (Core y UI): `xcodebuild test -project QuietSolitaire.xcodeproj -scheme QuietSolitaire -destination 'platform=iOS Simulator,name=iPhone 17' -derivedDataPath build/dd`.
+- Todos los tests (Core, app y UI): `xcodebuild test -project QuietSolitaire.xcodeproj -scheme QuietSolitaire -destination 'platform=iOS Simulator,name=iPhone 17' -derivedDataPath build/dd`.
 - Textos: `scripts/strings.py` escribe `Localizable.xcstrings` e `InfoPlist.xcstrings` (en/es) y falla si un texto que extrajo el compilador (`build/dd`) no tiene español. Correrlo después de compilar con `-derivedDataPath build/dd`.
 - Arte: `scripts/card-art.py` escribe los SVG de palos, emblemas y figuras en `Assets.xcassets/Cards` (mismos trazos del canvas); `scripts/render-icon.py` dibuja los íconos (estándar y Gold, claro/oscuro/tinted) con Chrome sin interfaz. El arte pixel se dibuja en código (`DesignSystem/PixelArt.swift`).
 - **Publicación** (`AppStore/app-store-connect.md`: todos los campos para crear la app, notas para la revisión y el orden de las imágenes):
@@ -50,14 +50,14 @@ Un solo target iOS (iPhone y iPad), un bundle ID. Proyecto generado con XcodeGen
   - Game Center: `scripts/game-center.py` escribe `AppStore/game-center.{md,json}` y las 13 insignias (`AppStore/achievements/<id>.png`, 1024 sin alfa) y verifica los IDs contra el código.
   - Web: `../docs/quiet-solitaire/{index,privacy,support}.html` (GitHub Pages desde `/docs`).
 - Simuladores: para pruebas usar uno solo ("iPhone 17") y apagarlo al terminar (`xcrun simctl shutdown <udid>`).
-- Argumentos DEBUG: `-startGame` abre una partida en memoria (`-seedKey <texto>` la hace determinista; `-nearlyWon` arranca a una jugada de autocompletar); `-uiTesting` usa `UITests.store` (`-resetStore` lo borra); `-unlockAll` desbloquea todo; `-date <ISO 8601>` fija el reloj del reto; `-demo` carga el estado de las capturas (en memoria); `-demoClock <segundos>` fija el reloj de una mesa `-startGame`.
+- Argumentos DEBUG: `-startGame` abre una partida en memoria (`-seedKey <texto>` la hace determinista; `-nearlyWon` arranca a una jugada de autocompletar); `-uiTesting` usa `UITests.store` (`-resetStore` lo borra); `-unlockAll` desbloquea todo; `-date <ISO 8601>` fija el reloj del reto; `-demo` carga el estado de las capturas (en memoria); `-demoClock <segundos>` fija el reloj de una mesa `-startGame`. Recordatorios (con `-demo`): `-showReminders` lista en Ajustes las notificaciones pendientes, `-refreshFriends` corre al abrir lo mismo que la tarea de segundo plano, `-completeToday` da por ganado el reto del 14-nov.
 
 ## QuietKit
 
 Paquete Swift en la raíz del repo, compartido por las apps. Dos productos:
 
 - `QuietCore` (sin UI): `SeededRandom` (SplitMix64, idéntico a Quiet Numbers; test con valores de referencia), `DailyKey` (clave del día, cambio a las 19:00, día de la semana), `Streaks`, FNV-1a y `Palette`: los 5 temas como valores hex por rol, más `suitRed`. `PaletteTests` exige 4,5:1 en cada par de texto (reemplaza a `theme-colors.py`).
-- `QuietUI`: `Theme` (colores dinámicos claro/oscuro desde `Palette`, en `\.quietTheme`), `Components.swift` (los de Quiet Numbers, públicos), `Layout`, `Typography`, `HapticsService`, `ToneService` (tonos sintetizados), `GameCenterService` genérico (IDs y tipo del snapshot los pone cada app) y `SplashView` (usa `SplashLockup` y `LaunchBackground` del bundle de la app, que también los necesita para la launch screen).
+- `QuietUI`: `Theme` (colores dinámicos claro/oscuro desde `Palette`, en `\.quietTheme`), `Components.swift` (los de Quiet Numbers, públicos), `Layout`, `Typography`, `HapticsService`, `ToneService` (tonos sintetizados), `GameCenterService` genérico (IDs y tipo del snapshot los pone cada app; desempate por tiempo del reto con `dailyEntries`), `DailyReminders` (notificaciones del reto), `FriendsTodayCard` y `FriendProfileView`, y `SplashView` (usa `SplashLockup` y `LaunchBackground` del bundle de la app, que también los necesita para la launch screen).
 - Decisión 2026-10-27: los colores van en código y no en un Asset Catalog del paquete, para que `swift test` corra sin Xcode y el contraste quede verificado por un test.
 
 Regla: **Quiet Numbers no se migra a QuietKit mientras su 1.0 está en revisión.** El kit nace copiando el código de Quiet Numbers y lo usa primero Quiet Solitaire; Quiet Numbers se migra en su 1.1, con sus tests (incluido "misma fecha → mismo tablero") como red. Mover `SeededRandom` no puede cambiar ni un bit de su salida.
@@ -101,7 +101,7 @@ Klondike estándar, **robar 1**, reciclar el mazo **sin límite**.
 - **Victoria:** las 52 cartas en las fundaciones. **Autocompletar** aparece cuando todo el tableau está boca arriba y el stock y el descarte están vacíos.
 - **Sin movimientos:** si el solver confirma que no hay salida, se ofrece "Sin salida · Nueva partida / Deshacer". Nunca se declara perdida una partida que tiene salida.
 - **Deshacer:** ilimitado, paso a paso. Cuenta como movimiento y bloquea el logro "Sin vuelta atrás".
-- **Pistas:** ilimitadas, cuestan 10 puntos (como Quiet Numbers), **aunque el puntaje quede negativo** (da el logro "Números rojos"). Con "Números rojos" cuestan 3 en clásico y práctica; el reto diario puntuable siempre cobra 10. Cada partida guarda su `Scoring`, así que el cambio aplica desde la siguiente. Si no hay movimiento útil ni mazo que tocar, no cobran. Señalan el mejor movimiento según el solver, si no hay ninguno útil sugieren tocar el mazo.
+- **Pistas:** ilimitadas, cuestan 10 puntos (como Quiet Numbers), **aunque el puntaje quede negativo** (da el logro "Números rojos"). Con "Números rojos" cuestan 3 solo en clásico (`AppModel.classicScoring`); los retos diarios, puntuables o de práctica, siempre cobran 10 (2026-10-30, regla de la familia; antes la práctica cobraba 3). Cada partida guarda su `Scoring`, así que el cambio aplica desde la siguiente. Si no hay movimiento útil ni mazo que tocar, no cobran. Señalan el mejor movimiento según el solver, si no hay ninguno útil sugieren tocar el mazo.
 
 **Decisiones de implementación (2026-10-27):**
 - Las fundaciones tienen palo fijo (♠ ♥ ♦ ♣, como el canvas), no "cualquier as en cualquier hueco".
@@ -123,7 +123,7 @@ Klondike estándar, **robar 1**, reciclar el mazo **sin límite**.
 - Voltear carta del tableau: 5
 - Fundación → tableau: −15
 - Reciclar el mazo: 0 (decidido 2026-10-27). No lleva castigo directo: como cada toque al mazo es un movimiento, dar vueltas ya reduce el bono de victoria. Se descartó el −100 por vuelta de Windows, muy duro en robar 1.
-- Pista: −10 (−3 con "Números rojos", salvo en el reto diario). Decidido 2026-10-27: las apps móviles suelen dar pistas gratis; aquí cobran para que el leaderboard del reto sea parejo.
+- Pista: −10 (−3 con "Números rojos", solo en clásico). Decidido 2026-10-27: las apps móviles suelen dar pistas gratis; aquí cobran para que el leaderboard del reto sea parejo.
 - Victoria: bono de 500 menos 2 por movimiento sobre 100 (mínimo 0).
 - Multiplicador por tiempo al ganar (2026-10-27): ×2,0 hasta 3 min, baja lineal hasta ×1,0 a los 15 min, en pasos de 0,1 (`Scoring.timeMultiplierTenths`). Se aplica a los puntos de juego más el bono de movimientos; el costo de las pistas queda fuera. La hoja de victoria muestra "Tiempo ×1,8 +N".
 
@@ -138,6 +138,12 @@ Lo nuevo: **cada reto diario tiene solución garantizada.** Con un reparto aleat
 - Plan B si el solver es lento en dispositivos viejos: un script que precalcula las semillas válidas de varios años y la app las trae en un archivo (pocos KB). Mismo resultado, sin cálculo en el dispositivo.
 - **Test obligatorio:** la misma fecha produce siempre el mismo reparto, y los retos de un año completo son ganables.
 - Modo clásico: "Solo partidas con solución" activado por defecto (mismo solver); se puede apagar en Ajustes.
+- **Regla de la familia** (sección "Reto diario" del `CLAUDE.md` de la raíz; alineado el 2026-10-30, tests en `AppTests/DailyRuleTests.swift`):
+  - "Completar" = ganar el reparto. El reto puntuable no termina sin ganar: si se sale, se retoma (sigue puntuando).
+  - **Práctica** (hoy después del intento puntuable, o un día de los últimos 30): se guarda por día (ranura `practice-<día>`, punto en el calendario, "Continuar" en la tarjeta) y al tocarla pregunta "Continuar / Empezar de nuevo". Se borra al ganarla o al salir de la ventana de 30 días.
+  - **Ganar una práctica rellena el día** una sola vez (`AppModel.fillDay`, `PersistenceService.fillDaily`): racha, calendario y logros de retos (`.dailyCompleted` con la racha más larga). Un intento puntuable sin terminar ese día conserva su puntaje. No envía nada a la clasificación.
+  - **Desempate por tiempo:** `StoredDaily.seconds` guarda el tiempo al ganar; viaja en el `Snapshot` y va en el `context` del puntaje de `qs_daily_challenge` (segundos + 1). Clasificaciones (pestaña Hoy, con el tiempo junto al puntaje) y el puesto entre amigos reordenan con `GameCenterService.dailyEntries` de QuietKit.
+  - Calendario igual al de Quiet Numbers (días reales del mes, bandas, prácticas a medias). La hoja de victoria es el resumen; los fuegos salen en toda victoria (también en clásico, pedido del usuario 2026-10-27), nunca con Reduce Motion.
 
 ## Game Center
 
@@ -150,6 +156,16 @@ Los mismos tres de Quiet Numbers (decidido 2026-10-27), con la misma pantalla (p
 - `qs_longest_streak` — clásico, racha más larga de retos (solo > 0).
 
 Prefijo `qs_` en los IDs para no chocar con los de Quiet Numbers si algún día comparten grupo de Game Center.
+
+**Amigos (2026-10-30, con QuietKit):** en Reto diario, la tarjeta "Amigos hoy" (`FriendsTodayCard`: amigos que ya jugaron con puntaje y tiempo, y tu puesto) y en Clasificaciones › Amigos cada fila abre el perfil del amigo (`FriendProfileView`, en `Features/Leaderboards/FriendProfileScreen.swift`): foto, frente a frente en reto de hoy, mejor puntaje y racha más larga, y los últimos 7 retos (`loadPreviousOccurrence`) con "Ganaste N de 7"; "Ver en Game Center" abre el perfil nativo (`GKAccessPoint.trigger(player:)`, iOS 18). Game Center no da logros, calendario ni partidas de otros. Nada se guarda.
+
+## Notificaciones del reto
+
+Locales (`DailyReminders` de QuietKit, sin servidor ni APNs; se mantiene "Data Not Collected"). Decidido 2026-10-30 para la familia (detalle en `quiet-numbers/BACKLOG.md`):
+- **19:00** si el reto de hoy no está ganado: "El reto de hoy te espera" o, con racha ≥ 3, "No pierdas tu racha de N días". **21:00** "Tu racha de N días termina a medianoche" si sigue sin ganarse y la racha es ≥ 3. Máximo dos al día; se programan 7 días (solo el próximo día por ganar lleva racha) y se rehacen al abrir, al volver a la app, a medianoche, al cambiar de zona horaria y al ganar o rellenar un reto.
+- **Amigos:** `BGAppRefreshTask` `com.tavoohoh.quietsolitaire.friends` (en `project.yml`: `BGTaskSchedulerPermittedIdentifiers` y modo `fetch`) desde las 17:00 carga la clasificación diaria de amigos y reescribe el texto de las 19:00 ("vale ganó el reto de hoy con 1.377. ¿Te animas?" / "3 amigos ya lo jugaron; vale lidera con 1.377."). iOS decide cuándo corre; si no corrió, sale el recordatorio normal.
+- **Permiso:** se ofrece una vez al volver de la partida que completó el primer reto ("¿Te aviso a las 7 p. m.?"), nunca al abrir. Ajustes › Reto diario › "Recordatorio del reto" (apagado: no se programa nada; sin permiso, lleva a Ajustes del sistema).
+- Textos en `App/Services/Reminders.swift`; los de QuietUI en `KIT` de `scripts/strings.py`. Tests: `AppTests/ReminderTests.swift`, `UITests/ReminderUITests.swift` (sin permiso no hay nada; 19:00 y 21:00 del 14-nov; la tarea de amigos cambia el texto; ganar el reto las pasa a mañana) y `DailyReminderPlanTests` en QuietKit.
 
 ## Logros y recompensas
 
@@ -176,7 +192,7 @@ Mazos (2026-10-27, tras la primera revisión: Contorno y New York se parecían d
 | `qs_night_owl` | Noctámbulo / Night Owl | Ganar un reto entre 00:00 y 04:00 | Reverso Noche |
 | `qs_fifty_wins` | Cincuenta / Fifty | Ganar 50 partidas | Efecto de victoria: cascada (las cartas caen y luego los fuegos) |
 | `qs_economy` | Economía / Economy | Ganar en menos de 100 movimientos | Mazo Pixel |
-| `qs_in_the_red` | Números rojos / In the Red | Llevar el puntaje por debajo de cero (oculto) | Easter egg: pistas a 3 en clásico y práctica (el reto diario sigue a 10 para que su leaderboard sea parejo; `qs_best_score` sí se beneficia, aceptado como en Quiet Numbers). No aparece en Colección. Mismo premio que en Quiet Numbers (decidido 2026-10-27). |
+| `qs_in_the_red` | Números rojos / In the Red | Llevar el puntaje por debajo de cero (oculto) | Easter egg: pistas a 3 solo en clásico (desde el 2026-10-30 tampoco en práctica; los retos siguen a 10 para que su leaderboard sea parejo; `qs_best_score` sí se beneficia, aceptado como en Quiet Numbers). No aparece en Colección. Mismo premio que en Quiet Numbers (decidido 2026-10-27). |
 
 Siempre disponibles, sin logro: tema **Alto contraste**, mazo **Cuatro colores** y mazo **Índice grande** (accesibilidad), y los tableros **Petróleo y coral claro** y **oscuro** (2026-10-28, como Quiet Numbers): el de por defecto fijo en un modo aunque el iPhone use el otro.
 
@@ -191,6 +207,7 @@ Categorías en Colección: mazo, reverso, tablero, efecto de victoria, pack de s
 - **Cartas** (canvas, artboard "Mazo Quiet"): índice (rango + palo chico) arriba a la izquierda, un palo grande abajo; As con el palo grande al centro; J/Q/K con un emblema geométrico de trazo sobre un panel `surface2` (J escudo, Q corona suave con una perla, K corona de picos con tres perlas), sin ilustraciones. Todo lo que va debajo del índice (palo, As, panel de figura) ocupa una misma caja: desde el 34 % del alto (40 % con Índice grande) hasta un margen igual al lateral (8 % del ancho), y el palo va centrado en ella. Esquinas de 10 % del ancho, borde de 1 pt y sombra mínima. En oscuro, cara de la carta oscura (`surface` levantado), no blanca.
 - **Tamaño en iPhone:** 7 columnas, carta de 48 × 67 pt con 6 pt entre columnas (ancho − 18 pt de margen). Boca abajo asoman 9 pt; boca arriba 22 pt. En iPad las cartas crecen hasta un tablero de 760 pt (como Quiet Numbers). Si una columna no cabe, se comprime el paso de las cartas boca arriba (mínimo 16 pt).
 - **Reverso:** color del tema con rayado diagonal fino, marco interior y la marca "pausa" del estudio al centro.
+- **Ícono** (`scripts/render-icon.py`, cambiado el 2026-10-30): dos cartas, una inclinada detrás y al frente una blanca con el corazón del mazo Quiet (antes, la marca de pausa). Colores del ícono de Quiet Numbers: el corazón hace de su línea coral (#FF9A85) y la carta de atrás va en su turquesa claro (#5BC2CF); en tinted el corazón es #A6A6A6 y en dorado #C98F2E (el gris y el crema de Numbers no se veían sobre la carta blanca). También el favicon de `../docs/quiet-solitaire`.
 - **Pantalla de juego:** volver y menú (redondos), puntaje de 40 pt y "34 movimientos · Mejor 1.240"; fila de fundaciones (4), hueco, descarte y mazo (con contador); tableau; abajo Deshacer y Pista, y la cápsula "Autocompletar" al centro cuando aplica.
 - **Animaciones** (nada bloquea el siguiente toque): mover = spring de 0,25 s; voltear = giro en Y de 180 ms; carta a fundación = pequeño "+10" que sube y se desvanece; inválido = anillo coral y sacudida ±4 pt ×3, la carta vuelve con spring; pista = anillo punteado que parpadea 2 veces en origen y destino; victoria = las cartas suben a las fundaciones una a una (efecto "cascada" desbloqueable). Reduce Motion: sin giros ni flotantes, fundidos de 150 ms.
 - **Hápticos:** selección al tomar una carta, medio al soltar en tableau, éxito al completar una fundación y al ganar, error en movimiento inválido.

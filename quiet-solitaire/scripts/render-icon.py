@@ -5,39 +5,54 @@ transparent background, which iOS tints.
 
     scripts/render-icon.py
 
-Two cards, the front one with the studio's pause mark, like the Home mock in the canvas.
+Two cards, the front one with a heart (2026-10-30; it had the studio's pause mark). Colors
+follow Quiet Numbers' icon (scripts/render-artwork.py there): the heart plays the part of its
+coral line, the accent. The heart is the deck's own glyph (Assets.xcassets/Cards/suit-h.svg,
+written by scripts/card-art.py).
 """
 import json
 import pathlib
+import re
 import subprocess
 import tempfile
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 ASSETS = ROOT / "App/Resources/Assets.xcassets"
 
-# name → (background, back card, front card, pause bars)
+# name → (background, back card, front card, heart). From Quiet Numbers' icon: background,
+# its light teal (#5BC2CF, the dark icon's nodes) on the back card, its coral line (#FF9A85)
+# on the heart. Two changes, because the heart sits on a white card, not on the background:
+# - tinted: Numbers' line gray (#D0D0D0) barely shows on white at 60 px → #A6A6A6;
+# - gold: its cream line (#FFE2A8) disappears on the card → a darker gold, #C98F2E (between
+#   Numbers' #E8B04A and its #A8741A background), on the gold back card #E8B04A.
 VARIANTS = {
-    "light": ("#0E6B78", "#5BC2CF", "#FFFFFF", "#0E6B78"),
-    "dark": ("#0F1A1D", "#1D5961", "#E8F1F2", "#0E6B78"),
-    "tinted": (None, "#7A7A7A", "#FFFFFF", "#7A7A7A"),
+    "light": ("#0E6B78", "#5BC2CF", "#FFFFFF", "#FF9A85"),
+    "dark": ("#0B1517", "#5BC2CF", "#E8F1F2", "#FF9A85"),
+    "tinted": (None, "#7A7A7A", "#FFFFFF", "#A6A6A6"),
 }
 GOLD = {
-    "light": ("#9A7628", "#E3C27A", "#FFFBF0", "#9A7628"),
-    "dark": ("#1E1A12", "#7D6224", "#F5E9CC", "#9A7628"),
+    "light": ("#A8741A", "#E8B04A", "#FFFFFF", "#C98F2E"),
+    "dark": ("#1A1408", "#E8B04A", "#F5E9CC", "#C98F2E"),
     "tinted": VARIANTS["tinted"],
 }
 
+HEART = re.search(r'd="([^"]+)"', (ASSETS / "Cards/suit-h.imageset/suit-h.svg").read_text()).group(1)
+# The glyph's 24-point box: the heart spans x 1.5–22.5 and y 4.5–20.5, centered on (12, 12.5).
+HEART_WIDTH = 230
+HEART_SCALE = HEART_WIDTH / 21
+CARD_CENTER = (592, 542)
 
-def svg(background, back, front, bars):
+
+def svg(background, back, front, heart):
     rect = f'<rect width="1024" height="1024" fill="{background}"/>' if background else ""
-    bar = (f'<rect x="545" y="460" width="34" height="164" rx="17" fill="{bars}"/>'
-           f'<rect x="605" y="460" width="34" height="164" rx="17" fill="{bars}"/>') if bars else ""
+    tx, ty = CARD_CENTER[0] - 12 * HEART_SCALE, CARD_CENTER[1] - 12.5 * HEART_SCALE
+    glyph = f'<path d="{HEART}" fill="{heart}" transform="translate({tx:.1f} {ty:.1f}) scale({HEART_SCALE:.4f})"/>'
     return f"""<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
 {rect}
 <g transform="rotate(-12 420 500)"><rect x="232" y="232" width="384" height="540" rx="56" fill="{back}"/></g>
 <g transform="rotate(7 600 540)">
 <rect x="400" y="272" width="384" height="540" rx="56" fill="{front}"/>
-{bar}
+{glyph}
 </g></svg>"""
 
 

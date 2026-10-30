@@ -37,6 +37,10 @@ public final class GameCenterService {
     /// Called each time the player becomes authenticated, to sync pending data.
     public var onAuthenticated: (() -> Void)?
 
+    /// Players seen on boards loaded this session, to load their entries and photo. Memory
+    /// only (never stored).
+    var knownPlayers: [String: GKPlayer] = [:]
+
     /// GameKit's sign-in screen, kept until the player asks for it (never shown unprompted).
     private var signInController: UIViewController?
     private let savedGameName: String
@@ -127,6 +131,7 @@ public final class GameCenterService {
                 for: friendsOnly ? .friendsOnly : .global, timeScope: .allTime, range: NSRange(1...25)
             )
             note("\(leaderboardID): \(entries.count) of \(total) entries, local \(local?.score ?? -1)")
+            for entry in entries { knownPlayers[entry.player.gamePlayerID] = entry.player }
             // With no score on this board (or today's occurrence) yet, the local entry has rank 0.
             return (local.flatMap { $0.rank > 0 ? Self.entry($0) : nil }, entries.map(Self.entry))
         } catch {
@@ -135,7 +140,44 @@ public final class GameCenterService {
         }
     }
 
-    private static func entry(_ entry: GKLeaderboard.Entry) -> Entry {
+    // MARK: Daily boards (tie-break by time)
+
+    /// The context a daily score carries: seconds played + 1 (0 = unknown time).
+    public nonisolated static func dailyContext(seconds: Int?) -> Int {
+        seconds.map { $0 + 1 } ?? 0
+    }
+
+    /// Time played that came with a daily score, if any.
+    public nonisolated static func dailySeconds(of entry: Entry) -> Int? {
+        entry.context > 0 ? entry.context - 1 : nil
+    }
+
+    /// A daily board ends in near ties; Game Center only ranks by score, so the page loaded
+    /// is reordered here: higher score first, then less time; no time goes last among its
+    /// score. Same score and time share a rank (1, 2, 2, 4).
+    public nonisolated static func rankedByScoreAndTime(_ entries: [Entry]) -> [Entry] {
+        func key(_ entry: Entry) -> (Int, Int) { (-entry.score, entry.context == 0 ? .max : entry.context) }
+        let sorted = entries.enumerated().sorted { a, b in
+            key(a.element) != key(b.element) ? key(a.element) < key(b.element) : a.offset < b.offset
+        }.map(\.element)
+        let first = entries.map(\.rank).min() ?? 1
+        var ranked: [Entry] = []
+        for (index, entry) in sorted.enumerated() {
+            let rank = ranked.last.map { key($0) == key(entry) ? $0.rank : first + index } ?? first
+            ranked.append(Entry(id: entry.id, rank: rank, name: entry.name, score: entry.score,
+                                isLocalPlayer: entry.isLocalPlayer, context: entry.context))
+        }
+        return ranked
+    }
+
+    /// `entries(for:friendsOnly:)` for a daily board, ranked by score and then time.
+    public func dailyEntries(for leaderboardID: String, friendsOnly: Bool) async throws -> (local: Entry?, top: [Entry]) {
+        let result = try await entries(for: leaderboardID, friendsOnly: friendsOnly)
+        let top = Self.rankedByScoreAndTime(result.top)
+        return (top.first(where: \.isLocalPlayer) ?? result.local, top)
+    }
+
+    static func entry(_ entry: GKLeaderboard.Entry) -> Entry {
         Entry(
             id: entry.player.gamePlayerID, rank: entry.rank, name: entry.player.displayName, score: entry.score,
             isLocalPlayer: entry.player.gamePlayerID == GKLocalPlayer.local.gamePlayerID,

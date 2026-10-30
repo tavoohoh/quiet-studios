@@ -1,9 +1,9 @@
 # Imágenes subidas al canvas de diseño: ruta en quiet-solitaire/ → id del asset (/_blob/<id>).
 # Las usa .claude/skills/quiet-design-canvas/qa.py para revisar el canvas en local.
-App/Resources/Assets.xcassets/AppIcon.appiconset/icon-1024.png	449cbb0e76483dcebbe234e968ca568a
-App/Resources/Assets.xcassets/AppIcon.appiconset/icon-1024-dark.png	f2184b398e2bffc29845d9176a53bff1
-App/Resources/Assets.xcassets/AppIcon.appiconset/icon-1024-tinted.png	0c2a933c4e50104a7028d436ef61ad64
-App/Resources/Assets.xcassets/AppIcon-Gold.appiconset/icon-1024.png	003eaef20eeadfd97c76b1eb12e2ed39
+App/Resources/Assets.xcassets/AppIcon.appiconset/icon-1024.png	9a25e414c4e0de5f6af33026f49963b0
+App/Resources/Assets.xcassets/AppIcon.appiconset/icon-1024-dark.png	41cab6fe571ff637061063d5a2485ea8
+App/Resources/Assets.xcassets/AppIcon.appiconset/icon-1024-tinted.png	0d07acaa40bc0b810d7c6f417af31f12
+App/Resources/Assets.xcassets/AppIcon-Gold.appiconset/icon-1024.png	b2b3d4a2efb61b1562a0aa3b7ced0800
 AppStore/store-images/iphone-6.9/en/01-no-ads.png	6cada048c294ba1c9d3d532d1ee697c7
 AppStore/store-images/iphone-6.9/en/02-daily.png	8e4428bc32c6c9881bfb2b6329a380bb
 AppStore/store-images/iphone-6.9/en/03-win.png	6d152f01c1a696745639de90264b0c70

@@ -40,6 +40,10 @@ enum DemoData {
         for (day, score) in completedDays {
             persistence.finishDaily(day, score: score, isCompleted: true)
         }
+        // `-completeToday`: today's daily already won (reminders move to tomorrow).
+        if ProcessInfo.processInfo.arguments.contains("-completeToday") {
+            persistence.finishDaily("2026-11-14", score: 1_361, isCompleted: true, seconds: 268)
+        }
         persistence.saveGame(classicGame, in: .classic)
     }
 
@@ -67,6 +71,40 @@ enum DemoData {
             GameCenterService.Entry(id: entry.0, rank: index + 1, name: entry.0, score: entry.1, isLocalPlayer: entry.0 == "guss")
         }
         return (top[3], top)
+    }
+
+    /// Today's friends board for "Friends today" (times in the context, like real scores).
+    static var friendsToday: FriendsToday { FriendsToday(entries: friendsEntries) }
+
+    static var friendsEntries: [GameCenterService.Entry] {
+        let friends: [(String, Int, Int?)] = [("vale", 1_377, 251), ("guss", 1_361, 268), ("juanca", 1_361, 302), ("cori16", 1_296, 344)]
+        let entries = friends.enumerated().map { index, friend in
+            GameCenterService.Entry(id: friend.0, rank: index + 1, name: friend.0, score: friend.1, isLocalPlayer: friend.0 == "guss",
+                                    context: GameCenterService.dailyContext(seconds: friend.2))
+        }
+        return GameCenterService.rankedByScoreAndTime(entries)
+    }
+
+    /// A friend's profile against the demo player: today, best, streak and the last 7 days.
+    static func headToHead(with name: String) -> HeadToHead {
+        func entry(_ score: Int, _ seconds: Int? = nil, mine: Bool) -> GameCenterService.Entry {
+            GameCenterService.Entry(id: mine ? "guss" : name, rank: 0, name: mine ? "guss" : name, score: score,
+                                    isLocalPlayer: mine, context: GameCenterService.dailyContext(seconds: seconds))
+        }
+        let days: [(Int, Int, Int?, Int?)] = [(1_340, 1_298, 280, 301), (1_212, 1_260, 330, 290), (1_401, 1_377, 255, 270),
+                                              (1_190, 1_150, 360, 410), (1_305, 1_305, 262, 299), (980, 1_120, 520, 380), (1_288, 1_240, 300, 315)]
+        let past = days.enumerated().map { index, day in
+            HeadToHead.PastDaily(
+                start: Calendar.current.date(byAdding: .day, value: -(index + 1), to: fixedDate)!,
+                matchup: .init(mine: entry(day.0, day.2, mine: true), theirs: entry(day.1, day.3, mine: false))
+            )
+        }
+        return HeadToHead(
+            today: .init(mine: entry(1_361, 268, mine: true), theirs: entry(1_377, 251, mine: false)),
+            best: .init(mine: entry(2_480, mine: true), theirs: entry(2_744, mine: false)),
+            streak: .init(mine: entry(11, mine: true), theirs: entry(27, mine: false)),
+            past: past
+        )
     }
 
     /// `-demoClock <seconds>` presets the clock of a `-startGame` table.

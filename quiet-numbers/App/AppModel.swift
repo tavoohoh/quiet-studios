@@ -9,7 +9,8 @@ enum GameKind: Equatable {
     case classic
     /// Today's first attempt: saved, scored, counts for the streak.
     case daily(dayKey: String)
-    /// Replay of a daily (today's after finishing, or a past day). Not saved or scored.
+    /// Replay of a daily (today's after the scored attempt, or a past day). Saved per day,
+    /// not scored; completing it fills that day for the streak.
     case practice(dayKey: String)
 }
 
@@ -31,10 +32,21 @@ final class AppModel {
     private(set) var pendingUnlocks: [Achievement] = []
     /// Achievements unlocked during the active game, for the end-of-game summary.
     private(set) var unlockedThisGame: [Achievement] = []
+    /// 19:00 reminder and 21:00 "streak at risk" (QuietKit), off until allowed.
+    let reminders: DailyReminders
+    /// The game on screen completed a daily: on leaving it, offer the reminder (once).
+    private var completedDailyThisGame = false
+    /// Shows the reminder offer (`dailyReminderOffer`) back on Home.
+    var offersReminders = false
 
-    init(persistence: PersistenceService, gameCenter: GameCenterService = .quietNumbers()) {
+    init(
+        persistence: PersistenceService,
+        gameCenter: GameCenterService = .quietNumbers(),
+        reminders: DailyReminders = .quietNumbers()
+    ) {
         self.persistence = persistence
         self.gameCenter = gameCenter
+        self.reminders = reminders
         progress = persistence.loadProgress()
         #if DEBUG
         if ProcessInfo.processInfo.arguments.contains("-resetStore") {
@@ -54,6 +66,23 @@ final class AppModel {
             persistence.deletePractice(before: oldest)
         }
         gameCenter.onAuthenticated = { [weak self] in self?.syncGameCenter() }
+        reminders.clock = { AppClock.now }
+        reminders.state = { [weak self] in
+            guard let self else { return (false, 0) }
+            return (persistence.dailies[todayKey]?.isCompleted == true, currentStreak)
+        }
+    }
+
+    // MARK: Reminders
+
+    /// The background refresh (from 17:00): today's friends rewrite the 19:00 reminder.
+    func refreshFriendsReminder() async {
+        await reminders.refreshFriends {
+            #if DEBUG
+            if DemoData.isActive { return DemoData.friendsToday }
+            #endif
+            return await self.gameCenter.friendsToday(dailyID: GameCenterService.Leaderboard.daily.rawValue)
+        }
     }
 
     // MARK: Achievements
@@ -116,6 +145,7 @@ final class AppModel {
         }
         UserDefaults.standard.set(true, forKey: PreferenceKey.pendingCloudReset)
         syncGameCenter()
+        Task { await reminders.reschedule() }
     }
 
     func dismissUnlock(_ achievement: Achievement) {
@@ -241,6 +271,8 @@ final class AppModel {
 
     /// Back from a game: send what changed (a new best, mostly) to Game Center.
     func leftGame() {
+        if completedDailyThisGame, reminders.shouldOffer { offersReminders = true }
+        completedDailyThisGame = false
         Task { await pushToGameCenter() }
     }
 
@@ -249,6 +281,7 @@ final class AppModel {
         activeGame = model
         activeKind = kind
         unlockedThisGame = []
+        completedDailyThisGame = false
     }
 
     private func finish(_ session: GameSession, _ kind: GameKind) {
@@ -275,6 +308,8 @@ final class AppModel {
         guard isNew else { return }
         let hour = Calendar.current.component(.hour, from: AppClock.now)
         record(.dailyCompleted(currentStreak: currentStreak, localHour: hour))
+        completedDailyThisGame = true
+        Task { await reminders.reschedule() }
     }
 
     /// A missed (or failed) day completed as practice fills the streak (2026-10-29). It
@@ -285,6 +320,8 @@ final class AppModel {
         let hour = Calendar.current.component(.hour, from: AppClock.now)
         // A filled gap can join two runs in the past, so the longest streak, not today's.
         record(.dailyCompleted(currentStreak: longestStreak, localHour: hour))
+        completedDailyThisGame = true
+        Task { await reminders.reschedule() }
     }
 
     private func refreshSavedGames() {

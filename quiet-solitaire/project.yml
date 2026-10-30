@@ -32,6 +32,9 @@ targets:
       properties:
         CFBundleShortVersionString: $(MARKETING_VERSION)
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        # Daily reminder: the friends refresh (DailyReminders.friendsTaskID).
+        BGTaskSchedulerPermittedIdentifiers: [com.tavoohoh.quietsolitaire.friends]
+        UIBackgroundModes: [fetch]
         # Same background and lockup as SplashView, in light and dark.
         UILaunchScreen:
           UIColorName: LaunchBackground
@@ -63,6 +66,18 @@ targets:
         SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD: YES
         SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD: NO
         CODE_SIGN_STYLE: Automatic
+  QuietSolitaireAppTests:
+    type: bundle.unit-test
+    supportedDestinations: [iOS]
+    sources: [AppTests]
+    dependencies:
+      - target: QuietSolitaire
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
+        PRODUCT_BUNDLE_IDENTIFIER: com.tavoohoh.quietsolitaire.tests
+        TEST_HOST: "$(BUILT_PRODUCTS_DIR)/Quiet Solitaire.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Quiet Solitaire"
+        BUNDLE_LOADER: "$(TEST_HOST)"
   QuietSolitaireUITests:
     type: bundle.ui-testing
     supportedDestinations: [iOS]
@@ -98,4 +113,5 @@ schemes:
     test:
       targets:
         - package: QuietSolitaireCore/QuietSolitaireCoreTests
+        - QuietSolitaireAppTests
         - QuietSolitaireUITests

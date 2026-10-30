@@ -295,8 +295,8 @@
       "hidden": true,
       "achievableMoreThanOnce": false,
       "reward": {
-        "en": "Hidden: hints at 3 outside the daily challenge",
-        "es": "Oculta: pistas a 3 fuera del reto diario"
+        "en": "Hidden: hints at 3 in classic games only",
+        "es": "Oculta: pistas a 3 solo en clásico"
       },
       "name": {
         "en": "In the Red",

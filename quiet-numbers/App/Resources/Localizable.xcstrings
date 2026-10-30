@@ -1,6 +1,26 @@
 {
   "sourceLanguage": "en",
   "strings": {
+    "%@ completed today's challenge with %@. Up for it?": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ completó el reto de hoy con %2$@. ¿Te animas?"
+          }
+        }
+      }
+    },
+    "%lld friends already played; %@ leads with %@.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lld amigos ya lo jugaron; %2$@ va primero con %3$@."
+          }
+        }
+      }
+    },
     "%lld in a row!": {
       "localizations": {
         "es": {
@@ -193,6 +213,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Ícono de la app"
+          }
+        }
+      }
+    },
+    "At %@ if you haven't played; with a streak of 3 or more, another at %@.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A las %1$@ si no has jugado; con una racha de 3 o más, otro a las %2$@."
           }
         }
       }
@@ -519,12 +549,32 @@
         }
       }
     },
+    "Couldn't load this profile. Check your connection and try again.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No se pudo cargar este perfil. Revisa tu conexión e inténtalo de nuevo."
+          }
+        }
+      }
+    },
     "Daily Challenge": {
       "localizations": {
         "es": {
           "stringUnit": {
             "state": "translated",
             "value": "Reto diario"
+          }
+        }
+      }
+    },
+    "Daily challenge reminder": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recordatorio del reto"
           }
         }
       }
@@ -545,6 +595,46 @@
           "stringUnit": {
             "state": "translated",
             "value": "En diagonal"
+          }
+        }
+      }
+    },
+    "Don't lose your %lld-day streak.": {
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Don't lose your %lld-day streak."
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Don't lose your %lld-day streak."
+                }
+              }
+            }
+          }
+        },
+        "es": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "No pierdas tu racha de %lld día."
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "No pierdas tu racha de %lld días."
+                }
+              }
+            }
           }
         }
       }
@@ -625,6 +715,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Amigos"
+          }
+        }
+      }
+    },
+    "Friends today": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Amigos hoy"
           }
         }
       }
@@ -829,6 +929,16 @@
         }
       }
     },
+    "Last %lld challenges": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Últimos %lld retos"
+          }
+        }
+      }
+    },
     "Leaderboards": {
       "localizations": {
         "es": {
@@ -855,6 +965,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "¡Tiro largo!"
+          }
+        }
+      }
+    },
+    "Longest streak": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Racha más larga"
           }
         }
       }
@@ -1005,12 +1125,42 @@
         }
       }
     },
+    "No past challenges yet.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Todavía no hay retos anteriores."
+          }
+        }
+      }
+    },
     "No scores yet": {
       "localizations": {
         "es": {
           "stringUnit": {
             "state": "translated",
             "value": "Aún no hay puntajes"
+          }
+        }
+      }
+    },
+    "None of your friends has played today's challenge yet.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ninguno de tus amigos ha jugado el reto de hoy."
+          }
+        }
+      }
+    },
+    "Not now": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ahora no"
           }
         }
       }
@@ -1045,6 +1195,16 @@
         }
       }
     },
+    "Notifications are off for this app. Turn them on in Settings.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Las notificaciones de esta app están desactivadas. Actívalas en Ajustes."
+          }
+        }
+      }
+    },
     "Numbers": {
       "localizations": {
         "es": {
@@ -1075,12 +1235,32 @@
         }
       }
     },
+    "Only on days you haven't played the challenge yet. You can change it in Settings.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Solo los días que aún no hayas jugado el reto. Puedes cambiarlo en Ajustes."
+          }
+        }
+      }
+    },
     "Open Settings": {
       "localizations": {
         "es": {
           "stringUnit": {
             "state": "translated",
             "value": "Abrir Ajustes"
+          }
+        }
+      }
+    },
+    "Opens their profile": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Abre su perfil"
           }
         }
       }
@@ -1241,6 +1421,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Llega a la etapa 5 en una partida."
+          }
+        }
+      }
+    },
+    "Remind me": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Avísame"
+          }
+        }
+      }
+    },
+    "Remind you at %@?": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Te aviso a las %@?"
           }
         }
       }
@@ -1614,6 +1814,26 @@
         }
       }
     },
+    "Today's challenge": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reto de hoy"
+          }
+        }
+      }
+    },
+    "Today's challenge is waiting.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "El reto de hoy te espera."
+          }
+        }
+      }
+    },
     "Top streak": {
       "localizations": {
         "es": {
@@ -1684,6 +1904,16 @@
         }
       }
     },
+    "View in Game Center": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ver en Game Center"
+          }
+        }
+      }
+    },
     "Wave": {
       "localizations": {
         "es": {
@@ -1704,6 +1934,16 @@
         }
       }
     },
+    "You": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tú"
+          }
+        }
+      }
+    },
     "You left %@ halfway.": {
       "localizations": {
         "es": {
@@ -1714,12 +1954,72 @@
         }
       }
     },
+    "You won %lld of %lld": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ganaste %1$lld de %2$lld"
+          }
+        }
+      }
+    },
+    "You're #%lld": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vas #%lld"
+          }
+        }
+      }
+    },
     "You're ready": {
       "localizations": {
         "es": {
           "stringUnit": {
             "state": "translated",
             "value": "¡Listo!"
+          }
+        }
+      }
+    },
+    "Your %lld-day streak ends at midnight.": {
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Your %lld-day streak ends at midnight."
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Your %lld-day streak ends at midnight."
+                }
+              }
+            }
+          }
+        },
+        "es": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Tu racha de %lld día termina a medianoche."
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Tu racha de %lld días termina a medianoche."
+                }
+              }
+            }
           }
         }
       }
@@ -1750,6 +2050,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Tus estadísticas"
+          }
+        }
+      }
+    },
+    "Your streak": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tu racha"
           }
         }
       }

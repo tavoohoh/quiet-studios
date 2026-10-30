@@ -52,9 +52,10 @@ public enum ProgressEvent: Sendable {
     case abandoned(played: Bool)
     /// The classic game on screen reached this score: the best updates right away.
     case classicScore(Int)
-    /// Today's daily was won on its own day.
+    /// A daily was completed: today's scored attempt, or a past day filled by practice.
     case dailyCompleted(currentStreak: Int, localHour: Int)
-    /// A past day won as practice: shown on the calendar, nothing else.
+    /// A past day won as practice: shown on the calendar (it also fills the day, sent as
+    /// `dailyCompleted` by the app).
     case practiceCompleted(dayKey: String)
 }
 

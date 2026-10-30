@@ -20,7 +20,7 @@ Ninguno se puede ganar más de una vez. Cada uno lleva una imagen de 1024×1024 
 | `qs_night_owl` | `nightOwl` | 40 | No | Night Owl / Noctámbulo | Win a daily challenge between midnight and 4 a.m. / Gana un reto diario entre la medianoche y las 4 a. m. | You won a daily challenge in the small hours. / Ganaste un reto diario de madrugada. | Reverso Noche |
 | `qs_fifty_wins` | `fiftyWins` | 80 | No | Fifty / Cincuenta | Win 50 games. / Gana 50 partidas. | You won 50 games. / Ganaste 50 partidas. | Victoria en cascada |
 | `qs_economy` | `economy` | 60 | No | Economy / Economía | Win in fewer than 100 moves. / Gana en menos de 100 movimientos. | You won in fewer than 100 moves. / Ganaste en menos de 100 movimientos. | Mazo Pixel |
-| `qs_in_the_red` | `inTheRed` | 20 | Sí | In the Red / Números rojos | Take your score below zero. / Lleva tu puntaje por debajo de cero. | Your score went below zero. It happens. / Tu puntaje bajó de cero. Pasa. | Oculta: pistas a 3 fuera del reto diario |
+| `qs_in_the_red` | `inTheRed` | 20 | Sí | In the Red / Números rojos | Take your score below zero. / Lleva tu puntaje por debajo de cero. | Your score went below zero. It happens. / Tu puntaje bajó de cero. Pasa. | Oculta: pistas a 3 solo en clásico |
 
 Ocultos: Noctámbulo, Economía y Números rojos son sorpresas; el resto son metas visibles.
 

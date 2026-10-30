@@ -101,6 +101,8 @@ struct HomeView: View {
                 }
             }
             .onChange(of: app.gameCenter.isAuthenticated, initial: true) { updateAccessPoint() }
+            // After a first completed daily, back from the game: "Remind you at 7 PM?"
+            .dailyReminderOffer(app.reminders, isPresented: Bindable(app).offersReminders)
             .onChange(of: path) { updateAccessPoint() }
         }
         #if DEBUG

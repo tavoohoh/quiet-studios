@@ -55,6 +55,17 @@
             parallelizable = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
+               BlueprintIdentifier = "DF1865823C648D694668971E"
+               BuildableName = "QuietSolitaireAppTests.xctest"
+               BlueprintName = "QuietSolitaireAppTests"
+               ReferencedContainer = "container:QuietSolitaire.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
                BlueprintIdentifier = "DC5C824A42F8D41E623EEF80"
                BuildableName = "QuietSolitaireUITests.xctest"
                BlueprintName = "QuietSolitaireUITests"

@@ -24,6 +24,15 @@ struct SettingsView: View {
                 }
                 .toggleStyle(ThemedToggleStyle())
 
+                GroupSection("Daily Challenge") {
+                    DailyReminderToggle(reminders: app.reminders)
+                        .padding(.vertical, 8)
+                        .accessibilityIdentifier("dailyReminder")
+                    #if DEBUG
+                    if PendingReminders.isRequested { PendingReminders() }
+                    #endif
+                }
+
                 GroupSection("Account") {
                     Button {
                         if app.gameCenter.isAuthenticated { app.gameCenter.showDashboard() } else { app.gameCenter.signIn() }

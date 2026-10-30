@@ -13,6 +13,10 @@ struct DailyChallengeView: View {
     @State private var month = AppClock.now
     /// Today's place among Game Center friends, when signed in.
     @State private var friendsRank: Int?
+    /// Today's friends board (ranked by time), when signed in.
+    @State private var friendsToday: [GameCenterService.Entry]?
+    /// A friend tapped on "Friends today": their profile.
+    @State private var friend: GameCenterService.Entry?
     /// A practice left halfway: continue it or deal the day again.
     @State private var unfinishedPractice: String?
 
@@ -30,6 +34,10 @@ struct DailyChallengeView: View {
                     friendsRank: friendsRank,
                     onPlay: { play(today) }
                 )
+
+                if let friendsToday {
+                    FriendsTodayCard(entries: friendsToday) { friend = $0 }
+                }
 
                 VStack(spacing: 6) {
                     CalendarView(
@@ -58,7 +66,8 @@ struct DailyChallengeView: View {
             .frame(maxWidth: .infinity)
         }
         .screen(Text("Daily Challenge"))
-        .task(id: app.gameCenter.isAuthenticated) { await loadFriendsRank() }
+        .task(id: app.gameCenter.isAuthenticated) { await loadFriends() }
+        .friendProfile($friend)
         .alert(
             "Continue this practice?",
             isPresented: Binding(get: { unfinishedPractice != nil }, set: { if !$0 { unfinishedPractice = nil } }),
@@ -84,15 +93,23 @@ struct DailyChallengeView: View {
         }
     }
 
-    private func loadFriendsRank() async {
+    /// Today's friends board: the card and the player's place among them.
+    private func loadFriends() async {
         #if DEBUG
         if DemoData.isActive {
-            friendsRank = 3
+            friendsToday = DemoData.friendsEntries
+            friendsRank = DemoData.friendsEntries.first(where: \.isLocalPlayer)?.rank
             return
         }
         #endif
-        guard app.gameCenter.isAuthenticated else { return friendsRank = nil }
-        friendsRank = try? await app.gameCenter.entries(for: .daily, friendsOnly: true).local?.rank
+        guard app.gameCenter.isAuthenticated else {
+            friendsToday = nil
+            friendsRank = nil
+            return
+        }
+        let result = try? await app.gameCenter.entries(for: .daily, friendsOnly: true)
+        friendsToday = result?.top
+        friendsRank = result?.local?.rank
     }
 
     /// Live relative time; frozen in demo launches so screenshots don't depend on the clock.

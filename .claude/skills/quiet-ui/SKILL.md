@@ -23,6 +23,8 @@ Fuente: el sistema de diseño de Quiet Studios (link en `CLAUDE.md` de la raíz;
 | Feedback | `HapticsService` (`.select`, `.place`, `.success`, `.invalid`) y `ToneService` |
 | Anchos | `Layout.boardWidth/column/buttons/calendar(sizeClass)`, `.readableColumn()` |
 | Tipografía | `Font.score`, `.counter`, `.stat`; `Animation.quiet` |
+| Recordatorio del reto | `DailyReminders` (19:00 y 21:00, plan en `DailyReminderPlan` de QuietCore), `.dailyReminderTriggers`, `.dailyReminderOffer`, `DailyReminderToggle` en Ajustes |
+| Amigos | `FriendsTodayCard` (Reto diario), `FriendProfileView` (frente a frente, últimos 7 retos), `PlayerAvatar`; datos con `GameCenterService.dailyEntries`, `headToHead`, `friendsToday` |
 
 Algo que no está en la tabla y se usará en dos apps: va a QuietUI (con su tarjeta en el sistema de diseño), no a la app.
 
@@ -39,6 +41,8 @@ Inicio, Juego, Resumen de partida, Reto diario, Clasificaciones, Colección, Aju
 - Fin de partida: hoja de resumen con estadísticas; fuegos solo al completar/ganar; logros de la partida en una tarjeta, sin avisos encima.
 - Textos: verbo que dice lo que pasa, en String Catalog con español; plurales del catálogo; números con `FormatStyle` y `.monospacedDigit()`.
 - Accesibilidad: `accessibilityLabel` en todo lo que es solo ícono, etiquetas útiles por celda o carta, objetivos ≥ 44 pt, Dynamic Type salvo el tablero (que tiene su opción de tamaño).
+- Textos de QuietUI: `Text("…", bundle: .main)`; cada app los pone en su catálogo (el compilador no los extrae de la app: listarlos a mano, como `KIT` en `quiet-solitaire/scripts/strings.py`). Los textos de las notificaciones los arma cada app.
+- Notificaciones: permiso solo en contexto (al volver de un primer reto completado, `.dailyReminderOffer`), nunca al abrir la app; máximo 2 al día; nada de Game Center se guarda.
 - iPad: mismo layout centrado con anchos máximos; atajos de teclado (⌘Z deshacer, H pista).
 
 ## Antes de dar algo por terminado

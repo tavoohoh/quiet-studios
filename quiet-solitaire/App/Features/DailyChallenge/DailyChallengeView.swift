@@ -13,6 +13,12 @@ struct DailyChallengeView: View {
     @State private var month = AppClock.now
     /// Today's place among Game Center friends, when signed in.
     @State private var friendsRank: Int?
+    /// Today's friends board (ranked by time), when signed in.
+    @State private var friendsToday: [GameCenterService.Entry]?
+    /// A friend tapped on "Friends today": their profile.
+    @State private var friend: GameCenterService.Entry?
+    /// A practice left halfway: continue it or deal the day again.
+    @State private var unfinishedPractice: String?
 
     var body: some View {
         let today = app.todayKey
@@ -26,22 +32,26 @@ struct DailyChallengeView: View {
                     streak: app.currentStreak,
                     bestStreak: app.longestStreak,
                     friendsRank: friendsRank,
-                    onPlay: { onPlay(today) }
+                    onPlay: { play(today) }
                 )
                 .disabled(app.isPreparing)
+
+                if let friendsToday {
+                    FriendsTodayCard(entries: friendsToday) { friend = $0 }
+                }
 
                 WeekDifficulty(todayKey: today)
 
                 VStack(spacing: 6) {
                     CalendarView(
                         month: $month, todayKey: today, records: app.persistence.dailies,
-                        practiced: app.progress.practicedDays, onSelect: onPlay
+                        practiced: app.progress.practicedDays, inProgress: app.daysInProgress, onSelect: play
                     )
                     Text("Next challenge in \(countdown)")
                         .font(.subheadline)
                         .foregroundStyle(theme.muted)
                         .padding(.top, 4)
-                    Text("Past days are practice: they don't count toward your streak.")
+                    Text("Past days are practice: they don't score, but winning one counts toward your streak.")
                         .font(.footnote)
                         .foregroundStyle(theme.muted)
                         .multilineTextAlignment(.center)
@@ -59,15 +69,50 @@ struct DailyChallengeView: View {
             .frame(maxWidth: .infinity)
         }
         .screen(Text("Daily Challenge"))
-        .task(id: app.gameCenter.isAuthenticated) { await loadFriendsRank() }
+        .task(id: app.gameCenter.isAuthenticated) { await loadFriends() }
+        .friendProfile($friend)
+        .alert(
+            "Continue this practice?",
+            isPresented: Binding(get: { unfinishedPractice != nil }, set: { if !$0 { unfinishedPractice = nil } }),
+            presenting: unfinishedPractice
+        ) { dayKey in
+            Button("Continue") { onPlay(dayKey) }
+            Button("Start over") {
+                app.discardPractice(dayKey)
+                onPlay(dayKey)
+            }
+            Button("Cancel", role: .cancel) {}
+        } message: { dayKey in
+            Text("You left \(DayKeyFormat.string(dayKey)) halfway.")
+        }
     }
 
-    private func loadFriendsRank() async {
+    /// The scored attempt always resumes; a practice in progress asks first.
+    private func play(_ dayKey: String) {
+        if !app.isDailyInProgress(dayKey), app.persistence.practiceInProgress.contains(dayKey) {
+            unfinishedPractice = dayKey
+        } else {
+            onPlay(dayKey)
+        }
+    }
+
+    /// Today's friends board: the card and the player's place among them.
+    private func loadFriends() async {
         #if DEBUG
-        if DemoData.isActive { return friendsRank = 3 }
+        if DemoData.isActive {
+            friendsToday = DemoData.friendsEntries
+            friendsRank = DemoData.friendsEntries.first(where: \.isLocalPlayer)?.rank
+            return
+        }
         #endif
-        guard app.gameCenter.isAuthenticated else { return friendsRank = nil }
-        friendsRank = try? await app.gameCenter.entries(for: Leaderboard.daily.rawValue, friendsOnly: true).local?.rank
+        guard app.gameCenter.isAuthenticated else {
+            friendsToday = nil
+            friendsRank = nil
+            return
+        }
+        let result = try? await app.gameCenter.dailyEntries(for: Leaderboard.daily.rawValue, friendsOnly: true)
+        friendsToday = result?.top
+        friendsRank = result?.local?.rank
     }
 
         /// Live relative time; frozen in demo launches so screenshots don't depend on the clock.
@@ -89,7 +134,7 @@ struct DailyChallengeView: View {
     }
 
     private func playTitle(for dayKey: String) -> LocalizedStringKey {
-        if app.isDailyInProgress(dayKey) { return "Continue" }
+        if app.daysInProgress.contains(dayKey) { return "Continue" }
         return app.isScored(dayKey) ? "Play" : "Play again"
     }
 }

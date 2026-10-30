@@ -11,6 +11,8 @@ struct LeaderboardsView: View {
     @State private var board = GameCenterService.Leaderboard.daily
     @State private var friendsOnly = false
     @State private var state = LoadState.loading
+    /// A friend tapped on the Friends tab: their profile.
+    @State private var friend: GameCenterService.Entry?
 
     private enum LoadState {
         case loading
@@ -36,6 +38,7 @@ struct LeaderboardsView: View {
         .frame(maxWidth: .infinity)
         .screen(Text("Leaderboards"))
         .task(id: "\(board.rawValue)-\(friendsOnly)-\(isSignedIn)") { await load() }
+        .friendProfile($friend)
     }
 
     @ViewBuilder
@@ -56,7 +59,7 @@ struct LeaderboardsView: View {
                 } else {
                     ScrollView {
                         VStack(spacing: 10) {
-                            EntryList(entries: top, showsTime: board == .daily)
+                            EntryList(entries: top, showsTime: board == .daily, onSelect: friendsOnly ? { friend = $0 } : nil)
                             if let local, !top.contains(where: \.isLocalPlayer) {
                                 EntryList(entries: [local], showsTime: board == .daily)
                             }
@@ -105,10 +108,20 @@ struct LeaderboardsView: View {
 private struct EntryList: View {
     let entries: [GameCenterService.Entry]
     let showsTime: Bool
+    /// Friends tab: tapping someone else opens their profile.
+    var onSelect: ((GameCenterService.Entry) -> Void)?
 
     var body: some View {
         VStack(spacing: 0) {
-            ForEach(entries) { EntryRow(entry: $0, showsTime: showsTime) }
+            ForEach(entries) { entry in
+                if let onSelect, !entry.isLocalPlayer {
+                    Button { onSelect(entry) } label: { EntryRow(entry: entry, showsTime: showsTime).contentShape(Rectangle()) }
+                        .buttonStyle(.plain)
+                        .accessibilityHint(Text("Opens their profile"))
+                } else {
+                    EntryRow(entry: entry, showsTime: showsTime)
+                }
+            }
         }
         .padding(6)
         .background { SurfaceShape(shape: RoundedRectangle(cornerRadius: 24, style: .continuous)) }
@@ -140,7 +153,7 @@ private struct EntryRow: View {
                 .foregroundStyle(entry.isLocalPlayer ? theme.primary : theme.ink)
                 .lineLimit(1)
             Spacer(minLength: 8)
-            if showsTime, let seconds = GameCenterService.seconds(of: entry) {
+            if showsTime, let seconds = GameCenterService.dailySeconds(of: entry) {
                 Text(GameClock.string(seconds))
                     .font(.subheadline.monospacedDigit())
                     .foregroundStyle(theme.muted)

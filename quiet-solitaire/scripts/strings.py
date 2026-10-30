@@ -36,6 +36,8 @@ ES = {
     "App icon": "Ícono de la app",
     "Auto-complete": "Autocompletar",
     "Back": "Volver",
+    "Cancel": "Cancelar",
+    "Continue this practice?": "¿Seguir con esta práctica?",
     "Best score": "Mejor puntaje",
     "Best streak": "Mejor racha",
     "Board": "Tablero",
@@ -121,7 +123,8 @@ ES = {
         "Un reparto para todos cada día, que siempre se puede ganar. Fácil el lunes, experto el domingo.",
     "Only winnable deals": "Solo partidas con solución",
     "Open Settings": "Abrir Ajustes",
-    "Past days are practice: they don't count toward your streak.": "Los días pasados son práctica: no cuentan para la racha.",
+    "Past days are practice: they don't score, but winning one counts toward your streak.":
+        "Los días pasados son práctica: no suman puntaje, pero ganarlos cuenta para tu racha.",
     "Pixel": "Pixel",
     "Play": "Jugar",
     "Play again": "Jugar de nuevo",
@@ -134,6 +137,8 @@ ES = {
     "Quiet": "Quiet",
     "Quiet Solitaire doesn't collect any data. Your games, streaks and achievements stay on this device. If you sign in to Game Center, your scores and achievements are shared with Apple's Game Center and your progress is saved in your iCloud.":
         "Quiet Solitaire no recolecta ningún dato. Tus partidas, rachas y logros se quedan en este dispositivo. Si inicias sesión en Game Center, tus puntajes y logros se comparten con Game Center de Apple y tu progreso se guarda en tu iCloud.",
+    "Start over": "Empezar de nuevo",
+    "You left %@ halfway.": "Dejaste el %@ a medias.",
     "Replays don't count toward your score.": "Las repeticiones no cuentan para tu puntaje.",
     "Reset Progress": "Restablecer progreso",
     "Reset Progress…": "Restablecer progreso…",
@@ -229,6 +234,42 @@ ES = {
     "diamonds": "diamantes",
     "hearts": "corazones",
     "spades": "picas",
+    # Daily reminders (notification texts are this app's).
+    "%@ won today's challenge with %@. Up for it?": "%1$@ ganó el reto de hoy con %2$@. ¿Te animas?",
+    "%lld friends already played; %@ leads with %@.": "%1$lld amigos ya lo jugaron; %2$@ lidera con %3$@.",
+    "Don't lose your %lld-day streak.": "No pierdas tu racha de %lld días.",
+    "Today's challenge is waiting.": "El reto de hoy te espera.",
+    "Your %lld-day streak ends at midnight.": "Tu racha de %lld días termina a medianoche.",
+    "Your streak": "Tu racha",
+    "Opens their profile": "Abre su perfil",
+}
+
+# QuietKit's texts (QuietUI looks them up in the app's catalog). The compiler doesn't
+# extract them for the app, so they're listed here by hand.
+KIT = {
+    "Remind you at %@?": "¿Te aviso a las %@?",
+    "Remind me": "Avísame",
+    "Not now": "Ahora no",
+    "Only on days you haven't played the challenge yet. You can change it in Settings.":
+        "Solo los días que aún no hayas jugado el reto. Puedes cambiarlo en Ajustes.",
+    "Daily challenge reminder": "Recordatorio del reto",
+    "At %@ if you haven't played; with a streak of 3 or more, another at %@.":
+        "A las %1$@ si no has jugado; con una racha de 3 o más, otro a las %2$@.",
+    "Notifications are off for this app. Turn them on in Settings.":
+        "Las notificaciones de esta app están desactivadas. Actívalas en Ajustes.",
+    "Friends today": "Amigos hoy",
+    "You're #%lld": "Vas #%lld",
+    "None of your friends has played today's challenge yet.": "Ninguno de tus amigos ha jugado el reto de hoy.",
+    "Couldn't load this profile. Check your connection and try again.":
+        "No se pudo cargar este perfil. Revisa tu conexión e inténtalo de nuevo.",
+    "View in Game Center": "Ver en Game Center",
+    "You": "Tú",
+    "Today's challenge": "Reto de hoy",
+    "Best score": "Mejor puntaje",
+    "Longest streak": "Racha más larga",
+    "Last %lld challenges": "Últimos %lld retos",
+    "You won %lld of %lld": "Ganaste %1$lld de %2$lld",
+    "No past challenges yet.": "Todavía no hay retos anteriores.",
 }
 
 # Plurals: key → (en one, en other, es one, es other).
@@ -264,7 +305,7 @@ def extracted_keys():
 
 def main():
     strings = {}
-    for key, es in ES.items():
+    for key, es in {**ES, **KIT}.items():
         strings[key] = {"localizations": {"es": unit(es)}}
     for key, (en_one, en_other, es_one, es_other) in PLURALS.items():
         strings[key] = {"localizations": {"en": plural(en_one, en_other), "es": plural(es_one, es_other)}}

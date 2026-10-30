@@ -111,3 +111,67 @@ import Testing
         }
     }
 }
+
+@Suite struct DailyReminderPlanTests {
+    private let bogota = TimeZone(identifier: "America/Bogota")!
+
+    private func date(_ day: Int, _ hour: Int, _ minute: Int = 0) -> Date {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = bogota
+        return calendar.date(from: DateComponents(year: 2026, month: 11, day: day, hour: hour, minute: minute))!
+    }
+
+    private func plan(_ now: Date, completed: Bool, streak: Int) -> [DailyReminderPlan.Item] {
+        DailyReminderPlan.items(now: now, todayCompleted: completed, streak: streak, timeZone: bogota)
+    }
+
+    @Test func todayGetsBothWhenAStreakIsAtStake() {
+        let items = plan(date(14, 10), completed: false, streak: 8)
+        let today = items.filter { $0.dayKey == "2026-11-14" }
+        #expect(today.map(\.kind) == [.reminder, .streakAtRisk])
+        #expect(today.map(\.components.hour) == [19, 21])
+        #expect(today.allSatisfy { $0.streak == 8 })
+        // Later days: the plain reminder only.
+        let later = items.filter { $0.dayKey != "2026-11-14" }
+        #expect(later.count == DailyReminderPlan.daysAhead - 1)
+        #expect(later.allSatisfy { $0.kind == .reminder && $0.streak == 0 })
+    }
+
+    @Test func atMostTwoADay() {
+        let items = plan(date(14, 10), completed: false, streak: 30)
+        #expect(Dictionary(grouping: items, by: \.dayKey).values.allSatisfy { $0.count <= 2 })
+        #expect(Set(items.map(\.identifier)).count == items.count)
+    }
+
+    @Test func shortStreaksGetNoWarning() {
+        let items = plan(date(14, 10), completed: false, streak: 2)
+        #expect(items.allSatisfy { $0.kind == .reminder && $0.streak == 0 })
+    }
+
+    @Test func completingTodayMovesTheStakeToTomorrow() {
+        let items = plan(date(14, 18), completed: true, streak: 9)
+        #expect(!items.contains { $0.dayKey == "2026-11-14" })
+        let tomorrow = items.filter { $0.dayKey == "2026-11-15" }
+        #expect(tomorrow.map(\.kind) == [.reminder, .streakAtRisk])
+        #expect(tomorrow.allSatisfy { $0.streak == 9 })
+        #expect(items.filter { $0.kind == .streakAtRisk }.count == 1)
+    }
+
+    @Test func pastHoursAreSkipped() {
+        // 20:00, not done: only the 21:00 warning is left today.
+        let evening = plan(date(14, 20), completed: false, streak: 5).filter { $0.dayKey == "2026-11-14" }
+        #expect(evening.map(\.kind) == [.streakAtRisk])
+        // 22:00: nothing today, and tomorrow has no streak at stake (it ends tonight).
+        let night = plan(date(14, 22), completed: false, streak: 5)
+        #expect(!night.contains { $0.dayKey == "2026-11-14" })
+        #expect(night.allSatisfy { $0.kind == .reminder && $0.streak == 0 })
+    }
+
+    @Test func duelsGoToTheHigherScoreThenTheFasterTime() {
+        #expect(DailyDuel.result(mine: (900, 300), theirs: (800, 100)) == .won)
+        #expect(DailyDuel.result(mine: (900, 300), theirs: (900, 200)) == .lost)
+        #expect(DailyDuel.result(mine: (900, 200), theirs: (900, nil)) == .won)
+        #expect(DailyDuel.result(mine: (900, 200), theirs: (900, 200)) == .tied)
+        #expect(DailyDuel.result(mine: nil, theirs: (900, 200)) == .notBoth)
+    }
+}

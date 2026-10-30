@@ -10,6 +10,8 @@ struct LeaderboardsView: View {
     @State private var board = Leaderboard.daily
     @State private var friendsOnly = false
     @State private var state = LoadState.loading
+    /// A friend tapped on the Friends tab: their profile.
+    @State private var friend: GameCenterService.Entry?
 
     private enum LoadState {
         case loading
@@ -35,6 +37,7 @@ struct LeaderboardsView: View {
         .frame(maxWidth: .infinity)
         .screen(Text("Leaderboards"))
         .task(id: "\(board.rawValue)-\(friendsOnly)-\(isSignedIn)") { await load() }
+        .friendProfile($friend)
     }
 
     @ViewBuilder
@@ -55,9 +58,9 @@ struct LeaderboardsView: View {
                 } else {
                     ScrollView {
                         VStack(spacing: 10) {
-                            EntryList(entries: top)
+                            EntryList(entries: top, showsTime: board == .daily, onSelect: friendsOnly ? { friend = $0 } : nil)
                             if let local, !top.contains(where: \.isLocalPlayer) {
-                                EntryList(entries: [local])
+                                EntryList(entries: [local], showsTime: board == .daily)
                             }
                             Text("Scores from Game Center · updated just now")
                                 .font(.footnote)
@@ -88,7 +91,10 @@ struct LeaderboardsView: View {
         guard app.gameCenter.isAuthenticated else { return }
         state = .loading
         do {
-            let result = try await app.gameCenter.entries(for: board.rawValue, friendsOnly: friendsOnly)
+            // Today's board breaks ties by time, faster first.
+            let result = board == .daily
+                ? try await app.gameCenter.dailyEntries(for: board.rawValue, friendsOnly: friendsOnly)
+                : try await app.gameCenter.entries(for: board.rawValue, friendsOnly: friendsOnly)
             state = .loaded(local: result.local, top: result.top)
         } catch {
             state = .failed
@@ -98,10 +104,21 @@ struct LeaderboardsView: View {
 
 private struct EntryList: View {
     let entries: [GameCenterService.Entry]
+    let showsTime: Bool
+    /// Friends tab: tapping someone else opens their profile.
+    var onSelect: ((GameCenterService.Entry) -> Void)?
 
     var body: some View {
         VStack(spacing: 0) {
-            ForEach(entries) { EntryRow(entry: $0) }
+            ForEach(entries) { entry in
+                if let onSelect, !entry.isLocalPlayer {
+                    Button { onSelect(entry) } label: { EntryRow(entry: entry, showsTime: showsTime).contentShape(Rectangle()) }
+                        .buttonStyle(.plain)
+                        .accessibilityHint(Text("Opens their profile"))
+                } else {
+                    EntryRow(entry: entry, showsTime: showsTime)
+                }
+            }
         }
         .padding(6)
         .background { SurfaceShape(shape: RoundedRectangle(cornerRadius: 24, style: .continuous)) }
@@ -110,6 +127,8 @@ private struct EntryList: View {
 
 private struct EntryRow: View {
     let entry: GameCenterService.Entry
+    /// Today's board: the time that breaks ties, next to the score.
+    let showsTime: Bool
 
     @Environment(\.quietTheme) private var theme
 
@@ -131,6 +150,11 @@ private struct EntryRow: View {
                 .foregroundStyle(entry.isLocalPlayer ? theme.primary : theme.ink)
                 .lineLimit(1)
             Spacer(minLength: 8)
+            if showsTime, let seconds = GameCenterService.dailySeconds(of: entry) {
+                Text(GameClock.string(seconds))
+                    .font(.subheadline.monospacedDigit())
+                    .foregroundStyle(theme.muted)
+            }
             Text(entry.score, format: .number)
                 .font(.system(.title3, design: .rounded, weight: entry.isLocalPlayer ? .heavy : .medium).monospacedDigit())
                 .foregroundStyle(entry.isLocalPlayer ? theme.primary : theme.ink)

@@ -17,7 +17,17 @@ struct QuietNumbersApp: App {
                 HomeView()
                     .modifier(AppearanceRoot())
                     .environment(app)
-                    .task { app.gameCenter.authenticate() }
+                    .task {
+                        app.gameCenter.authenticate()
+                        #if DEBUG
+                        // `-refreshFriends`: run the background refresh now (UI tests, QA).
+                        if ProcessInfo.processInfo.arguments.contains("-refreshFriends") {
+                            await app.reminders.reschedule()
+                            await app.refreshFriendsReminder()
+                        }
+                        #endif
+                    }
+                    .dailyReminderTriggers(app.reminders)
                 if showsSplash {
                     SplashView {
                         // Reduce Motion cuts straight to Home.
@@ -28,6 +38,10 @@ struct QuietNumbersApp: App {
                     .zIndex(1)
                 }
             }
+        }
+        // From 17:00: what friends did today goes into the 19:00 reminder.
+        .backgroundTask(.appRefresh(DailyReminders.friendsTaskID)) {
+            await app.refreshFriendsReminder()
         }
     }
 

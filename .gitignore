@@ -19,6 +19,7 @@ build/
 # Local signing config (Team ID, personal bundle ID)
 quiet-numbers/Config/Local.xcconfig
 quiet-solitaire/Config/Local.xcconfig
+quiet-sudoku/Config/Local.xcconfig
 
 # Signing and App Store Connect credentials: never commit
 *.p8
