@@ -1,0 +1,35 @@
+Quiet Sudoku is classic sudoku, calm and honest. No ads. No purchases. No data collected. Just you and the grid.
+
+HOW TO PLAY
+Fill the 9×9 grid so every row, every column and every 3×3 box holds the digits 1 to 9 once each. Tap a cell, then a digit. Never played before? A short interactive tutorial teaches you from scratch.
+
+ONE SOLUTION, NO GUESSING
+Every puzzle is made on your device and checked before you play: it has exactly one solution, and you can reach it by logic alone. Its level comes from the reasoning it needs, not from how many digits it shows: Easy needs only the basics, Expert asks for techniques like the X-Wing and the Swordfish.
+
+HINTS THAT TEACH
+Stuck? A hint writes the next digit you can find and explains why ("In box 3, the 5 fits only here"). Settings › Techniques explains every technique.
+
+A NEW PUZZLE EVERY DAY
+The same daily challenge for everyone. Easy on Monday, expert on Sunday. Keep your streak going, and replay the last 30 days for practice.
+
+PLAY AT YOUR PACE
+• Notes, unlimited undo and hints (hints cost a few points).
+• Mistakes show right away, or only when the board is full: your choice. The game never ends; fix them and go on.
+• Solve quickly for up to double points. Every solve ends in fireworks.
+• Works fully offline.
+
+REWARDS YOU EARN, NEVER BUY
+Achievements unlock digit styles, colored notes, board themes, a wave victory and an alternate app icon. Everything is earned by playing.
+
+GAME CENTER, IF YOU WANT IT
+Daily, best-score and streak leaderboards with friends and the world, plus 12 achievements. Your progress follows you across your devices through your own iCloud. Prefer to stay signed out? Everything still works.
+
+RESPECTFUL BY DESIGN
+• No ads, no in-app purchases, no subscriptions.
+• No accounts, no analytics, no tracking, no third-party SDKs.
+• Your games stay on your device.
+
+IPHONE, IPAD AND MAC
+Free on iPhone, iPad and Mac, with keyboard shortcuts on iPad and Mac (digits, arrows, N for notes, ⌘Z to undo, H for a hint). Supports Dark Mode and Reduce Motion, with large digits and a high-contrast theme always available.
+
+Quiet Sudoku is made by Quiet Studios: apps that respect your attention and your privacy.

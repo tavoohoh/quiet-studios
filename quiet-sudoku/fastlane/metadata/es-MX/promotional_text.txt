@@ -1,0 +1,1 @@
+Un sudoku que te respeta: sin anuncios, sin compras y sin recolectar datos. Cada sudoku tiene una sola solución y no hay que adivinar. Hay un reto nuevo cada día.

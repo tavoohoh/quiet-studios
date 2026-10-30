@@ -42,6 +42,11 @@ Un solo target iOS (iPhone y iPad), un bundle ID. Proyecto generado con XcodeGen
 - Todos los tests: `xcodebuild test -project QuietSudoku.xcodeproj -scheme QuietSudoku -destination 'platform=iOS Simulator,name=iPhone 17' -derivedDataPath build/dd`.
 - Textos: `scripts/strings.py` (como Quiet Solitaire).
 - Simulador: uno solo ("iPhone 17"), apagarlo por udid al terminar.
+- **Publicación** (`AppStore/app-store-connect.md`: campos de la app, lo que falta a mano y notas para la revisión):
+  - Textos: `fastlane/metadata/{en-US,es-MX}` (solo la estructura de carpetas; no se usa la gema), validar con `scripts/validate-metadata.py`, subir con `scripts/upload-metadata.py [--apply]` (textos, categoría Puzle + Juegos de mesa, copyright; imágenes cuando existan en `AppStore/store-images/`). Cliente `scripts/asc.py`, credenciales en `~/.appstoreconnect` (las de Quiet Numbers).
+  - Game Center: `scripts/game-center.py` escribe `AppStore/game-center.{md,json}` y las 12 insignias (`AppStore/achievements/<id>.png`, 1024 sin alfa) y verifica los IDs contra el código; `scripts/setup-game-center.py [--apply]` los crea (no duplica ni borra).
+  - Build a TestFlight: como Quiet Solitaire (`git worktree add --detach` de `main` en el scratchpad, copiar `Config/Local.xcconfig`, `xcodegen generate`, `xcodebuild archive … -configuration Release -destination 'generic/platform=iOS' -allowProvisioningUpdates`, `xcodebuild -exportArchive` con `method app-store-connect`, `destination upload`, `teamID` y firma automática). Si falla con "Failed to Use Accounts", renovar la sesión en Xcode › Settings › Accounts.
+  - Web: `../docs/quiet-sudoku/{index,privacy,support}.html` (GitHub Pages desde `/docs`, se publica con el push a main).
 
 ## QuietKit
 
@@ -218,10 +223,12 @@ Cada fase termina con su criterio de aceptación cumplido antes de pasar a la si
 | 1. Motor | ✅ 47 tests (`swift test -c release`): dos resolvedores que coinciden (también en puzzles mínimos), cada técnica usada y nunca contradice la solución, 40 tableros por nivel con solución única y nivel exacto (resuelve con su nivel, no con el anterior), un año de retos, valores de referencia por fecha, sesión, puntaje, logros y tutorial. |
 | 2. Juego jugable | 🟡 Jugable en el simulador: tablero, teclado con restantes, notas, borrar, deshacer, pista con explicación, errores al instante u ocultos, victoria con resumen y fuegos, tutorial de 7 pasos. UI tests: pista, notas, ganar y el tutorial completo. Falta probar en iPhone real e iPad. |
 | 3. Persistencia y reto diario | 🟡 Heredado de Quiet Solitaire y adaptado (regla de la familia, calendario, recordatorios); `DailyRuleTests`, `ReminderTests` y `ReminderUITests` pasan. Falta verificar en dispositivo. |
-| 4–6 | ⬜ Código de Game Center, colección y ajustes ya adaptado; sin App Store Connect (se hace con el usuario). |
+| 4. Game Center | 🟡 12 logros (con insignias, en/es) y 3 clasificaciones creados en App Store Connect (2026-10-30, `setup-game-center.py --apply`). Falta activarlos en la versión 1.0 y verificar envío y sincronización en el dispositivo. |
+| 5. Recompensas y colección | 🟡 Implementado (números, notas, resaltado, tableros, ola, ícono dorado); falta revisión en dispositivo. |
+| 6. Pulido y lanzamiento | 🟡 App creada en App Store Connect (2026-10-30). Ficha en/es subida (textos, categoría, copyright). Build **1.0 (1)** subido a TestFlight el 2026-10-30. Web en `docs/quiet-sudoku/` (se publica con el push). Falta: capturas, header y búsqueda; clasificación por edad, precio, privacidad y lo demás de "Qué falta hacer a mano" en `AppStore/app-store-connect.md`; auditoría de VoiceOver. |
 
 ## Preguntas abiertas
 
-- [ ] Nombre en la App Store: buscar si "Quiet Sudoku" está libre; si no, "Quiet Sudoku: Logic Puzzle". Bundle ID propuesto `com.tavoohoh.quietsudoku`, SKU `quietsudoku-ios` (no registrar sin el usuario).
+- [x] Nombre en la App Store (2026-10-30): **Quiet Sudoku: Logic Puzzle** ("Quiet Sudoku" ya existía dos veces y "Quiet Sudoku: Classic Puzzles" también). En la pantalla de inicio sigue "Quiet Sudoku". Bundle ID `com.tavoohoh.quietsudoku` (registrado por Xcode, con Game Center e iCloud), SKU `quietsudoku-ios`, app ID `6828993446` (creada por el usuario en la web: la API no crea apps).
 - [x] Errores: al instante por defecto, con "Marcar errores al instante" en Ajustes (revisión de quiet-studio 2026-10-30); mismo cobro en los dos modos.
 - [ ] ¿Auto-notas (llenar todos los candidatos) como ayuda gratis en clásico? Propuesta: backlog.

@@ -318,4 +318,29 @@ func table(stock: [String] = [], waste: [String] = [], foundations: [Int] = [0, 
         )
         #expect(Solver.solve(state, budget: 40_000) == .unsolvable)
     }
+
+    /// Reported from a device (2026-10-30): after following a hint, "No way to win". The
+    /// solver gives up on this position, and the fallback used to play the waste's 3♣ onto
+    /// a column, which the stuck check then proves lost. Now the hint avoids that.
+    @Test func hintDoesNotWalkIntoALoss() throws {
+        let state = table(
+            stock: ["5♥", "J♠", "6♠", "10♦", "2♦", "7♥", "4♠"],
+            waste: ["10♥", "8♠", "4♥", "J♣", "5♣", "Q♣", "J♥", "K♦", "3♣"],
+            column("K♣"),
+            column("K♠"),
+            column("?K♥", "?9♠", "6♣", "5♦", "4♣", "3♦", "2♣"),
+            column("?Q♦", "?A♦", "Q♠", "J♦", "10♠", "9♥"),
+            column("?8♣", "?9♦", "?3♠", "3♥", "2♠"),
+            column("?Q♥", "?6♦", "?A♠", "8♦", "7♠", "6♥", "5♠", "4♦"),
+            column("?10♣", "?A♣", "?9♣", "?A♥", "?2♥", "?7♦", "8♥", "7♣")
+        )
+        #expect(Solver.solve(state, budget: Solver.quickBudget) == .unknown)
+        var wasteToColumn = state
+        wasteToColumn.apply(.move(from: .waste, count: 1, to: .tableau(5)))
+        #expect(Solver.solve(wasteToColumn, budget: Solver.quickBudget) == .unsolvable)
+
+        var next = state
+        next.apply(try #require(GameSession.suggestion(for: state)))
+        #expect(Solver.solve(next, budget: Solver.quickBudget) != .unsolvable)
+    }
 }

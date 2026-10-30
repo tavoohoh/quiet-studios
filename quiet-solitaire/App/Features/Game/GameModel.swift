@@ -265,7 +265,7 @@ final class GameModel {
         stuckCheck = Task {
             try? await Task.sleep(for: .milliseconds(600))
             guard !Task.isCancelled else { return }
-            let result = await Task.detached(priority: .utility) { Solver.solve(state, budget: 40_000) }.value
+            let result = await Task.detached(priority: .utility) { Solver.solve(state, budget: Solver.quickBudget) }.value
             guard !Task.isCancelled, state == session.state else { return }
             withAnimation(.quiet) { isStuck = result == .unsolvable }
         }

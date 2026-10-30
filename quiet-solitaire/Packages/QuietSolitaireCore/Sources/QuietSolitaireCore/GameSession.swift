@@ -126,8 +126,11 @@ public struct GameSession: Codable, Hashable, Sendable {
         return .hintCharged(scoreAfter: score)
     }
 
-    /// The solver's next move when it finds a win; otherwise a sensible legal move, or a draw.
-    public static func suggestion(for state: GameState, budget: Int = 20_000) -> Move? {
+    /// The solver's next move when it finds a win; otherwise a sensible legal move that
+    /// doesn't walk into a loss the "no way to win" check (`Solver.quickBudget`) would
+    /// prove right after, or a draw. A device game (2026-10-30) got a fallback hint (waste
+    /// card onto a column) that the check then called lost.
+    public static func suggestion(for state: GameState, budget: Int = Solver.quickBudget) -> Move? {
         if case .solved(let move?, _) = Solver.solve(state, budget: budget) { return move }
         let moves = state.legalMoves.filter { move in
             // Back-and-forth moves between columns aren't useful advice.
@@ -138,10 +141,14 @@ public struct GameSession: Codable, Hashable, Sendable {
             }
             return from == .waste
         }
-        if let toFoundation = moves.first(where: { if case .move(_, _, .foundation) = $0 { true } else { false } }) {
-            return toFoundation
+        let isToFoundation: (Move) -> Bool = { if case .move(_, _, .foundation) = $0 { true } else { false } }
+        let candidates = moves.filter(isToFoundation) + moves.filter { !isToFoundation($0) }
+        let notLosing = candidates.first { move in
+            var next = state
+            next.apply(move)
+            return Solver.solve(next, budget: Solver.quickBudget) != .unsolvable
         }
-        return moves.first ?? (state.isLegal(.draw) ? .draw : nil)
+        return notLosing ?? (state.isLegal(.draw) ? .draw : nil)
     }
 
     private func points(for move: Move) -> Int {

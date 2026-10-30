@@ -66,6 +66,8 @@ final class AppModel {
     var offersReminders = false
 
     private var dailySeeds: [String: UInt64] = [:]
+    /// The next winnable classic deal, searched ahead so "New Game" opens at once.
+    private var nextWinnableSeed: Task<UInt64, Never>?
 
     init(
         persistence: PersistenceService,
@@ -188,25 +190,39 @@ final class AppModel {
     var hasClassicInProgress: Bool { classicMoves != nil }
 
     func continueClassic() async {
-        guard let session = persistence.loadGame(.classic), !session.isWon else { return await newClassic() }
+        guard let session = persistence.loadGame(.classic), !session.isWon else {
+            await newClassic()
+            return
+        }
         start(GameModel(session: session), as: .classic)
     }
 
     /// A fresh deal; with "Only winnable deals" on (the default), one the solver can win.
-    func newClassic() async {
+    /// False if a deal was already being prepared: repeated taps while the solver searched
+    /// used to open several games (2026-10-30).
+    @discardableResult
+    func newClassic() async -> Bool {
+        guard !isPreparing else { return false }
+        isPreparing = true
+        defer { isPreparing = false }
         if let abandoned = persistence.loadGame(.classic), !abandoned.isWon {
             record(.abandoned(played: abandoned.hasMoves))
             if abandoned.score > progress.bestScore { record(.classicScore(abandoned.score)) }
         }
-        let start = UInt64.random(in: .min ... .max)
         let winnableOnly = UserDefaults.standard.object(forKey: PreferenceKey.winnableOnly) as? Bool ?? true
-        isPreparing = true
-        let seed = winnableOnly ? await Task.detached(priority: .userInitiated) { Deals.winnableSeed(startingAt: start) }.value : start
-        isPreparing = false
+        let seed: UInt64
+        if winnableOnly {
+            if nextWinnableSeed == nil { warmUpClassic() }
+            seed = await nextWinnableSeed?.value ?? .random(in: .min ... .max)
+            warmUpClassic()
+        } else {
+            seed = .random(in: .min ... .max)
+        }
         let model = GameModel(session: GameSession(seed: seed, scoring: classicScoring))
         persistence.saveGame(model.session, in: .classic)
         classicMoves = 0
         self.start(model, as: .classic)
+        return true
     }
 
     /// The same deal again from the start (classic stays classic; a daily replay is practice).
@@ -299,6 +315,13 @@ final class AppModel {
         isPreparing = false
         dailySeeds[dayKey] = seed
         return seed
+    }
+
+    /// Searches the next winnable classic deal in the background (several deals can take
+    /// the solver a few seconds).
+    func warmUpClassic() {
+        let start = UInt64.random(in: .min ... .max)
+        nextWinnableSeed = Task.detached(priority: .utility) { Deals.winnableSeed(startingAt: start) }
     }
 
     /// Prepares today's deal in the background so "Play" starts right away.

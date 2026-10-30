@@ -47,7 +47,7 @@ struct HomeView: View {
                             Button {
                                 Task {
                                     await app.continueClassic()
-                                    path.append(.game)
+                                    openGame()
                                 }
                             } label: {
                                 Text("Continue · \(moves) moves")
@@ -60,8 +60,7 @@ struct HomeView: View {
                                 path.append(.tutorial)
                             } else {
                                 Task {
-                                    await app.newClassic()
-                                    path.append(.game)
+                                    if await app.newClassic() { openGame() }
                                 }
                             }
                         } label: {
@@ -90,7 +89,7 @@ struct HomeView: View {
                     DailyChallengeView { dayKey in
                         Task {
                             await app.playDaily(dayKey)
-                            path.append(.game)
+                            openGame()
                         }
                     }
                 case .collection:
@@ -117,6 +116,11 @@ struct HomeView: View {
         #if DEBUG
         .onAppear(perform: startDebugGameIfRequested)
         #endif
+    }
+
+    /// Shows the game screen once, however many taps got here.
+    private func openGame() {
+        if path.last != .game { path.append(.game) }
     }
 
     /// Game Center's access point, only on Home and only when signed in.

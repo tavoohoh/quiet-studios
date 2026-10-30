@@ -16,6 +16,7 @@ struct QuietSolitaireApp: App {
                     .task {
                         app.gameCenter.authenticate()
                         app.warmUpDaily()
+                        app.warmUpClassic()
                         #if DEBUG
                         // `-refreshFriends`: run the background refresh now (UI tests, QA).
                         if ProcessInfo.processInfo.arguments.contains("-refreshFriends") {

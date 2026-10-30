@@ -21,6 +21,10 @@ public enum Solver {
         case unknown
     }
 
+    /// The game screen's "no way to win" check. Hints search at least this far, so a hint
+    /// never points into a position the check then calls lost.
+    public static let quickBudget = 40_000
+
     /// `complete`: also split runs anywhere. The quick search skips those splits unless
     /// they free a card for the foundations, so its "unsolvable" isn't a strict proof;
     /// measured (2026-10-27) on 1,346 positions from played games, the 112 it called lost

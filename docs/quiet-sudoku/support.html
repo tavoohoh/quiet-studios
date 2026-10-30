@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Support · Quiet Sudoku</title>
+  <meta name="description" content="Classic sudoku, calm and honest. No ads, no purchases, no data collected.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201024%201024'%3E%3Crect%20width='1024'%20height='1024'%20rx='230'%20fill='%230E6B78'/%3E%3Crect%20x='150'%20y='150'%20width='200'%20height='200'%20rx='44'%20fill='%23FFFFFF'/%3E%3Crect%20x='412'%20y='150'%20width='200'%20height='200'%20rx='44'%20fill='%23FFFFFF'/%3E%3Crect%20x='674'%20y='150'%20width='200'%20height='200'%20rx='44'%20fill='%23FFFFFF'/%3E%3Crect%20x='150'%20y='412'%20width='200'%20height='200'%20rx='44'%20fill='%23FFFFFF'/%3E%3Crect%20x='412'%20y='412'%20width='200'%20height='200'%20rx='44'%20fill='%23FFFFFF'/%3E%3Crect%20x='674'%20y='412'%20width='200'%20height='200'%20rx='44'%20fill='%23FFFFFF'/%3E%3Crect%20x='150'%20y='674'%20width='200'%20height='200'%20rx='44'%20fill='%23FF9A85'/%3E%3Crect%20x='412'%20y='674'%20width='200'%20height='200'%20rx='44'%20fill='%23FFFFFF'/%3E%3Crect%20x='674'%20y='674'%20width='200'%20height='200'%20rx='44'%20fill='%23FFFFFF'/%3E%3C/svg%3E">
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: #f3f7f8;
+      --surface: #ffffff;
+      --ink: #16201f;
+      --muted: #5e6f72;
+      --accent: #0e6b78;
+      --line: #e3eaec;
+      --coral: #b9472f;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0f1a1d;
+        --surface: #172629;
+        --ink: #e8f1f2;
+        --muted: #8a9da0;
+        --accent: #5bc2cf;
+        --line: #263a3e;
+        --coral: #ff9a85;
+      }
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font: 17px/1.55 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      -webkit-text-size-adjust: 100%;
+    }
+    main { max-width: 640px; margin: 0 auto; padding: 48px 20px 64px; }
+    header { margin-bottom: 40px; }
+    h1, h2, h3 { font-family: ui-rounded, -apple-system, BlinkMacSystemFont, sans-serif; line-height: 1.2; }
+    h1 { font-size: 34px; margin: 0 0 8px; }
+    h2 { font-size: 24px; margin: 48px 0 12px; }
+    h3 { font-size: 18px; margin: 28px 0 6px; }
+    p, li { color: var(--ink); }
+    .muted { color: var(--muted); }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    nav { display: flex; flex-wrap: wrap; gap: 16px; font-size: 15px; }
+    .lang { font-size: 15px; color: var(--muted); margin: 0 0 24px; }
+    section + section { border-top: 1px solid var(--line); margin-top: 48px; }
+    .card { background: var(--surface); border-radius: 18px; padding: 20px 22px; margin: 20px 0; }
+    .card ul { margin: 0; padding-left: 20px; }
+    .mark { display: block; margin-bottom: 16px; }
+    footer { margin-top: 56px; font-size: 14px; color: var(--muted); }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <nav>
+        <a href="./">Quiet Sudoku</a>
+        <a href="privacy.html">Privacy · Privacidad</a>
+        <a href="support.html">Support · Soporte</a>
+      </nav>
+    </header>
+    <p class="lang"><a href="#en">English</a> · <a href="#es">Español</a></p>
+
+    <section id="en" lang="en">
+      <h1>Support</h1>
+      <h3>How do I play?</h3>
+      <p>Fill the 9×9 grid so every row, every column and every 3×3 box holds the digits 1 to 9 once each. Tap a cell, then a digit. Digits in dark ink came with the puzzle and can't change. Turn on Notes to jot the digits that could go in a cell. Undo is unlimited. Settings › How to play replays the tutorial, and Settings › Techniques explains every technique a hint can use.</p>
+      <h3>Does every puzzle have one solution?</h3>
+      <p>Yes. Every puzzle is made on your device and checked before you play: it has exactly one solution, and you can reach it by logic alone, without guessing. Its level is the hardest technique it needs: Easy needs only the basics, Medium adds locked candidates and pairs, Hard adds triples, X-Wing and XY-Wing, and Expert adds techniques like the Swordfish.</p>
+      <h3>What happens when I make a mistake?</h3>
+      <p>A digit that isn't the solution's is a mistake and costs 20 points. By default it turns red right away; with Settings › Show mistakes right away off, mistakes are checked when the board is full and the wrong digits are marked then. Either way each mistake costs the same, and the game never ends: fix it and go on.</p>
+      <h3>How is the score counted?</h3>
+      <p>10 to 30 points for each correct digit you write (10 Easy, 15 Medium, 20 Hard, 30 Expert), −20 for a mistake and −10 for a hint. Solving adds 500, and your points are multiplied by up to ×2 for solving fast (×2 up to 5 minutes on Easy, 10 on Medium, 15 on Hard and 25 on Expert, down to ×1 at three times that). Mistake and hint costs aren't multiplied.</p>
+      <h3>How does the daily challenge work?</h3>
+      <p>Every day there's one puzzle for everyone. It gets harder through the week: easy on Monday and Tuesday, medium Wednesday to Friday, hard on Saturday, expert on Sunday. A new challenge starts at midnight your local time. Solve it to keep your streak. Your first attempt counts for your score; replays and the past 30 days can be played for practice, and solving a missed day fills it in your streak.</p>
+      <h3>How does Game Center sync work?</h3>
+      <p>Game Center is optional. Sign in from your device's Settings, and Quiet Sudoku will send your scores and achievements to Game Center and keep your progress in your iCloud so it appears on your other devices. Progress made offline is sent the next time you're connected. A game in progress stays on the device where you started it.</p>
+      <h3>How do I reset my progress?</h3>
+      <p>Open Settings in the app and tap <strong>Reset Progress</strong>. It deletes your games, daily results, streaks, achievements and unlocked rewards on this device and the copy saved in your iCloud, and resets your Game Center achievements. If you're signed out of Game Center, the iCloud copy is cleared the next time you sign in. Scores already on leaderboards stay there.</p>
+      <h3>Contact</h3>
+      <p>Write to <a href="mailto:hi@tavoohoh.com">hi@tavoohoh.com</a>. We read every message.</p>
+    </section>
+
+    <section id="es" lang="es">
+      <h1>Soporte</h1>
+      <h3>¿Cómo se juega?</h3>
+      <p>Llena la cuadrícula de 9×9 para que cada fila, cada columna y cada caja de 3×3 tenga los números del 1 al 9 una vez cada uno. Toca una casilla y luego un número. Los números en tinta oscura vienen con el sudoku y no se cambian. Activa Notas para anotar los números que podrían ir en una casilla. Deshacer es ilimitado. En Ajustes › Cómo jugar puedes repetir el tutorial, y en Ajustes › Técnicas se explica cada técnica que puede usar una pista.</p>
+      <h3>¿Cada sudoku tiene una sola solución?</h3>
+      <p>Sí. Cada sudoku se crea en tu dispositivo y se revisa antes de jugar: tiene exactamente una solución, y se llega a ella solo con lógica, sin adivinar. Su nivel es la técnica más difícil que necesita: Fácil solo pide lo básico, Media suma candidatos bloqueados y pares, Difícil suma tríos, X-Wing y XY-Wing, y Experto suma técnicas como el Swordfish.</p>
+      <h3>¿Qué pasa si me equivoco?</h3>
+      <p>Un número que no es el de la solución es un error y cuesta 20 puntos. Por defecto se pone en rojo al instante; si apagas Ajustes › Marcar errores al instante, los errores se revisan al llenar el tablero y ahí se marcan. De las dos formas cada error cuesta lo mismo, y la partida nunca se pierde: corrígelo y sigue.</p>
+      <h3>¿Cómo se cuenta el puntaje?</h3>
+      <p>De 10 a 30 puntos por cada número correcto que escribes (10 Fácil, 15 Media, 20 Difícil, 30 Experto), −20 por error y −10 por pista. Al resolverlo se suman 500, y tus puntos se multiplican hasta ×2 por resolver rápido (×2 hasta 5 minutos en Fácil, 10 en Media, 15 en Difícil y 25 en Experto, bajando a ×1 al triple de ese tiempo). El costo de errores y pistas no se multiplica.</p>
+      <h3>¿Cómo funciona el reto diario?</h3>
+      <p>Cada día hay un sudoku para todos. Se pone más difícil durante la semana: fácil el lunes y el martes, media de miércoles a viernes, difícil el sábado y experto el domingo. Un reto nuevo empieza a la medianoche de tu hora local. Resuélvelo para mantener tu racha. Tu primer intento cuenta para tu puntaje; las repeticiones y los últimos 30 días se pueden jugar como práctica, y resolver un día que faltó lo rellena en tu racha.</p>
+      <h3>¿Cómo funciona la sincronización con Game Center?</h3>
+      <p>Game Center es opcional. Inicia sesión desde los Ajustes de tu dispositivo y Quiet Sudoku enviará tus puntajes y logros a Game Center, y guardará tu progreso en tu iCloud para que aparezca en tus otros dispositivos. Lo que juegues sin conexión se envía la próxima vez que te conectes. Una partida en curso se queda en el dispositivo donde la empezaste.</p>
+      <h3>¿Cómo restablezco mi progreso?</h3>
+      <p>Abre Ajustes en la app y toca <strong>Restablecer progreso</strong>. Borra tus partidas, resultados diarios, rachas, logros y recompensas desbloqueadas en este dispositivo y la copia guardada en tu iCloud, y reinicia tus logros de Game Center. Si no tienes sesión en Game Center, la copia de iCloud se borra la próxima vez que inicies sesión. Los puntajes que ya están en las clasificaciones se quedan ahí.</p>
+      <h3>Contacto</h3>
+      <p>Escribe a <a href="mailto:hi@tavoohoh.com">hi@tavoohoh.com</a>. Leemos todos los mensajes.</p>
+    </section>
+    <footer>
+      <p>Quiet Sudoku · Quiet Studios</p>
+    </footer>
+  </main>
+</body>
+</html>

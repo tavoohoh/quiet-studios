@@ -1,0 +1,35 @@
+Quiet Sudoku es el sudoku clásico, tranquilo y honesto. Sin anuncios. Sin compras. Sin recolectar datos. Solo tú y la cuadrícula.
+
+CÓMO SE JUEGA
+Llena la cuadrícula de 9×9 para que cada fila, cada columna y cada caja de 3×3 tenga los números del 1 al 9 una vez cada uno. Toca una casilla y luego un número. ¿Nunca has jugado? Un tutorial interactivo corto te enseña desde cero.
+
+UNA SOLA SOLUCIÓN, SIN ADIVINAR
+Cada sudoku se crea en tu dispositivo y se revisa antes de jugar: tiene exactamente una solución, y se llega a ella solo con lógica. Su nivel depende del razonamiento que pide, no de cuántos números muestra: Fácil solo necesita lo básico, Experto pide técnicas como el X-Wing y el Swordfish.
+
+PISTAS QUE ENSEÑAN
+¿Atascado? Una pista escribe el siguiente número que se puede deducir y explica por qué ("En la caja 3, el 5 solo cabe aquí"). En Ajustes › Técnicas se explica cada técnica.
+
+UN SUDOKU NUEVO CADA DÍA
+El mismo reto diario para todos. Fácil el lunes, experto el domingo. Mantén tu racha y juega los últimos 30 días como práctica.
+
+JUEGA A TU RITMO
+• Notas, deshacer ilimitado y pistas (las pistas cuestan unos pocos puntos).
+• Los errores se marcan al instante o solo al llenar el tablero: tú eliges. La partida nunca se pierde; corrígelos y sigue.
+• Resuelve rápido y suma hasta el doble de puntos. Cada sudoku resuelto termina con fuegos artificiales.
+• Funciona completamente sin conexión.
+
+RECOMPENSAS QUE SE GANAN, NUNCA SE COMPRAN
+Los logros desbloquean estilos de números, notas en color, temas de tablero, una victoria en ola y un ícono alternativo. Todo se gana jugando.
+
+GAME CENTER, SI LO QUIERES
+Clasificaciones del reto diario, mejor puntaje y racha, con amigos y con el mundo, además de 12 logros. Tu progreso te acompaña en tus dispositivos a través de tu propio iCloud. ¿Prefieres no iniciar sesión? Todo funciona igual.
+
+RESPETUOSO POR DISEÑO
+• Sin anuncios, sin compras dentro de la app, sin suscripciones.
+• Sin cuentas, sin analytics, sin rastreo, sin SDKs de terceros.
+• Tus partidas se quedan en tu dispositivo.
+
+IPHONE, IPAD Y MAC
+Gratis en iPhone, iPad y Mac, con atajos de teclado en iPad y Mac (números, flechas, N para notas, ⌘Z para deshacer, H para una pista). Compatible con modo oscuro y reducir movimiento, con números grandes y un tema de alto contraste siempre disponibles.
+
+Quiet Sudoku es de Quiet Studios: apps que respetan tu atención y tu privacidad.

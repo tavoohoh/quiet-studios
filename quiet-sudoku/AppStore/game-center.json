@@ -1,0 +1,350 @@
+{
+  "achievements": [
+    {
+      "id": "qsu_first_win",
+      "codeCase": "Achievement.firstWin",
+      "points": 10,
+      "hidden": false,
+      "achievableMoreThanOnce": false,
+      "reward": {
+        "en": "Rounded digits, Teal & Coral board (defaults)",
+        "es": "Números Redondos, tablero Petróleo y coral (por defecto)"
+      },
+      "name": {
+        "en": "First Sudoku",
+        "es": "Primer sudoku"
+      },
+      "preEarnedDescription": {
+        "en": "Solve your first sudoku.",
+        "es": "Resuelve tu primer sudoku."
+      },
+      "earnedDescription": {
+        "en": "You solved your first sudoku.",
+        "es": "Resolviste tu primer sudoku."
+      },
+      "image": "AppStore/achievements/qsu_first_win.png"
+    },
+    {
+      "id": "qsu_no_mistakes",
+      "codeCase": "Achievement.noMistakes",
+      "points": 40,
+      "hidden": false,
+      "achievableMoreThanOnce": false,
+      "reward": {
+        "en": "Classic digits (New York)",
+        "es": "Números Clásicos (New York)"
+      },
+      "name": {
+        "en": "Clean Sheet",
+        "es": "Sin tachones"
+      },
+      "preEarnedDescription": {
+        "en": "Solve a sudoku without mistakes.",
+        "es": "Resuelve un sudoku sin errores."
+      },
+      "earnedDescription": {
+        "en": "You solved a sudoku without a single mistake.",
+        "es": "Resolviste un sudoku sin un solo error."
+      },
+      "image": "AppStore/achievements/qsu_no_mistakes.png"
+    },
+    {
+      "id": "qsu_no_hints",
+      "codeCase": "Achievement.noHints",
+      "points": 40,
+      "hidden": false,
+      "achievableMoreThanOnce": false,
+      "reward": {
+        "en": "Sage & Sand board",
+        "es": "Tablero Salvia y arena"
+      },
+      "name": {
+        "en": "On Your Own",
+        "es": "Por tu cuenta"
+      },
+      "preEarnedDescription": {
+        "en": "Solve a sudoku without hints.",
+        "es": "Resuelve un sudoku sin pistas."
+      },
+      "earnedDescription": {
+        "en": "You solved a sudoku without a single hint.",
+        "es": "Resolviste un sudoku sin usar ni una pista."
+      },
+      "image": "AppStore/achievements/qsu_no_hints.png"
+    },
+    {
+      "id": "qsu_no_notes",
+      "codeCase": "Achievement.noNotes",
+      "points": 60,
+      "hidden": false,
+      "achievableMoreThanOnce": false,
+      "reward": {
+        "en": "Typewriter digits (SF Mono)",
+        "es": "Números Máquina (SF Mono)"
+      },
+      "name": {
+        "en": "From Memory",
+        "es": "De memoria"
+      },
+      "preEarnedDescription": {
+        "en": "Solve a medium or harder sudoku without notes.",
+        "es": "Resuelve un sudoku de nivel Media o más sin notas."
+      },
+      "earnedDescription": {
+        "en": "You solved a medium or harder sudoku without notes.",
+        "es": "Resolviste un sudoku de nivel Media o más sin notas."
+      },
+      "image": "AppStore/achievements/qsu_no_notes.png"
+    },
+    {
+      "id": "qsu_ten_wins",
+      "codeCase": "Achievement.tenWins",
+      "points": 40,
+      "hidden": false,
+      "achievableMoreThanOnce": false,
+      "reward": {
+        "en": "Notes in color",
+        "es": "Notas en color"
+      },
+      "name": {
+        "en": "Ten Sudokus",
+        "es": "Diez sudokus"
+      },
+      "preEarnedDescription": {
+        "en": "Solve 10 sudokus.",
+        "es": "Resuelve 10 sudokus."
+      },
+      "earnedDescription": {
+        "en": "You solved 10 sudokus.",
+        "es": "Resolviste 10 sudokus."
+      },
+      "image": "AppStore/achievements/qsu_ten_wins.png"
+    },
+    {
+      "id": "qsu_consistency",
+      "codeCase": "Achievement.consistency",
+      "points": 80,
+      "hidden": false,
+      "achievableMoreThanOnce": false,
+      "reward": {
+        "en": "Indigo & Peach board",
+        "es": "Tablero Índigo y durazno"
+      },
+      "name": {
+        "en": "Consistency",
+        "es": "Constancia"
+      },
+      "preEarnedDescription": {
+        "en": "Complete 7 daily challenges in a row.",
+        "es": "Completa 7 retos diarios seguidos."
+      },
+      "earnedDescription": {
+        "en": "You completed 7 daily challenges in a row.",
+        "es": "Completaste 7 retos diarios seguidos."
+      },
+      "image": "AppStore/achievements/qsu_consistency.png"
+    },
+    {
+      "id": "qsu_habit",
+      "codeCase": "Achievement.habit",
+      "points": 100,
+      "hidden": false,
+      "achievableMoreThanOnce": false,
+      "reward": {
+        "en": "Wave victory",
+        "es": "Victoria en ola"
+      },
+      "name": {
+        "en": "Habit",
+        "es": "Hábito"
+      },
+      "preEarnedDescription": {
+        "en": "Complete 30 daily challenges in a row.",
+        "es": "Completa 30 retos diarios seguidos."
+      },
+      "earnedDescription": {
+        "en": "You completed 30 daily challenges in a row.",
+        "es": "Completaste 30 retos diarios seguidos."
+      },
+      "image": "AppStore/achievements/qsu_habit.png"
+    },
+    {
+      "id": "qsu_expert",
+      "codeCase": "Achievement.expert",
+      "points": 80,
+      "hidden": false,
+      "achievableMoreThanOnce": false,
+      "reward": {
+        "en": "Pen digits (Noteworthy)",
+        "es": "Números Pluma (Noteworthy)"
+      },
+      "name": {
+        "en": "Expert",
+        "es": "Experto"
+      },
+      "preEarnedDescription": {
+        "en": "Solve an expert sudoku.",
+        "es": "Resuelve un sudoku Experto."
+      },
+      "earnedDescription": {
+        "en": "You solved an expert sudoku.",
+        "es": "Resolviste un sudoku Experto."
+      },
+      "image": "AppStore/achievements/qsu_expert.png"
+    },
+    {
+      "id": "qsu_quick",
+      "codeCase": "Achievement.quick",
+      "points": 50,
+      "hidden": false,
+      "achievableMoreThanOnce": false,
+      "reward": {
+        "en": "Soft highlight (same digit only)",
+        "es": "Resaltado suave (solo el mismo número)"
+      },
+      "name": {
+        "en": "Quick",
+        "es": "Rápido"
+      },
+      "preEarnedDescription": {
+        "en": "Solve an easy sudoku in under 4 minutes.",
+        "es": "Resuelve un sudoku Fácil en menos de 4 minutos."
+      },
+      "earnedDescription": {
+        "en": "You solved an easy sudoku in under 4 minutes.",
+        "es": "Resolviste un sudoku Fácil en menos de 4 minutos."
+      },
+      "image": "AppStore/achievements/qsu_quick.png"
+    },
+    {
+      "id": "qsu_night_owl",
+      "codeCase": "Achievement.nightOwl",
+      "points": 40,
+      "hidden": false,
+      "achievableMoreThanOnce": false,
+      "reward": {
+        "en": "Sage & Coral board",
+        "es": "Tablero Salvia y coral"
+      },
+      "name": {
+        "en": "Night Owl",
+        "es": "Noctámbulo"
+      },
+      "preEarnedDescription": {
+        "en": "Solve a daily challenge between midnight and 4 a.m.",
+        "es": "Resuelve un reto diario entre la medianoche y las 4 a. m."
+      },
+      "earnedDescription": {
+        "en": "You solved a daily challenge in the small hours.",
+        "es": "Resolviste un reto diario de madrugada."
+      },
+      "image": "AppStore/achievements/qsu_night_owl.png"
+    },
+    {
+      "id": "qsu_centennial",
+      "codeCase": "Achievement.centennial",
+      "points": 100,
+      "hidden": false,
+      "achievableMoreThanOnce": false,
+      "reward": {
+        "en": "Gold app icon",
+        "es": "Ícono dorado"
+      },
+      "name": {
+        "en": "Centennial",
+        "es": "Centenario"
+      },
+      "preEarnedDescription": {
+        "en": "Solve 100 sudokus.",
+        "es": "Resuelve 100 sudokus."
+      },
+      "earnedDescription": {
+        "en": "You solved 100 sudokus.",
+        "es": "Resolviste 100 sudokus."
+      },
+      "image": "AppStore/achievements/qsu_centennial.png"
+    },
+    {
+      "id": "qsu_in_the_red",
+      "codeCase": "Achievement.inTheRed",
+      "points": 20,
+      "hidden": true,
+      "achievableMoreThanOnce": false,
+      "reward": {
+        "en": "Hidden: hints at 3 in classic games only",
+        "es": "Oculta: pistas a 3 solo en clásico"
+      },
+      "name": {
+        "en": "In the Red",
+        "es": "Números rojos"
+      },
+      "preEarnedDescription": {
+        "en": "Take your score below zero.",
+        "es": "Lleva tu puntaje por debajo de cero."
+      },
+      "earnedDescription": {
+        "en": "Your score went below zero. It happens.",
+        "es": "Tu puntaje bajó de cero. Pasa."
+      },
+      "image": "AppStore/achievements/qsu_in_the_red.png"
+    }
+  ],
+  "totalPoints": 660,
+  "leaderboards": [
+    {
+      "id": "qsu_daily_challenge",
+      "codeCase": "Leaderboard.daily",
+      "type": "recurring",
+      "recurrence": "Every 1 day, starting at 05:00 UTC (00:00 in Colombia)",
+      "name": {
+        "en": "Daily Challenge",
+        "es": "Reto diario"
+      },
+      "scoreFormat": "Integer",
+      "formatSuffix": {
+        "en": " points",
+        "es": " puntos"
+      },
+      "sortOrder": "High to Low",
+      "scoreSubmission": "Most recent score",
+      "source": "Today's scored daily attempt when it's solved (AppModel.pushToGameCenter)",
+      "scoreRange": "None (scores can be negative)"
+    },
+    {
+      "id": "qsu_best_score",
+      "codeCase": "Leaderboard.bestScore",
+      "type": "classic",
+      "recurrence": null,
+      "name": {
+        "en": "Best Score",
+        "es": "Mejor puntaje"
+      },
+      "scoreFormat": "Integer",
+      "formatSuffix": {
+        "en": " points",
+        "es": " puntos"
+      },
+      "sortOrder": "High to Low",
+      "scoreSubmission": "Best score",
+      "source": "PlayerProgress.bestScore (best solved classic game)"
+    },
+    {
+      "id": "qsu_longest_streak",
+      "codeCase": "Leaderboard.longestStreak",
+      "type": "classic",
+      "recurrence": null,
+      "name": {
+        "en": "Longest Streak",
+        "es": "Racha más larga"
+      },
+      "scoreFormat": "Integer",
+      "formatSuffix": {
+        "en": " days",
+        "es": " días"
+      },
+      "sortOrder": "High to Low",
+      "scoreSubmission": "Best score",
+      "source": "Longest run of completed daily challenges (AppModel.longestStreak)"
+    }
+  ]
+}

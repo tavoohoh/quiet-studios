@@ -36,6 +36,7 @@
 		B80D284C38EDB7C53B718654 /* BoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B073CE3BF38DA394219A37D0 /* BoardView.swift */; };
 		C0001125044B6421A6301DE3 /* AppearanceRoot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C0C71637C81DE09E7B2D55 /* AppearanceRoot.swift */; };
 		CCC8414FB94FB1139C9BF469 /* GameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C838AB33AB932D01E914CF /* GameModel.swift */; };
+		E13723E16368634364DB72AA /* NewGameTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0860FFD1667C350EF0D382D8 /* NewGameTests.swift */; };
 		E286052F3D4F7D31ED91839B /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B2CAAEAFC19DBFB9A221F26 /* SettingsView.swift */; };
 		EADEDCF7255741B60C87B6C2 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6A68668B33B1C84366ACA2B /* HomeView.swift */; };
 		EAF19109D334BF65491207D8 /* PendingReminders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 176F29438065CCC42CD0540F /* PendingReminders.swift */; };
@@ -74,6 +75,7 @@
 
 /* Begin PBXFileReference section */
 		030B4B3367B721F3319E1E50 /* BoardLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardLayout.swift; sourceTree = "<group>"; };
+		0860FFD1667C350EF0D382D8 /* NewGameTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewGameTests.swift; sourceTree = "<group>"; };
 		0F309760749C65769E775FC3 /* ReminderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderTests.swift; sourceTree = "<group>"; };
 		11C0C71637C81DE09E7B2D55 /* AppearanceRoot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceRoot.swift; sourceTree = "<group>"; };
 		154FE75B0079D8CD192C2E2C /* CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionView.swift; sourceTree = "<group>"; };
@@ -296,6 +298,7 @@
 			isa = PBXGroup;
 			children = (
 				F0822C2D5698722A6EC5BE80 /* DailyRuleTests.swift */,
+				0860FFD1667C350EF0D382D8 /* NewGameTests.swift */,
 				0F309760749C65769E775FC3 /* ReminderTests.swift */,
 			);
 			path = AppTests;
@@ -536,6 +539,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A204A6CA521109A927A42117 /* DailyRuleTests.swift in Sources */,
+				E13723E16368634364DB72AA /* NewGameTests.swift in Sources */,
 				F3AE73F752DCC95460E1833F /* ReminderTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
