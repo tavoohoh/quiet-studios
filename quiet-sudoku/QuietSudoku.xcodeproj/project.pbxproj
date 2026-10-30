@@ -1,0 +1,852 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		01063E96DF138176824A45CB /* AppearanceRoot.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC507D6BCBCB5E013FC5473F /* AppearanceRoot.swift */; };
+		084D8950A4EB0999A776F58B /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 4E6B6E8D9D8EBF565F483EB3 /* PrivacyInfo.xcprivacy */; };
+		0902DDE019DFF2054DFFAD98 /* QuietUI in Frameworks */ = {isa = PBXBuildFile; productRef = E4095B18284BBED6DB0C4C98 /* QuietUI */; };
+		107F072429E62FFC997B63DC /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B6E02316D0B29C8717AC458 /* SettingsView.swift */; };
+		1C2E5D5B58337A76F8941145 /* TestBoards.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A9FEC0ED6A4DF6C33944C44 /* TestBoards.swift */; };
+		1D142E2529438A141030B3FC /* FeedbackService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388D399A6B51D106E96CB3BE /* FeedbackService.swift */; };
+		29F78CA1059B5721A921E5AE /* BoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98FF2F1F7556C398EF6EC15F /* BoardView.swift */; };
+		33F90CF35C45CBA4196C05CA /* Reminders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1395ADF6BDCD8BE5356824A7 /* Reminders.swift */; };
+		4B9280ECC6D93A80930A03BD /* FriendProfileScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0EC90DBA35227D98762FAB8 /* FriendProfileScreen.swift */; };
+		5196904A2E30F01E6093E023 /* DailyRuleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A1C9EDD3554F2295A35AB93 /* DailyRuleTests.swift */; };
+		5703AFAA2006983757BCE1B4 /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 24BA7A378C43FDF7F7E27719 /* InfoPlist.xcstrings */; };
+		5E5830BEBBFE463DB92301D2 /* DemoData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E021F0609C3C1C325E94772 /* DemoData.swift */; };
+		684DDE890279F6E49C4A5487 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 40D5297CF26D6CACC743706A /* Assets.xcassets */; };
+		69E2A141226AA7B18B85025B /* ReminderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A69B88C3A31DFE0E324D9C79 /* ReminderTests.swift */; };
+		6BA98019A5E99C76E2B48E27 /* PendingReminders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AFB0E9DDF335FA150A3E745 /* PendingReminders.swift */; };
+		6ED5DF686C8F98AD934E7F3F /* GameplayUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C8ADE58B69E4DB83AD93CF2 /* GameplayUITests.swift */; };
+		826CB236369A74F43EEC26D3 /* AchievementText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3780911BD1CD61FC679055 /* AchievementText.swift */; };
+		83EAE46E95C82056A9ED632D /* CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 878F8CC7F5732FEC43B49EBF /* CollectionView.swift */; };
+		89EBC361983534AA52FF6633 /* GameModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCBD6C2F83A3703302A79E4A /* GameModelTests.swift */; };
+		8C456C889FC715BEC62F02E3 /* GameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 072F2702291C8994C1FB4DF6 /* GameModel.swift */; };
+		979A0644CEB2294043C0BB6B /* DayKeyFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708077E70B4B23820DD8C399 /* DayKeyFormat.swift */; };
+		9E30DBB0849025F74A5C97EF /* QuietSudokuApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B9B71117D4F5385AA0395F5 /* QuietSudokuApp.swift */; };
+		AAE0E7E20A046CD9FD597747 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FFDDA819405A9DAE90FD2C0 /* CalendarView.swift */; };
+		B8E484A0E81718618955EB93 /* LeaderboardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76DFCD46E0BDA23ED59DA4C4 /* LeaderboardsView.swift */; };
+		BC2D917DE3AE7E038363FB3B /* QuietSudokuCore in Frameworks */ = {isa = PBXBuildFile; productRef = 5C821BA07D3AB42D5441DD88 /* QuietSudokuCore */; };
+		BF5F1AC191B5DABEE09796A7 /* ReminderUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5B3A1B88F39A24531AFBB8 /* ReminderUITests.swift */; };
+		C9ABCED4E210AA379451AE96 /* PersistenceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C329C60CEDD5280A31AF4BB /* PersistenceService.swift */; };
+		CC5C4D9A7DD59118CAFC25B2 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B782CA01C46029161F648DC /* GameView.swift */; };
+		D48AE1874FB1AACE17D943D1 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC566FE907CEAFDE717D6A9E /* HomeView.swift */; };
+		D8B006818E66718FC4BBCE32 /* DailyChallengeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D90AA28C21CB034C650FBB49 /* DailyChallengeView.swift */; };
+		D98D445820EBFC8547F2F04B /* AppClock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97DE748572F592C9920A5EE0 /* AppClock.swift */; };
+		DD958D9BB3E471092F5A7103 /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A6B722605F7E8D70B91AFA9 /* AppModel.swift */; };
+		E5A33578F392896963E2580C /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 1BA5F8E715C08321EE9C1A79 /* Localizable.xcstrings */; };
+		E5A548CD0CFC927E080D9D2A /* Rewards.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE418DCE2D568B50549AB4E /* Rewards.swift */; };
+		FDBA4776B53FC59284373D1F /* QuietCore in Frameworks */ = {isa = PBXBuildFile; productRef = 0F1D18E2987B1F160951C56D /* QuietCore */; };
+		FF698C27CEB4A896AECFB5E4 /* TutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF188F041C534627BABD2D1 /* TutorialView.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		5445D7ADCCC7642ADB946867 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3B59C3502D884CF352D9B2A9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B0160868DDC30375A4679917;
+			remoteInfo = QuietSudoku;
+		};
+		FE3A7E0B4A341581EC7324A0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3B59C3502D884CF352D9B2A9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B0160868DDC30375A4679917;
+			remoteInfo = QuietSudoku;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		072F2702291C8994C1FB4DF6 /* GameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameModel.swift; sourceTree = "<group>"; };
+		0A3780911BD1CD61FC679055 /* AchievementText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementText.swift; sourceTree = "<group>"; };
+		0A9FEC0ED6A4DF6C33944C44 /* TestBoards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestBoards.swift; sourceTree = "<group>"; };
+		1395ADF6BDCD8BE5356824A7 /* Reminders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reminders.swift; sourceTree = "<group>"; };
+		1BA5F8E715C08321EE9C1A79 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		24BA7A378C43FDF7F7E27719 /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
+		2AF188F041C534627BABD2D1 /* TutorialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialView.swift; sourceTree = "<group>"; };
+		2B9B71117D4F5385AA0395F5 /* QuietSudokuApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuietSudokuApp.swift; sourceTree = "<group>"; };
+		388D399A6B51D106E96CB3BE /* FeedbackService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackService.swift; sourceTree = "<group>"; };
+		3B70584125B8C34D70F989DA /* QuietKit */ = {isa = PBXFileReference; lastKnownFileType = folder; name = QuietKit; path = ../QuietKit; sourceTree = SOURCE_ROOT; };
+		3C8ADE58B69E4DB83AD93CF2 /* GameplayUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameplayUITests.swift; sourceTree = "<group>"; };
+		40D5297CF26D6CACC743706A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		4B5B3A1B88F39A24531AFBB8 /* ReminderUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderUITests.swift; sourceTree = "<group>"; };
+		4BF50F1172C0D26612562233 /* QuietSudokuUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = QuietSudokuUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		4E6B6E8D9D8EBF565F483EB3 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		6A1C9EDD3554F2295A35AB93 /* DailyRuleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyRuleTests.swift; sourceTree = "<group>"; };
+		6AFB0E9DDF335FA150A3E745 /* PendingReminders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingReminders.swift; sourceTree = "<group>"; };
+		6DE418DCE2D568B50549AB4E /* Rewards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rewards.swift; sourceTree = "<group>"; };
+		6E021F0609C3C1C325E94772 /* DemoData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoData.swift; sourceTree = "<group>"; };
+		6FFDDA819405A9DAE90FD2C0 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
+		708077E70B4B23820DD8C399 /* DayKeyFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayKeyFormat.swift; sourceTree = "<group>"; };
+		76DFCD46E0BDA23ED59DA4C4 /* LeaderboardsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderboardsView.swift; sourceTree = "<group>"; };
+		7A8F47F5F4D1F4C73E7CFCB0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		7C329C60CEDD5280A31AF4BB /* PersistenceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceService.swift; sourceTree = "<group>"; };
+		837C398B8F24C7831E3DBA17 /* QuietSudoku.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = QuietSudoku.entitlements; sourceTree = "<group>"; };
+		878F8CC7F5732FEC43B49EBF /* CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionView.swift; sourceTree = "<group>"; };
+		8A6B722605F7E8D70B91AFA9 /* AppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModel.swift; sourceTree = "<group>"; };
+		8B782CA01C46029161F648DC /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
+		97DE748572F592C9920A5EE0 /* AppClock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppClock.swift; sourceTree = "<group>"; };
+		98FF2F1F7556C398EF6EC15F /* BoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardView.swift; sourceTree = "<group>"; };
+		9B6E02316D0B29C8717AC458 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		A69B88C3A31DFE0E324D9C79 /* ReminderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderTests.swift; sourceTree = "<group>"; };
+		BC566FE907CEAFDE717D6A9E /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		BE4CDB6F678524EE2738D479 /* QuietSudoku.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = QuietSudoku.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CCBD6C2F83A3703302A79E4A /* GameModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameModelTests.swift; sourceTree = "<group>"; };
+		CFDD8AE5B52E57656BE853DF /* QuietSudoku-Personal.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "QuietSudoku-Personal.entitlements"; sourceTree = "<group>"; };
+		D14599D8B1DF006F53599893 /* QuietSudokuCore */ = {isa = PBXFileReference; lastKnownFileType = folder; name = QuietSudokuCore; path = Packages/QuietSudokuCore; sourceTree = SOURCE_ROOT; };
+		D90AA28C21CB034C650FBB49 /* DailyChallengeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyChallengeView.swift; sourceTree = "<group>"; };
+		E0EC90DBA35227D98762FAB8 /* FriendProfileScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendProfileScreen.swift; sourceTree = "<group>"; };
+		EC507D6BCBCB5E013FC5473F /* AppearanceRoot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceRoot.swift; sourceTree = "<group>"; };
+		F28C173931936A470AB98621 /* Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Base.xcconfig; sourceTree = "<group>"; };
+		FCBB24511482D7037E615EB3 /* QuietSudokuAppTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = QuietSudokuAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		B99C9E7A2C16063889FD5A40 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BC2D917DE3AE7E038363FB3B /* QuietSudokuCore in Frameworks */,
+				FDBA4776B53FC59284373D1F /* QuietCore in Frameworks */,
+				0902DDE019DFF2054DFFAD98 /* QuietUI in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		013A82BA7D453EFC0C85D634 /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				F28C173931936A470AB98621 /* Base.xcconfig */,
+			);
+			path = Config;
+			sourceTree = "<group>";
+		};
+		0BA1F01190836605A75E22FD /* DesignSystem */ = {
+			isa = PBXGroup;
+			children = (
+				0A3780911BD1CD61FC679055 /* AchievementText.swift */,
+				EC507D6BCBCB5E013FC5473F /* AppearanceRoot.swift */,
+				708077E70B4B23820DD8C399 /* DayKeyFormat.swift */,
+				6DE418DCE2D568B50549AB4E /* Rewards.swift */,
+			);
+			path = DesignSystem;
+			sourceTree = "<group>";
+		};
+		27A1DF74143968FB3DB8013E /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				3B70584125B8C34D70F989DA /* QuietKit */,
+				D14599D8B1DF006F53599893 /* QuietSudokuCore */,
+			);
+			path = Packages;
+			sourceTree = "<group>";
+		};
+		2C757AB42B97C560F6CC0AC4 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				40D5297CF26D6CACC743706A /* Assets.xcassets */,
+				24BA7A378C43FDF7F7E27719 /* InfoPlist.xcstrings */,
+				1BA5F8E715C08321EE9C1A79 /* Localizable.xcstrings */,
+				4E6B6E8D9D8EBF565F483EB3 /* PrivacyInfo.xcprivacy */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		3F659279E798E70944995DCA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BE4CDB6F678524EE2738D479 /* QuietSudoku.app */,
+				FCBB24511482D7037E615EB3 /* QuietSudokuAppTests.xctest */,
+				4BF50F1172C0D26612562233 /* QuietSudokuUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4A43A266488FEEF4EE272EC7 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				9B6E02316D0B29C8717AC458 /* SettingsView.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		4BC9BF8B667B9FF850F3D538 /* UITests */ = {
+			isa = PBXGroup;
+			children = (
+				3C8ADE58B69E4DB83AD93CF2 /* GameplayUITests.swift */,
+				4B5B3A1B88F39A24531AFBB8 /* ReminderUITests.swift */,
+			);
+			path = UITests;
+			sourceTree = "<group>";
+		};
+		5752FBAC993F514F30D18BFD /* Game */ = {
+			isa = PBXGroup;
+			children = (
+				98FF2F1F7556C398EF6EC15F /* BoardView.swift */,
+				072F2702291C8994C1FB4DF6 /* GameModel.swift */,
+				8B782CA01C46029161F648DC /* GameView.swift */,
+			);
+			path = Game;
+			sourceTree = "<group>";
+		};
+		60E5FE3F7CAA7867F0C6F908 /* DailyChallenge */ = {
+			isa = PBXGroup;
+			children = (
+				6FFDDA819405A9DAE90FD2C0 /* CalendarView.swift */,
+				D90AA28C21CB034C650FBB49 /* DailyChallengeView.swift */,
+			);
+			path = DailyChallenge;
+			sourceTree = "<group>";
+		};
+		6280B8680D94A609F55DA9AE /* Collection */ = {
+			isa = PBXGroup;
+			children = (
+				878F8CC7F5732FEC43B49EBF /* CollectionView.swift */,
+			);
+			path = Collection;
+			sourceTree = "<group>";
+		};
+		935D53DFD684E6BC51423626 /* Tutorial */ = {
+			isa = PBXGroup;
+			children = (
+				2AF188F041C534627BABD2D1 /* TutorialView.swift */,
+			);
+			path = Tutorial;
+			sourceTree = "<group>";
+		};
+		A91BCAA5E57D4C26ED98CB1F /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				97DE748572F592C9920A5EE0 /* AppClock.swift */,
+				388D399A6B51D106E96CB3BE /* FeedbackService.swift */,
+				7C329C60CEDD5280A31AF4BB /* PersistenceService.swift */,
+				1395ADF6BDCD8BE5356824A7 /* Reminders.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		B537D1365F6D89B6A0A852F2 = {
+			isa = PBXGroup;
+			children = (
+				CED683DBE654CCBCD3EA606F /* App */,
+				C53B1D38C9B2BCFAC7E4ED0A /* AppTests */,
+				013A82BA7D453EFC0C85D634 /* Config */,
+				27A1DF74143968FB3DB8013E /* Packages */,
+				4BC9BF8B667B9FF850F3D538 /* UITests */,
+				3F659279E798E70944995DCA /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		B7BD9FD34C01C52D959D1643 /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				6280B8680D94A609F55DA9AE /* Collection */,
+				60E5FE3F7CAA7867F0C6F908 /* DailyChallenge */,
+				5752FBAC993F514F30D18BFD /* Game */,
+				E2B4D210DEA0B0902B82B39C /* Home */,
+				DC84C12D4AE5D23A16832BDD /* Leaderboards */,
+				4A43A266488FEEF4EE272EC7 /* Settings */,
+				935D53DFD684E6BC51423626 /* Tutorial */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		C53B1D38C9B2BCFAC7E4ED0A /* AppTests */ = {
+			isa = PBXGroup;
+			children = (
+				6A1C9EDD3554F2295A35AB93 /* DailyRuleTests.swift */,
+				CCBD6C2F83A3703302A79E4A /* GameModelTests.swift */,
+				A69B88C3A31DFE0E324D9C79 /* ReminderTests.swift */,
+				0A9FEC0ED6A4DF6C33944C44 /* TestBoards.swift */,
+			);
+			path = AppTests;
+			sourceTree = "<group>";
+		};
+		CED683DBE654CCBCD3EA606F /* App */ = {
+			isa = PBXGroup;
+			children = (
+				8A6B722605F7E8D70B91AFA9 /* AppModel.swift */,
+				7A8F47F5F4D1F4C73E7CFCB0 /* Info.plist */,
+				CFDD8AE5B52E57656BE853DF /* QuietSudoku-Personal.entitlements */,
+				837C398B8F24C7831E3DBA17 /* QuietSudoku.entitlements */,
+				2B9B71117D4F5385AA0395F5 /* QuietSudokuApp.swift */,
+				FC985F099688E9B0C6967FC7 /* Debug */,
+				0BA1F01190836605A75E22FD /* DesignSystem */,
+				B7BD9FD34C01C52D959D1643 /* Features */,
+				2C757AB42B97C560F6CC0AC4 /* Resources */,
+				A91BCAA5E57D4C26ED98CB1F /* Services */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		DC84C12D4AE5D23A16832BDD /* Leaderboards */ = {
+			isa = PBXGroup;
+			children = (
+				E0EC90DBA35227D98762FAB8 /* FriendProfileScreen.swift */,
+				76DFCD46E0BDA23ED59DA4C4 /* LeaderboardsView.swift */,
+			);
+			path = Leaderboards;
+			sourceTree = "<group>";
+		};
+		E2B4D210DEA0B0902B82B39C /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				BC566FE907CEAFDE717D6A9E /* HomeView.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		FC985F099688E9B0C6967FC7 /* Debug */ = {
+			isa = PBXGroup;
+			children = (
+				6E021F0609C3C1C325E94772 /* DemoData.swift */,
+				6AFB0E9DDF335FA150A3E745 /* PendingReminders.swift */,
+			);
+			path = Debug;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		2EBEC15D62A6FD390A904753 /* QuietSudokuAppTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F082B997288E12D1B7576232 /* Build configuration list for PBXNativeTarget "QuietSudokuAppTests" */;
+			buildPhases = (
+				0F7007EF294278A0F3DDBD45 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C1CDCA16D2947E26F9B03960 /* PBXTargetDependency */,
+			);
+			name = QuietSudokuAppTests;
+			packageProductDependencies = (
+			);
+			productName = QuietSudokuAppTests;
+			productReference = FCBB24511482D7037E615EB3 /* QuietSudokuAppTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		3FC83D49DB027581241978C6 /* QuietSudokuUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E2EA29B3AE94339FC7EF0AC5 /* Build configuration list for PBXNativeTarget "QuietSudokuUITests" */;
+			buildPhases = (
+				61E7790329A30FD6B632D23A /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				965AD5FC536B51836C9036C4 /* PBXTargetDependency */,
+			);
+			name = QuietSudokuUITests;
+			packageProductDependencies = (
+			);
+			productName = QuietSudokuUITests;
+			productReference = 4BF50F1172C0D26612562233 /* QuietSudokuUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		B0160868DDC30375A4679917 /* QuietSudoku */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 43AF82B97D61421D4819DF7F /* Build configuration list for PBXNativeTarget "QuietSudoku" */;
+			buildPhases = (
+				FCDAFBB3E048D175F16118F9 /* Sources */,
+				EA0127D759B4DE7C595E43D2 /* Resources */,
+				B99C9E7A2C16063889FD5A40 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = QuietSudoku;
+			packageProductDependencies = (
+				5C821BA07D3AB42D5441DD88 /* QuietSudokuCore */,
+				0F1D18E2987B1F160951C56D /* QuietCore */,
+				E4095B18284BBED6DB0C4C98 /* QuietUI */,
+			);
+			productName = QuietSudoku;
+			productReference = BE4CDB6F678524EE2738D479 /* QuietSudoku.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		3B59C3502D884CF352D9B2A9 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					3FC83D49DB027581241978C6 = {
+						TestTargetID = B0160868DDC30375A4679917;
+					};
+					B0160868DDC30375A4679917 = {
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 320EA1FDC873A832BFCE1961 /* Build configuration list for PBXProject "QuietSudoku" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+				es,
+			);
+			mainGroup = B537D1365F6D89B6A0A852F2;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				B62D2B55EA1607BEE0C121D9 /* XCLocalSwiftPackageReference "../QuietKit" */,
+				5A3FA039004889A9D1097B09 /* XCLocalSwiftPackageReference "Packages/QuietSudokuCore" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 3F659279E798E70944995DCA /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				B0160868DDC30375A4679917 /* QuietSudoku */,
+				2EBEC15D62A6FD390A904753 /* QuietSudokuAppTests */,
+				3FC83D49DB027581241978C6 /* QuietSudokuUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		EA0127D759B4DE7C595E43D2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				684DDE890279F6E49C4A5487 /* Assets.xcassets in Resources */,
+				5703AFAA2006983757BCE1B4 /* InfoPlist.xcstrings in Resources */,
+				E5A33578F392896963E2580C /* Localizable.xcstrings in Resources */,
+				084D8950A4EB0999A776F58B /* PrivacyInfo.xcprivacy in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		0F7007EF294278A0F3DDBD45 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5196904A2E30F01E6093E023 /* DailyRuleTests.swift in Sources */,
+				89EBC361983534AA52FF6633 /* GameModelTests.swift in Sources */,
+				69E2A141226AA7B18B85025B /* ReminderTests.swift in Sources */,
+				1C2E5D5B58337A76F8941145 /* TestBoards.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		61E7790329A30FD6B632D23A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6ED5DF686C8F98AD934E7F3F /* GameplayUITests.swift in Sources */,
+				BF5F1AC191B5DABEE09796A7 /* ReminderUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FCDAFBB3E048D175F16118F9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				826CB236369A74F43EEC26D3 /* AchievementText.swift in Sources */,
+				D98D445820EBFC8547F2F04B /* AppClock.swift in Sources */,
+				DD958D9BB3E471092F5A7103 /* AppModel.swift in Sources */,
+				01063E96DF138176824A45CB /* AppearanceRoot.swift in Sources */,
+				29F78CA1059B5721A921E5AE /* BoardView.swift in Sources */,
+				AAE0E7E20A046CD9FD597747 /* CalendarView.swift in Sources */,
+				83EAE46E95C82056A9ED632D /* CollectionView.swift in Sources */,
+				D8B006818E66718FC4BBCE32 /* DailyChallengeView.swift in Sources */,
+				979A0644CEB2294043C0BB6B /* DayKeyFormat.swift in Sources */,
+				5E5830BEBBFE463DB92301D2 /* DemoData.swift in Sources */,
+				1D142E2529438A141030B3FC /* FeedbackService.swift in Sources */,
+				4B9280ECC6D93A80930A03BD /* FriendProfileScreen.swift in Sources */,
+				8C456C889FC715BEC62F02E3 /* GameModel.swift in Sources */,
+				CC5C4D9A7DD59118CAFC25B2 /* GameView.swift in Sources */,
+				D48AE1874FB1AACE17D943D1 /* HomeView.swift in Sources */,
+				B8E484A0E81718618955EB93 /* LeaderboardsView.swift in Sources */,
+				6BA98019A5E99C76E2B48E27 /* PendingReminders.swift in Sources */,
+				C9ABCED4E210AA379451AE96 /* PersistenceService.swift in Sources */,
+				9E30DBB0849025F74A5C97EF /* QuietSudokuApp.swift in Sources */,
+				33F90CF35C45CBA4196C05CA /* Reminders.swift in Sources */,
+				E5A548CD0CFC927E080D9D2A /* Rewards.swift in Sources */,
+				107F072429E62FFC997B63DC /* SettingsView.swift in Sources */,
+				FF698C27CEB4A896AECFB5E4 /* TutorialView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		965AD5FC536B51836C9036C4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B0160868DDC30375A4679917 /* QuietSudoku */;
+			targetProxy = 5445D7ADCCC7642ADB946867 /* PBXContainerItemProxy */;
+		};
+		C1CDCA16D2947E26F9B03960 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B0160868DDC30375A4679917 /* QuietSudoku */;
+			targetProxy = FE3A7E0B4A341581EC7324A0 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		084AB232CF24B97E4A435DA8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F28C173931936A470AB98621 /* Base.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "AppIcon-Gold";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
+				CODE_SIGN_ENTITLEMENTS = "$(QS_ENTITLEMENTS)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = App/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Quiet Sudoku";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.puzzle-games";
+				INFOPLIST_KEY_NSGKFriendListUsageDescription = "Show your Game Center friends on Quiet Sudoku leaderboards.";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(QS_BUNDLE_ID)";
+				PRODUCT_NAME = "Quiet Sudoku";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		300593A91B238C998BE15D0E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F28C173931936A470AB98621 /* Base.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "AppIcon-Gold";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
+				CODE_SIGN_ENTITLEMENTS = "$(QS_ENTITLEMENTS)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = App/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Quiet Sudoku";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.puzzle-games";
+				INFOPLIST_KEY_NSGKFriendListUsageDescription = "Show your Game Center friends on Quiet Sudoku leaderboards.";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(QS_BUNDLE_ID)";
+				PRODUCT_NAME = "Quiet Sudoku";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		543CF8871481C6945CFA3431 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.tavoohoh.quietsudoku.tests;
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Quiet Sudoku.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Quiet Sudoku";
+			};
+			name = Debug;
+		};
+		8391F7D1081963DB76CD56DF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Debug;
+		};
+		8B914ED20DE07DC16059E828 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Release;
+		};
+		D42ECA8B44561A9798300311 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.tavoohoh.quietsudoku.tests;
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Quiet Sudoku.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Quiet Sudoku";
+			};
+			name = Release;
+		};
+		DC55355522F82EF91B7C8DB6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.tavoohoh.quietsudoku.uitests;
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = QuietSudoku;
+			};
+			name = Release;
+		};
+		FC15B34AED5A4A4D00F4DCCD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.tavoohoh.quietsudoku.uitests;
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = QuietSudoku;
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		320EA1FDC873A832BFCE1961 /* Build configuration list for PBXProject "QuietSudoku" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8391F7D1081963DB76CD56DF /* Debug */,
+				8B914ED20DE07DC16059E828 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		43AF82B97D61421D4819DF7F /* Build configuration list for PBXNativeTarget "QuietSudoku" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				300593A91B238C998BE15D0E /* Debug */,
+				084AB232CF24B97E4A435DA8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		E2EA29B3AE94339FC7EF0AC5 /* Build configuration list for PBXNativeTarget "QuietSudokuUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FC15B34AED5A4A4D00F4DCCD /* Debug */,
+				DC55355522F82EF91B7C8DB6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		F082B997288E12D1B7576232 /* Build configuration list for PBXNativeTarget "QuietSudokuAppTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				543CF8871481C6945CFA3431 /* Debug */,
+				D42ECA8B44561A9798300311 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		5A3FA039004889A9D1097B09 /* XCLocalSwiftPackageReference "Packages/QuietSudokuCore" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/QuietSudokuCore;
+		};
+		B62D2B55EA1607BEE0C121D9 /* XCLocalSwiftPackageReference "../QuietKit" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ../QuietKit;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		0F1D18E2987B1F160951C56D /* QuietCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = QuietCore;
+		};
+		5C821BA07D3AB42D5441DD88 /* QuietSudokuCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = QuietSudokuCore;
+		};
+		E4095B18284BBED6DB0C4C98 /* QuietUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = QuietUI;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 3B59C3502D884CF352D9B2A9 /* Project object */;
+}

@@ -37,6 +37,7 @@ Cada app vive en su propio directorio en la raíz, con su propio `CLAUDE.md` que
 
 - `quiet-numbers/` — puzzle de números (emparejar iguales o que sumen 10). Primera app de la familia.
 - `quiet-solitaire/` — solitario clásico (Klondike, robar 1). Segunda app, jugable en el simulador.
+- `quiet-sudoku/` — sudoku 9×9 con solución única y dificultad por técnicas lógicas. Tercera app, jugable en el simulador (2026-10-30).
 - `QuietKit/` — paquete compartido: `QuietCore` (PRNG, día del reto, rachas, paleta de temas) y `QuietUI` (tema, componentes, hápticos, tonos, Game Center, splash). Lo usan Quiet Solitaire y Quiet Numbers (migrado el 2026-10-28, para su 1.1; sin cambios visibles ni en los tableros de cada fecha).
 
 ## Reto diario (igual en todos los juegos)
@@ -61,7 +62,7 @@ Un juego que no cumpla algo de esto lo anota en su `BACKLOG.md` hasta alinearlo.
 
 - **Sistema de diseño de Quiet Studios:** https://claude.ai/artifact/59yz1mHLFU3u3jvSfugf7B (tokens de color por tema, tipografía, componentes de QuietUI, pantallas que se repiten, reglas de la App Store, logos). Lo genera el código de `QuietKit`; si no coinciden, manda el código y se actualiza el artefacto.
 - **Cada app tiene un solo artefacto de diseño:** un canvas (tipo "Design", título `Quiet <App>`) con 5 páginas: Overview, App Store, Screens, Styles y Components. Solo lleva lo propio del juego; nada que ya esté en el sistema de Quiet Studios (decisión 2026-10-29). Plantilla, QA y procedimiento en `.claude/skills/quiet-design-canvas`. Su link va en la primera línea del `CLAUDE.md` de la app. Una app nueva no empieza a programar pantallas sin él.
-- Links: [Quiet Numbers](https://claude.ai/artifact/3Z4eY31mrvGeqPvR8hUaZL) · [Quiet Solitaire](https://claude.ai/artifact/EwWvXPwMtEVpx47drg2AJV). Los artefactos anteriores (un sistema de diseño y un canvas por app) se borraron el 2026-10-29; sus archivos están en `quiet-<app>/design/backups/pre-plantilla-2026-10-29/`.
+- Links: [Quiet Numbers](https://claude.ai/artifact/3Z4eY31mrvGeqPvR8hUaZL) · [Quiet Solitaire](https://claude.ai/artifact/EwWvXPwMtEVpx47drg2AJV) · [Quiet Sudoku](https://claude.ai/artifact/CUwSvM9TWjrAphXWbcrGFL). Los artefactos anteriores (un sistema de diseño y un canvas por app) se borraron el 2026-10-29; sus archivos están en `quiet-<app>/design/backups/pre-plantilla-2026-10-29/`.
 - **Respaldos:** con cada versión aprobada en la App Store se exporta el canvas de esa app como HTML a `quiet-<app>/design/backups/<versión>/` (procedimiento en `quiet-release`). Los artefactos son privados: para compartirlos, menú Share.
 
 ## Estudio

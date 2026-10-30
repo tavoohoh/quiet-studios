@@ -1,0 +1,9 @@
+// Copy to Config/Local.xcconfig (ignored by git), then run `xcodegen generate`.
+
+// Team ID: Xcode > Settings > Accounts.
+DEVELOPMENT_TEAM = ABCDE12345
+
+// With a free Personal Team: a bundle ID nobody else has registered, and the entitlements
+// without Game Center and iCloud (the app works fully without them).
+// QS_BUNDLE_ID = com.yourname.quietsudoku
+// QS_ENTITLEMENTS = App/QuietSudoku-Personal.entitlements

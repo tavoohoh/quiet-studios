@@ -1,0 +1,22 @@
+# Imágenes subidas al canvas de diseño: ruta en quiet-sudoku/ → id del asset (/_blob/<id>).
+# Las usa .claude/skills/quiet-design-canvas/qa.py para revisar el canvas en local.
+App/Resources/Assets.xcassets/AppIcon.appiconset/icon-1024.png	e347cf9bc48e104a3d580eb4e8c44667
+App/Resources/Assets.xcassets/AppIcon.appiconset/icon-1024-dark.png	3930fbb567c57438341103db98547a15
+App/Resources/Assets.xcassets/AppIcon.appiconset/icon-1024-tinted.png	4081a6b80c6be34049f5e9a52acbb603
+App/Resources/Assets.xcassets/AppIcon-Gold.appiconset/icon-1024.png	ccdc023a5a584b1b6c9492c437ea7cfe
+AppStore/design-screens/iphone/en/light/01-home.png	e3c6d3e750886773d8d7a377d5dbf8e6
+AppStore/design-screens/iphone/en/dark/01-home.png	cd09aa72b146497640340024ebcc80b8
+AppStore/design-screens/iphone/en/light/02-game.png	4db13474394dbb248dc1c4b60fc16151
+AppStore/design-screens/iphone/en/dark/02-game.png	faaa0c3c15c882744c163f5df3993be4
+AppStore/design-screens/iphone/en/light/03-summary.png	bb5e82dd68ca807e09db99e43f680b9b
+AppStore/design-screens/iphone/en/dark/03-summary.png	e6074d4cf9f6b29e11bf99d333e76d7f
+AppStore/design-screens/iphone/en/light/04-daily.png	16ba23fd16a1d54b9042cc03b2863477
+AppStore/design-screens/iphone/en/dark/04-daily.png	22262fd9aae871886a97cf5b8ef18127
+AppStore/design-screens/iphone/en/light/05-leaderboards.png	9dcb89233ac849e4af6def1f20fcef57
+AppStore/design-screens/iphone/en/dark/05-leaderboards.png	f4f9a6a1bf422b733a981e76c717f11a
+AppStore/design-screens/iphone/en/light/06-collection.png	21127fc9674a6f5fcf7a67d1b3596097
+AppStore/design-screens/iphone/en/dark/06-collection.png	d60641c3e632fa883070ab5d26cbbb3d
+AppStore/design-screens/iphone/en/light/07-settings.png	ec4a0bd6d6e1eec33ed460fb03072746
+AppStore/design-screens/iphone/en/dark/07-settings.png	6b8b68324823a7e723fe2516917fdb86
+AppStore/design-screens/iphone/en/light/08-tutorial.png	74ea146fcbe71723b8cf837bd0299650
+AppStore/design-screens/iphone/en/dark/08-tutorial.png	2a03f3caaa699ef3c0fc3554fc1ad8b8

@@ -1,0 +1,2649 @@
+{
+  "sourceLanguage": "en",
+  "strings": {
+    "": {
+      "shouldTranslate": false
+    },
+    "%@ won today's challenge with %@. Up for it?": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ ganó el reto de hoy con %2$@. ¿Te animas?"
+          }
+        }
+      }
+    },
+    "%@ · %@": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ · %2$@"
+          }
+        }
+      }
+    },
+    "%lld": {
+      "shouldTranslate": false
+    },
+    "%lld digits don't fit. Fix them.": {
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld digit doesn't fit. Fix it."
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld digits don't fit. Fix them."
+                }
+              }
+            }
+          }
+        },
+        "es": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld número no va. Corrígelo."
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld números no van. Corrígelos."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "%lld friends already played; %@ leads with %@.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lld amigos ya lo jugaron; %2$@ lidera con %3$@."
+          }
+        }
+      }
+    },
+    "%lld left": {
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld left"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld left"
+                }
+              }
+            }
+          }
+        },
+        "es": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Queda %lld"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Quedan %lld"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "%lld-day streak": {
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld-day streak"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld-day streak"
+                }
+              }
+            }
+          }
+        },
+        "es": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Racha de %lld día"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Racha de %lld días"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "10": {
+      "shouldTranslate": false
+    },
+    "10 to 30 points per digit, by level. Solve it for 500 more, doubled if you're fast.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "De 10 a 30 puntos por número, según el nivel. Al resolverlo, 500 más, el doble si eres rápido."
+          }
+        }
+      }
+    },
+    "2": {
+      "shouldTranslate": false
+    },
+    "2-String Kite": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cometa (2-String Kite)"
+          }
+        }
+      }
+    },
+    "3": {
+      "shouldTranslate": false
+    },
+    "4": {
+      "shouldTranslate": false
+    },
+    "5": {
+      "shouldTranslate": false
+    },
+    "6": {
+      "shouldTranslate": false
+    },
+    "7": {
+      "shouldTranslate": false
+    },
+    "8": {
+      "shouldTranslate": false
+    },
+    "9": {
+      "shouldTranslate": false
+    },
+    "A cell {x, y, z} sees cells {x, z} and {y, z}. One of the three is z, so a cell seeing all three can't be z.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Una casilla {x, y, z} ve a las casillas {x, z} e {y, z}. Una de las tres es z, así que una casilla que ve a las tres no puede ser z."
+          }
+        }
+      }
+    },
+    "A cell {x, y} sees cells {x, z} and {y, z}. One of those two is z, so a cell seeing both can't be z.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Una casilla {x, y} ve a las casillas {x, z} e {y, z}. Una de esas dos es z, así que una casilla que ve a ambas no puede ser z."
+          }
+        }
+      }
+    },
+    "A cell's row, column and box already hold eight different digits: the ninth goes there.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La fila, la columna y la caja de una casilla ya tienen ocho números distintos: el noveno va ahí."
+          }
+        }
+      }
+    },
+    "A digit fits twice on two rows, in the same two columns. It takes those columns there, so not elsewhere in them (or rows and columns swapped).": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Un número cabe dos veces en dos filas, en las mismas dos columnas. Ocupa esas columnas ahí, así que no va en el resto de ellas (o al revés, con filas y columnas)."
+          }
+        }
+      }
+    },
+    "A digit that isn't the solution's is a mistake and costs 20 points, shown right away or not. The game never ends: fix it and go on.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Un número que no es el de la solución es un error y cuesta 20 puntos, se marque al instante o no. La partida nunca se pierde: corrígelo y sigue."
+          }
+        }
+      }
+    },
+    "A hint writes the next digit you can find by logic and explains why. Each hint costs 10 points.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Una pista escribe el siguiente número que se puede deducir y explica por qué. Cada pista cuesta 10 puntos."
+          }
+        }
+      }
+    },
+    "A row and a column with two spots each for a digit, linked through a box. One of the far ends holds it: a cell seeing both can't.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Una fila y una columna con dos lugares cada una para un número, unidas por una caja. Uno de los extremos lejanos lo tiene: una casilla que ve a ambos no puede tenerlo."
+          }
+        }
+      }
+    },
+    "A row, column or box with one empty cell: it takes the missing digit.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Una fila, columna o caja con una sola casilla vacía: lleva el número que falta."
+          }
+        }
+      }
+    },
+    "A wrong digit is a mistake: it costs 20 points, and the game goes on. Stuck? Tap Hint: it writes the next digit and says why, for 10 points.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Un número equivocado es un error: cuesta 20 puntos y la partida sigue. ¿Atascado? Toca Pista: escribe el siguiente número y dice por qué, por 10 puntos."
+          }
+        }
+      }
+    },
+    "Account": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cuenta"
+          }
+        }
+      }
+    },
+    "Achievement unlocked": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Logro desbloqueado"
+          }
+        }
+      }
+    },
+    "Achievements": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Logros"
+          }
+        }
+      }
+    },
+    "Achievements unlocked": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Logros desbloqueados"
+          }
+        }
+      }
+    },
+    "Always available for low vision.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Siempre disponible para baja visión."
+          }
+        }
+      }
+    },
+    "And boxes": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Y las cajas"
+          }
+        }
+      }
+    },
+    "App icon": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ícono de la app"
+          }
+        }
+      }
+    },
+    "At %@ if you haven't played; with a streak of 3 or more, another at %@.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A las %1$@ si no has jugado; con una racha de 3 o más, otro a las %2$@."
+          }
+        }
+      }
+    },
+    "Back": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Volver"
+          }
+        }
+      }
+    },
+    "Best score": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mejor puntaje"
+          }
+        }
+      }
+    },
+    "Best streak": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mejor racha"
+          }
+        }
+      }
+    },
+    "Bigger digits and notes on the board.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Números y notas más grandes en el tablero."
+          }
+        }
+      }
+    },
+    "Board": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tablero"
+          }
+        }
+      }
+    },
+    "Box and line": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Caja y línea"
+          }
+        }
+      }
+    },
+    "Cancel": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cancelar"
+          }
+        }
+      }
+    },
+    "Centennial": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Centenario"
+          }
+        }
+      }
+    },
+    "Check your connection and try again.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Revisa tu conexión e inténtalo de nuevo."
+          }
+        }
+      }
+    },
+    "Choose a level": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Elige un nivel"
+          }
+        }
+      }
+    },
+    "Classic": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clásico"
+          }
+        }
+      }
+    },
+    "Clean Sheet": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sin tachones"
+          }
+        }
+      }
+    },
+    "Close": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cerrar"
+          }
+        }
+      }
+    },
+    "Collection": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Colección"
+          }
+        }
+      }
+    },
+    "Columns too": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "También las columnas"
+          }
+        }
+      }
+    },
+    "Complete 30 daily challenges in a row.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Completa 30 retos diarios seguidos."
+          }
+        }
+      }
+    },
+    "Complete 7 daily challenges in a row.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Completa 7 retos diarios seguidos."
+          }
+        }
+      }
+    },
+    "Completed": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Completado"
+          }
+        }
+      }
+    },
+    "Consistency": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Constancia"
+          }
+        }
+      }
+    },
+    "Continue": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Continuar"
+          }
+        }
+      }
+    },
+    "Continue this practice?": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Seguir con esta práctica?"
+          }
+        }
+      }
+    },
+    "Continue · %@": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Continuar · %@"
+          }
+        }
+      }
+    },
+    "Couldn't load": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No se pudo cargar"
+          }
+        }
+      }
+    },
+    "Couldn't load this profile. Check your connection and try again.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No se pudo cargar este perfil. Revisa tu conexión e inténtalo de nuevo."
+          }
+        }
+      }
+    },
+    "Daily": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reto"
+          }
+        }
+      }
+    },
+    "Daily Challenge": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reto diario"
+          }
+        }
+      }
+    },
+    "Daily challenge": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reto diario"
+          }
+        }
+      }
+    },
+    "Daily challenge reminder": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recordatorio del reto"
+          }
+        }
+      }
+    },
+    "Deletes games, daily results, streaks, achievements and unlocked rewards, here and in iCloud.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Borra partidas, retos, rachas, logros y recompensas, aquí y en iCloud."
+          }
+        }
+      }
+    },
+    "Digits": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Números"
+          }
+        }
+      }
+    },
+    "Don't lose your %lld-day streak.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No pierdas tu racha de %lld días."
+          }
+        }
+      }
+    },
+    "Done": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Listo"
+          }
+        }
+      }
+    },
+    "Each 3×3 box needs 1 to 9 once too. Fill the empty cell of this box.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cada caja de 3×3 también lleva del 1 al 9 una vez. Llena la casilla vacía de esta caja."
+          }
+        }
+      }
+    },
+    "Each row holds 1 to 9": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cada fila lleva del 1 al 9"
+          }
+        }
+      }
+    },
+    "Easy": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fácil"
+          }
+        }
+      }
+    },
+    "Easy needs only the basics. Each level up needs one more kind of reasoning.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fácil solo pide lo básico. Cada nivel más pide un tipo de razonamiento más."
+          }
+        }
+      }
+    },
+    "Erase": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Borrar"
+          }
+        }
+      }
+    },
+    "Every Quiet Sudoku can be solved with these, without guessing. A puzzle's level is the hardest one it needs. A house is a row, a column or a box.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Todo Quiet Sudoku se resuelve con estas técnicas, sin adivinar. El nivel de un sudoku es la más difícil que necesita. Un grupo es una fila, una columna o una caja."
+          }
+        }
+      }
+    },
+    "Every column also needs 1 to 9 once. Which digit is missing from this column?": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cada columna también lleva del 1 al 9 una vez. ¿Qué número le falta a esta columna?"
+          }
+        }
+      }
+    },
+    "Every row needs the digits 1 to 9, once each. This row is missing one: tap it on the keypad.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cada fila lleva los números del 1 al 9, una vez cada uno. A esta fila le falta uno: tócalo en el teclado."
+          }
+        }
+      }
+    },
+    "Expert": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Experto"
+          }
+        }
+      }
+    },
+    "Fill every row, column and box with 1 to 9. Start with an easy one: it needs only what you just learned.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Llena cada fila, columna y caja con el 1 al 9. Empieza con uno Fácil: solo necesita lo que acabas de aprender."
+          }
+        }
+      }
+    },
+    "Fill the grid so every row, every column and every 3×3 box holds the digits 1 to 9 once each.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Llena la cuadrícula para que cada fila, cada columna y cada caja de 3×3 tenga los números del 1 al 9 una vez cada uno."
+          }
+        }
+      }
+    },
+    "Find where the %lld goes in this box. The ringed %llds rule out every other empty cell: their rows and columns already have one.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Busca dónde va el %1$lld en esta caja. Los %2$lld con anillo descartan las demás casillas vacías: sus filas y columnas ya tienen uno."
+          }
+        }
+      }
+    },
+    "Fireworks": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fuegos artificiales"
+          }
+        }
+      }
+    },
+    "First Sudoku": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Primer sudoku"
+          }
+        }
+      }
+    },
+    "Follows your device's light or dark mode.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sigue el modo claro u oscuro de tu dispositivo."
+          }
+        }
+      }
+    },
+    "Friends": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Amigos"
+          }
+        }
+      }
+    },
+    "Friends today": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Amigos hoy"
+          }
+        }
+      }
+    },
+    "From Memory": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "De memoria"
+          }
+        }
+      }
+    },
+    "Game Center": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Game Center"
+          }
+        }
+      }
+    },
+    "Global": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Global"
+          }
+        }
+      }
+    },
+    "Goal": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Objetivo"
+          }
+        }
+      }
+    },
+    "Gold": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dorado"
+          }
+        }
+      }
+    },
+    "Habit": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hábito"
+          }
+        }
+      }
+    },
+    "Haptics": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hápticos"
+          }
+        }
+      }
+    },
+    "Hard": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Difícil"
+          }
+        }
+      }
+    },
+    "Hidden pair": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Par oculto"
+          }
+        }
+      }
+    },
+    "Hidden triple": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Trío oculto"
+          }
+        }
+      }
+    },
+    "High contrast": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alto contraste"
+          }
+        }
+      }
+    },
+    "Highlight": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Resaltado"
+          }
+        }
+      }
+    },
+    "Hint": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pista"
+          }
+        }
+      }
+    },
+    "Hints": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pistas"
+          }
+        }
+      }
+    },
+    "Hints %lld × −%lld": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pistas %1$lld × −%2$lld"
+          }
+        }
+      }
+    },
+    "Home": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Inicio"
+          }
+        }
+      }
+    },
+    "How to play": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cómo jugar"
+          }
+        }
+      }
+    },
+    "In %@, the %lld fits only here.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En %1$@, el %2$lld solo cabe aquí."
+          }
+        }
+      }
+    },
+    "In a box, a digit's only cells lie on one line. It must be there, so it's not elsewhere on that line.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En una caja, los únicos lugares de un número están en una misma línea. Tiene que ir ahí, así que no va en el resto de esa línea."
+          }
+        }
+      }
+    },
+    "In a row, column or box, a digit fits in only one cell because its other copies rule out the rest.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En una fila, columna o caja, un número cabe en una sola casilla porque sus otras copias descartan las demás."
+          }
+        }
+      }
+    },
+    "In color": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En color"
+          }
+        }
+      }
+    },
+    "In progress": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En curso"
+          }
+        }
+      }
+    },
+    "In the Red": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Números rojos"
+          }
+        }
+      }
+    },
+    "Indigo & Peach": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Índigo y durazno"
+          }
+        }
+      }
+    },
+    "It's the last empty cell of %@: the %lld goes here.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Es la última casilla vacía de %1$@: aquí va el %2$lld."
+          }
+        }
+      }
+    },
+    "Large digits": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Números grandes"
+          }
+        }
+      }
+    },
+    "Last %lld challenges": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Últimos %lld retos"
+          }
+        }
+      }
+    },
+    "Last empty cell": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Última casilla"
+          }
+        }
+      }
+    },
+    "Leaderboards": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clasificaciones"
+          }
+        }
+      }
+    },
+    "Level": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nivel"
+          }
+        }
+      }
+    },
+    "Like an X-Wing with three rows and three columns.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Como un X-Wing, con tres filas y tres columnas."
+          }
+        }
+      }
+    },
+    "Longest streak": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Racha más larga"
+          }
+        }
+      }
+    },
+    "Medium": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Media"
+          }
+        }
+      }
+    },
+    "Mistake": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Error"
+          }
+        }
+      }
+    },
+    "Mistakes": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Errores"
+          }
+        }
+      }
+    },
+    "Mistakes %lld × −%lld": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Errores %1$lld × −%2$lld"
+          }
+        }
+      }
+    },
+    "Mistakes and hints": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Errores y pistas"
+          }
+        }
+      }
+    },
+    "Monday and Tuesday easy, Wednesday to Friday medium, Saturday hard, Sunday expert.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lunes y martes fácil, de miércoles a viernes media, sábado difícil, domingo experto."
+          }
+        }
+      }
+    },
+    "More": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Más"
+          }
+        }
+      }
+    },
+    "Naked pair": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Par desnudo"
+          }
+        }
+      }
+    },
+    "Naked triple": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Trío desnudo"
+          }
+        }
+      }
+    },
+    "New Game": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nueva partida"
+          }
+        }
+      }
+    },
+    "New record!": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¡Nuevo récord!"
+          }
+        }
+      }
+    },
+    "Next challenge in %@": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Próximo reto en %@"
+          }
+        }
+      }
+    },
+    "Next month": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mes siguiente"
+          }
+        }
+      }
+    },
+    "Night Owl": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Noctámbulo"
+          }
+        }
+      }
+    },
+    "No past challenges yet.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Todavía no hay retos anteriores."
+          }
+        }
+      }
+    },
+    "No scores yet": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aún no hay puntajes"
+          }
+        }
+      }
+    },
+    "None of your friends has played today's challenge yet.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ninguno de tus amigos ha jugado el reto de hoy."
+          }
+        }
+      }
+    },
+    "Not now": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ahora no"
+          }
+        }
+      }
+    },
+    "Not played yet": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aún no lo juegas"
+          }
+        }
+      }
+    },
+    "Not signed in": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sin sesión"
+          }
+        }
+      }
+    },
+    "Not sure yet? Take notes. With Notes on, tap %@: the digits that could still go here.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Todavía no sabes? Toma notas. Con Notas activado, toca %@: los números que todavía pueden ir aquí."
+          }
+        }
+      }
+    },
+    "Note %lld": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nota %lld"
+          }
+        }
+      }
+    },
+    "Notes": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Notas"
+          }
+        }
+      }
+    },
+    "Notifications are off for this app. Turn them on in Settings.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Las notificaciones de esta app están desactivadas. Actívalas en Ajustes."
+          }
+        }
+      }
+    },
+    "Off": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Desactivado"
+          }
+        }
+      }
+    },
+    "Off: they're checked when the board is full. Each mistake costs the same either way.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apagado: se revisan al llenar el tablero. Cada error cuesta lo mismo de las dos formas."
+          }
+        }
+      }
+    },
+    "On": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Activado"
+          }
+        }
+      }
+    },
+    "On Your Own": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Por tu cuenta"
+          }
+        }
+      }
+    },
+    "On a row or column, a digit's only cells lie in one box. It's not in the rest of that box.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En una fila o columna, los únicos lugares de un número están en una misma caja. No va en el resto de esa caja."
+          }
+        }
+      }
+    },
+    "One sudoku for everyone each day, with one solution and no guessing. Easy on Monday, expert on Sunday.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Un sudoku para todos cada día, con una sola solución y sin adivinar. Fácil el lunes, experto el domingo."
+          }
+        }
+      }
+    },
+    "Only digit": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Único posible"
+          }
+        }
+      }
+    },
+    "Only on days you haven't played the challenge yet. You can change it in Settings.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Solo los días que aún no hayas jugado el reto. Puedes cambiarlo en Ajustes."
+          }
+        }
+      }
+    },
+    "Only place": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Único lugar"
+          }
+        }
+      }
+    },
+    "Only the %lld fits here: its row, column and box hold the other eight.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aquí solo cabe el %lld: su fila, su columna y su caja tienen los otros ocho."
+          }
+        }
+      }
+    },
+    "Open Settings": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Abrir Ajustes"
+          }
+        }
+      }
+    },
+    "Opens their profile": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Abre su perfil"
+          }
+        }
+      }
+    },
+    "Past days are practice: they don't score, but winning one counts toward your streak.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Los días pasados son práctica: no suman puntaje, pero ganarlos cuenta para tu racha."
+          }
+        }
+      }
+    },
+    "Pen": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pluma"
+          }
+        }
+      }
+    },
+    "Plain": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sencillas"
+          }
+        }
+      }
+    },
+    "Play": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jugar"
+          }
+        }
+      }
+    },
+    "Play again": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jugar de nuevo"
+          }
+        }
+      }
+    },
+    "Play with friends": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Juega con amigos"
+          }
+        }
+      }
+    },
+    "Played": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jugado"
+          }
+        }
+      }
+    },
+    "Pointing": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apuntando"
+          }
+        }
+      }
+    },
+    "Practice": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Práctica"
+          }
+        }
+      }
+    },
+    "Practiced": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Practicado"
+          }
+        }
+      }
+    },
+    "Previous month": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mes anterior"
+          }
+        }
+      }
+    },
+    "Privacy": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Privacidad"
+          }
+        }
+      }
+    },
+    "Quick": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rápido"
+          }
+        }
+      }
+    },
+    "Quiet Sudoku doesn't collect any data. Your games, streaks and achievements stay on this device. If you sign in to Game Center, your scores and achievements are shared with Apple's Game Center and your progress is saved in your iCloud.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quiet Sudoku no recolecta ningún dato. Tus partidas, rachas y logros se quedan en este dispositivo. Si inicias sesión en Game Center, tus puntajes y logros se comparten con Game Center de Apple y tu progreso se guarda en tu iCloud."
+          }
+        }
+      }
+    },
+    "Remind me": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Avísame"
+          }
+        }
+      }
+    },
+    "Remind you at %@?": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Te aviso a las %@?"
+          }
+        }
+      }
+    },
+    "Replays don't count toward your score.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Las repeticiones no cuentan para tu puntaje."
+          }
+        }
+      }
+    },
+    "Reset Progress": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Restablecer progreso"
+          }
+        }
+      }
+    },
+    "Reset Progress…": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Restablecer progreso…"
+          }
+        }
+      }
+    },
+    "Reset all progress?": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Restablecer todo el progreso?"
+          }
+        }
+      }
+    },
+    "Restart This Sudoku": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reiniciar este sudoku"
+          }
+        }
+      }
+    },
+    "Rounded": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Redondos"
+          }
+        }
+      }
+    },
+    "Row %lld, column %lld, %lld": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fila %1$lld, columna %2$lld, %3$lld"
+          }
+        }
+      }
+    },
+    "Row %lld, column %lld, %lld, wrong": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fila %1$lld, columna %2$lld, %3$lld, equivocado"
+          }
+        }
+      }
+    },
+    "Row %lld, column %lld, empty": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fila %1$lld, columna %2$lld, vacía"
+          }
+        }
+      }
+    },
+    "Row %lld, column %lld, empty, notes %@": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fila %1$lld, columna %2$lld, vacía, notas %3$@"
+          }
+        }
+      }
+    },
+    "Row, column and box": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fila, columna y caja"
+          }
+        }
+      }
+    },
+    "Rules": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reglas"
+          }
+        }
+      }
+    },
+    "Sage & Coral": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Salvia y coral"
+          }
+        }
+      }
+    },
+    "Sage & Sand": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Salvia y arena"
+          }
+        }
+      }
+    },
+    "Same digit only": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Solo el mismo número"
+          }
+        }
+      }
+    },
+    "Score": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Puntaje"
+          }
+        }
+      }
+    },
+    "Score %lld": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Puntaje %lld"
+          }
+        }
+      }
+    },
+    "Scores from Game Center · updated just now": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Puntajes de Game Center · actualizado hace un momento"
+          }
+        }
+      }
+    },
+    "Settings": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ajustes"
+          }
+        }
+      }
+    },
+    "Show mistakes right away": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Marcar errores al instante"
+          }
+        }
+      }
+    },
+    "Sign in to Game Center in Settings to see leaderboards. Your progress is saved on this device either way.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Inicia sesión en Game Center para ver las clasificaciones. Tu progreso se guarda en este dispositivo de todos modos."
+          }
+        }
+      }
+    },
+    "Signed in as %@": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sesión iniciada como %@"
+          }
+        }
+      }
+    },
+    "Skip": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Saltar"
+          }
+        }
+      }
+    },
+    "Skyscraper": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rascacielos (Skyscraper)"
+          }
+        }
+      }
+    },
+    "Solve 10 sudokus.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Resuelve 10 sudokus."
+          }
+        }
+      }
+    },
+    "Solve 100 sudokus.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Resuelve 100 sudokus."
+          }
+        }
+      }
+    },
+    "Solve a daily challenge between midnight and 4 a.m.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Resuelve un reto diario entre la medianoche y las 4 a. m."
+          }
+        }
+      }
+    },
+    "Solve a medium or harder sudoku without notes.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Resuelve un sudoku de nivel Media o más sin notas."
+          }
+        }
+      }
+    },
+    "Solve a sudoku without hints.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Resuelve un sudoku sin pistas."
+          }
+        }
+      }
+    },
+    "Solve a sudoku without mistakes.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Resuelve un sudoku sin errores."
+          }
+        }
+      }
+    },
+    "Solve an easy sudoku in under 4 minutes.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Resuelve un sudoku Fácil en menos de 4 minutos."
+          }
+        }
+      }
+    },
+    "Solve an expert sudoku.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Resuelve un sudoku Experto."
+          }
+        }
+      }
+    },
+    "Solve bonus": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bono por resolver"
+          }
+        }
+      }
+    },
+    "Solve your first sudoku.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Resuelve tu primer sudoku."
+          }
+        }
+      }
+    },
+    "Solved!": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¡Resuelto!"
+          }
+        }
+      }
+    },
+    "Sound": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sonido"
+          }
+        }
+      }
+    },
+    "Standard": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Estándar"
+          }
+        }
+      }
+    },
+    "Start over": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Empezar de nuevo"
+          }
+        }
+      }
+    },
+    "Start playing": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Empezar a jugar"
+          }
+        }
+      }
+    },
+    "Step %lld of %lld": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Paso %1$lld de %2$lld"
+          }
+        }
+      }
+    },
+    "Streak": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Racha"
+          }
+        }
+      }
+    },
+    "Swordfish": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Swordfish"
+          }
+        }
+      }
+    },
+    "Take your score below zero.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lleva tu puntaje por debajo de cero."
+          }
+        }
+      }
+    },
+    "Tap a cell, then a digit. Digits in dark ink came with the puzzle and can't change.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Toca una casilla y luego un número. Los números en tinta oscura vienen con el sudoku y no se cambian."
+          }
+        }
+      }
+    },
+    "Teal & Coral": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Petróleo y coral"
+          }
+        }
+      }
+    },
+    "Teal & Coral Dark": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Petróleo y coral oscuro"
+          }
+        }
+      }
+    },
+    "Teal & Coral Light": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Petróleo y coral claro"
+          }
+        }
+      }
+    },
+    "Techniques": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Técnicas"
+          }
+        }
+      }
+    },
+    "Ten Sudokus": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Diez sudokus"
+          }
+        }
+      }
+    },
+    "This cell's row, column and box already hold eight different digits. Which one is left?": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La fila, la columna y la caja de esta casilla ya tienen ocho números distintos. ¿Cuál queda?"
+          }
+        }
+      }
+    },
+    "This digit doesn't go here. It's been cleared.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Este número no va aquí. Se borró."
+          }
+        }
+      }
+    },
+    "This week": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dificultad de la semana"
+          }
+        }
+      }
+    },
+    "Three cells of a house holding only three digits between them: not elsewhere in the house.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tres casillas de un grupo con solo tres números entre ellas: esos números no van en el resto del grupo."
+          }
+        }
+      }
+    },
+    "Three digits that fit in only the same three cells of a house: those cells hold nothing else.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tres números que caben solo en las mismas tres casillas de un grupo: esas casillas no llevan otra cosa."
+          }
+        }
+      }
+    },
+    "Time": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tiempo"
+          }
+        }
+      }
+    },
+    "Time ×%@": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tiempo ×%@"
+          }
+        }
+      }
+    },
+    "To see it, first rule out candidates with %@. See Settings › Techniques.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Para verlo, primero hay que descartar candidatos con %@. Mira Ajustes › Técnicas."
+          }
+        }
+      }
+    },
+    "Today": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hoy"
+          }
+        }
+      }
+    },
+    "Today's challenge": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reto de hoy"
+          }
+        }
+      }
+    },
+    "Today's challenge is waiting.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "El reto de hoy te espera."
+          }
+        }
+      }
+    },
+    "Today: %@": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hoy: %@"
+          }
+        }
+      }
+    },
+    "Top streak": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mejor racha"
+          }
+        }
+      }
+    },
+    "Turn on Notes to jot the digits that could go in a cell. A digit you place clears itself from the notes it sees.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Activa Notas para anotar los números que podrían ir en una casilla. Al poner un número, se borra de las notas que ve."
+          }
+        }
+      }
+    },
+    "Two cells of a house with the same two candidates: those digits go there, so not in the house's other cells.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dos casillas de un grupo con los mismos dos candidatos: esos números van ahí, así que no en las demás casillas del grupo."
+          }
+        }
+      }
+    },
+    "Two cells {x, y} linked by a house where x has two spots, one seen by each. One of the two cells is y: a cell seeing both can't be.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dos casillas {x, y} unidas por un grupo donde x tiene dos lugares, cada uno visto por una. Una de las dos casillas es y: una casilla que ve a ambas no puede serlo."
+          }
+        }
+      }
+    },
+    "Two digits that fit in only the same two cells of a house: those cells hold nothing else.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dos números que caben solo en las mismas dos casillas de un grupo: esas casillas no llevan otra cosa."
+          }
+        }
+      }
+    },
+    "Two rows with two spots each for a digit, one pair lined up. One of the other two ends holds it: a cell seeing both can't.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dos filas con dos lugares cada una para un número, un par alineado. Uno de los otros dos extremos lo tiene: una casilla que ve a ambos no puede tenerlo."
+          }
+        }
+      }
+    },
+    "Typewriter": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Máquina"
+          }
+        }
+      }
+    },
+    "Undo": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deshacer"
+          }
+        }
+      }
+    },
+    "Unlocked": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Desbloqueado"
+          }
+        }
+      }
+    },
+    "Version": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Versión"
+          }
+        }
+      }
+    },
+    "Victory": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Victoria"
+          }
+        }
+      }
+    },
+    "View in Game Center": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ver en Game Center"
+          }
+        }
+      }
+    },
+    "W-Wing": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "W-Wing"
+          }
+        }
+      }
+    },
+    "Wave and fireworks": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ola y fuegos artificiales"
+          }
+        }
+      }
+    },
+    "Wins": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Victorias"
+          }
+        }
+      }
+    },
+    "Won": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ganadas"
+          }
+        }
+      }
+    },
+    "Won · %@": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ganado · %@"
+          }
+        }
+      }
+    },
+    "X-Wing": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "X-Wing"
+          }
+        }
+      }
+    },
+    "XY-Wing": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "XY-Wing"
+          }
+        }
+      }
+    },
+    "XYZ-Wing": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "XYZ-Wing"
+          }
+        }
+      }
+    },
+    "You": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tú"
+          }
+        }
+      }
+    },
+    "You left %@ halfway.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dejaste el %@ a medias."
+          }
+        }
+      }
+    },
+    "You won %lld of %lld": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ganaste %1$lld de %2$lld"
+          }
+        }
+      }
+    },
+    "You're #%lld": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vas #%lld"
+          }
+        }
+      }
+    },
+    "You're ready": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ya sabes jugar"
+          }
+        }
+      }
+    },
+    "Your %lld-day streak ends at midnight.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tu racha de %lld días termina a medianoche."
+          }
+        }
+      }
+    },
+    "Your 5-minute break.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tu pausa de 5 minutos."
+          }
+        }
+      }
+    },
+    "Your games, daily challenge results, streaks, achievements and unlocked rewards will be deleted on this device and in iCloud. Scores already on Game Center leaderboards stay there. This can't be undone.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Se borrarán tus partidas, retos, rachas, logros y recompensas en este dispositivo y en iCloud. Los puntajes que ya están en las clasificaciones de Game Center se quedan ahí. No se puede deshacer."
+          }
+        }
+      }
+    },
+    "Your stats": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tus estadísticas"
+          }
+        }
+      }
+    },
+    "Your streak": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tu racha"
+          }
+        }
+      }
+    },
+    "box %lld": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "la caja %lld"
+          }
+        }
+      }
+    },
+    "column %lld": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "la columna %lld"
+          }
+        }
+      }
+    },
+    "row %lld": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "la fila %lld"
+          }
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}
