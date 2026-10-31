@@ -35,6 +35,14 @@ Cada app documenta sus comandos exactos en su CLAUDE.md ("Comandos" y "Publicaci
 - Al cambiar cualquier imagen de la tienda, subirla al canvas de la app (página App Store), anotar su id en `design/canvas-assets.tsv` y correr el QA (`quiet-design-canvas`).
 - Reglas: apto 4+, sin precios ni descuentos, sin URLs ni ©, nada que la app no tenga, localizado en/es. Excepción (decisión 2026-10-29): los juegos gratis para siempre pueden decir "Gratis siempre" / "Always free" en las capturas (p. ej. la imagen 04 de Quiet Numbers); el header y la búsqueda no lo dicen.
 
+## Envío a revisión (notas y video)
+
+Toda versión que se envía a revisión lleva en App Review Information › Notes las respuestas a lo que Apple pide en "Guideline 2.1 - Information Needed" (Quiet Numbers fue rechazada por eso el 2026-10-31), y un video como adjunto de esa misma sección:
+
+- **Notas** en `AppStore/app-review-notes.md` de la app, en inglés y numeradas como las pide Apple: 1) video (y que no hay cuentas, contenido de usuarios ni compras); 2) propósito y público; 3) cómo entrar a lo principal (sin login ni cuenta de prueba; dónde están el tutorial y el reto diario); 4) servicios externos (solo Game Center e iCloud del usuario); 5) sin diferencias por región; 6) sin industria regulada ni material de terceros. Plantilla: `quiet-numbers/AppStore/app-review-notes.md`.
+- **Video** grabado por el usuario en su iPhone, con el iOS más reciente y el build que se envía (instalación limpia desde TestFlight para que salga el tutorial; No molestar activado; Game Center con sesión). Empieza abriendo la app desde la pantalla de inicio y muestra en 2–3 min: tutorial, partida libre (jugadas, pista, deshacer), reto diario (salir y "Continuar / Empezar de nuevo", calendario), clasificaciones, Colección y Ajustes. Sin audio ni edición.
+- Revisar las notas cuando cambie algo que mencionan (servicios, notificaciones, funciones nuevas).
+
 ## Game Center
 
 Logros y clasificaciones se definen en `AppStore/game-center.json` y se crean con `scripts/setup-game-center.py` (muestra qué haría; `--apply` solo con permiso). Los IDs del código se verifican con `check-game-center.py` / `game-center.py`. Una clasificación publicada no cambia de formato: si hace falta otro criterio, es otra clasificación.
