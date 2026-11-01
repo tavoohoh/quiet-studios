@@ -3,25 +3,27 @@
 Respuesta al rechazo del 2026-10-31 (Guideline 2.1 - Information Needed) de la 1.1 (8). Reenviada el 2026-11-01 como 1.2 (9), con los recordatorios y los amigos. Va completa en App Store Connect › versión › App Review Information › Notes, y el video como adjunto de esa misma sección.
 
 ```text
-1. Screen recording
-Attached: recorded on an iPhone running the latest iOS with the submitted build. It starts by launching the app and shows the typical flow: the first-run tutorial, a classic game (pairs, hint, undo, adding numbers with +), the daily challenge and its calendar, the optional reminder prompt, Game Center leaderboards and friends, the achievements collection and Settings.
-The app has no account registration or login, no user-generated content and no paid content or in-app purchases, so none of those flows exist.
+Hi, thanks for taking a look at Quiet Numbers.
 
-2. Purpose and audience
-Quiet Numbers is a free, calm number puzzle for adults and teens who want a short, relaxing brain break without ads, purchases or tracking. Players clear a board of digits by pairing numbers that are equal or add up to ten. A daily challenge (the same board for everyone) gives a reason to come back, with an optional Game Center leaderboard. The value is a focused, respectful game: no ads, no in-app purchases, no accounts and no data collected.
+What it is
+A small, calm number puzzle: you clear the board by pairing numbers that match or add up to ten. We made it for people who want a few quiet minutes with a puzzle, without ads, purchases, accounts or tracking. There's also a daily challenge, the same board for everyone, if you like a reason to come back.
 
-3. How to access the main features
-No login, demo account or sample files are needed. Open the app and tap New Game; the first time, a short interactive tutorial explains the rules (it can be replayed from Settings > How to Play). Daily Challenge is on the Home screen. Leaderboards and achievements use Game Center if the device is signed in; everything else works signed out and offline. Cosmetic rewards (themes, tile styles, icons) unlock automatically from achievements and are shown in Collection.
-Daily reminders are optional local notifications scheduled on the device (no push server). Permission is asked in context only after the player completes a first daily challenge ("Remind you at 7:00 PM?"), never at launch, and they can be turned off in Settings > Daily challenge reminder. At most two per day: 7 pm if today's challenge is not done (mentioning how Game Center friends did, if known) and 9 pm if a streak of 3+ days is at risk. With Game Center signed in, the Daily Challenge screen shows which friends already played today, and tapping a friend opens a head-to-head view built only from Game Center leaderboards; nothing is stored or sent elsewhere.
+How to try it
+No login or demo account needed. Open the app and tap New Game; the first time, a short tutorial shows the rules (you can replay it from Settings > How to Play). The Daily Challenge is on the Home screen. If the device is signed in to Game Center you'll also see leaderboards, achievements and friends who played today; without it, everything else works the same, offline too.
 
-4. External services
-Only Apple's Game Center (optional leaderboards, achievements and friends' daily scores) and the user's own iCloud via SwiftData/CloudKit for syncing progress between their devices. No third-party SDKs, analytics, ads, payment processors, authentication services or AI services. No server of our own.
+After you finish a first daily challenge, the app asks if you'd like a reminder at 7 pm. These are local notifications scheduled on the device, at most two a day, and they can be turned off in Settings.
 
-5. Regional differences
-None. The app works the same in all regions; it is localized in English and Spanish.
+The recording
+Attached, recorded on an iPhone with the latest iOS and the submitted build. It starts at launch and goes through a classic game, the daily challenge and its calendar, the leaderboards, the achievements collection and Settings. There are no accounts, user content or purchases in the app, so there are no flows for those.
 
-6. Regulated industry / third-party material
-Not applicable. The app does not operate in a regulated industry and contains no third-party protected material; the pairing mechanic is a generic number-puzzle mechanic, and all names, art and text are our own.
+Services
+Just Apple's: Game Center (optional) and the player's own iCloud to sync progress between their devices. No servers of our own, no third-party SDKs, analytics, ads, payments or AI.
+
+Regions
+It works the same everywhere, in English and Spanish.
+
+Anything regulated or third-party
+No. The pairing mechanic is a classic number-puzzle idea; the name, art and text are our own.
 ```
 
 ## Guion del video (2–3 min, iPhone, build en revisión)
