@@ -22,8 +22,14 @@ FAINT_DOTS = [(50, 26), (74, 26), (26, 50), (74, 50), (26, 74), (50, 74)]
 
 
 def icon(background, faint, line, solid):
-    """100-unit grid. `background` None leaves it transparent (tinted variant)."""
-    rect = f'<rect width="100" height="100" fill="{background}"/>' if background else ""
+    """100-unit grid. `background` None leaves it transparent (tinted variant); a (top,
+    bottom) pair is a vertical gradient."""
+    if isinstance(background, tuple):
+        rect = ('<defs><linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">'
+                f'<stop offset="0" stop-color="{background[0]}"/><stop offset="1" stop-color="{background[1]}"/>'
+                '</linearGradient></defs><rect width="100" height="100" fill="url(#bg)"/>')
+    else:
+        rect = f'<rect width="100" height="100" fill="{background}"/>' if background else ""
     dots = "".join(f'<circle cx="{x}" cy="{y}" r="5.5"/>' for x, y in FAINT_DOTS)
     return (
         '<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100">'
@@ -35,15 +41,17 @@ def icon(background, faint, line, solid):
 
 
 ICONS = {
+    # Vivid teal with a lighter coral (2026-11-01, "A2"): next to other apps the flat
+    # #0E6B78 looked grey. Only the icon and the store art; the app's themes don't change.
     "AppIcon": {
-        "light": icon("#0E6B78", "#FFFFFF", "#FF9A85", "#FFFFFF"),
-        "dark": icon("#0B1517", "#5BC2CF", "#FF9A85", "#5BC2CF"),
+        "light": icon(("#19BFCD", "#0A8AA5"), "#FFFFFF", "#FF9277", "#FFFFFF"),
+        "dark": icon("#03171B", "#2FD6E4", "#FF9277", "#2FD6E4"),
         "tinted": icon(None, "#FFFFFF", "#D0D0D0", "#FFFFFF"),
     },
     # Alternate icon, unlocked by Centennial.
     "AppIcon-Gold": {
-        "light": icon("#A8741A", "#FFFFFF", "#FFE2A8", "#FFFFFF"),
-        "dark": icon("#1A1408", "#E8B04A", "#FFE2A8", "#E8B04A"),
+        "light": icon(("#E3B043", "#B27A17"), "#FFFFFF", "#FFF1CF", "#FFFFFF"),
+        "dark": icon("#1A1408", "#F0BC4E", "#FFE2A8", "#F0BC4E"),
         "tinted": icon(None, "#FFFFFF", "#D0D0D0", "#FFFFFF"),
     },
 }
