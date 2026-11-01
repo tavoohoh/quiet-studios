@@ -1,10 +1,10 @@
 # Notas para la revisión de Apple
 
-Respuesta al rechazo del 2026-10-31 (Guideline 2.1 - Information Needed) de la 1.1 (8). Va completa en App Store Connect › versión › App Review Information › Notes, y el video como adjunto de esa misma sección.
+Respuesta al rechazo del 2026-10-31 (Guideline 2.1 - Information Needed) de la 1.1 (8). Reenviada el 2026-11-01 como 1.2 (9), con los recordatorios y los amigos. Va completa en App Store Connect › versión › App Review Information › Notes, y el video como adjunto de esa misma sección.
 
 ```text
 1. Screen recording
-Attached: recorded on an iPhone running the latest iOS with the submitted build. It starts by launching the app and shows the typical flow: the first-run tutorial, a classic game (pairs, hint, undo, adding numbers with +), the daily challenge and its calendar, Game Center leaderboards, the achievements collection and Settings.
+Attached: recorded on an iPhone running the latest iOS with the submitted build. It starts by launching the app and shows the typical flow: the first-run tutorial, a classic game (pairs, hint, undo, adding numbers with +), the daily challenge and its calendar, the optional reminder prompt, Game Center leaderboards and friends, the achievements collection and Settings.
 The app has no account registration or login, no user-generated content and no paid content or in-app purchases, so none of those flows exist.
 
 2. Purpose and audience
@@ -12,9 +12,10 @@ Quiet Numbers is a free, calm number puzzle for adults and teens who want a shor
 
 3. How to access the main features
 No login, demo account or sample files are needed. Open the app and tap New Game; the first time, a short interactive tutorial explains the rules (it can be replayed from Settings > How to Play). Daily Challenge is on the Home screen. Leaderboards and achievements use Game Center if the device is signed in; everything else works signed out and offline. Cosmetic rewards (themes, tile styles, icons) unlock automatically from achievements and are shown in Collection.
+Daily reminders are optional local notifications scheduled on the device (no push server). Permission is asked in context only after the player completes a first daily challenge ("Remind you at 7:00 PM?"), never at launch, and they can be turned off in Settings > Daily challenge reminder. At most two per day: 7 pm if today's challenge is not done (mentioning how Game Center friends did, if known) and 9 pm if a streak of 3+ days is at risk. With Game Center signed in, the Daily Challenge screen shows which friends already played today, and tapping a friend opens a head-to-head view built only from Game Center leaderboards; nothing is stored or sent elsewhere.
 
 4. External services
-Only Apple's Game Center (optional leaderboards and achievements) and the user's own iCloud via SwiftData/CloudKit for syncing progress between their devices. No third-party SDKs, analytics, ads, payment processors, authentication services or AI services. No server of our own.
+Only Apple's Game Center (optional leaderboards, achievements and friends' daily scores) and the user's own iCloud via SwiftData/CloudKit for syncing progress between their devices. No third-party SDKs, analytics, ads, payment processors, authentication services or AI services. No server of our own.
 
 5. Regional differences
 None. The app works the same in all regions; it is localized in English and Spanish.
@@ -25,9 +26,11 @@ Not applicable. The app does not operate in a regulated industry and contains no
 
 ## Guion del video (2–3 min, iPhone, build en revisión)
 
+El video enviado el 2026-11-01 es de la 1.2 (9).
+
 Ver el procedimiento en la respuesta de la sesión `quiet-studio` del 2026-10-31; resumen:
 
-1. Instalación limpia del build en revisión (TestFlight › Quiet Numbers › builds anteriores › 1.1 (8)), para que salga el tutorial.
+1. Instalación limpia del build en revisión (TestFlight › Quiet Numbers › builds anteriores › el build enviado), para que salga el tutorial.
 2. Grabar desde la pantalla de inicio de iOS: abrir la app (splash → Inicio).
 3. Nueva partida → tutorial completo → algunas parejas, una pista, deshacer, +.
 4. Volver a Inicio → Reto diario: jugar unas jugadas, salir y ver "Continuar / Empezar de nuevo", calendario.
