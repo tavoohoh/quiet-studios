@@ -8,7 +8,7 @@
 
 Las imágenes salen de scripts/creative-assets.py (AppStore/creative-assets/<en|es>/). Se suben como
 header-en.png, search-es.png…; si ya hay una con ese nombre en la biblioteca, no se repite.
-Una imagen cambiada se sube con otro nombre (p. ej. header-en-v2.png) o borrando la anterior en App Store Connect.
+Una imagen cambiada se sube con otro nombre: `--suffix v2` (header-en-v2.png…), y con --place reemplaza a la anterior.
 Apple las revisa junto con la versión donde se colocan.
 """
 import pathlib
@@ -80,6 +80,8 @@ def place(version_string, app_id, images, apply):
 def main():
     apply = "--apply" in sys.argv
     version = sys.argv[sys.argv.index("--place") + 1] if "--place" in sys.argv else None
+    # Imágenes cambiadas: --suffix v2 las sube como header-en-v2.png… y las coloca en lugar de las anteriores.
+    suffix = "-" + sys.argv[sys.argv.index("--suffix") + 1] if "--suffix" in sys.argv else ""
     app_id = asc.request("GET", f"/v1/apps?filter[bundleId]={BUNDLE_ID}")["data"][0]["id"]
     library = asc.request("GET", f"/v1/apps/{app_id}/assetLibrary")["data"]["id"]
     current = {i["attributes"]["fileName"]: i for i in asc.get_all(f"/v1/appAssetLibraries/{library}/images")
@@ -88,14 +90,15 @@ def main():
     images = {}
     for lang in LOCALES:
         for kind in PLACEMENTS:
-            name = f"{kind}-{lang}.png"
+            name = f"{kind}-{lang}{suffix}.png"
+            key = f"{kind}-{lang}.png"
             path = ROOT / "AppStore" / "creative-assets" / lang / f"{kind}.png"
             if name in current:
                 print(f"ya está {name} ({current[name]['attributes']['state']})")
-                images[name] = current[name]["id"]
+                images[key] = current[name]["id"]
             elif apply:
                 print(f"subiendo {name}")
-                images[name] = upload(library, path, name)
+                images[key] = upload(library, path, name)
             else:
                 print(f"subiría {name} ({path.stat().st_size} bytes)")
     if version:
