@@ -1,4 +1,6 @@
+import Foundation
 import QuietSudokuCore
+import SwiftData
 @testable import Quiet_Sudoku
 
 /// Boards for app tests.
@@ -27,11 +29,29 @@ extension GameModel {
     }
 
     /// Any action that counts as playing: a note in the first empty cell.
-    func writeANote() {
+    func writeANote(_ digit: Int = 1) {
         let cell = (0..<81).first { session.values[$0] == 0 }!
         select(cell)
         isNoting = true
-        input(1)
+        input(digit)
         isNoting = false
+    }
+
+    /// A wrong digit in the first empty cell, erased right away (it still costs).
+    func writeAMistake() {
+        let cell = (0..<81).first { session.values[$0] == 0 }!
+        select(cell)
+        isNoting = false
+        input(session.puzzle.solution[cell] % 9 + 1)
+        erase()
+    }
+}
+
+@MainActor
+extension PersistenceService {
+    /// A game in a slot from before 2026-11-02 ("daily", "practice-<day>").
+    func saveLegacyGame(_ session: GameSession, slot: String, updatedAt: Date) {
+        container.mainContext.insert(StoredGame(slot: slot, data: try! JSONEncoder().encode(session), updatedAt: updatedAt))
+        try? container.mainContext.save()
     }
 }

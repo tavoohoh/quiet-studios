@@ -4,14 +4,15 @@ import QuietUI
 import SwiftUI
 
 /// Month grid of daily challenges. Completed days are filled, played ones outlined, past
-/// days cleared as practice softly tinted, a dot marks a game left halfway, and days completed
+/// days first won after their date softly tinted, a dot marks a game left halfway, and days completed
 /// in a row are joined by a band (within a week). Days within the replay window can be tapped
 /// to play them unscored.
 struct CalendarView: View {
     @Binding var month: Date
     let todayKey: String
     let records: [String: DailyRecord]
-    let practiced: Set<String>
+    /// Days first won after their date.
+    let late: Set<String>
     let inProgress: Set<String>
     let onSelect: (String) -> Void
 
@@ -69,7 +70,7 @@ struct CalendarView: View {
                             dayKey: dayKey(for: day),
                             todayKey: todayKey,
                             record: records[dayKey(for: day)],
-                            isPracticed: practiced.contains(dayKey(for: day)),
+                            isLate: late.contains(dayKey(for: day)),
                             isInProgress: inProgress.contains(dayKey(for: day)),
                             isPlayable: isPlayable(dayKey(for: day)),
                             joinsPrevious: column != 0 && isCompleted(day) && isCompleted(day - 1),
@@ -143,8 +144,8 @@ private struct DayCell: View {
     let dayKey: String
     let todayKey: String
     let record: DailyRecord?
-    /// Cleared later as practice; a day completed on time keeps its own look.
-    let isPracticed: Bool
+    /// First won after its date; a day completed on time keeps its own look.
+    let isLate: Bool
     /// A game on this day was left halfway.
     let isInProgress: Bool
     let isPlayable: Bool
@@ -164,13 +165,13 @@ private struct DayCell: View {
             onSelect(dayKey)
         } label: {
             Text(day, format: .number)
-                .font(.system(isRegular ? .title3 : .callout, design: .rounded, weight: record?.isCompleted == true || isPracticed || isToday ? .bold : .regular).monospacedDigit())
+                .font(.system(isRegular ? .title3 : .callout, design: .rounded, weight: record?.isCompleted == true || isLate || isToday ? .bold : .regular).monospacedDigit())
                 .foregroundStyle(foreground)
                 .frame(width: circle, height: circle)
                 .background {
                     if record?.isCompleted == true {
                         Circle().fill(theme.primary)
-                    } else if isPracticed {
+                    } else if isLate {
                         Circle().fill(theme.primary.opacity(0.22))
                     } else if record?.isFinished == true {
                         Circle().strokeBorder(theme.primary, lineWidth: 1.5)
@@ -223,14 +224,14 @@ private struct DayCell: View {
     private var foreground: Color {
         if record?.isCompleted == true { return theme.onPrimary }
         if isToday { return theme.accent }
-        if isPracticed { return theme.primary }
+        if isLate { return theme.primary }
         return isPlayable ? theme.ink : theme.muted.opacity(0.6)
     }
 
     private var accessibilityStatus: Text {
         if isInProgress { return Text("In progress") }
         if record?.isCompleted == true { return Text("Completed") }
-        if isPracticed { return Text("Practiced") }
+        if isLate { return Text("Won later") }
         if record?.isFinished == true { return Text("Played") }
         return Text(verbatim: "")
     }

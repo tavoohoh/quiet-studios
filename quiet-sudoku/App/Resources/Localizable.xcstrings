@@ -574,12 +574,12 @@
         }
       }
     },
-    "Continue this practice?": {
+    "Continue this challenge?": {
       "localizations": {
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "¿Seguir con esta práctica?"
+            "value": "¿Seguir con este reto?"
           }
         }
       }
@@ -1544,12 +1544,12 @@
         }
       }
     },
-    "Past days are practice: they don't score, but winning one counts toward your streak.": {
+    "Past days don't go to the leaderboard, but winning one counts toward your streak.": {
       "localizations": {
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Los días pasados son práctica: no suman puntaje, pero ganarlos cuenta para tu racha."
+            "value": "Los días pasados no van a la clasificación, pero ganar uno cuenta para tu racha."
           }
         }
       }
@@ -1624,26 +1624,6 @@
         }
       }
     },
-    "Practice": {
-      "localizations": {
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Práctica"
-          }
-        }
-      }
-    },
-    "Practiced": {
-      "localizations": {
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Practicado"
-          }
-        }
-      }
-    },
     "Previous month": {
       "localizations": {
         "es": {
@@ -1704,12 +1684,12 @@
         }
       }
     },
-    "Replays don't count toward your score.": {
+    "Replay": {
       "localizations": {
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Las repeticiones no cuentan para tu puntaje."
+            "value": "Repetición"
           }
         }
       }
@@ -2470,6 +2450,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Ganadas"
+          }
+        }
+      }
+    },
+    "Won later": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ganado después"
           }
         }
       }

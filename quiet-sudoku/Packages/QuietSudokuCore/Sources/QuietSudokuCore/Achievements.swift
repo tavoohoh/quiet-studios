@@ -50,11 +50,12 @@ public enum ProgressEvent: Sendable {
     case scoreChanged(Int)
     /// A classic game was replaced before it ended; it counts as played if anything was played.
     case abandoned(played: Bool)
-    /// A daily was completed: today's scored attempt, or a past day filled by practice.
+    /// A day's challenge was won for the first time (today's, or a past day that fills the
+    /// streak). Replays of a day already won don't send it.
     case dailyCompleted(currentStreak: Int, localHour: Int)
-    /// A past day solved as practice: shown on the calendar (it also fills the day, sent as
-    /// `dailyCompleted` by the app).
-    case practiceCompleted(dayKey: String)
+    /// A past day won for the first time after its date: the calendar tints it apart (the
+    /// app also sends `dailyCompleted`).
+    case completedLate(dayKey: String)
 }
 
 /// Lifetime counters and unlocked achievements. Stored locally; works without Game Center.
@@ -66,12 +67,18 @@ public struct PlayerProgress: Codable, Hashable, Sendable {
     public private(set) var bestStreak = 0
     /// Best classic score.
     public private(set) var bestScore = 0
-    /// Past days solved as practice.
-    public private(set) var practicedDays: Set<String> = []
+    /// Past days first won after their date.
+    public private(set) var lateDays: Set<String> = []
     /// Fastest solve per level, in seconds (keyed by `Difficulty.rawValue`).
     public private(set) var bestTimes: [Int: Int] = [:]
 
     public init() {}
+
+    /// `lateDays` keeps the key it had when replays were called "practice" (before 2026-11-02).
+    private enum CodingKeys: String, CodingKey {
+        case unlocked, gamesWon, gamesPlayed, dailiesCompleted, bestStreak, bestScore, bestTimes
+        case lateDays = "practicedDays"
+    }
 
     /// Starts with achievements already unlocked (QA and screenshots).
     public init(unlocked: Set<Achievement>) {
@@ -107,8 +114,8 @@ public struct PlayerProgress: Codable, Hashable, Sendable {
             dailiesCompleted += 1
             bestStreak = max(bestStreak, streak)
             if (0..<4).contains(hour) { hits.append(.nightOwl) }
-        case .practiceCompleted(let dayKey):
-            practicedDays.insert(dayKey)
+        case .completedLate(let dayKey):
+            lateDays.insert(dayKey)
         }
         hits += Achievement.allCases.filter { $0.target > 1 && count(for: $0) >= $0.target }
         return unlock(hits)
@@ -124,7 +131,7 @@ public struct PlayerProgress: Codable, Hashable, Sendable {
         result.dailiesCompleted = max(dailiesCompleted, other.dailiesCompleted)
         result.bestStreak = max(bestStreak, other.bestStreak)
         result.bestScore = max(bestScore, other.bestScore)
-        result.practicedDays.formUnion(other.practicedDays)
+        result.lateDays.formUnion(other.lateDays)
         result.bestTimes.merge(other.bestTimes) { min($0, $1) }
         return result
     }

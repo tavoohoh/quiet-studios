@@ -128,8 +128,7 @@ struct GameView: View {
             Spacer()
             switch kind {
             case .classic: Stat(title: "Level", value: Text(model.session.difficulty.title))
-            case .daily: Stat(title: "Daily", value: Text(model.session.difficulty.title))
-            case .practice: Stat(title: "Practice", value: Text(model.session.difficulty.title))
+            case .daily(_, let isReplay): Stat(title: isReplay ? "Replay" : "Daily", value: Text(model.session.difficulty.title))
             }
         }
         .padding(.horizontal, 24)

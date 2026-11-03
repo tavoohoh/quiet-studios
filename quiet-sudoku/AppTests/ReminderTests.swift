@@ -37,9 +37,9 @@ import Testing
     @Test func aCompletedDailyOffersTheReminderOnce() {
         let app = AppModel(persistence: PersistenceService(store: .inMemory), reminders: reminders())
         let today = app.todayKey
-        app.persistence.startDaily(today)
-                        let model = TestBoards.oneFromWin(.daily(dayKey: today))
-        app.start(model, as: .daily(dayKey: today))
+        app.persistence.startAttempt(today)
+        let model = TestBoards.oneFromWin(.daily(dayKey: today))
+        app.start(model, as: .daily(dayKey: today, isReplay: false))
         model.playLastCell()
         #expect(!app.offersReminders)
         app.leftGame()

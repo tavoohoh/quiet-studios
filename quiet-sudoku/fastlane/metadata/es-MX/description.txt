@@ -10,7 +10,7 @@ PISTAS QUE ENSEÑAN
 ¿Atascado? Una pista escribe el siguiente número que se puede deducir y explica por qué ("En la caja 3, el 5 solo cabe aquí"). En Ajustes › Técnicas se explica cada técnica.
 
 UN SUDOKU NUEVO CADA DÍA
-El mismo reto diario para todos. Fácil el lunes, experto el domingo. Mantén tu racha y juega los últimos 30 días como práctica.
+El mismo reto diario para todos. Fácil el lunes, experto el domingo. Juégalo las veces que quieras, mantén tu racha y vuelve a cualquiera de los últimos 30 días.
 
 JUEGA A TU RITMO
 • Notas, deshacer ilimitado y pistas (las pistas cuestan unos pocos puntos).

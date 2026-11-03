@@ -6,8 +6,9 @@ transparent background, which iOS tints.
     scripts/render-icon.py
 
 A 3×3 box of rounded tiles (2026-10-30): eight in the light tile color and one in the accent,
-the digit the player is about to find. Colors from Quiet Solitaire's icon (and so Quiet
-Numbers'): background, light teal (#5BC2CF) and coral (#FF9A85).
+the digit the player is about to find. Colors from Quiet Numbers' icon, "A2" since
+2026-11-02 (vivid teal gradient #19BFCD → #0A8AA5, coral #FF9277): next to other apps the
+flat #0E6B78 looked grey. Only the icon and the store art; the app's themes don't change.
 """
 import json
 import pathlib
@@ -17,15 +18,15 @@ import tempfile
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 ASSETS = ROOT / "App/Resources/Assets.xcassets"
 
-# name → (background, tiles, the found tile).
+# name → (background, tiles, the found tile). A (top, bottom) background is a vertical gradient.
 VARIANTS = {
-    "light": ("#0E6B78", "#FFFFFF", "#FF9A85"),
-    "dark": ("#0B1517", "#5BC2CF", "#FF9A85"),
+    "light": (("#19BFCD", "#0A8AA5"), "#FFFFFF", "#FF9277"),
+    "dark": ("#03171B", "#2FD6E4", "#FF9277"),
     "tinted": (None, "#FFFFFF", "#A6A6A6"),
 }
 GOLD = {
-    "light": ("#A8741A", "#FFFFFF", "#E8B04A"),
-    "dark": ("#1A1408", "#E8B04A", "#F5E9CC"),
+    "light": (("#E3B043", "#B27A17"), "#FFFFFF", "#FF9277"),
+    "dark": ("#1A1408", "#F0BC4E", "#FF9277"),
     "tinted": VARIANTS["tinted"],
 }
 
@@ -35,7 +36,12 @@ FOUND = (2, 0)  # row, column of the accent tile
 
 
 def svg(background, tile, found):
-    rect = f'<rect width="1024" height="1024" fill="{background}"/>' if background else ""
+    if isinstance(background, tuple):
+        rect = ('<defs><linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">'
+                f'<stop offset="0" stop-color="{background[0]}"/><stop offset="1" stop-color="{background[1]}"/>'
+                '</linearGradient></defs><rect width="1024" height="1024" fill="url(#bg)"/>')
+    else:
+        rect = f'<rect width="1024" height="1024" fill="{background}"/>' if background else ""
     start = (1024 - (3 * TILE + 2 * GAP)) / 2
     tiles = []
     for row in range(3):
