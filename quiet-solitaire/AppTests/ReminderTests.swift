@@ -41,7 +41,7 @@ import Testing
         let foundations = Suit.allCases.map { suit in (1...(suit == .spades ? 12 : 13)).map { Card($0, suit) } }
         let state = GameState(stock: [], waste: [Card(13, .spades)], foundations: foundations, tableau: Array(repeating: [], count: 7))
         let model = GameModel(session: GameSession(mode: .daily(dayKey: today), state: state))
-        app.start(model, as: .daily(dayKey: today))
+        app.start(model, as: .daily(dayKey: today, isReplay: false))
         model.tap(Card(13, .spades).id)
         #expect(!app.offersReminders)
         app.leftGame()

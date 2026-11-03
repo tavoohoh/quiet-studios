@@ -102,7 +102,8 @@ final class GameplayUITests: XCTestCase {
         app.launch()
         app.buttons["newGame"].tap()
         let stock = app.buttons["stock"]
-        XCTAssertTrue(app.staticTexts["score"].waitForExistence(timeout: 5))
+        // The winnable deal is searched in the background; a debug build under load is slow.
+        XCTAssertTrue(app.staticTexts["score"].waitForExistence(timeout: 30))
         app.descendants(matching: .any).matching(NSPredicate(format: "label BEGINSWITH 'Stock,'")).firstMatch.tap()
         XCTAssertTrue(app.buttons["undo"].isEnabled)
         app.buttons["undo"].tap()

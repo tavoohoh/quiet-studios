@@ -3,10 +3,10 @@ import QuietSolitaireCore
 import QuietUI
 import SwiftUI
 
-/// Month grid of daily challenges. Completed days are filled, played ones outlined, past
-/// days cleared as practice softly tinted, a dot marks a game left halfway, and days completed
+/// Month grid of daily challenges. Completed days are filled, played ones outlined, days
+/// completed after their day softly tinted, a dot marks a game left halfway, and days completed
 /// in a row are joined by a band (within a week). Days within the replay window can be tapped
-/// to play them unscored.
+/// to play them (off the leaderboard).
 struct CalendarView: View {
     @Binding var month: Date
     let todayKey: String
@@ -143,7 +143,7 @@ private struct DayCell: View {
     let dayKey: String
     let todayKey: String
     let record: DailyRecord?
-    /// Cleared later as practice; a day completed on time keeps its own look.
+    /// Completed after its day; a day completed on time keeps its own look.
     let isPracticed: Bool
     /// A game on this day was left halfway.
     let isInProgress: Bool
@@ -230,7 +230,7 @@ private struct DayCell: View {
     private var accessibilityStatus: Text {
         if isInProgress { return Text("In progress") }
         if record?.isCompleted == true { return Text("Completed") }
-        if isPracticed { return Text("Practiced") }
+        if isPracticed { return Text("Completed later") }
         if record?.isFinished == true { return Text("Played") }
         return Text(verbatim: "")
     }

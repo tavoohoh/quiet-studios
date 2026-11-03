@@ -101,7 +101,7 @@ Klondike estándar, **robar 1**, reciclar el mazo **sin límite**.
 - **Victoria:** las 52 cartas en las fundaciones. **Autocompletar** aparece cuando todo el tableau está boca arriba y el stock y el descarte están vacíos.
 - **Sin movimientos:** si el solver confirma que no hay salida, se ofrece "Sin salida · Nueva partida / Deshacer". Nunca se declara perdida una partida que tiene salida.
 - **Deshacer:** ilimitado, paso a paso. Cuenta como movimiento y bloquea el logro "Sin vuelta atrás".
-- **Pistas:** ilimitadas, cuestan 10 puntos (como Quiet Numbers), **aunque el puntaje quede negativo** (da el logro "Números rojos"). Con "Números rojos" cuestan 3 solo en clásico (`AppModel.classicScoring`); los retos diarios, puntuables o de práctica, siempre cobran 10 (2026-10-30, regla de la familia; antes la práctica cobraba 3). Cada partida guarda su `Scoring`, así que el cambio aplica desde la siguiente. Si no hay movimiento útil ni mazo que tocar, no cobran. Señalan el mejor movimiento según el solver, si no hay ninguno útil sugieren tocar el mazo.
+- **Pistas:** ilimitadas, cuestan 10 puntos (como Quiet Numbers), **aunque el puntaje quede negativo** (da el logro "Números rojos"). Con "Números rojos" cuestan 3 solo en clásico (`AppModel.classicScoring`); los retos diarios, cualquier día y cualquier intento, siempre cobran 10 (2026-10-30, regla de la familia; antes las repeticiones cobraban 3). Cada partida guarda su `Scoring`, así que el cambio aplica desde la siguiente. Si no hay movimiento útil ni mazo que tocar, no cobran. Señalan el mejor movimiento según el solver, si no hay ninguno útil sugieren tocar el mazo.
 
 **Decisiones de implementación (2026-10-27):**
 - Las fundaciones tienen palo fijo (♠ ♥ ♦ ♣, como el canvas), no "cualquier as en cualquier hueco".
@@ -129,7 +129,7 @@ Klondike estándar, **robar 1**, reciclar el mazo **sin límite**.
 
 ## Reto diario
 
-Mismo esquema que Quiet Numbers (clave `yyyy-MM-dd` → FNV-1a → semilla, cambio de día a la **medianoche local** como Quiet Numbers desde el 2026-10-27 (`DailyKey.rolloverHour = 0` en QuietKit; antes 19:00), un intento puntuable, práctica sin puntuar, racha y calendario de 30 días). La clasificación `qs_daily_challenge` recurre cada día desde las 05:00 UTC (medianoche en Colombia).
+Mismo esquema que Quiet Numbers (clave `yyyy-MM-dd` → FNV-1a → semilla, cambio de día a la **medianoche local** como Quiet Numbers desde el 2026-10-27 (`DailyKey.rolloverHour = 0` en QuietKit; antes 19:00), intentos sin límite, racha y calendario de 30 días). La clasificación `qs_daily_challenge` recurre cada día desde las 05:00 UTC (medianoche en Colombia).
 
 Lo nuevo: **cada reto diario tiene solución garantizada.** Con un reparto aleatorio se juega "otra partida más"; el reto diario se distingue porque es el mismo para todos y se sabe que se puede ganar.
 
@@ -139,11 +139,12 @@ Lo nuevo: **cada reto diario tiene solución garantizada.** Con un reparto aleat
 - **Test obligatorio:** la misma fecha produce siempre el mismo reparto, y los retos de un año completo son ganables.
 - Modo clásico: "Solo partidas con solución" activado por defecto (mismo solver); se puede apagar en Ajustes.
 - **Regla de la familia** (sección "Reto diario" del `CLAUDE.md` de la raíz; alineado el 2026-10-30, tests en `AppTests/DailyRuleTests.swift`):
-  - "Completar" = ganar el reparto. El reto puntuable no termina sin ganar: si se sale, se retoma (sigue puntuando).
-  - **Práctica** (hoy después del intento puntuable, o un día de los últimos 30): se guarda por día (ranura `practice-<día>`, punto en el calendario, "Continuar" en la tarjeta) y al tocarla pregunta "Continuar / Empezar de nuevo". Se borra al ganarla o al salir de la ventana de 30 días.
-  - **Ganar una práctica rellena el día** una sola vez (`AppModel.fillDay`, `PersistenceService.fillDaily`): racha, calendario y logros de retos (`.dailyCompleted` con la racha más larga). Un intento puntuable sin terminar ese día conserva su puntaje. No envía nada a la clasificación.
-  - **Desempate por tiempo:** `StoredDaily.seconds` guarda el tiempo al ganar; viaja en el `Snapshot` y va en el `context` del puntaje de `qs_daily_challenge` (segundos + 1). Clasificaciones (pestaña Hoy, con el tiempo junto al puntaje) y el puesto entre amigos reordenan con `GameCenterService.dailyEntries` de QuietKit.
-  - Calendario igual al de Quiet Numbers (días reales del mes, bandas, prácticas a medias). La hoja de victoria es el resumen; los fuegos salen en toda victoria (también en clásico, pedido del usuario 2026-10-27), nunca con Reduce Motion.
+  - "Completar" = ganar el reparto. Un intento no termina sin ganar: si se sale, se retoma.
+  - **Intentos sin límite (2026-11-02):** hoy y cualquier día de los últimos 30 (`GameKind.daily(dayKey:isReplay:)`). Cada día guarda **el último estado del intento en curso** en la ranura `daily-<día>` (punto en el calendario, "Continuar" en la tarjeta); al tocar un día a medias pregunta "Continuar / Empezar de nuevo". Reiniciar o empezar de nuevo es un intento nuevo que reemplaza lo guardado (`PersistenceService.startDaily` cuenta `StoredDaily.attempts`); desde el segundo intento la partida dice "Repetición" en lugar de "Reto diario". Bug del primer intento que volvía (hoy: ⋯ › Reiniciar este reparto, jugar, salir y volver), corregido el 2026-11-02; pruebas `aRestartedDailyResumesTheLatestAttempt` (base en disco reabierta) y `DailyRestartUITests` (hoy y un día pasado). Hasta la 1.0 (3) el intento de hoy iba en la ranura `daily` y las repeticiones en `practice-<día>`; `PersistenceService` las migra al abrir.
+  - **Mejor resultado del día:** cada victoria pasa por `PersistenceService.winDaily`, que se queda con el mayor puntaje (a igualdad, el menor tiempo). Solo las victorias de **hoy** se envían a `qs_daily_challenge`; como esa clasificación guarda el puntaje más reciente, la app envía siempre el mejor del día. Los días pasados no se envían.
+  - **Completar un día por primera vez** cuenta una sola vez: racha, calendario y logros de retos (`.dailyCompleted`; para un día pasado, con la racha más larga y `.practiceCompleted`, que lo marca en el calendario como "Completado después").
+  - **Desempate por tiempo:** `StoredDaily.seconds` guarda el tiempo del mejor resultado; viaja en el `Snapshot` y va en el `context` del puntaje de `qs_daily_challenge` (segundos + 1). Clasificaciones (pestaña Hoy, con el tiempo junto al puntaje) y el puesto entre amigos reordenan con `GameCenterService.dailyEntries` de QuietKit.
+  - Calendario igual al de Quiet Numbers (días reales del mes, bandas, retos a medias). La hoja de victoria es el resumen; los fuegos salen en toda victoria (también en clásico, pedido del usuario 2026-10-27), nunca con Reduce Motion.
 
 ## Game Center
 
@@ -192,7 +193,7 @@ Mazos (2026-10-27, tras la primera revisión: Contorno y New York se parecían d
 | `qs_night_owl` | Noctámbulo / Night Owl | Ganar un reto entre 00:00 y 04:00 | Reverso Noche |
 | `qs_fifty_wins` | Cincuenta / Fifty | Ganar 50 partidas | Efecto de victoria: cascada (las cartas caen y luego los fuegos) |
 | `qs_economy` | Economía / Economy | Ganar en menos de 100 movimientos | Mazo Pixel |
-| `qs_in_the_red` | Números rojos / In the Red | Llevar el puntaje por debajo de cero (oculto) | Easter egg: pistas a 3 solo en clásico (desde el 2026-10-30 tampoco en práctica; los retos siguen a 10 para que su leaderboard sea parejo; `qs_best_score` sí se beneficia, aceptado como en Quiet Numbers). No aparece en Colección. Mismo premio que en Quiet Numbers (decidido 2026-10-27). |
+| `qs_in_the_red` | Números rojos / In the Red | Llevar el puntaje por debajo de cero (oculto) | Easter egg: pistas a 3 solo en clásico (desde el 2026-10-30 tampoco en las repeticiones de retos; los retos siguen a 10 para que su leaderboard sea parejo; `qs_best_score` sí se beneficia, aceptado como en Quiet Numbers). No aparece en Colección. Mismo premio que en Quiet Numbers (decidido 2026-10-27). |
 
 Siempre disponibles, sin logro: tema **Alto contraste**, mazo **Cuatro colores** y mazo **Índice grande** (accesibilidad), y los tableros **Petróleo y coral claro** y **oscuro** (2026-10-28, como Quiet Numbers): el de por defecto fijo en un modo aunque el iPhone use el otro.
 

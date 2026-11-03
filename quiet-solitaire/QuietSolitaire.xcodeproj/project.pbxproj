@@ -33,6 +33,7 @@
 		A9908AE59A6DDE3B9F709608 /* PixelArt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CC760EECB00E2DB6A4A3169 /* PixelArt.swift */; };
 		ACC0F5905FDACB2E3AE75A55 /* FriendProfileScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D2E08422267B6C9AC44928B /* FriendProfileScreen.swift */; };
 		ACFC8BE2FEC723B4AD1F46CF /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 9A975A3C7BA70E5AE2664432 /* InfoPlist.xcstrings */; };
+		B017BF76C639E4FB740D8536 /* DailyRestartUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3231A42938CCA69E8AFC2AB4 /* DailyRestartUITests.swift */; };
 		B80D284C38EDB7C53B718654 /* BoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B073CE3BF38DA394219A37D0 /* BoardView.swift */; };
 		C0001125044B6421A6301DE3 /* AppearanceRoot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C0C71637C81DE09E7B2D55 /* AppearanceRoot.swift */; };
 		CCC8414FB94FB1139C9BF469 /* GameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C838AB33AB932D01E914CF /* GameModel.swift */; };
@@ -84,6 +85,7 @@
 		2A23AACF4062D4DB0CABD08A /* GameplayUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameplayUITests.swift; sourceTree = "<group>"; };
 		2CBA4796B554B9BFFFAF19BA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		2D2E08422267B6C9AC44928B /* FriendProfileScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendProfileScreen.swift; sourceTree = "<group>"; };
+		3231A42938CCA69E8AFC2AB4 /* DailyRestartUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyRestartUITests.swift; sourceTree = "<group>"; };
 		3478F816C3C25F348F333D5C /* PersistenceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceService.swift; sourceTree = "<group>"; };
 		3B2CAAEAFC19DBFB9A221F26 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		405D5003598030F7890BE92E /* QuietSolitaireApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuietSolitaireApp.swift; sourceTree = "<group>"; };
@@ -204,6 +206,7 @@
 		6A6E0E5434005DF03C4AD1D7 /* UITests */ = {
 			isa = PBXGroup;
 			children = (
+				3231A42938CCA69E8AFC2AB4 /* DailyRestartUITests.swift */,
 				2A23AACF4062D4DB0CABD08A /* GameplayUITests.swift */,
 				587848CAA224DC97C97F4FB5 /* ReminderUITests.swift */,
 			);
@@ -521,6 +524,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B017BF76C639E4FB740D8536 /* DailyRestartUITests.swift in Sources */,
 				FD4C5C39403BCA2C9A9CE98E /* GameplayUITests.swift in Sources */,
 				63C37A2085816994D185A5A6 /* ReminderUITests.swift in Sources */,
 			);
@@ -657,7 +661,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -802,7 +806,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;

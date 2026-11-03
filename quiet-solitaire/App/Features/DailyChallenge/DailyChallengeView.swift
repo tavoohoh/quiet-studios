@@ -17,8 +17,8 @@ struct DailyChallengeView: View {
     @State private var friendsToday: [GameCenterService.Entry]?
     /// A friend tapped on "Friends today": their profile.
     @State private var friend: GameCenterService.Entry?
-    /// A practice left halfway: continue it or deal the day again.
-    @State private var unfinishedPractice: String?
+    /// A day left halfway: continue it or deal it again.
+    @State private var unfinishedDay: String?
 
     var body: some View {
         let today = app.todayKey
@@ -28,7 +28,6 @@ struct DailyChallengeView: View {
                     date: Text(DayKeyFormat.weekdayString(today)),
                     status: status(for: today),
                     playTitle: playTitle(for: today),
-                    showsReplayNote: !app.isScored(today),
                     streak: app.currentStreak,
                     bestStreak: app.longestStreak,
                     friendsRank: friendsRank,
@@ -51,7 +50,7 @@ struct DailyChallengeView: View {
                         .font(.subheadline)
                         .foregroundStyle(theme.muted)
                         .padding(.top, 4)
-                    Text("Past days are practice: they don't score, but winning one counts toward your streak.")
+                    Text("Past days don't go to the leaderboard, but your best score is kept and winning one counts toward your streak.")
                         .font(.footnote)
                         .foregroundStyle(theme.muted)
                         .multilineTextAlignment(.center)
@@ -72,13 +71,13 @@ struct DailyChallengeView: View {
         .task(id: app.gameCenter.isAuthenticated) { await loadFriends() }
         .friendProfile($friend)
         .alert(
-            "Continue this practice?",
-            isPresented: Binding(get: { unfinishedPractice != nil }, set: { if !$0 { unfinishedPractice = nil } }),
-            presenting: unfinishedPractice
+            "Continue this challenge?",
+            isPresented: Binding(get: { unfinishedDay != nil }, set: { if !$0 { unfinishedDay = nil } }),
+            presenting: unfinishedDay
         ) { dayKey in
             Button("Continue") { onPlay(dayKey) }
             Button("Start over") {
-                app.discardPractice(dayKey)
+                app.discardDaily(dayKey)
                 onPlay(dayKey)
             }
             Button("Cancel", role: .cancel) {}
@@ -87,10 +86,10 @@ struct DailyChallengeView: View {
         }
     }
 
-    /// The scored attempt always resumes; a practice in progress asks first.
+    /// A day left halfway asks first: continue it or start over.
     private func play(_ dayKey: String) {
-        if !app.isDailyInProgress(dayKey), app.persistence.practiceInProgress.contains(dayKey) {
-            unfinishedPractice = dayKey
+        if app.isDailyInProgress(dayKey) {
+            unfinishedDay = dayKey
         } else {
             onPlay(dayKey)
         }
@@ -129,13 +128,13 @@ struct DailyChallengeView: View {
 
     private func status(for dayKey: String) -> Text {
         if app.isDailyInProgress(dayKey) { return Text("In progress") }
-        guard let record = app.persistence.dailies[dayKey] else { return Text("Not played yet") }
+        guard let record = app.persistence.dailies[dayKey], record.isCompleted else { return Text("Not played yet") }
         return Text("Won · \(Text(record.score, format: .number))")
     }
 
     private func playTitle(for dayKey: String) -> LocalizedStringKey {
-        if app.daysInProgress.contains(dayKey) { return "Continue" }
-        return app.isScored(dayKey) ? "Play" : "Play again"
+        if app.isDailyInProgress(dayKey) { return "Continue" }
+        return app.persistence.dailies[dayKey]?.isCompleted == true ? "Play again" : "Play"
     }
 }
 
@@ -144,7 +143,6 @@ private struct TodayCard: View {
     let date: Text
     let status: Text
     let playTitle: LocalizedStringKey
-    let showsReplayNote: Bool
     let streak: Int
     let bestStreak: Int
     let friendsRank: Int?
@@ -153,7 +151,6 @@ private struct TodayCard: View {
     @Environment(\.quietTheme) private var theme
 
     var body: some View {
-        let onPrimary = theme.onPrimary
         VStack(alignment: .leading, spacing: 14) {
             ViewThatFits(in: .horizontal) {
                 HStack(spacing: 10) {
@@ -172,11 +169,6 @@ private struct TodayCard: View {
                 StatTile(label: "Friends") {
                     if let friendsRank { Text(verbatim: "#") + Text(friendsRank, format: .number) } else { Text(verbatim: "–") }
                 }
-            }
-            if showsReplayNote {
-                Text("Replays don't count toward your score.")
-                    .font(.footnote)
-                    .foregroundStyle(onPrimary.opacity(0.85))
             }
         }
         .padding(18)

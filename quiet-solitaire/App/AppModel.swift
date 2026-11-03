@@ -7,16 +7,15 @@ import QuietUI
 /// Which game is on screen, and whether it counts.
 enum GameKind: Equatable {
     case classic
-    /// Today's first attempt: saved, scored, counts for the streak.
-    case daily(dayKey: String)
-    /// Replay of a daily (today's after the scored attempt, or a past day). Saved per day,
-    /// not scored; winning it fills that day for the streak.
-    case practice(dayKey: String)
+    /// Any attempt at a day's challenge, today's or a past day's (2026-11-02: no limit).
+    /// Saved per day; today's wins go to the daily board; winning a day completes it for
+    /// the streak. `isReplay`: not the day's first attempt.
+    case daily(dayKey: String, isReplay: Bool)
 }
 
 /// Leaderboards, the same three as Quiet Numbers.
 enum Leaderboard: String, CaseIterable {
-    /// Recurring, resets every 24 h. Today's scored daily attempt (latest result).
+    /// Recurring, resets every 24 h. Today's best result, sent after every win.
     case daily = "qs_daily_challenge"
     case bestScore = "qs_best_score"
     case longestStreak = "qs_longest_streak"
@@ -53,8 +52,6 @@ final class AppModel {
     private(set) var unlockedThisGame: [Achievement] = []
     /// Moves of the saved classic game, if one is in progress.
     private(set) var classicMoves: Int?
-    /// Day of the scored daily attempt that's still open.
-    private(set) var openDailyKey: String?
     private(set) var progress: PlayerProgress
     /// Newly unlocked achievements waiting to be announced during play.
     private(set) var pendingUnlocks: [Achievement] = []
@@ -92,7 +89,7 @@ final class AppModel {
         #endif
         refreshSavedGames()
         if let oldest = DailyKey.dayKey(todayKey, addingDays: -DailyKey.replayWindow) {
-            persistence.deletePractice(before: oldest)
+            persistence.deleteDailyGames(before: oldest)
         }
         gameCenter.onAuthenticated = { [weak self] in self?.syncGameCenter() }
         reminders.clock = { AppClock.now }
@@ -158,7 +155,8 @@ final class AppModel {
         await gameCenter.submit(progress.bestScore, to: Leaderboard.bestScore.rawValue)
         await gameCenter.submit(longestStreak, to: Leaderboard.longestStreak.rawValue)
         if let today = persistence.dailies[todayKey], today.isFinished {
-            // The time rides in the context: the app breaks ties with it (`rankedByScoreAndTime`).
+            // Today's best, after every win: the board keeps the latest score it gets. The
+            // time rides in the context: the app breaks ties with it (`rankedByScoreAndTime`).
             await gameCenter.submit(today.score, to: Leaderboard.daily.rawValue, always: true,
                                     context: GameCenterService.dailyContext(seconds: today.seconds))
         }
@@ -225,7 +223,8 @@ final class AppModel {
         return true
     }
 
-    /// The same deal again from the start (classic stays classic; a daily replay is practice).
+    /// The same deal again from the start. In a daily it's a new attempt that replaces the
+    /// saved game (before, the first attempt could come back; 2026-11-02).
     func restart() {
         guard let game = activeGame, let kind = activeKind else { return }
         let session = GameSession(mode: game.session.mode, seed: game.session.seed, scoring: game.session.scoring)
@@ -234,12 +233,10 @@ final class AppModel {
             persistence.saveGame(session, in: .classic)
             classicMoves = 0
             start(GameModel(session: session), as: .classic)
-        case .daily(let day):
-            // The scored attempt keeps its score; the restart is practice.
-            start(GameModel(session: GameSession(mode: session.mode, seed: session.seed)), as: .practice(dayKey: day))
-        case .practice(let day):
-            persistence.saveGame(session, in: .practice(dayKey: day))
-            start(GameModel(session: session), as: kind)
+        case .daily(let day, _):
+            persistence.startDaily(day)
+            persistence.saveGame(session, in: .daily(dayKey: day))
+            start(GameModel(session: session), as: .daily(dayKey: day, isReplay: isReplay(day)))
         }
     }
 
@@ -259,7 +256,7 @@ final class AppModel {
     }
 
     /// Classic only: "In the Red" makes hints cheaper (a hidden reward). Daily challenges,
-    /// scored or replayed, always use `.standard` (2026-10-30, the family's daily rule).
+    /// any day and any attempt, always use `.standard` (2026-10-30, the family's daily rule).
     var classicScoring: Scoring {
         progress.unlocked.contains(.inTheRed) ? .cheapHints : .standard
     }
@@ -271,40 +268,30 @@ final class AppModel {
     var currentStreak: Int { Streaks.current(completed: persistence.completedDays, today: todayKey) }
     var longestStreak: Int { Streaks.longest(completed: persistence.completedDays) }
 
-    func isDailyInProgress(_ dayKey: String) -> Bool { openDailyKey == dayKey }
+    /// A game of that day is saved halfway.
+    func isDailyInProgress(_ dayKey: String) -> Bool { persistence.dailiesInProgress.contains(dayKey) }
 
-    /// Days with a game left halfway: today's scored attempt or any practice replay.
-    var daysInProgress: Set<String> {
-        persistence.practiceInProgress.union(openDailyKey.map { [$0] } ?? [])
-    }
+    /// Days with a game left halfway (for "Continue" and the calendar).
+    var daysInProgress: Set<String> { persistence.dailiesInProgress }
 
-    /// Whether playing `dayKey` now would count.
-    func isScored(_ dayKey: String) -> Bool {
-        isDailyInProgress(dayKey) || (dayKey == todayKey && persistence.dailies[dayKey] == nil)
-    }
+    /// The day was attempted before: the next (or current) attempt is a replay.
+    func isReplay(_ dayKey: String) -> Bool { (persistence.dailies[dayKey]?.attempts ?? 0) > 1 }
 
+    /// Resumes the day's game left halfway, or deals the day as a new attempt.
     func playDaily(_ dayKey: String) async {
-        if isDailyInProgress(dayKey), let session = persistence.loadGame(.daily) {
-            return start(GameModel(session: session), as: .daily(dayKey: dayKey))
+        if let saved = persistence.loadGame(.daily(dayKey: dayKey)), !saved.isWon {
+            return start(GameModel(session: saved), as: .daily(dayKey: dayKey, isReplay: isReplay(dayKey)))
         }
         let seed = await dailySeed(dayKey)
-        if isScored(dayKey) {
-            let model = GameModel(session: GameSession(mode: .daily(dayKey: dayKey), seed: seed))
-            persistence.startDaily(dayKey)
-            persistence.saveGame(model.session, in: .daily)
-            openDailyKey = dayKey
-            start(model, as: .daily(dayKey: dayKey))
-        } else if let saved = persistence.loadGame(.practice(dayKey: dayKey)), !saved.isWon {
-            start(GameModel(session: saved), as: .practice(dayKey: dayKey))
-        } else {
-            let session = GameSession(mode: .daily(dayKey: dayKey), seed: seed)
-            start(GameModel(session: session), as: .practice(dayKey: dayKey))
-        }
+        let model = GameModel(session: GameSession(mode: .daily(dayKey: dayKey), seed: seed))
+        persistence.startDaily(dayKey)
+        persistence.saveGame(model.session, in: .daily(dayKey: dayKey))
+        start(model, as: .daily(dayKey: dayKey, isReplay: isReplay(dayKey)))
     }
 
-    /// "Start over" on a practice left halfway: the next `playDaily` deals the day again.
-    func discardPractice(_ dayKey: String) {
-        persistence.deleteGame(.practice(dayKey: dayKey))
+    /// "Start over" on a day left halfway: the next `playDaily` deals the day again.
+    func discardDaily(_ dayKey: String) {
+        persistence.deleteGame(.daily(dayKey: dayKey))
     }
 
     /// The solver picks the day's deal (a fraction of a second; cached for the session).
@@ -354,8 +341,7 @@ final class AppModel {
             persistence.saveGame(game.session, in: .classic)
             classicMoves = game.session.moves
             if game.session.score > progress.bestScore { record(.classicScore(game.session.score)) }
-        case .daily: persistence.saveGame(game.session, in: .daily)
-        case .practice(let day): persistence.saveGame(game.session, in: .practice(dayKey: day))
+        case .daily(let day, _): persistence.saveGame(game.session, in: .daily(dayKey: day))
         }
         if game.session.isWon { finish(game.session, kind) }
     }
@@ -373,8 +359,7 @@ final class AppModel {
         guard let game = activeGame, !game.session.isWon else { return }
         switch activeKind {
         case .classic: persistence.saveGame(game.session, in: .classic)
-        case .daily: persistence.saveGame(game.session, in: .daily)
-        case .practice(let day): persistence.saveGame(game.session, in: .practice(dayKey: day))
+        case .daily(let day, _): persistence.saveGame(game.session, in: .daily(dayKey: day))
         case nil: break
         }
     }
@@ -383,16 +368,20 @@ final class AppModel {
         switch kind {
         case .classic:
             persistence.deleteGame(.classic)
-        case .daily(let dayKey):
-            persistence.finishDaily(dayKey, score: session.score, isCompleted: true, seconds: session.elapsedSeconds)
-            persistence.deleteGame(.daily)
+        case .daily(let dayKey, _):
+            persistence.deleteGame(.daily(dayKey: dayKey))
+            let wasCompleted = persistence.winDaily(dayKey, score: session.score, seconds: session.elapsedSeconds)
+            guard !wasCompleted else { break }
             let hour = Calendar.current.component(.hour, from: AppClock.now)
-            record(.dailyCompleted(currentStreak: currentStreak, localHour: hour))
+            if dayKey == todayKey {
+                record(.dailyCompleted(currentStreak: currentStreak, localHour: hour))
+            } else {
+                // Completed late: marked on the calendar. A filled gap can join two runs in
+                // the past, so the longest streak, not today's.
+                record(.practiceCompleted(dayKey: dayKey))
+                record(.dailyCompleted(currentStreak: longestStreak, localHour: hour))
+            }
             completedDailyThisGame = true
-        case .practice(let dayKey):
-            persistence.deleteGame(.practice(dayKey: dayKey))
-            if !progress.practicedDays.contains(dayKey) { record(.practiceCompleted(dayKey: dayKey)) }
-            fillDay(dayKey, with: session)
         }
         refreshSavedGames()
         Task {
@@ -401,24 +390,7 @@ final class AppModel {
         }
     }
 
-    /// A missed (or unfinished) day won as practice fills the streak (2026-10-30, as in Quiet
-    /// Numbers). It counts like a completed daily for achievements, but sends nothing to the
-    /// daily board.
-    private func fillDay(_ dayKey: String, with session: GameSession) {
-        guard persistence.dailies[dayKey]?.isCompleted != true else { return }
-        persistence.fillDaily(dayKey, score: session.score, seconds: session.elapsedSeconds)
-        let hour = Calendar.current.component(.hour, from: AppClock.now)
-        // A filled gap can join two runs in the past, so the longest streak, not today's.
-        record(.dailyCompleted(currentStreak: longestStreak, localHour: hour))
-        completedDailyThisGame = true
-    }
-
     private func refreshSavedGames() {
         classicMoves = persistence.loadGame(.classic).flatMap { $0.isWon ? nil : $0.moves }
-        if let daily = persistence.loadGame(.daily), !daily.isWon, case .daily(let key) = daily.mode {
-            openDailyKey = key
-        } else {
-            openDailyKey = nil
-        }
     }
 }

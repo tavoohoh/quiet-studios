@@ -302,7 +302,7 @@ private struct DailyCard: View {
     private var status: Text {
         let today = app.todayKey
         if app.isDailyInProgress(today) { return Text("In progress") }
-        guard let record = app.persistence.dailies[today] else { return Text("Not played yet") }
+        guard let record = app.persistence.dailies[today], record.isCompleted else { return Text("Not played yet") }
         return Text("Won · \(Text(record.score, format: .number))")
     }
 }

@@ -3,7 +3,7 @@
 ## En curso
 
 ### Alinear el reto diario con la regla de la familia
-- **Estado (2026-10-30):** hecho en código, sin commit, falta probarlo en el iPhone. Práctica guardada por día con "Continuar / Empezar de nuevo", ganar un día pasado rellena la racha, pistas a 10 en todo reto, desempate por tiempo en `qs_daily_challenge`, calendario con prácticas a medias. Detalle en `CLAUDE.md` › Reto diario. Pasa a "Hecho" cuando salga en una versión.
+- **Estado (2026-11-02):** reglas nuevas en código, sin commit: intentos sin límite hoy y en días pasados, el mejor resultado del día (hoy a la clasificación), "Repetición" desde el segundo intento, y siempre se retoma el último intento (bug corregido; antes volvía el primero). Antes (2026-10-30): guardado por día con "Continuar / Empezar de nuevo", ganar un día pasado rellena la racha, pistas a 10 en todo reto, desempate por tiempo. Falta probarlo en el iPhone. Detalle en `CLAUDE.md` › Reto diario. Pasa a "Hecho" cuando salga en una versión.
 
 ### Notificaciones del reto y perfil de amigos
 - **Estado (2026-10-30):** hecho en código con QuietKit (`DailyReminders`, `FriendsTodayCard`, `FriendProfileView`), sin commit; falta probar en el iPhone (permiso real, tarea de segundo plano y perfil con amigos de verdad). Detalle en `CLAUDE.md` › Notificaciones del reto y Game Center › Amigos.

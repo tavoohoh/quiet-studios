@@ -119,11 +119,12 @@ struct GameView: View {
                 .accessibilityIdentifier("time")
             Spacer()
             Stat(title: "Moves", value: Text(model.session.moves, format: .number))
+                .accessibilityIdentifier("moves")
             Spacer()
             switch kind {
             case .classic: Stat(title: "Best", value: Text(max(bestScore ?? 0, 0), format: .number))
-            case .daily(let day): Stat(title: "Daily", value: Text(Deals.dailyDifficulty(forDayKey: day).title))
-            case .practice: Stat(title: "Practice", value: Text(verbatim: "–"))
+            case .daily(let day, let isReplay):
+                Stat(title: isReplay ? "Replay" : "Daily", value: Text(Deals.dailyDifficulty(forDayKey: day).title))
             }
         }
         .padding(.horizontal, 24)

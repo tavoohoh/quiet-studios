@@ -19,20 +19,22 @@ import tempfile
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 ASSETS = ROOT / "App/Resources/Assets.xcassets"
 
-# name → (background, back card, front card, heart). From Quiet Numbers' icon: background,
-# its light teal (#5BC2CF, the dark icon's nodes) on the back card, its coral line (#FF9A85)
-# on the heart. Two changes, because the heart sits on a white card, not on the background:
+# name → (background, back card, front card, heart). From Quiet Numbers' icon (scripts/
+# render-artwork.py there), palette "A2" since 2026-11-02: vivid teal gradient #19BFCD → #0A8AA5
+# (dark: #03171B), the dark icon's nodes (#2FD6E4) on the back card, its coral line (#FF9277)
+# on the heart. Only the icon and the store art; the app's themes don't change. Because the
+# heart sits on a white card, not on the background:
 # - tinted: Numbers' line gray (#D0D0D0) barely shows on white at 60 px → #A6A6A6;
-# - gold: its cream line (#FFE2A8) disappears on the card → a darker gold, #C98F2E (between
-#   Numbers' #E8B04A and its #A8741A background), on the gold back card #E8B04A.
+# - gold: the heart stays coral, like the standard icon (the user's call, 2026-11-02), with a
+#   pale gold back card (#F7D27E; dark: #F0BC4E).
 VARIANTS = {
-    "light": ("#0E6B78", "#5BC2CF", "#FFFFFF", "#FF9A85"),
-    "dark": ("#0B1517", "#5BC2CF", "#E8F1F2", "#FF9A85"),
+    "light": (("#19BFCD", "#0A8AA5"), "#2FD6E4", "#FFFFFF", "#FF9277"),
+    "dark": ("#03171B", "#2FD6E4", "#E8F1F2", "#FF9277"),
     "tinted": (None, "#7A7A7A", "#FFFFFF", "#A6A6A6"),
 }
 GOLD = {
-    "light": ("#A8741A", "#E8B04A", "#FFFFFF", "#C98F2E"),
-    "dark": ("#1A1408", "#E8B04A", "#F5E9CC", "#C98F2E"),
+    "light": (("#E3B043", "#B27A17"), "#F7D27E", "#FFFFFF", "#FF9277"),
+    "dark": ("#1A1408", "#F0BC4E", "#F5E9CC", "#FF9277"),
     "tinted": VARIANTS["tinted"],
 }
 
@@ -44,7 +46,14 @@ CARD_CENTER = (592, 542)
 
 
 def svg(background, back, front, heart):
-    rect = f'<rect width="1024" height="1024" fill="{background}"/>' if background else ""
+    """`background` None leaves it transparent (tinted); a (top, bottom) pair is a vertical
+    gradient, as in Quiet Numbers."""
+    if isinstance(background, tuple):
+        rect = ('<defs><linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">'
+                f'<stop offset="0" stop-color="{background[0]}"/><stop offset="1" stop-color="{background[1]}"/>'
+                '</linearGradient></defs><rect width="1024" height="1024" fill="url(#bg)"/>')
+    else:
+        rect = f'<rect width="1024" height="1024" fill="{background}"/>' if background else ""
     tx, ty = CARD_CENTER[0] - 12 * HEART_SCALE, CARD_CENTER[1] - 12.5 * HEART_SCALE
     glyph = f'<path d="{HEART}" fill="{heart}" transform="translate({tx:.1f} {ty:.1f}) scale({HEART_SCALE:.4f})"/>'
     return f"""<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
