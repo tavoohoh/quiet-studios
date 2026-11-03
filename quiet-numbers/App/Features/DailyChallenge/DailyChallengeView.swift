@@ -17,8 +17,8 @@ struct DailyChallengeView: View {
     @State private var friendsToday: [GameCenterService.Entry]?
     /// A friend tapped on "Friends today": their profile.
     @State private var friend: GameCenterService.Entry?
-    /// A practice left halfway: continue it or deal the day again.
-    @State private var unfinishedPractice: String?
+    /// A challenge left halfway: continue it or deal the day again.
+    @State private var unfinishedDay: String?
 
     var body: some View {
         let today = app.todayKey
@@ -28,7 +28,7 @@ struct DailyChallengeView: View {
                     date: Text(DayKeyFormat.weekdayString(today)),
                     status: status(for: today),
                     playTitle: playTitle(for: today),
-                    showsReplayNote: !app.isScored(today),
+                    showsReplayNote: app.hasPlayed(today),
                     streak: app.currentStreak,
                     bestStreak: app.longestStreak,
                     friendsRank: friendsRank,
@@ -48,7 +48,7 @@ struct DailyChallengeView: View {
                         .font(.subheadline)
                         .foregroundStyle(theme.muted)
                         .padding(.top, 4)
-                    Text("Past days are practice: they don't score, but completing one counts toward your streak.")
+                    Text("Past days don't go to the leaderboard, but completing one counts toward your streak.")
                         .font(.footnote)
                         .foregroundStyle(theme.muted)
                         .multilineTextAlignment(.center)
@@ -69,13 +69,13 @@ struct DailyChallengeView: View {
         .task(id: app.gameCenter.isAuthenticated) { await loadFriends() }
         .friendProfile($friend)
         .alert(
-            "Continue this practice?",
-            isPresented: Binding(get: { unfinishedPractice != nil }, set: { if !$0 { unfinishedPractice = nil } }),
-            presenting: unfinishedPractice
+            "Continue this challenge?",
+            isPresented: Binding(get: { unfinishedDay != nil }, set: { if !$0 { unfinishedDay = nil } }),
+            presenting: unfinishedDay
         ) { dayKey in
             Button("Continue") { onPlay(dayKey) }
             Button("Start over") {
-                app.discardPractice(dayKey)
+                app.startOver(dayKey)
                 onPlay(dayKey)
             }
             Button("Cancel", role: .cancel) {}
@@ -84,10 +84,10 @@ struct DailyChallengeView: View {
         }
     }
 
-    /// The scored attempt always resumes; a practice in progress asks first.
+    /// A challenge left halfway, today or past, asks first.
     private func play(_ dayKey: String) {
-        if !app.isDailyInProgress(dayKey), app.persistence.practiceInProgress.contains(dayKey) {
-            unfinishedPractice = dayKey
+        if app.isDailyInProgress(dayKey) {
+            unfinishedDay = dayKey
         } else {
             onPlay(dayKey)
         }
@@ -134,8 +134,8 @@ struct DailyChallengeView: View {
     }
 
     private func playTitle(for dayKey: String) -> LocalizedStringKey {
-        if app.daysInProgress.contains(dayKey) { return "Continue" }
-        return app.isScored(dayKey) ? "Play" : "Play again"
+        if app.isDailyInProgress(dayKey) { return "Continue" }
+        return app.hasPlayed(dayKey) ? "Play again" : "Play"
     }
 }
 
@@ -174,7 +174,7 @@ private struct TodayCard: View {
                 }
             }
             if showsReplayNote {
-                Text("Replays don't count toward your score.")
+                Text("Play again as often as you like: your best score counts.")
                     .font(.footnote)
                     .foregroundStyle(onPrimary.opacity(0.85))
             }

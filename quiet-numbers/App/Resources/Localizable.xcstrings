@@ -479,12 +479,12 @@
         }
       }
     },
-    "Continue this practice?": {
+    "Continue this challenge?": {
       "localizations": {
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "¿Seguir con esta práctica?"
+            "value": "¿Seguir con este reto?"
           }
         }
       }
@@ -1175,16 +1175,6 @@
         }
       }
     },
-    "Not scored": {
-      "localizations": {
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Sin puntaje"
-          }
-        }
-      }
-    },
     "Not signed in": {
       "localizations": {
         "es": {
@@ -1295,12 +1285,12 @@
         }
       }
     },
-    "Past days are practice: they don't score, but completing one counts toward your streak.": {
+    "Past days don't go to the leaderboard, but completing one counts toward your streak.": {
       "localizations": {
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Los días pasados son práctica: no suman puntaje, pero completarlos cuenta para tu racha."
+            "value": "Los días pasados no van a la clasificación, pero completarlos cuenta para tu racha."
           }
         }
       }
@@ -1335,6 +1325,16 @@
         }
       }
     },
+    "Play again as often as you like: your best score counts.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Juega las veces que quieras: cuenta tu mejor puntaje."
+          }
+        }
+      }
+    },
     "Play with friends": {
       "localizations": {
         "es": {
@@ -1361,26 +1361,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Jugado · %@"
-          }
-        }
-      }
-    },
-    "Practice · %@": {
-      "localizations": {
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Práctica · %@"
-          }
-        }
-      }
-    },
-    "Practiced": {
-      "localizations": {
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Practicado"
           }
         }
       }
@@ -1445,12 +1425,12 @@
         }
       }
     },
-    "Replays don't count toward your score.": {
+    "Replay": {
       "localizations": {
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Las repeticiones no suman a tu puntaje."
+            "value": "Repetición"
           }
         }
       }

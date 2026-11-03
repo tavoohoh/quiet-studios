@@ -3,8 +3,8 @@ import QuietNumbersCore
 import QuietUI
 import SwiftUI
 
-/// Month grid of daily challenges. Completed days are filled, played ones outlined, past
-/// days cleared as practice softly tinted, a dot marks a game left halfway, and days completed
+/// Month grid of daily challenges. Completed days are filled, played ones outlined, a dot
+/// marks a game left halfway (older versions' late days are softly tinted), and days completed
 /// in a row are joined by a band (within a week). Days within the replay window can be tapped
 /// to play them unscored.
 struct CalendarView: View {
@@ -143,7 +143,7 @@ private struct DayCell: View {
     let dayKey: String
     let todayKey: String
     let record: DailyRecord?
-    /// Cleared later as practice; a day completed on time keeps its own look.
+    /// Cleared later (`PlayerProgress.practicedDays`); a day completed on time keeps its own look.
     let isPracticed: Bool
     /// A game on this day was left halfway.
     let isInProgress: Bool
@@ -200,6 +200,7 @@ private struct DayCell: View {
         .disabled(!isPlayable)
         .accessibilityLabel(Text(DayKeyFormat.string(dayKey, date: .long)))
         .accessibilityValue(accessibilityStatus)
+        .accessibilityIdentifier("day-\(dayKey)")
     }
 
     private var isToday: Bool { dayKey == todayKey }
@@ -230,7 +231,7 @@ private struct DayCell: View {
     private var accessibilityStatus: Text {
         if isInProgress { return Text("In progress") }
         if record?.isCompleted == true { return Text("Completed") }
-        if isPracticed { return Text("Practiced") }
+        if isPracticed { return Text("Completed") }
         if record?.isFinished == true { return Text("Played") }
         return Text(verbatim: "")
     }

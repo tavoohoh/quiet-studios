@@ -48,10 +48,10 @@ ICONS = {
         "dark": icon("#03171B", "#2FD6E4", "#FF9277", "#2FD6E4"),
         "tinted": icon(None, "#FFFFFF", "#D0D0D0", "#FFFFFF"),
     },
-    # Alternate icon, unlocked by Centennial.
+    # Alternate icon, unlocked by Centennial. Same coral line as every Quiet icon (2026-11-02).
     "AppIcon-Gold": {
-        "light": icon(("#E3B043", "#B27A17"), "#FFFFFF", "#FFF1CF", "#FFFFFF"),
-        "dark": icon("#1A1408", "#F0BC4E", "#FFE2A8", "#F0BC4E"),
+        "light": icon(("#E3B043", "#B27A17"), "#FFFFFF", "#FF9277", "#FFFFFF"),
+        "dark": icon("#1A1408", "#F0BC4E", "#FF9277", "#F0BC4E"),
         "tinted": icon(None, "#FFFFFF", "#D0D0D0", "#FFFFFF"),
     },
 }

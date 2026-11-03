@@ -160,7 +160,8 @@ private struct ActiveGameView: View {
                 onNewGame: { app.newClassic() },
                 onSessionChange: { app.sessionChanged() },
                 bestScore: kind == .classic ? app.progress.bestScore : nil,
-                unlocked: app.unlockedThisGame
+                unlocked: app.unlockedThisGame,
+                isReplay: app.isReplay
             )
             .id(ObjectIdentifier(game))
             .onDisappear { app.leftGame() }

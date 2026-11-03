@@ -283,7 +283,7 @@
       },
       "sortOrder": "High to Low",
       "scoreSubmission": "Most recent score",
-      "source": "Today's scored daily attempt, sent whenever it finishes, even at 0 or below (AppModel.pushToGameCenter)",
+      "source": "Today's best result (AppModel.dailyToSubmit), sent after every attempt at today's challenge, even at 0 or below; with 'Most recent score' a worse attempt can't replace it (2026-11-02)",
       "scoreRange": "None (scores can be negative)"
     },
     {

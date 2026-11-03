@@ -35,7 +35,9 @@ final class PersistenceUITests: XCTestCase {
         app.buttons["back"].tap()
         dailyCard(app).tap()
         snapshot(app, "daily")
-        app.buttons["Continue"].tap()
+        app.buttons["Continue"].firstMatch.tap()
+        // A challenge left halfway asks first (2026-11-02, today too).
+        app.alerts.buttons["Continue"].tap()
         XCTAssertTrue(app.staticTexts["score"].waitForExistence(timeout: 2))
         XCTAssertEqual(app.buttons.matching(identifierPrefix: "cell-").count, dailyCells)
         snapshot(app, "daily-resumed")

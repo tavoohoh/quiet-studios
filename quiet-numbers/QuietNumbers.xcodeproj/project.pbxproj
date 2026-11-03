@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		04E2920C2758163799FFDD3C /* DailyRestartUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8AA698502DF5FF0D0752225 /* DailyRestartUITests.swift */; };
 		053BB0365C625243135874E4 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E7798637C0A4A6CDA4DBB2 /* GameView.swift */; };
 		0A6F8008456DDF2D88E85F3E /* FriendProfileScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15D8E8DC19971AD50F6178DE /* FriendProfileScreen.swift */; };
 		0F74E3EDDCA32DA6C44BF7F5 /* TutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4BA742F911507670BC8C928 /* TutorialView.swift */; };
@@ -122,6 +123,7 @@
 		B529A32088A2D117919279B6 /* QuietNumbersCore */ = {isa = PBXFileReference; lastKnownFileType = folder; name = QuietNumbersCore; path = Packages/QuietNumbersCore; sourceTree = SOURCE_ROOT; };
 		C219A3C9F0EBBD5008E22FA5 /* ScreenshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenshotTests.swift; sourceTree = "<group>"; };
 		C33B49B32F0F2F2AA6714F78 /* BoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardView.swift; sourceTree = "<group>"; };
+		C8AA698502DF5FF0D0752225 /* DailyRestartUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyRestartUITests.swift; sourceTree = "<group>"; };
 		CA3D83326830FBDF44307316 /* Rewards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rewards.swift; sourceTree = "<group>"; };
 		D01628D4296D74542A4B3F7C /* GameClock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameClock.swift; sourceTree = "<group>"; };
 		D15AA4C99BAE2C8662B34C66 /* AppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModel.swift; sourceTree = "<group>"; };
@@ -161,6 +163,7 @@
 			isa = PBXGroup;
 			children = (
 				2A2F11A9E3ADE55BDF7FA2D0 /* CollectionUITests.swift */,
+				C8AA698502DF5FF0D0752225 /* DailyRestartUITests.swift */,
 				ABA9DDB21A2D6D9A16F979F4 /* GameplayUITests.swift */,
 				B0B0675BDEA4B0A15DEB5B9C /* PersistenceUITests.swift */,
 				23E4CB3A5344AF1C740A0ECE /* ReminderUITests.swift */,
@@ -561,6 +564,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4FEBF4CDF576A9ADE24F5480 /* CollectionUITests.swift in Sources */,
+				04E2920C2758163799FFDD3C /* DailyRestartUITests.swift in Sources */,
 				7285EE1FA7F38A9D5CD2EB39 /* GameplayUITests.swift in Sources */,
 				C8F42C0267E4DB6F52F5D3B0 /* PersistenceUITests.swift in Sources */,
 				E13626598E7FBD9FC42A4422 /* ReminderUITests.swift in Sources */,
@@ -665,7 +669,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 11;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -684,7 +688,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
-				MARKETING_VERSION = 1.2;
+				MARKETING_VERSION = 1.3;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -752,7 +756,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 11;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -765,7 +769,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
-				MARKETING_VERSION = 1.2;
+				MARKETING_VERSION = 1.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";

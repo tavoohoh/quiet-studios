@@ -14,6 +14,8 @@ struct GameView: View {
     let bestScore: Int?
     /// Achievements this game unlocked, for the summary.
     let unlocked: [Achievement]
+    /// A daily already played to the end before.
+    var isReplay = false
 
     /// Best score when this game started, to spot a new record.
     @State private var startingBest: Int?
@@ -119,6 +121,7 @@ struct GameView: View {
                 GameSummarySheet(
                     session: model.session,
                     kind: kind,
+                    isReplay: isReplay,
                     isNewBest: (startingBest ?? 0) > 0 && model.session.score > (startingBest ?? 0),
                     unlocked: unlocked,
                     onNewGame: { animate(onNewGame) },
@@ -137,7 +140,7 @@ struct GameView: View {
     private var fireworksSeed: UInt64 {
         switch kind {
         case .classic: 7
-        case .daily(let dayKey), .practice(let dayKey): FNV1a.hash(dayKey)
+        case .daily(let dayKey): FNV1a.hash(dayKey)
         }
     }
 
@@ -150,8 +153,11 @@ struct GameView: View {
         case .classic:
             Text("Stage \(model.session.stage)") + Text(verbatim: " · ")
                 + Text("Best \(Text(max(startingBest ?? bestScore ?? 0, model.displayedScore), format: .number))")
-        case .daily: Text("Stage \(model.session.stage)") + goal
-        case .practice(let dayKey): Text("Practice · \(DayKeyFormat.string(dayKey))") + goal
+        case .daily(let dayKey):
+            // A past day says which; today's shows the stage.
+            dayKey == DailyKey.dayKey(for: AppClock.now)
+                ? Text("Stage \(model.session.stage)") + goal
+                : Text(DayKeyFormat.string(dayKey)) + goal
         }
     }
 
@@ -192,6 +198,7 @@ private struct StageBanner: View {
 private struct GameSummarySheet: View {
     let session: GameSession
     let kind: GameKind
+    let isReplay: Bool
     let isNewBest: Bool
     let unlocked: [Achievement]
     let onNewGame: () -> Void
@@ -210,8 +217,8 @@ private struct GameSummarySheet: View {
                     .foregroundStyle(theme.ink)
                 if isNewBest {
                     tag(Text("New best score!"))
-                } else if case .practice = kind {
-                    tag(Text("Not scored"))
+                } else if isReplay {
+                    tag(Text("Replay"))
                 }
             }
             .accessibilityElement(children: .combine)
