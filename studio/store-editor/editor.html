@@ -1,0 +1,522 @@
+<title>Estilo de la tienda</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: lienzo a la izquierda con las piezas a escala (header y búsqueda arriba, capturas abajo), panel de propiedades fijo a la derecha. */
+:root {
+  --bg: #EEF2F2; --panel: #FFFFFF; --canvas: #DDE4E5; --line: #CBD5D6; --ink: #142023; --muted: #5A6B6E;
+  --accent: #0E6B78; --on-accent: #FFFFFF; --select: #FF7A59; --ok: #1E7A4C; --warn: #A15C00; --bad: #B3261E;
+  --ui: "Manrope", system-ui, sans-serif; --mono: "JetBrains Mono", ui-monospace, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #11181A; --panel: #172124; --canvas: #0B1113; --line: #2A383B; --ink: #E6EEEF; --muted: #93A5A8;
+  --accent: #5BC2CF; --on-accent: #062327; --select: #FF9A85; --ok: #6FD39E; --warn: #F2B35B; --bad: #FF8A80; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #11181A; --panel: #172124; --canvas: #0B1113; --line: #2A383B; --ink: #E6EEEF; --muted: #93A5A8;
+  --accent: #5BC2CF; --on-accent: #062327; --select: #FF9A85; --ok: #6FD39E; --warn: #F2B35B; --bad: #FF8A80; color-scheme: dark }
+html, body { height: 100%; }
+body { background: var(--bg); color: var(--ink); font: 500 13px/1.4 var(--ui); }
+button, input, select { font: inherit; color: inherit; }
+.app { height: 100%; display: grid; grid-template-rows: auto 1fr; }
+.top { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; padding-block: 10px;
+       padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+       border-bottom: 1px solid var(--line); background: var(--panel); }
+.top h1 { margin: 0; font-size: 15px; font-weight: 800; letter-spacing: -0.01em; }
+.top h1 span { color: var(--muted); font-weight: 600; }
+.spacer { flex: 1; }
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.seg button { border: 0; background: transparent; padding: 5px 10px; cursor: pointer; font-weight: 700; }
+.seg button[aria-pressed="true"] { background: var(--accent); color: var(--on-accent); }
+.btn { border: 1px solid var(--line); background: var(--panel); border-radius: 8px; padding: 5px 10px; cursor: pointer; font-weight: 700; }
+.btn:hover:not(:disabled) { border-color: var(--accent); }
+.btn:disabled { opacity: 0.4; cursor: default; }
+.btn.primary { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
+.status { color: var(--muted); font-size: 12px; min-width: 90px; }
+:focus-visible { outline: 2px solid var(--select); outline-offset: 2px; }
+
+.work { min-height: 0; display: grid; grid-template-columns: minmax(0, 1fr) 320px; }
+.canvas { min-height: 0; overflow: auto; background: var(--canvas); padding-block: 24px;
+          padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.row { display: flex; flex-wrap: wrap; gap: 18px; margin-bottom: 28px; }
+.piece { display: flex; flex-direction: column; gap: 6px; }
+.frame { position: relative; overflow: hidden; border-radius: 6px; box-shadow: 0 1px 2px rgba(0,0,0,0.12), 0 8px 24px rgba(0,0,0,0.12); cursor: pointer; }
+.frame iframe { position: absolute; left: 0; top: 0; border: 0; transform-origin: 0 0; pointer-events: none; background: #888; }
+.frame::after { content: ""; position: absolute; inset: 0; border-radius: 6px; box-shadow: inset 0 0 0 0 var(--select); transition: box-shadow 120ms; }
+.piece.selected .frame::after { box-shadow: inset 0 0 0 3px var(--select); }
+.piece .name { display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; color: var(--muted); }
+.piece.selected .name { color: var(--ink); }
+.dot { width: 7px; height: 7px; border-radius: 50%; background: var(--select); }
+
+.panel { min-height: 0; overflow: auto; background: var(--panel); border-left: 1px solid var(--line); padding: 14px 16px 24px;
+         padding-right: max(16px, env(safe-area-inset-right, 0px)); display: flex; flex-direction: column; gap: 18px; }
+.scope { display: flex; flex-direction: column; gap: 6px; }
+.scope .label, .section h2 { font-size: 11px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin: 0; }
+.scope p { margin: 0; color: var(--muted); }
+.section { display: flex; flex-direction: column; gap: 10px; padding-top: 14px; border-top: 1px solid var(--line); }
+.section header { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.own { display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: var(--muted); cursor: pointer; }
+.section[data-locked="true"] .fields { opacity: 0.45; pointer-events: none; }
+.fields { display: flex; flex-direction: column; gap: 9px; }
+.field { display: grid; grid-template-columns: 78px minmax(0, 1fr); align-items: center; gap: 8px; }
+.field > span { color: var(--muted); font-weight: 600; }
+.color { display: flex; align-items: center; gap: 6px; min-width: 0; }
+.color input[type="color"] { width: 30px; height: 26px; padding: 0; border: 1px solid var(--line); border-radius: 6px; background: none; cursor: pointer; }
+.color input[type="text"] { width: 84px; min-width: 0; padding: 4px 6px; border: 1px solid var(--line); border-radius: 6px; background: transparent; font-family: var(--mono); font-size: 12px; text-transform: uppercase; }
+select { width: 100%; padding: 4px 6px; border: 1px solid var(--line); border-radius: 6px; background: var(--panel); }
+.range { display: flex; align-items: center; gap: 8px; }
+.range input { flex: 1; min-width: 0; accent-color: var(--accent); }
+.range output { width: 42px; text-align: right; font-family: var(--mono); font-size: 12px; font-variant-numeric: tabular-nums; }
+.presets { display: flex; flex-wrap: wrap; gap: 6px; }
+.presets button { width: 30px; height: 30px; border-radius: 8px; border: 1px solid var(--line); cursor: pointer; }
+.check { display: flex; align-items: center; gap: 6px; font-weight: 600; color: var(--muted); }
+.contrast { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { display: inline-flex; gap: 6px; align-items: baseline; padding: 3px 8px; border-radius: 999px; border: 1px solid var(--line); font-size: 12px; font-weight: 700; }
+.chip b { font-family: var(--mono); font-weight: 500; font-variant-numeric: tabular-nums; }
+.chip.ok { color: var(--ok); } .chip.warn { color: var(--warn); } .chip.bad { color: var(--bad); }
+.apply { display: flex; flex-direction: column; gap: 8px; padding: 12px; border-radius: 10px; background: var(--bg); }
+.apply p { margin: 0; }
+.apply code { font-family: var(--mono); font-size: 12px; }
+.empty { color: var(--muted); padding: 40px 0; }
+.note { margin: 0; color: var(--muted); font-size: 12px; }
+
+@media (max-width: 760px) {
+  .work { grid-template-columns: 1fr; grid-template-rows: minmax(320px, 55%) auto; }
+  .panel { border-left: 0; border-top: 1px solid var(--line); padding-left: max(16px, env(safe-area-inset-left, 0px)); }
+  .app { height: auto; min-height: 100%; }
+}
+@media (prefers-reduced-motion: reduce) { .frame::after { transition: none; } }
+</style>
+
+<div class="app">
+  <div class="top">
+    <h1 id="title">Estilo de la tienda <span>· cargando</span></h1>
+    <div class="seg" role="group" aria-label="Idioma">
+      <button id="lang-en" type="button" aria-pressed="false">EN</button>
+      <button id="lang-es" type="button" aria-pressed="true">ES</button>
+    </div>
+    <div class="spacer"></div>
+    <span class="status" id="status" aria-live="polite"></span>
+    <button class="btn" id="undo" type="button" title="Deshacer (⌘Z)" disabled>Deshacer</button>
+    <button class="btn" id="redo" type="button" title="Rehacer (⇧⌘Z)" disabled>Rehacer</button>
+    <button class="btn" id="reset" type="button" title="Volver al estilo que está en las imágenes actuales">Restablecer</button>
+  </div>
+  <div class="work">
+    <div class="canvas" id="canvas"><p class="empty">Cargando las piezas de la tienda…</p></div>
+    <aside class="panel" id="panel">
+      <div class="scope">
+        <span class="label">Editando</span>
+        <div class="seg" role="group" aria-label="Alcance">
+          <button id="scope-all" type="button" aria-pressed="true">Todas las piezas</button>
+          <button id="scope-one" type="button" aria-pressed="false" disabled>Pieza</button>
+        </div>
+        <p id="scope-hint">Toca una pieza del lienzo para darle un estilo propio.</p>
+      </div>
+
+      <section class="section" data-section="background">
+        <header><h2>Fondo</h2><label class="own" hidden><input type="checkbox" data-own> Solo esta pieza</label></header>
+        <div class="fields">
+          <div class="presets" id="presets" aria-label="Fondos de la familia"></div>
+          <label class="field"><span>Arriba</span><span class="color" data-color="background.top"></span></label>
+          <label class="field"><span>Abajo</span><span class="color" data-color="background.bottom"></span></label>
+          <label class="check"><input type="checkbox" id="solid"> Color sólido</label>
+        </div>
+      </section>
+
+      <section class="section" data-section="title">
+        <header><h2>Título</h2><label class="own" hidden><input type="checkbox" data-own> Solo esta pieza</label></header>
+        <div class="fields">
+          <label class="field"><span>Fuente</span><select data-font="title.font"></select></label>
+          <label class="field"><span>Peso</span><select data-weight="title.weight"></select></label>
+          <div class="field"><span>Tamaño</span><span class="range"><input type="range" min="70" max="130" step="1" data-range="title.size" aria-label="Tamaño del título"><output></output></span></div>
+          <p class="note">En las capturas, 100 % es el mismo tamaño en las cinco; una línea que no cabe se achica sola.</p>
+          <label class="field"><span>Línea 1</span><span class="color" data-color="title.color"></span></label>
+          <label class="field"><span>Línea 2</span><span class="color" data-color="title.accent"></span></label>
+        </div>
+      </section>
+
+      <section class="section" data-section="subtitle">
+        <header><h2>Subtítulo</h2><label class="own" hidden><input type="checkbox" data-own> Solo esta pieza</label></header>
+        <div class="fields">
+          <label class="field"><span>Fuente</span><select data-font="subtitle.font"></select></label>
+          <label class="field"><span>Peso</span><select data-weight="subtitle.weight"></select></label>
+          <div class="field"><span>Tamaño</span><span class="range"><input type="range" min="70" max="130" step="1" data-range="subtitle.size" aria-label="Tamaño del subtítulo"><output></output></span></div>
+          <label class="field"><span>Color</span><span class="color" data-color="subtitle.color"></span></label>
+          <div class="field"><span>Opacidad</span><span class="range"><input type="range" min="40" max="100" step="1" data-range="subtitle.opacity" aria-label="Opacidad del subtítulo"><output></output></span></div>
+        </div>
+      </section>
+
+      <section class="section" data-section="phone">
+        <header><h2>Teléfono</h2><label class="own" hidden><input type="checkbox" data-own> Solo esta pieza</label></header>
+        <div class="fields">
+          <div class="field"><span>Posición</span><span class="range"><input type="range" min="-60" max="120" step="2" data-range="phone.offset" data-unit=" pt" aria-label="Posición vertical del teléfono"><output></output></span></div>
+          <p class="note">Mueve el teléfono de las 5 capturas, todas a la misma altura. Positivo baja, negativo sube.</p>
+        </div>
+      </section>
+
+      <section class="section">
+        <header><h2>Contraste sobre el fondo</h2></header>
+        <div class="contrast" id="contrast"></div>
+        <p style="margin:0;color:var(--muted)">Se mide contra el color más difícil del degradado. El título pide 3:1 y el subtítulo 4,5:1.</p>
+      </section>
+
+      <div class="apply">
+        <p><strong>Se guarda solo.</strong> Para pasarlo a las imágenes reales, dile a Claude:</p>
+        <p><code id="apply-text">Aplica el estilo de la tienda</code></p>
+        <button class="btn" id="copy" type="button">Copiar el estilo (JSON)</button>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<script>
+const SECTIONS = ['background', 'title', 'subtitle', 'phone'];
+const WEIGHTS = [[400, 'Regular'], [500, 'Medium'], [600, 'Semibold'], [700, 'Bold'], [800, 'Heavy'], [900, 'Black']];
+const PRESETS = [
+  ['Teal vivo', '#19BFCD', '#0A8AA5'], ['Teal de la búsqueda', '#16B4C4', '#08788F'], ['Petróleo', '#0E6B78', '#08474F'],
+  ['Noche', '#0F1A1D', '#03171B'], ['Coral', '#FF9277', '#E0674F'], ['Dorado', '#E3B043', '#B27A17'],
+  ['Índigo y durazno', '#3B3F8C', '#1F2257'], ['Salvia', '#4F8A6A', '#2F5E45'],
+];
+
+const state = { game: null, fonts: [], repo: null, style: null, lang: 'es', piece: null, history: [], future: [], db: null };
+const frames = new Map();
+const $ = (id) => document.getElementById(id);
+const clone = (value) => JSON.parse(JSON.stringify(value));
+
+// Lo mismo que store_style.py: estilo efectivo de una pieza y sus variables CSS.
+function effective(style, piece) {
+  const own = (style.pieces || {})[piece] || {};
+  return Object.fromEntries(SECTIONS.map((s) => [s, own[s] || style[s]]));
+}
+function rgba(hex, opacity) {
+  const [r, g, b] = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16));
+  return `rgba(${r}, ${g}, ${b}, ${+(opacity / 100).toFixed(4)})`;
+}
+function withDefaults(style) {
+  const s = clone(style);
+  for (const section of SECTIONS) if (!s[section]) s[section] = clone(state.repo[section]);
+  return s;
+}
+function fontOf(id) { return state.fonts.find((f) => f.id === id) || state.fonts[0]; }
+function cssVars(style, piece) {
+  const { background: bg, title, subtitle: sub, phone } = effective(style, piece);
+  return {
+    '--bg': bg.top.toLowerCase() === bg.bottom.toLowerCase() ? bg.top : `linear-gradient(180deg, ${bg.top}, ${bg.bottom})`,
+    '--title-font': fontOf(title.font).stack, '--title-weight': String(title.weight), '--title-scale': String(title.size / 100),
+    '--title-color': title.color, '--title-accent': title.accent,
+    '--sub-font': fontOf(sub.font).stack, '--sub-weight': String(sub.weight), '--sub-scale': String(sub.size / 100),
+    '--sub-color': rgba(sub.color, sub.opacity), '--eyebrow-color': rgba(sub.color, Math.round(sub.opacity * 0.944)),
+    '--phone-offset': `${phone.offset}px`,
+  };
+}
+function fontLinks(style, piece) {
+  const e = effective(style, piece);
+  return [...new Set(['title', 'subtitle'].map((s) => fontOf(e[s].font).google).filter(Boolean))]
+    .map((family) => `https://fonts.googleapis.com/css2?family=${family}&display=swap`);
+}
+
+// Contraste (WCAG) contra cada extremo del degradado; el subtítulo se mezcla con su opacidad.
+function channels(hex) { return [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16)); }
+function luminance(rgb) {
+  const [r, g, b] = rgb.map((c) => { c /= 255; return c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4; });
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+}
+function ratio(a, b) { const [x, y] = [luminance(a), luminance(b)].sort((m, n) => n - m); return (x + 0.05) / (y + 0.05); }
+function over(fg, alpha, bg) { return fg.map((c, i) => c * alpha + bg[i] * (1 - alpha)); }
+function contrastOf(piece) {
+  const { background: bg, title, subtitle: sub } = effective(state.style, piece);
+  const ends = [bg.top, bg.bottom].map(channels);
+  const min = (color, alpha = 1) => Math.min(...ends.map((end) => ratio(over(channels(color), alpha, end), end)));
+  return [['Línea 1', min(title.color), 3], ['Línea 2', min(title.accent), 3], ['Subtítulo', min(sub.color, sub.opacity / 100), 4.5]];
+}
+
+function postStyle(id) {
+  const entry = frames.get(id);
+  if (!entry || !entry.ready) return;
+  entry.iframe.contentWindow.postMessage({ type: 'store-style', vars: cssVars(state.style, id), links: fontLinks(state.style, id) }, '*');
+}
+function postAll() { for (const id of frames.keys()) postStyle(id); }
+
+function buildCanvas() {
+  const canvas = $('canvas');
+  canvas.textContent = '';
+  frames.clear();
+  const rows = [0, 1].map(() => canvas.appendChild(Object.assign(document.createElement('div'), { className: 'row' })));
+  for (const piece of state.game.pieces) {
+    const wrap = document.createElement('div');
+    wrap.className = 'piece';
+    wrap.dataset.id = piece.id;
+    const frame = document.createElement('div');
+    frame.className = 'frame';
+    frame.tabIndex = 0;
+    frame.setAttribute('role', 'button');
+    frame.setAttribute('aria-label', `Editar ${piece.label}`);
+    const iframe = document.createElement('iframe');
+    iframe.title = piece.label;
+    iframe.width = piece.w; iframe.height = piece.h;
+    iframe.style.width = piece.w + 'px'; iframe.style.height = piece.h + 'px';
+    iframe.src = `pages/${state.lang}/${piece.id}.html`;
+    frame.append(iframe);
+    const name = document.createElement('div');
+    name.className = 'name';
+    name.append(Object.assign(document.createElement('span'), { textContent: piece.label }));
+    wrap.append(frame, name);
+    rows[piece.row].append(wrap);
+    frames.set(piece.id, { iframe, frame, wrap, piece, ready: false });
+    const select = () => selectPiece(state.piece === piece.id ? null : piece.id);
+    frame.addEventListener('click', select);
+    frame.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); select(); } });
+  }
+  layout();
+  markPieces();
+}
+
+function layout() {
+  const canvas = $('canvas');
+  const width = canvas.clientWidth - parseFloat(getComputedStyle(canvas).paddingLeft) - parseFloat(getComputedStyle(canvas).paddingRight);
+  const gap = 18;
+  const top = state.game.pieces.filter((p) => p.row === 0);
+  const shots = state.game.pieces.filter((p) => p.row === 1);
+  const perRow = width < 560 ? 2 : width < 900 ? 3 : shots.length;
+  const shotScale = Math.min(0.62, (width - gap * (perRow - 1)) / (perRow * shots[0].w));
+  const topWidth = top.reduce((sum, p) => sum + p.w, 0);
+  const topScale = width < 700 ? Math.min(0.62, width / Math.max(...top.map((p) => p.w))) : Math.min(0.62, (width - gap * (top.length - 1)) / topWidth);
+  for (const { iframe, frame, piece } of frames.values()) {
+    const scale = piece.row === 0 ? topScale : shotScale;
+    iframe.style.transform = `scale(${scale})`;
+    frame.style.width = Math.floor(piece.w * scale) + 'px';
+    frame.style.height = Math.floor(piece.h * scale) + 'px';
+  }
+}
+
+function markPieces() {
+  for (const { wrap, piece } of frames.values()) {
+    wrap.classList.toggle('selected', state.piece === piece.id);
+    const name = wrap.querySelector('.name');
+    const has = Object.keys((state.style.pieces || {})[piece.id] || {}).length > 0;
+    let dot = name.querySelector('.dot');
+    if (has && !dot) { dot = Object.assign(document.createElement('span'), { className: 'dot', title: 'Tiene estilo propio' }); name.prepend(dot); }
+    if (!has && dot) dot.remove();
+  }
+}
+
+function selectPiece(id) {
+  state.piece = id;
+  const label = id ? frames.get(id).piece.label : null;
+  $('scope-all').setAttribute('aria-pressed', String(!id));
+  $('scope-one').setAttribute('aria-pressed', String(!!id));
+  $('scope-one').disabled = !id;
+  $('scope-one').textContent = label || 'Pieza';
+  $('scope-hint').textContent = id
+    ? 'Marca "Solo esta pieza" en una sección para que esta pieza no siga al estilo de todas.'
+    : 'Toca una pieza del lienzo para darle un estilo propio.';
+  markPieces();
+  renderPanel();
+}
+
+// Panel: muestra el estilo global o el efectivo de la pieza elegida.
+function target(section) {
+  if (!state.piece) return state.style[section];
+  const own = (state.style.pieces || {})[state.piece] || {};
+  return own[section] || null;
+}
+function shown(section) { return target(section) || state.style[section]; }
+
+function renderPanel() {
+  for (const el of document.querySelectorAll('.section[data-section]')) {
+    const section = el.dataset.section;
+    const own = el.querySelector('.own');
+    own.hidden = !state.piece;
+    el.hidden = section === 'phone' && !!state.piece && frames.get(state.piece).piece.row === 0;
+    own.querySelector('input').checked = !!(state.piece && target(section));
+    el.dataset.locked = String(!!state.piece && !target(section));
+  }
+  for (const el of document.querySelectorAll('[data-color]')) {
+    const [section, key] = el.dataset.color.split('.');
+    const value = shown(section)[key].toUpperCase();
+    el.querySelector('input[type="color"]').value = value.toLowerCase();
+    el.querySelector('input[type="text"]').value = value;
+  }
+  for (const el of document.querySelectorAll('[data-font]')) { const [s, k] = el.dataset.font.split('.'); el.value = shown(s)[k]; }
+  for (const el of document.querySelectorAll('[data-weight]')) { const [s, k] = el.dataset.weight.split('.'); el.value = String(shown(s)[k]); }
+  for (const el of document.querySelectorAll('[data-range]')) {
+    const [s, k] = el.dataset.range.split('.');
+    el.value = shown(s)[k];
+    el.nextElementSibling.textContent = shown(s)[k] + (el.dataset.unit || ' %');
+  }
+  const bg = shown('background');
+  $('solid').checked = bg.top.toLowerCase() === bg.bottom.toLowerCase();
+  document.querySelector('[data-color="background.bottom"]').style.opacity = $('solid').checked ? 0.45 : 1;
+  renderContrast();
+  $('undo').disabled = state.history.length === 0;
+  $('redo').disabled = state.future.length === 0;
+}
+
+function renderContrast() {
+  const box = $('contrast');
+  box.textContent = '';
+  const piece = state.piece || state.game.pieces.find((p) => p.row === 1).id;
+  for (const [label, value, need] of contrastOf(piece)) {
+    const chip = document.createElement('span');
+    chip.className = 'chip ' + (value >= need ? 'ok' : value >= need * 0.8 ? 'warn' : 'bad');
+    chip.append(label + ' ', Object.assign(document.createElement('b'), { textContent: value.toFixed(1).replace('.', ',') + ':1' }));
+    box.append(chip);
+  }
+}
+
+// Cambios: "input" mueve la vista previa; "change" deja un paso para deshacer y guarda.
+let pending = null;
+function beginEdit() { if (!pending) pending = JSON.stringify(state.style); }
+function commitEdit() {
+  if (!pending) return;
+  if (pending !== JSON.stringify(state.style)) { state.history.push(pending); state.future = []; if (state.history.length > 100) state.history.shift(); save(); }
+  pending = null;
+  renderPanel();
+}
+function setValue(section, key, value) {
+  beginEdit();
+  const t = target(section);
+  if (!t) return;
+  t[key] = value;
+  if (section === 'background' && key === 'top' && $('solid').checked) t.bottom = value;
+  refresh(section);
+}
+function refresh(section) {
+  if (section === 'background' || !state.piece) postAll(); else postStyle(state.piece);
+  if (state.piece) postStyle(state.piece);
+  markPieces();
+  renderContrast();
+}
+
+function setupControls() {
+  for (const el of document.querySelectorAll('[data-color]')) {
+    const [section, key] = el.dataset.color.split('.');
+    const picker = Object.assign(document.createElement('input'), { type: 'color' });
+    const text = Object.assign(document.createElement('input'), { type: 'text', maxLength: 7, spellcheck: false });
+    picker.setAttribute('aria-label', el.parentElement.querySelector('span').textContent);
+    text.setAttribute('aria-label', el.parentElement.querySelector('span').textContent + ' (hex)');
+    el.append(picker, text);
+    picker.addEventListener('input', () => { text.value = picker.value.toUpperCase(); setValue(section, key, picker.value.toUpperCase()); });
+    picker.addEventListener('change', commitEdit);
+    text.addEventListener('change', () => {
+      const v = text.value.trim().replace(/^#?/, '#').toUpperCase();
+      if (/^#[0-9A-F]{6}$/.test(v)) { setValue(section, key, v); commitEdit(); } else renderPanel();
+    });
+  }
+  for (const el of document.querySelectorAll('[data-font]')) {
+    for (const f of state.fonts) el.append(new Option(f.label, f.id));
+    const [s, k] = el.dataset.font.split('.');
+    el.addEventListener('change', () => { setValue(s, k, el.value); commitEdit(); });
+  }
+  for (const el of document.querySelectorAll('[data-weight]')) {
+    for (const [w, label] of WEIGHTS) el.append(new Option(`${label} · ${w}`, w));
+    const [s, k] = el.dataset.weight.split('.');
+    el.addEventListener('change', () => { setValue(s, k, +el.value); commitEdit(); });
+  }
+  for (const el of document.querySelectorAll('[data-range]')) {
+    const [s, k] = el.dataset.range.split('.');
+    el.addEventListener('input', () => { el.nextElementSibling.textContent = el.value + (el.dataset.unit || ' %'); setValue(s, k, +el.value); });
+    el.addEventListener('change', commitEdit);
+  }
+  for (const [name, top, bottom] of PRESETS) {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.title = name;
+    b.setAttribute('aria-label', name);
+    b.style.background = `linear-gradient(180deg, ${top}, ${bottom})`;
+    b.addEventListener('click', () => { setValue('background', 'top', top); setValue('background', 'bottom', $('solid').checked ? top : bottom); commitEdit(); });
+    $('presets').append(b);
+  }
+  $('solid').addEventListener('change', () => {
+    const bg = shown('background');
+    setValue('background', 'bottom', $('solid').checked ? bg.top : shade(bg.top, -0.25));
+    commitEdit();
+  });
+  for (const own of document.querySelectorAll('[data-own]')) {
+    own.addEventListener('change', () => {
+      const section = own.closest('.section').dataset.section;
+      beginEdit();
+      state.style.pieces = state.style.pieces || {};
+      const pieces = state.style.pieces;
+      if (own.checked) { pieces[state.piece] = pieces[state.piece] || {}; pieces[state.piece][section] = clone(state.style[section]); }
+      else if (pieces[state.piece]) { delete pieces[state.piece][section]; if (!Object.keys(pieces[state.piece]).length) delete pieces[state.piece]; }
+      refresh(section);
+      commitEdit();
+    });
+  }
+  $('scope-all').addEventListener('click', () => selectPiece(null));
+  $('undo').addEventListener('click', undo);
+  $('redo').addEventListener('click', redo);
+  $('reset').addEventListener('click', () => { beginEdit(); state.style = clone(state.repo); postAll(); commitEdit(); markPieces(); });
+  $('lang-en').addEventListener('click', () => setLang('en'));
+  $('lang-es').addEventListener('click', () => setLang('es'));
+  $('copy').addEventListener('click', async () => {
+    const text = JSON.stringify(state.style, null, 2);
+    try { await navigator.clipboard.writeText(text); flash('Estilo copiado'); } catch { flash('No se pudo copiar'); }
+  });
+  addEventListener('keydown', (e) => {
+    if (!(e.metaKey || e.ctrlKey) || e.key.toLowerCase() !== 'z' || e.target.matches('input[type="text"]')) return;
+    e.preventDefault();
+    e.shiftKey ? redo() : undo();
+  });
+  addEventListener('resize', layout);
+  addEventListener('message', (e) => {
+    if (!e.data || e.data.type !== 'store-page-ready') return;
+    for (const [id, entry] of frames) if (entry.iframe.contentWindow === e.source) { entry.ready = true; postStyle(id); }
+  });
+}
+
+function shade(hex, amount) {
+  return '#' + channels(hex).map((c) => Math.round(Math.max(0, Math.min(255, c * (1 + amount)))).toString(16).padStart(2, '0')).join('').toUpperCase();
+}
+function undo() { if (!state.history.length) return; state.future.push(JSON.stringify(state.style)); state.style = JSON.parse(state.history.pop()); postAll(); save(); markPieces(); renderPanel(); }
+function redo() { if (!state.future.length) return; state.history.push(JSON.stringify(state.style)); state.style = JSON.parse(state.future.pop()); postAll(); save(); markPieces(); renderPanel(); }
+function setLang(lang) {
+  state.lang = lang;
+  $('lang-en').setAttribute('aria-pressed', String(lang === 'en'));
+  $('lang-es').setAttribute('aria-pressed', String(lang === 'es'));
+  for (const entry of frames.values()) { entry.ready = false; entry.iframe.src = `pages/${lang}/${entry.piece.id}.html`; }
+}
+
+// Guardado en la base del artefacto: un documento por juego, que Claude lee para aplicarlo.
+let saveTimer = null;
+function save() {
+  if (!state.db) { flash('Sin guardar: abre el artefacto en claude.ai'); return; }
+  flash('Guardando…');
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(async () => {
+    try {
+      await state.db.doc(`styles/${state.game.id}`).set({ style: state.style, updatedAt: new Date().toISOString() });
+      flash('Guardado');
+    } catch (e) { flash(e && e.code === 'unavailable' ? 'Sin conexión; reintenta' : 'No se pudo guardar'); }
+  }, 500);
+}
+let flashTimer = null;
+function flash(text) { $('status').textContent = text; clearTimeout(flashTimer); if (text === 'Guardado') flashTimer = setTimeout(() => { $('status').textContent = ''; }, 2500); }
+
+async function start() {
+  const [game, fonts, repo] = await Promise.all(['game.json', 'fonts.json', 'style.json'].map((f) => fetch(f).then((r) => r.json())));
+  Object.assign(state, { game, fonts, repo, style: clone(repo) });
+  $('title').innerHTML = '';
+  $('title').append(game.name + ' ', Object.assign(document.createElement('span'), { textContent: '· estilo de la tienda' }));
+  $('apply-text').textContent = `Aplica el estilo de la tienda de ${game.name}`;
+  setupControls();
+  buildCanvas();
+  renderPanel();
+
+  for (let i = 0; i < 20 && !(window.claude && window.claude.use); i++) await new Promise((r) => setTimeout(r, 100));
+  const db = window.claude && window.claude.use ? await window.claude.use('db') : null;
+  if (!db) { flash('Solo vista previa'); return; }
+  state.db = db;
+  const ref = db.doc(`styles/${game.id}`);
+  try {
+    const snap = await ref.get();
+    if (snap.exists && snap.data().style) { state.style = withDefaults(snap.data().style); postAll(); markPieces(); renderPanel(); }
+  } catch { flash('No se pudo leer lo guardado'); }
+  ref.onSnapshot((snap) => {
+    if (!snap.exists || snap.metadata.hasPendingWrites || pending) return;
+    const incoming = snap.data().style;
+    if (incoming && JSON.stringify(withDefaults(incoming)) !== JSON.stringify(state.style)) { state.style = withDefaults(incoming); postAll(); markPieces(); renderPanel(); }
+  }, () => {});
+}
+start().catch(() => { $('canvas').innerHTML = '<p class="empty">No se pudieron cargar las piezas.</p>'; });
+</script>
