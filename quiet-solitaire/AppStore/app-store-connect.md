@@ -49,19 +49,39 @@ Gratis, todos los países. Sin compras dentro de la app.
 
 ### Notas para la revisión de Apple
 
-> Quiet Solitaire is a free, single-player Klondike solitaire with no ads, purchases or accounts. Game Center is optional: everything works signed out. To see a win quickly, play any game and use Hint (lightbulb) repeatedly; the hints follow a winning line. No login or demo account is needed.
+En `app-review-notes.md` (notas en inglés y guion del video).
+
+### Pendiente para enviar la 1.0 (revisado el 2026-11-05, solo lectura por la API)
+
+| Punto | Estado |
+|---|---|
+| Nombre, subtítulo, categoría (Cartas y Puzle), edad 4+, copyright, URL de privacidad | Listo |
+| Textos en/es (descripción, palabras clave, promocional, soporte, marketing) | Listo en App Store Connect; la descripción local cambió el 2026-11-02 ("juégalo las veces que quieras"): subirla con `scripts/upload-metadata.py` |
+| Capturas iPhone 6.9" y iPad 13", 5 por idioma | La 02 (reto diario) regenerada en local el 2026-11-05 (en/es, iPhone e iPad; ya sin "Past days are practice…"); falta reemplazarla en App Store Connect con `scripts/upload-metadata.py --replace-screenshots` |
+| Build | 1.0 (4) procesado (VALID); falta elegirlo en la versión |
+| Game Center en la versión | Falta activarlo y elegir los 13 logros y 3 clasificaciones |
+| App Review Information | Falta: contacto, notas (`app-review-notes.md`), sin cuenta de prueba, video adjunto |
+| Precio | Sin precio en la API: elegir Gratis (web) |
+| Disponibilidad | No se pudo leer por la API: confirmar todos los países (web) |
+| Derechos de contenido | Sin declarar: "no contiene contenido de terceros" (web) |
+| Privacidad de la app | No se lee por la API: confirmar "Data Not Collected" publicada (web) |
+| Web de soporte, privacidad y portada | Publicadas y al día |
 
 ## Imágenes de la App Store
 
 Cinco por dispositivo e idioma, en este orden (`scripts/screenshots.sh` y luego `scripts/store-images.py`):
 
+Línea "la capa gratis de Quiet Studios" (aprobada el 2026-11-05): qué es el juego y por qué existe; "gratis" no va en las imágenes, el porqué está al final de la descripción y en la web de soporte.
+
 | # | Archivo | English | Español |
 |---|---|---|---|
-| 1 | `01-no-ads` (partida en curso, claro) | **Classic solitaire. No ads. Ever.** Klondike, draw one. No purchases, no data collected. Just you and the cards. · *Every deal can be won* | **Solitario clásico. Sin anuncios.** Klondike, robando de a una. Sin compras y sin recolectar datos. Solo tú y las cartas. · *Cada reparto se puede ganar* |
-| 2 | `02-daily` (reto diario, claro) | **A new deal every day.** The same deal for everyone, always winnable. Easy on Monday, expert on Sunday. · *8-day streak* | **Un reparto nuevo cada día.** El mismo para todos, y siempre se puede ganar. Fácil el lunes, experto el domingo. · *Racha de 8 días* |
-| 3 | `03-win` (victoria con fuegos, claro) | **Win fast, score double.** Finish in under 3 minutes for ×2 points. Every win ends in fireworks. · *×2* | **Gana rápido, suma el doble.** Termina en menos de 3 minutos y gana ×2 puntos. Cada victoria acaba en fuegos artificiales. · *×2* |
-| 4 | `04-rewards` (Índigo, mazo Pixel, reverso Noche, oscuro) | **Earned, never bought.** Pixel, Classic and Illustrated decks, card backs and boards, unlocked by playing. | **Se gana, nunca se compra.** Mazos Pixel, Clásico e Ilustrado, reversos y tableros que desbloqueas jugando. |
-| 5 | `05-leaderboards` (amigos, oscuro) | **Climb to the top.** Daily, best-score and streak leaderboards with friends and the world, on Game Center. | **Llega a la cima.** Clasificaciones del día, de mejor puntaje y de racha con tus amigos y el mundo, en Game Center. |
+| 1 | `01-classic` (partida en curso, claro) | **Classic solitaire.** Klondike, draw one. | **Solitario clásico.** Klondike, robando de a una. |
+| 2 | `02-daily` (reto de hoy ganado, claro) | **A new challenge every day.** The same deal for everyone. · *9-day streak* | **Un reto nuevo cada día.** El mismo reparto para todos. · *Racha de 9 días* |
+| 3 | `03-friends` (clasificaciones, Amigos, oscuro) | **Play with your friends.** See who clears it best. | **Juega con tus amigos.** A ver quién lo hace mejor. |
+| 4 | `04-rewards` (Índigo, mazo Pixel, reverso Noche, oscuro) | **Earned by playing.** Card backs, themes and more. | **Todo se gana jugando.** Reversos, temas y más. |
+| 5 | `05-winnable` (victoria, claro) | **Every deal can be won.** With "Only winnable deals", on from the start. | **Cada reparto tiene solución.** Con "Solo partidas con solución", activado desde el inicio. |
+
+Header (B, las dos cartas): **Classic solitaire.** Nothing to sell. Just play. / **Solitario clásico.** Nada que venderte. Solo juega. Búsqueda (A, reto diario): **Classic solitaire.** Daily challenge with friends. Calm, no catch. / **Solitario clásico.** Reto diario con tus amigos. Tranquilo, sin trampas. Fuentes en `AppStore/creative/`, exportadas con `scripts/creative-assets.py`.
 
 Sin nombres ni estética de otras apps de solitario.
 

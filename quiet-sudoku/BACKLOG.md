@@ -17,6 +17,8 @@
 
 ## Ideas
 
+- **Revisar colores y contraste de las imágenes de la tienda** (header, búsqueda y capturas sobre el teal vivo; el usuario notó un contraste raro, 2026-11-05). Para la siguiente iteración de la ficha, igual en los tres juegos.
+
 - Auto-notas: llenar todos los candidatos con un toque (gratis en clásico; en el reto, ¿con costo?).
 - Opción de clásico "Revisar al final" en vez de marcar los errores al instante.
 - Más técnicas (cadenas, coloreo) para un nivel "Maestro".

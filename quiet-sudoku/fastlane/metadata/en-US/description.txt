@@ -33,3 +33,5 @@ IPHONE, IPAD AND MAC
 Free on iPhone, iPad and Mac, with keyboard shortcuts on iPad and Mac (digits, arrows, N for notes, ⌘Z to undo, H for a hint). Supports Dark Mode and Reduce Motion, with large digits and a high-contrast theme always available.
 
 Quiet Sudoku is made by Quiet Studios: apps that respect your attention and your privacy.
+
+Why is it free? Quiet Sudoku is part of the free collection from Quiet Studios. We make these games because we enjoy making them and want them to exist: no ads, no purchases, and none of your data collected. There's nothing to sell you. We just want you to play.

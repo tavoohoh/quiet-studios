@@ -33,7 +33,18 @@ Cada app documenta sus comandos exactos en su CLAUDE.md ("Comandos" y "Publicaci
 - Capturas con `scripts/screenshots.sh` (no correrlo a la vez que el de otra app: comparten simuladores) e imágenes con `scripts/store-images.py` desde el canvas.
 - Header, búsqueda y universal (iOS 27+): medidas y reglas en `app-store.md` del sistema de diseño; propuestas en un artefacto aparte (lo elegido entra a la página App Store del canvas). Lo elegido se guarda como HTML estático en `AppStore/creative/` y se exporta con `scripts/creative-assets.py`. Se suben por la API con `scripts/creative-upload.py` (biblioteca de assets: reservar `appAssetLibraryImages` con categoría `CREATIVE_ASSETS`, subir las partes, `uploaded: true`; luego `appAssetLibraryPlacements` `PRODUCT_PAGE_HEADER_ASSET` / `APP_STORE_SEARCH_RESULTS_ASSET` por localización de una versión editable). Una versión en revisión no admite colocarlas.
 - Al cambiar cualquier imagen de la tienda, subirla al canvas de la app (página App Store), anotar su id en `design/canvas-assets.tsv` y correr el QA (`quiet-design-canvas`).
-- Reglas: apto 4+, sin precios ni descuentos, sin URLs ni ©, nada que la app no tenga, localizado en/es. Excepción (decisión 2026-10-29): los juegos gratis para siempre pueden decir "Gratis siempre" / "Always free" en las capturas (p. ej. la imagen 04 de Quiet Numbers); el header y la búsqueda no lo dicen.
+- Reglas: apto 4+, sin precios ni descuentos, sin URLs ni ©, nada que la app no tenga, localizado en/es. Ni "gratis" ni "sin anuncios" a secas en las imágenes (decisión 2026-11-05: suena a oferta y hace pensar "algo deben ganar"; reemplaza la excepción "Gratis siempre" del 2026-10-29).
+- **Textos de la tienda de la capa gratis** (Numbers, Solitaire, Sudoku; decisión 2026-11-05). No vendemos el precio, contamos por qué: los hacemos porque queremos que existan y que la gente juegue.
+  - Título igual en header, búsqueda y captura 1: "Classic sudoku." / "Sudoku clásico.", "Classic solitaire." / "Solitario clásico.", "Number pairs." / "Parejas de números.".
+  - Header: + "Nothing to sell. Just play." / "Nada que venderte. Solo juega."
+  - Búsqueda: + "Daily challenge with friends. Calm, no catch." / "Reto diario con tus amigos. Tranquilo, sin trampas."
+  - Capturas, en este orden: 1 qué es, 2 reto ("A new challenge every day." / "Un reto nuevo cada día."), 3 amigos ("Play with your friends." / "Juega con tus amigos."), 4 recompensas ("Earned by playing." / "Todo se gana jugando." + "<lo propio>, themes and more" / "…, temas y más"), 5 lo propio del juego.
+  - Descripción (último párrafo) y web de soporte: "Why is it free? <App> is part of the free collection from Quiet Studios. We make these games because we enjoy making them and want them to exist: no ads, no purchases, and none of your data collected. There's nothing to sell you. We just want you to play." / "¿Por qué es gratis? <App> es parte de la colección gratuita de Quiet Studios. Hacemos estos juegos porque nos gusta hacerlos y queremos que existan: sin anuncios, sin compras y sin recolectar tus datos. No hay nada que venderte. Solo queremos que juegues."
+  - Un juego de pago futuro no usa esta fórmula.
+- **Composición de header, búsqueda y capturas** (decisión 2026-11-05, igual en los tres juegos):
+  - Fondo: el degradado teal vivo de la búsqueda (#19BFCD → #0A8AA5, paleta A2), también en el header y en las capturas. Nunca el teal apagado (#0E6B78 o similar).
+  - Título siempre en **dos líneas**, para aprovechar el alto: la primera en blanco y la segunda en durazno (#FFD3C6), p. ej. "Classic / sudoku.", "Sudoku / clásico.", "Number / pairs.", "A new challenge / every day.".
+  - El subtítulo se corta en el punto, nunca deja una palabra sola en la línea ("Daily challenge with friends." / "Calm, no catch.").
 
 ## Envío a revisión (notas y video)
 

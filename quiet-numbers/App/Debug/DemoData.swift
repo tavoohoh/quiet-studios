@@ -63,8 +63,8 @@ enum DemoData {
 
     // MARK: App Store images
 
-    /// `-storeScene 1|2|4`: the hand-made board of the canvas's App Store images (Store1, 2
-    /// and 4), so the real screenshot matches the approved frames and their callouts.
+    /// `-storeScene 1|2`: the hand-made board of the canvas's App Store images (05-stages and
+    /// 01-pairs), so the real screenshot matches the approved frames and their callouts.
     struct StoreScene {
         let score: Int
         let stage: Int
@@ -103,7 +103,6 @@ enum DemoData {
         return switch arguments[i + 1] {
         case "1": StoreScene(score: 1_240, stage: 2, best: 2_480)
         case "2": StoreScene(score: 3_385, stage: 3, best: 4_120)
-        case "4": StoreScene(score: 9_615, stage: 5, best: 12_840)
         default: nil
         }
     }()

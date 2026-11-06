@@ -28,26 +28,28 @@ DEVICES = {
                     inner_radius=34, text_scale=1.55, pad=(84, 72), callout_scale=1.6),
 }
 
+# "La capa gratis de Quiet Studios" (2026-11-05): what the game is and why it exists; the word
+# "free" stays out of the images (the "Why is it free?" paragraph is in the description).
 TEXT = {
     "en": {
-        1: ("Classic solitaire.<br><span>No ads. Ever.</span>", "Klondike, draw one. No purchases, no data collected. Just you and the cards."),
-        2: ("A new deal<br><span>every day.</span>", "The same deal for everyone, always winnable. Easy on Monday, expert on Sunday."),
-        3: ("Win fast,<br><span>score double.</span>", "Finish in under 3 minutes for ×2 points. Every win ends in fireworks."),
-        4: ("Earned,<br><span>never bought.</span>", "Pixel, Classic and Illustrated decks, card backs and boards, unlocked by playing."),
-        5: ("Climb to<br><span>the top</span>", "Daily, best-score and streak leaderboards with friends and the world, on Game Center."),
+        1: ("Classic<br><span>solitaire.</span>", "Klondike, draw one."),
+        2: ("A new challenge<br><span>every day.</span>", "The same deal for everyone."),
+        3: ("Play with<br><span>your friends.</span>", "See who clears it best."),
+        4: ("Earned<br><span>by playing.</span>", "Card backs, themes and more."),
+        5: ("Every deal<br><span>can be won.</span>", "With “Only winnable deals”, on from the start."),
     },
     "es": {
-        1: ("Solitario clásico.<br><span>Sin anuncios.</span>", "Klondike, robando de a una. Sin compras y sin recolectar datos. Solo tú y las cartas."),
-        2: ("Un reparto nuevo<br><span>cada día.</span>", "El mismo para todos, y siempre se puede ganar. Fácil el lunes, experto el domingo."),
-        3: ("Gana rápido,<br><span>suma el doble.</span>", "Termina en menos de 3 minutos y gana ×2 puntos. Cada victoria acaba en fuegos artificiales."),
-        4: ("Se gana,<br><span>nunca se compra.</span>", "Mazos Pixel, Clásico e Ilustrado, reversos y tableros que desbloqueas jugando."),
-        5: ("Llega a<br><span>la cima</span>", "Clasificaciones del día, de mejor puntaje y de racha con tus amigos y el mundo, en Game Center."),
+        1: ("Solitario<br><span>clásico.</span>", "Klondike, robando de a una."),
+        2: ("Un reto nuevo<br><span>cada día.</span>", "El mismo reparto para todos."),
+        3: ("Juega con<br><span>tus amigos.</span>", "A ver quién lo hace mejor."),
+        4: ("Todo se gana<br><span>jugando.</span>", "Reversos, temas y más."),
+        5: ("Cada reparto<br><span>tiene solución.</span>", "Con “Solo partidas con solución”, activado desde el inicio."),
     },
 }
 
 CALLOUT_TEXT = {
-    "en": {"winnable": "Every deal can be won", "streak": "8-day streak", "double": "×2", "decks": "6 decks"},
-    "es": {"winnable": "Cada reparto se puede ganar", "streak": "Racha de 8 días", "double": "×2", "decks": "6 mazos"},
+    "en": {"streak": "9-day streak"},
+    "es": {"streak": "Racha de 9 días"},
 }
 
 ICON = {
@@ -58,25 +60,18 @@ ICON = {
 
 # Callouts: (style, content, anchor), anchored to the phone's top-right corner in canvas
 # iPhone coordinates (the phone's right edge is x 390, its top is `phone_top`).
+# Family composition (skill quiet-release, 2026-11-05): the vivid teal gradient behind every image,
+# titles in two lines (white, then peach #FFD3C6), subtitles broken at the period.
+TEAL = "linear-gradient(180deg, #19BFCD, #0A8AA5)"
+STYLE = dict(bg=TEAL, ink="#FFFFFF", span="#FFD3C6", em="#FFD3C6", sub="rgba(255,255,255,0.9)", h1=50,
+             phone_top=330, shadow="0 30px 70px rgba(2,30,36,0.4)")
 FRAMES = {
-    1: dict(name="01-no-ads", shot="01-game", appearance="light", bg="#0E6B78", ink="#FFFFFF", span="#FFC2B5",
-            em="#FFC2B5", sub="rgba(255,255,255,0.92)", h1=46, phone_top=330, bezel_color="#0A1416",
-            shadow="0 30px 70px rgba(2,30,36,0.45)",
-            callouts=[("pill coral small", f'<i class="icon">{ICON["check"]}</i>{{winnable}}', (404, 312))]),
-    2: dict(name="02-daily", shot="02-daily", appearance="light", bg="#DCEEF0", ink="#16201F", span="#0E6B78",
-            em="#0E6B78", sub="#2E4A4E", h1=46, phone_top=330, bezel_color="#0A1416",
-            shadow="0 30px 70px rgba(14,107,120,0.3)",
+    1: dict(STYLE, name="01-classic", shot="01-game", appearance="light", bezel_color="#0A1416", callouts=[]),
+    2: dict(STYLE, name="02-daily", shot="02-daily", appearance="light", bezel_color="#0A1416",
             callouts=[("pill coral small", f'<i class="icon">{ICON["flame"]}</i>{{streak}}', (404, 312))]),
-    3: dict(name="03-win", shot="06-win", appearance="light", bg="#FCE9E3", ink="#16201F", span="#B9472F",
-            em="#B9472F", sub="#4A5B5E", h1=50, phone_top=330, bezel_color="#0A1416",
-            shadow="0 30px 70px rgba(120,50,30,0.3)",
-            callouts=[("card", f'<i class="icon" style="color:#0E6B78">{ICON["timer"]}</i><b style="font-size:30px;color:#0E6B78">{{double}}</b>', (404, 312))]),
-    4: dict(name="04-rewards", shot="05-rewards", appearance="dark", bg="#13121F", ink="#ECEBF7", span="#FFAE82",
-            em="#FFAE82", sub="rgba(236,235,247,0.85)", h1=50, phone_top=330, bezel_color="#000000",
-            shadow="0 0 0 1px rgba(154,152,255,0.25), 0 30px 70px rgba(0,0,0,0.55)", callouts=[]),
-    5: dict(name="05-leaderboards", shot="03-leaderboards", appearance="dark", bg="#0A4E58", ink="#FFFFFF",
-            span="#9FE3EC", em="#9FE3EC", sub="rgba(255,255,255,0.88)", h1=50, phone_top=330,
-            bezel_color="#000000", shadow="0 30px 70px rgba(0,20,24,0.5)", callouts=[]),
+    3: dict(STYLE, name="03-friends", shot="03-leaderboards", appearance="dark", bezel_color="#000000", callouts=[]),
+    4: dict(STYLE, name="04-rewards", shot="05-rewards", appearance="dark", bezel_color="#000000", callouts=[]),
+    5: dict(STYLE, name="05-winnable", shot="06-win", appearance="light", bezel_color="#0A1416", callouts=[]),
 }
 
 CSS = """
@@ -88,7 +83,7 @@ body { width: %(w)spx; height: %(h)spx; position: relative; overflow: hidden; ba
 header { position: absolute; left: 0; right: 0; top: 0; padding: %(pad_top)spx %(pad_x)spx 0; display: flex; flex-direction: column; gap: %(gap)spx; }
 h1 { margin: 0; font-size: %(h1)spx; line-height: 1.02; font-weight: 900; letter-spacing: -0.015em; white-space: nowrap; }
 h1 span { color: %(span)s; } h1 em { font-style: normal; color: %(em)s; }
-header p { margin: 0; font-size: %(sub_size)spx; line-height: 1.35; font-weight: 600; color: %(sub)s; }
+header p { margin: 0; font-size: %(sub_size)spx; line-height: 1.35; font-weight: 600; color: %(sub)s; text-wrap: balance; }
 .phone { position: absolute; left: %(phone_left)spx; top: %(phone_top)spx; width: %(phone_width)spx; padding: %(bezel)spx;
          border-radius: %(radius)spx; background: %(bezel_color)s; box-shadow: %(shadow)s; }
 .phone img { display: block; width: 100%%; border-radius: %(inner_radius)spx; }

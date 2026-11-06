@@ -12,6 +12,10 @@ enum DemoData {
 
     static var date: Date? { isActive ? fixedDate : nil }
 
+    /// `-completeToday`: today's daily already won (reminders move to tomorrow). Without it the
+    /// player hasn't played today, so they're not on today's boards either.
+    private static let completesToday = ProcessInfo.processInfo.arguments.contains("-completeToday")
+
     private static let fixedDate = Calendar.current.date(from: DateComponents(year: 2026, month: 11, day: 14, hour: 10))!
 
     private static let completedDays: [(day: String, score: Int)] =
@@ -39,8 +43,9 @@ enum DemoData {
         for (day, score) in completedDays {
             persistence.finishDaily(day, score: score, isCompleted: true)
         }
-        // `-completeToday`: today's daily already won (reminders move to tomorrow).
-        if ProcessInfo.processInfo.arguments.contains("-completeToday") {
+        if completesToday {
+            // Played once and won: its button says "Play again".
+            persistence.startAttempt("2026-11-14")
             persistence.finishDaily("2026-11-14", score: 1_361, isCompleted: true, seconds: 268)
         }
         persistence.saveGame(classicGame, in: .classic)
@@ -73,10 +78,11 @@ enum DemoData {
         case .bestScore: [2_960, 2_811, 2_744, 2_480, 2_391, 2_350, 2_207, 2_166, 2_015, 1_980]
         case .longestStreak: [41, 33, 27, 19, 14, 12, 11, 9, 8, 6]
         }
-        let top = zip(names, scores).enumerated().map { index, entry in
+        let rows = zip(names, scores).filter { board != .daily || completesToday || $0.0 != "guss" }
+        let top = rows.enumerated().map { index, entry in
             GameCenterService.Entry(id: entry.0, rank: index + 1, name: entry.0, score: entry.1, isLocalPlayer: entry.0 == "guss")
         }
-        return (top[3], top)
+        return (top.first(where: \.isLocalPlayer), top)
     }
 
     /// Today's friends board for "Friends today" (times in the context, like real scores).
@@ -84,6 +90,7 @@ enum DemoData {
 
     static var friendsEntries: [GameCenterService.Entry] {
         let friends: [(String, Int, Int?)] = [("vale", 1_377, 251), ("guss", 1_361, 268), ("juanca", 1_361, 302), ("cori16", 1_296, 344)]
+            .filter { completesToday || $0.0 != "guss" }
         let entries = friends.enumerated().map { index, friend in
             GameCenterService.Entry(id: friend.0, rank: index + 1, name: friend.0, score: friend.1, isLocalPlayer: friend.0 == "guss",
                                     context: GameCenterService.dailyContext(seconds: friend.2))

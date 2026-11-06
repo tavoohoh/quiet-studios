@@ -20,7 +20,6 @@ struct CalendarView: View {
     @Environment(\.horizontalSizeClass) private var sizeClass
 
     private let calendar = Calendar.current
-    private let columns = Array(repeating: GridItem(.flexible(), spacing: 0), count: 7)
 
     var body: some View {
         VStack(spacing: 8) {
@@ -51,35 +50,46 @@ struct CalendarView: View {
             .font(.subheadline.weight(.bold))
             .buttonStyle(.plain)
 
-            LazyVGrid(columns: columns, spacing: 0) {
-                // One ForEach with distinct ids: sibling ForEach ids collide inside a grid.
-                ForEach(items, id: \.self) { item in
-                    switch item {
-                    case .weekday(let index):
-                        Text(weekdaySymbols[index])
-                            .font(.footnote.weight(.semibold))
-                            .foregroundStyle(theme.muted)
-                            .frame(maxWidth: .infinity)
-                            .padding(.bottom, 6)
-                    case .blank:
-                        Color.clear.frame(height: 1)
-                    case .day(let day):
-                        let column = (leadingBlanks + day - 1) % 7
-                        DayCell(
-                            day: day,
-                            dayKey: dayKey(for: day),
-                            todayKey: todayKey,
-                            record: records[dayKey(for: day)],
-                            isLate: late.contains(dayKey(for: day)),
-                            isInProgress: inProgress.contains(dayKey(for: day)),
-                            isPlayable: isPlayable(dayKey(for: day)),
-                            joinsPrevious: column != 0 && isCompleted(day) && isCompleted(day - 1),
-                            joinsNext: column != 6 && isCompleted(day) && isCompleted(day + 1),
-                            onSelect: onSelect
-                        )
+            // A plain Grid, not LazyVGrid: inside the screen's ScrollView a lazy grid starts from an
+            // estimated height, and when the real one arrives the scroll view keeps its offset, so
+            // the content opened scrolled, with the top card cut under the header.
+            Grid(horizontalSpacing: 0, verticalSpacing: 0) {
+                ForEach(weeks, id: \.self) { week in
+                    GridRow {
+                        ForEach(week, id: \.self) { item in
+                            cell(item)
+                        }
                     }
                 }
             }
+        }
+    }
+
+    @ViewBuilder
+    private func cell(_ item: Item) -> some View {
+        switch item {
+        case .weekday(let index):
+            Text(weekdaySymbols[index])
+                .font(.footnote.weight(.semibold))
+                .foregroundStyle(theme.muted)
+                .frame(maxWidth: .infinity)
+                .padding(.bottom, 6)
+        case .blank:
+            Color.clear.frame(height: 1)
+        case .day(let day):
+            let column = (leadingBlanks + day - 1) % 7
+            DayCell(
+                day: day,
+                dayKey: dayKey(for: day),
+                todayKey: todayKey,
+                record: records[dayKey(for: day)],
+                isLate: late.contains(dayKey(for: day)),
+                isInProgress: inProgress.contains(dayKey(for: day)),
+                isPlayable: isPlayable(dayKey(for: day)),
+                joinsPrevious: column != 0 && isCompleted(day) && isCompleted(day - 1),
+                joinsNext: column != 6 && isCompleted(day) && isCompleted(day + 1),
+                onSelect: onSelect
+            )
         }
     }
 
@@ -89,6 +99,11 @@ struct CalendarView: View {
         case weekday(Int)
         case blank(Int)
         case day(Int)
+    }
+
+    /// The grid's rows: weekday symbols, then the month in weeks.
+    private var weeks: [[Item]] {
+        stride(from: 0, to: items.count, by: 7).map { Array(items[$0..<min($0 + 7, items.count)]) }
     }
 
     private var items: [Item] {

@@ -19,24 +19,27 @@ final class ScreenshotTests: XCTestCase {
         capture(app, "01-game")
         goBack(app)
 
-        // 2. Daily challenge: streak, week difficulty, calendar.
-        tap(app.buttons["daily"])
-        sleep(1)
-        capture(app, "02-daily")
-        goBack(app)
+        // 2. Daily challenge, today already won: the card matches the player's row in
+        // "Friends today" (2026-11-05; before, "Not played yet" beside a score).
+        app.terminate()
+        let daily = launch(extra: ["-completeToday"])
+        tap(daily.buttons["daily"])
+        sleep(2)
+        capture(daily, "02-daily")
+        goBack(daily)
 
         // 3. Leaderboards, Friends.
-        tap(app.buttons["leaderboards"])
-        tap(app.buttons[language == "es" ? "Amigos" : "Friends"])
+        tap(daily.buttons["leaderboards"])
+        tap(daily.buttons[language == "es" ? "Amigos" : "Friends"])
         sleep(1)
-        capture(app, "03-leaderboards")
-        goBack(app)
+        capture(daily, "03-leaderboards")
+        goBack(daily)
 
         // 4. Collection.
-        tap(app.buttons["collection"])
+        tap(daily.buttons["collection"])
         sleep(1)
-        capture(app, "04-collection")
-        app.terminate()
+        capture(daily, "04-collection")
+        daily.terminate()
 
         // 5. The same game with unlocked rewards: Indigo board, Pixel deck, Night back.
         let themed = launch(extra: ["-board", "indigoPeach", "-deck", "pixel", "-back", "night"])
@@ -125,6 +128,16 @@ final class ScreenshotTests: XCTestCase {
         attachment.name = "03-summary"
         attachment.lifetime = .keepAlways
         add(attachment)
+    }
+
+    /// The phone in the App Store search result (AppStore/creative/search.*.html): the daily
+    /// challenge with today already won, matching the player's row in "Friends today".
+    @MainActor
+    func testSearchDaily() {
+        let app = launch(extra: ["-completeToday"])
+        tap(app.buttons["daily"])
+        sleep(2)
+        capture(app, "search-daily")
     }
 
     private var language: String { ProcessInfo.processInfo.environment["QS_LANGUAGE"] ?? "en" }

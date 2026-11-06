@@ -167,6 +167,20 @@ struct HomeView: View {
             let empty = (0..<81).filter { puzzle.givens[$0] == 0 }
             for cell in empty.dropLast() { session.place(puzzle.solution[cell], at: cell) }
         }
+        // `-filled <n>`: n of the player's digits spread over the board, and the candidates
+        // noted in a few empty cells (App Store captures).
+        if let filled = value(after: "-filled").flatMap(Int.init), filled > 0 {
+            let empty = (0..<81).filter { puzzle.givens[$0] == 0 }
+            let step = max(1, empty.count / filled)
+            for cell in stride(from: 0, to: empty.count, by: step).prefix(filled).map({ empty[$0] }) {
+                session.place(puzzle.solution[cell], at: cell)
+            }
+            for cell in (0..<81).filter({ session.values[$0] == 0 }).prefix(3) {
+                for digit in 1...9 where !(0..<81).contains(where: { Grid.sees(cell, $0) && session.values[$0] == digit }) {
+                    session.toggleNote(digit, at: cell)
+                }
+            }
+        }
         let model = GameModel(session: session)
         app.start(model, as: .classic)
         // `-hint`: opens with a hint applied (design captures).

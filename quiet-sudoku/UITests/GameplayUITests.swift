@@ -38,11 +38,13 @@ final class GameplayUITests: XCTestCase {
         XCTAssertTrue(app.buttons["hint"].waitForExistence(timeout: 10))
         let empty = app.buttons.matching(NSPredicate(format: "label ENDSWITH 'empty'")).firstMatch
         empty.tap()
-        // Try digits until the right one: wrong ones stay red and get replaced.
-        for digit in 1...9 where !app.staticTexts["Solved!"].exists {
+        // Try digits until the right one: wrong ones stay red and get replaced. The win disables
+        // the keypad before the summary shows (it waits for the win animation); a tap after that
+        // could land on the summary's Home button.
+        for digit in 1...9 where app.buttons["digit-\(digit)"].isEnabled {
             app.buttons["digit-\(digit)"].tap()
         }
-        XCTAssertTrue(app.staticTexts["Solved!"].waitForExistence(timeout: 6))
+        XCTAssertTrue(app.staticTexts["Solved!"].waitForExistence(timeout: 15))
     }
 
     func testTutorialFromScratch() {

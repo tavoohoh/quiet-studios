@@ -14,8 +14,9 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 ROOT="$PWD"
 OUT="${OUT:-$ROOT/AppStore/screenshots}"
-# The design captures (scripts/design-screens.sh) run alone; the App Store set skips them.
-FILTER=(-skip-testing:QuietSolitaireScreenshots/ScreenshotTests/testDesignScreens)
+# The design captures (scripts/design-screens.sh) and the search-result phone (testSearchDaily)
+# run alone; the App Store set skips them.
+FILTER=(-skip-testing:QuietSolitaireScreenshots/ScreenshotTests/testDesignScreens -skip-testing:QuietSolitaireScreenshots/ScreenshotTests/testSearchDaily)
 [[ -n "${ONLY_TESTING:-}" ]] && FILTER=(-only-testing:"$ONLY_TESTING")
 WORK="$(mktemp -d)"
 trap 'rm -rf "$WORK"' EXIT

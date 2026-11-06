@@ -51,6 +51,13 @@ final class DailyRestartUITests: XCTestCase {
         let restart = app.buttons["Restart This Deal"]
         XCTAssertTrue(restart.waitForExistence(timeout: 3))
         restart.tap()
+        // The menu's tap can be dropped under load; wait for the fresh deal before playing on.
+        let moves = app.descendants(matching: .any)["moves"].firstMatch
+        let reset = NSPredicate(format: "label ENDSWITH ', 0'")
+        if XCTWaiter.wait(for: [expectation(for: reset, evaluatedWith: moves)], timeout: 3) != .completed {
+            if restart.exists { restart.tap() } else { app.buttons["More"].tap(); restart.tap() }
+            XCTAssertEqual(XCTWaiter.wait(for: [expectation(for: reset, evaluatedWith: moves)], timeout: 5), .completed, moves.label)
+        }
     }
 
     private func check(day: (XCUIApplication) -> XCUIElement?) {

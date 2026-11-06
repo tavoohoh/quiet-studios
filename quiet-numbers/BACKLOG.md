@@ -53,6 +53,8 @@
 
 ## Ideas
 
+- **Revisar colores y contraste de las imágenes de la tienda** (header, búsqueda y capturas sobre el teal vivo; el usuario notó un contraste raro, 2026-11-05). Para la siguiente iteración de la ficha, igual en los tres juegos.
+
 - **Más notificaciones (locales), si las primeras funcionan:** "te faltan N retos para Constancia/Hábito/Centenario" una sola vez; resumen semanal el domingo ("5 de 7 retos esta semana"); partida clásica a medias al día siguiente. Los challenges de Game Center (iOS 26) traen además sus propias notificaciones del sistema.
 
 ## Hecho

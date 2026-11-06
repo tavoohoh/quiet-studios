@@ -11,7 +11,6 @@ using the cell positions ScreenshotTests saves next to each store scene. Rendere
 headless: iPhone 6.9" at 1320×2868 (scaled to 6.3", 1206×2622, the size App Store Connect asks
 for first) and iPad 13" at 2064×2752, no alpha.
 """
-import html
 import pathlib
 import subprocess
 import tempfile
@@ -35,20 +34,22 @@ DEVICES = {
                     bezel=14, radius=48, inner_radius=34, text_scale=1.55, pad=(84, 72), callout_scale=1.6),
 }
 
+# "Quiet Studios' free collection" copy (2026-11-05): what the game is and why it exists, never
+# "free" as an offer. 5 has no subtitle. Subtitles are HTML: break with <br> at a period.
 TEXT = {
     "en": {
-        1: ("Your 5-minute<br><span>break.</span>", "One quick round of numbers. Clear your head, beat your best, back to your day."),
-        2: ("Match.<br><span>Pop.</span> <em>Clear.</em>", "Pair equal numbers or two that add up to 10. Horizontal, vertical or diagonal."),
-        3: ("Beat your friends.<br><span>Or just yesterday's you.</span>", "A new score goal every day. Keep your streak alive."),
-        4: ("No ads.<br><span>No purchases.</span>", "Always free, no hidden charges. Just focus on playing."),
-        5: ("Climb to<br><span>the top</span>", "Daily, best score and streak leaderboards with your friends and the world, on Game Center."),
+        1: ("Number<br><span>pairs.</span>", "Pair equal numbers<br>or ones that add up to 10."),
+        2: ("A new challenge<br><span>every day.</span>", "The same board for everyone."),
+        3: ("Play with<br><span>your friends.</span>", "Beat them, or yesterday's you."),
+        4: ("Earned<br><span>by playing.</span>", "Themes, tile styles and more."),
+        5: ("Clear the board,<br><span>stage by stage.</span>", ""),
     },
     "es": {
-        1: ("Tu pausa de<br><span>5 minutos.</span>", "Una ronda rápida de números. Despeja la mente, supera tu récord y vuelve a tu día."),
-        2: ("Junta.<br><span>Explota.</span> <em>Limpia.</em>", "Junta números iguales o dos que sumen 10. En horizontal, vertical o diagonal."),
-        3: ("Gánales a tus amigos.<br><span>O a tu yo de ayer.</span>", "Una meta nueva cada día. Mantén viva tu racha."),
-        4: ("Sin anuncios.<br><span>Sin compras.</span>", "Gratis siempre, sin cobros ocultos. Solo concéntrate en jugar."),
-        5: ("Llega a<br><span>la cima</span>", "Clasificaciones del día, de mejor puntaje y de racha con tus amigos y el mundo, en Game Center."),
+        1: ("Parejas<br><span>de números.</span>", "Empareja iguales o los que suman 10."),
+        2: ("Un reto nuevo<br><span>cada día.</span>", "El mismo tablero para todos."),
+        3: ("Juega con<br><span>tus amigos.</span>", "Gánales, o a tu yo de ayer."),
+        4: ("Todo se gana<br><span>jugando.</span>", "Temas, estilos de fichas y más."),
+        5: ("Limpia el tablero,<br><span>etapa por etapa.</span>", ""),
     },
 }
 
@@ -78,18 +79,14 @@ ICON = {
 # Callouts: (style, content, anchor). Anchors are canvas iPhone coordinates of the callout's
 # top-left ("left") or top-right ("right") corner, relative to the board ("cell"), the score
 # ("score") or the phone's top-right corner ("phone").
+# Every frame on the vivid teal of the icon, header and search (A2), titles in white and peach
+# (family rule, 2026-11-05).
+VIVID, PEACH = "linear-gradient(180deg, #19BFCD, #0A8AA5)", "#FFD3C6"
+
 FRAMES = {
-    1: dict(name="01-break", shot="store1", appearance="light", bg="#0E6B78", ink="#FFFFFF", span="#FFC2B5",
-            em="#FFC2B5", sub="rgba(255,255,255,0.92)", h1=52, phone_top=330, grid_top=504, score_top=428,
-            bezel_color="#0A1416", shadow="0 30px 70px rgba(2,30,36,0.45)",
-            rings=[1, 82], dotted=(1, 82, "#B9472F"),
-            callouts=[
-                ("card", f'<i class="icon" style="color:#0E6B78">{ICON["timer"]}</i><b style="font-size:30px;color:#0E6B78">4:12</b>', ("right", "score", 424, 426)),
-                ("pill coral", "{long_shot}", ("left", "cell", 176, 718)),
-            ]),
-    2: dict(name="02-match", shot="store2", appearance="dark", bg="#0F1A1D", ink="#E8F1F2", span="#5BC2CF",
-            em="#FF9A85", sub="rgba(232,241,242,0.85)", h1=54, phone_top=320, grid_top=494, score_top=418,
-            bezel_color="#000000", shadow="0 0 0 1px rgba(91,194,207,0.22), 0 30px 70px rgba(0,0,0,0.55)",
+    1: dict(name="01-pairs", shot="store2", appearance="dark", bg=VIVID, ink="#FFFFFF", span=PEACH,
+            em=PEACH, sub="rgba(255,255,255,0.92)", h1=54, phone_top=320, grid_top=494, score_top=418,
+            bezel_color="#000000", shadow="0 30px 70px rgba(2,40,48,0.4)",
             pills=[(14, 15), (57, 66), (50, 60)],
             callouts=[
                 ("pill teal", f'<i class="icon">{ICON["vertical"]}</i>7 + 3 = 10', ("left", "cell", 63, 685)),
@@ -97,23 +94,26 @@ FRAMES = {
                 ("pill teal", f'<i class="icon">{ICON["diagonal"]}</i>1 + 9 = 10', ("left", "cell", 280, 669)),
                 ("praise peach", '<b>{double_row}</b><small>+20</small>', ("right", "cell", 422, 840)),
             ]),
-    3: dict(name="03-daily", shot="02-daily", appearance="light", bg="#DCEEF0", ink="#16201F", span="#0E6B78",
-            em="#0E6B78", sub="#2E4A4E", h1=46, phone_top=360, bezel_color="#0A1416",
-            shadow="0 30px 70px rgba(14,107,120,0.3)",
+    2: dict(name="02-daily", shot="02-daily", appearance="light", bg=VIVID, ink="#FFFFFF", span=PEACH,
+            em=PEACH, sub="rgba(255,255,255,0.92)", h1=46, phone_top=360, bezel_color="#0A1416",
+            shadow="0 30px 70px rgba(2,40,48,0.4)",
             callouts=[
                 ("pill coral small", f'<i class="icon">{ICON["flame"]}</i>{{streak}}', ("right", "phone", 422, 344)),
             ]),
-    4: dict(name="04-no-ads", shot="store4", appearance="dark", bg="#FCE9E3", ink="#16201F", span="#B9472F",
-            em="#B9472F", sub="#4A5B5E", h1=52, phone_top=320, grid_top=494, score_top=418,
-            bezel_color="#000000", shadow="0 30px 70px rgba(120,50,30,0.3)",
-            pills=[(75, 76)],
+    3: dict(name="03-friends", shot="06-leaderboards-friends", appearance="dark", bg=VIVID, ink="#FFFFFF",
+            span=PEACH, em=PEACH, sub="rgba(255,255,255,0.92)", h1=52, phone_top=330,
+            bezel_color="#000000", shadow="0 30px 70px rgba(2,40,48,0.4)", callouts=[]),
+    4: dict(name="04-rewards", shot="04-collection", appearance="light", bg=VIVID, ink="#FFFFFF", span=PEACH,
+            em=PEACH, sub="rgba(255,255,255,0.92)", h1=52, phone_top=330, bezel_color="#0A1416",
+            shadow="0 30px 70px rgba(2,40,48,0.4)", callouts=[]),
+    5: dict(name="05-stages", shot="store1", appearance="light", bg=VIVID, ink="#FFFFFF", span=PEACH,
+            em=PEACH, sub="rgba(255,255,255,0.92)", h1=52, phone_top=330, grid_top=504, score_top=428,
+            bezel_color="#0A1416", shadow="0 30px 70px rgba(2,40,48,0.4)",
+            rings=[1, 82], dotted=(1, 82, "#B9472F"),
             callouts=[
-                ("card best", '<small>{best}</small><b>12,840</b>', ("right", "score", 424, 412)),
-                ("praise coral", "<b>{in_a_row}</b>", ("right", "cell", 426, 588)),
+                ("card", f'<i class="icon" style="color:#0E6B78">{ICON["timer"]}</i><b style="font-size:30px;color:#0E6B78">4:12</b>', ("right", "score", 424, 426)),
+                ("pill coral", "{long_shot}", ("left", "cell", 176, 718)),
             ]),
-    5: dict(name="05-leaderboards", shot="06-leaderboards-friends", appearance="dark", bg="#0A4E58", ink="#FFFFFF",
-            span="#9FE3EC", em="#9FE3EC", sub="rgba(255,255,255,0.88)", h1=52, phone_top=330,
-            bezel_color="#000000", shadow="0 30px 70px rgba(0,20,24,0.5)", callouts=[]),
 }
 
 CSS = """
@@ -234,7 +234,7 @@ def build(device, language, number):
         radius=spec["radius"], inner_radius=spec["inner_radius"], bezel_color=frame["bezel_color"], shadow=frame["shadow"],
     )
     return f"""<!doctype html><html lang="{language}"><head><meta charset="utf-8"><style>{css}</style></head><body>
-<header><h1>{title}</h1><p>{html.escape(subtitle)}</p></header>
+<header><h1>{title}</h1>{f"<p>{subtitle}</p>" if subtitle else ""}</header>
 <div class="phone"><img src="{shot.as_uri()}"></div>
 <svg class="overlay" viewBox="0 0 {w} {h}">{"".join(svg)}</svg>
 {callouts}{FIT}</body></html>"""

@@ -52,11 +52,11 @@ final class ScreenshotTests: XCTestCase {
         capture(friends, "06-leaderboards-friends")
     }
 
-    /// The canvas's hand-made board (`DemoData.StoreScene`) for App Store images 1, 2 and 4,
+    /// The canvas's hand-made board (`DemoData.StoreScene`) for App Store images 05-stages and 01-pairs,
     /// plus where its first and last cells and the score are (points), so the frames can place their callouts.
     @MainActor
     func testStoreScenes() throws {
-        for scene in ["1", "2", "4"] {
+        for scene in ["1", "2"] {
             let app = launch(extra: ["-storeScene", scene])
             tap(app.buttons["continue"])
             XCTAssertTrue(app.staticTexts["score"].waitForExistence(timeout: 5))

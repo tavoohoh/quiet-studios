@@ -26,7 +26,7 @@ Ocultos: Noctámbulo, Monótono y Números rojos son sorpresas; el resto son met
 
 | ID | Caso en el código | Nombre (en / es) | Tipo | Formato | Sufijo (en / es) | Orden | Envío | Qué se envía |
 |---|---|---|---|---|---|---|---|---|
-| `daily_challenge` | `daily` | Daily Challenge / Reto diario | Recurrente (Every 1 day, starting at 05:00 UTC (00:00 in Colombia)) | Entero | " points" / " puntos" | Mayor a menor | **Más reciente** | El intento puntuable del día, siempre que termine, aunque sea 0 o negativo (`AppModel.pushToGameCenter`). Sin rango de puntaje, para aceptar negativos. |
+| `daily_challenge` | `daily` | Daily Challenge / Reto diario | Recurrente (Every 1 day, starting at 05:00 UTC (00:00 in Colombia)) | Entero | " points" / " puntos" | Mayor a menor | **Más reciente** | El mejor resultado de hoy (mayor puntaje; a igual puntaje, menor tiempo), enviado al terminar cada intento del reto de hoy, aunque sea 0 o negativo (`AppModel.dailyToSubmit`, desde la 1.3). Como guarda el más reciente, enviar siempre el mejor evita que un intento peor lo reemplace. Los días pasados no se envían. Sin rango de puntaje, para aceptar negativos. |
 | `best_score` | `bestScore` | Best Score / Mejor puntaje | Clásico | Entero | " points" / " puntos" | Mayor a menor | Mejor puntaje | PlayerProgress.bestScore (classic games, including abandoned ones) |
 | `longest_streak` | `longestStreak` | Longest Streak / Racha más larga | Clásico | Entero | " days" / " días" | Mayor a menor | Mejor puntaje | Longest run of completed daily challenges (AppModel.longestStreak) |
 

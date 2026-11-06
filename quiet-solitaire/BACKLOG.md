@@ -16,4 +16,6 @@
 
 ## Ideas
 
+- **Revisar colores y contraste de las imágenes de la tienda** (header, búsqueda y capturas sobre el teal vivo; el usuario notó un contraste raro, 2026-11-05). Para la siguiente iteración de la ficha, igual en los tres juegos.
+
 ## Hecho

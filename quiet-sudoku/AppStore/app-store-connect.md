@@ -47,10 +47,30 @@ Gratis para siempre (familia "gratis para siempre", `studio/roadmap.md`), todos 
 
 ### Notas para la revisión de Apple
 
-> Quiet Sudoku is a free, single-player sudoku with no ads, purchases or accounts. Game Center is optional: everything works signed out. To see a solve quickly, start a New Game (Easy) and tap Hint (lightbulb) repeatedly; each hint writes the next digit and explains why. No login or demo account is needed.
+Completas, con el guion del video que las acompaña, en `app-review-notes.md` (skill `quiet-release`, "Envío a revisión").
 
-## Qué falta hacer a mano en App Store Connect
+## Antes de enviar a revisión (revisado el 2026-11-05, solo lectura por la API)
 
-- Crear la app (arriba).
-- Clasificación por edad, precio (gratis) y disponibilidad, privacidad ("Data Not Collected").
-- En la versión 1.0: activar Game Center y elegir logros y clasificaciones, elegir el build, notas para la revisión y publicación automática.
+Listo:
+- App creada (app ID `6828993446`), nombre y URL de privacidad en en-US y es-MX, categoría Juegos.
+- Versión 1.0 en "Prepare for Submission", con publicación automática al aprobarse.
+- Textos de la 1.0 en en-US y es-MX: descripción, palabras clave, texto promocional, URL de soporte y de marketing.
+- Game Center activado en la versión 1.0; 12 logros y 3 clasificaciones creados.
+- Build **1.0 (2)** procesado (válido) en TestFlight.
+- Web publicada (página, privacidad y soporte, con las reglas del reto del 2026-11-02).
+- Notas para Apple y guion del video en `app-review-notes.md`.
+
+Falta (preparado aquí, se sube cuando el usuario lo pida):
+- Capturas de iPhone e iPad (`scripts/screenshots.sh` + `scripts/store-images.py`): pendientes de aprobación del usuario; la versión no tiene ninguna todavía.
+- Header y búsqueda: propuestas en un artefacto aparte; lo elegido pasa al canvas y a `AppStore/creative/`.
+- Elegir el build: la versión todavía tiene el **1.0 (1)**; cambiarlo al **1.0 (2)**.
+- Notas para la revisión: la versión no tiene notas ni datos de contacto.
+
+Solo en la web de App Store Connect (lo hace el usuario):
+- **Clasificación por edad:** responder el cuestionario, todo "Ninguno"/"No" → 4+ (hoy está sin responder).
+- **Precio y disponibilidad:** gratis, todos los países (hoy no hay precio ni disponibilidad).
+- **Derechos de contenido:** "No contiene contenido de terceros" (hoy sin responder).
+- **Privacidad de la app:** "Data Not Collected" (la API no lo deja leer: confirmarlo en App Privacy).
+- **Versión 1.0 › Game Center:** confirmar que estén elegidos los 12 logros y las 3 clasificaciones.
+- **App Review Information:** nombre, teléfono y correo de contacto; pegar las notas de `app-review-notes.md`; adjuntar el video.
+- Enviar a revisión (el mismo día que Apple apruebe Quiet Numbers).
