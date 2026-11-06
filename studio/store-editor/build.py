@@ -26,6 +26,12 @@ GAMES = {
     "numbers": dict(dir="quiet-numbers", name="Quiet Numbers",
                     labels={"01-pairs": "Parejas", "02-daily": "Reto diario", "03-friends": "Amigos",
                             "04-rewards": "Recompensas", "05-stages": "Etapas"}),
+    "solitaire": dict(dir="quiet-solitaire", name="Quiet Solitaire",
+                      labels={"01-classic": "Clásico", "02-daily": "Reto diario", "03-friends": "Amigos",
+                              "04-rewards": "Recompensas", "05-winnable": "Con solución"}),
+    "sudoku": dict(dir="quiet-sudoku", name="Quiet Sudoku",
+                   labels={"01-classic": "Clásico", "02-daily": "Reto diario", "03-friends": "Amigos",
+                           "04-rewards": "Recompensas", "05-win": "Victoria"}),
 }
 CREATIVE = {"header": ("Header", 1280, 549), "search": ("Búsqueda", 1200, 800)}
 
@@ -77,6 +83,10 @@ def main():
     for lang in ("en", "es"):
         pages = out / "pages" / lang
         pages.mkdir(parents=True)
+        # Imágenes que usan el header o la búsqueda (p. ej. el teléfono de la búsqueda de Solitaire).
+        for image in sorted((root / "AppStore/creative").glob(f"*.{lang}.png")):
+            shutil.copy(image, pages / image.name)
+            files.append(f"pages/{lang}/{image.name}")
         for kind in CREATIVE:
             source = (root / "AppStore/creative" / f"{kind}.{lang}.html").read_text()
             page = source.replace("</head>", store_style.head(style, kind) + "\n</head>", 1)

@@ -4,14 +4,20 @@
 Sources: `AppStore/creative/{header,search}.<lang>.html`, static copies of the chosen artboards
 in the design canvas (page "App Store"). Output: `AppStore/creative-assets/<lang>/`,
 header 3840×1646 and search 3840×2560, RGB (the App Store rejects alpha). Uses headless Chrome.
+Background, title and subtitle come from AppStore/store-style.json (store editor), set as CSS
+variables in each page's head.
 """
 import pathlib
 import subprocess
+import sys
 import tempfile
 
 from PIL import Image
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT.parent / "studio/store-editor"))
+import store_style  # noqa: E402
+
 CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 # Artboard size in CSS px, device scale, and the exact size Apple asks for.
 ASSETS = {
@@ -21,14 +27,18 @@ ASSETS = {
 
 
 def main():
+    style = store_style.load(ROOT)
     for source in sorted((ROOT / "AppStore/creative").glob("*.html")):
         name, lang = source.stem.split(".")
         (w, h), scale, size = ASSETS[name]
         with tempfile.TemporaryDirectory() as tmp:
             raw = pathlib.Path(tmp) / "raw.png"
-            subprocess.run([CHROME, "--headless=new", "--disable-gpu", "--hide-scrollbars",
+            page = pathlib.Path(tmp) / "page.html"
+            head = f'<base href="{source.parent.as_uri()}/">' + store_style.head(style, name)
+            page.write_text(source.read_text().replace("</head>", head + "\n</head>", 1))
+            subprocess.run([CHROME, "--headless=new", "--disable-gpu", "--hide-scrollbars", "--allow-file-access-from-files",
                             f"--force-device-scale-factor={scale}", f"--window-size={w},{h}",
-                            "--virtual-time-budget=3000", f"--screenshot={raw}", source.as_uri()],
+                            "--virtual-time-budget=3000", f"--screenshot={raw}", page.as_uri()],
                            check=True, capture_output=True)
             out = ROOT / "AppStore/creative-assets" / lang / f"{name}.png"
             out.parent.mkdir(parents=True, exist_ok=True)

@@ -11,11 +11,14 @@ size App Store Connect asks for first) and iPad 13" at 2064×2752, no alpha.
 import html
 import pathlib
 import subprocess
+import sys
 import tempfile
 
 from PIL import Image
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT.parent / "studio/store-editor"))
+import store_style  # noqa: E402
 SHOTS = ROOT / "AppStore/screenshots"
 OUT = ROOT / "AppStore/store-images"
 IPHONE_63 = (1206, 2622)
@@ -60,11 +63,11 @@ ICON = {
 
 # Callouts: (style, content, anchor), anchored to the phone's top-right corner in canvas
 # iPhone coordinates (the phone's right edge is x 390, its top is `phone_top`).
-# Family composition (skill quiet-release, 2026-11-05): the vivid teal gradient behind every image,
-# titles in two lines (white, then peach #FFD3C6), subtitles broken at the period.
-TEAL = "linear-gradient(180deg, #19BFCD, #0A8AA5)"
-STYLE = dict(bg=TEAL, ink="#FFFFFF", span="#FFD3C6", em="#FFD3C6", sub="rgba(255,255,255,0.9)", h1=50,
-             phone_top=330, shadow="0 30px 70px rgba(2,30,36,0.4)")
+# Background, title, subtitle and the phone offset come from AppStore/store-style.json (store editor,
+# 2026-11-06). Every frame has the same title size (shrunk only when a line does not fit) and the phone
+# at the same height; "phone_top" in FRAMES is the canvas position, only used to place callouts.
+TITLE_SIZE, PHONE_TOP = 60, 320
+STYLE = dict(phone_top=330, shadow="0 30px 70px rgba(2,30,36,0.4)")
 FRAMES = {
     1: dict(STYLE, name="01-classic", shot="01-game", appearance="light", bezel_color="#0A1416", callouts=[]),
     2: dict(STYLE, name="02-daily", shot="02-daily", appearance="light", bezel_color="#0A1416",
@@ -78,17 +81,18 @@ CSS = """
 @font-face { font-family: "QRounded"; src: url("file:///System/Library/Fonts/SFNSRounded.ttf"); font-weight: 1 1000; }
 * { box-sizing: border-box; }
 html, body { margin: 0; }
-body { width: %(w)spx; height: %(h)spx; position: relative; overflow: hidden; background: %(bg)s; color: %(ink)s;
+body { width: %(w)spx; height: %(h)spx; position: relative; overflow: hidden; background: var(--bg); color: #FFFFFF;
        font-family: "QRounded", system-ui, sans-serif; }
 header { position: absolute; left: 0; right: 0; top: 0; padding: %(pad_top)spx %(pad_x)spx 0; display: flex; flex-direction: column; gap: %(gap)spx; }
-h1 { margin: 0; font-size: %(h1)spx; line-height: 1.02; font-weight: 900; letter-spacing: -0.015em; white-space: nowrap; }
-h1 span { color: %(span)s; } h1 em { font-style: normal; color: %(em)s; }
-header p { margin: 0; font-size: %(sub_size)spx; line-height: 1.35; font-weight: 600; color: %(sub)s; text-wrap: balance; }
-.phone { position: absolute; left: %(phone_left)spx; top: %(phone_top)spx; width: %(phone_width)spx; padding: %(bezel)spx;
+h1 { margin: 0; font-family: var(--title-font); font-size: calc(%(h1)spx * var(--title-scale)); line-height: 1.02; font-weight: var(--title-weight);
+     letter-spacing: -0.015em; white-space: nowrap; color: var(--title-color); }
+h1 span, h1 em { font-style: normal; color: var(--title-accent); }
+header p { margin: 0; font-family: var(--sub-font); font-size: calc(%(sub_size)spx * var(--sub-scale)); line-height: 1.35; font-weight: var(--sub-weight); color: var(--sub-color); text-wrap: balance; }
+.phone { position: absolute; left: %(phone_left)spx; top: %(phone_top)spx; margin-top: calc(var(--phone-offset) * %(offset_k)s); width: %(phone_width)spx; padding: %(bezel)spx;
          border-radius: %(radius)spx; background: %(bezel_color)s; box-shadow: %(shadow)s; }
 .phone img { display: block; width: 100%%; border-radius: %(inner_radius)spx; }
-.overlay { position: absolute; left: 0; top: 0; width: %(w)spx; height: %(h)spx; overflow: visible; }
-.callout { position: absolute; display: flex; align-items: center; gap: 8px; font-weight: 900; white-space: nowrap; }
+.overlay { position: absolute; left: 0; top: 0; margin-top: calc(var(--phone-offset) * %(offset_k)s); width: %(w)spx; height: %(h)spx; overflow: visible; }
+.callout { position: absolute; margin-top: calc(var(--phone-offset) * %(offset_k)s); display: flex; align-items: center; gap: 8px; font-weight: 900; white-space: nowrap; }
 .callout .icon { display: flex; width: 20px; height: 20px; } .callout .icon svg { width: 100%%; height: 100%%; }
 .pill { padding: 10px 16px; border-radius: 999px; font-size: 18px; box-shadow: 0 12px 28px rgba(0,0,0,0.45); }
 .pill.coral { padding: 11px 18px; font-size: 22px; background: #B9472F; color: #FFFFFF; box-shadow: 0 14px 30px rgba(90,25,10,0.4); }
@@ -107,21 +111,29 @@ header p { margin: 0; font-size: %(sub_size)spx; line-height: 1.35; font-weight:
 
 FIT = """
 <script>
-for (const h1 of document.querySelectorAll('h1')) {
-  const max = h1.parentElement.clientWidth - 2 * parseFloat(getComputedStyle(h1.parentElement).paddingLeft);
-  let size = parseFloat(getComputedStyle(h1).fontSize);
-  while (h1.scrollWidth > max && size > 20) { size -= 1; h1.style.fontSize = size + 'px'; }
-}
+// The store editor calls it again after changing the style.
+window.fitTitles = () => {
+  for (const h1 of document.querySelectorAll('h1')) {
+    h1.style.fontSize = '';
+    const max = h1.parentElement.clientWidth - 2 * parseFloat(getComputedStyle(h1.parentElement).paddingLeft);
+    let size = parseFloat(getComputedStyle(h1).fontSize);
+    while (h1.scrollWidth > max && size > 20) { size -= 1; h1.style.fontSize = size + 'px'; }
+  }
+};
+document.fonts.ready.then(fitTitles);
+fitTitles();
 </script>
 """
 
 
 
-def build(device, language, number):
+def build(device, language, number, style=None, image_src=None):
+    """The page of one frame. The store editor passes its own style and a relative image path."""
     spec, frame = DEVICES[device], FRAMES[number]
     w, h = spec["size"]
     k = spec["text_scale"]
-    phone_top = frame["phone_top"] if k == 1 else round(spec["pad"][0] + 300 + (frame["phone_top"] - 320) * 0.5)
+    # iPad: the text is 1.55× larger, so the tablet starts lower to clear a two-line subtitle.
+    phone_top = PHONE_TOP if k == 1 else spec["pad"][0] + 330
     shot = SHOTS / device / language / frame["appearance"] / f"{frame['shot']}.png"
 
     def place(anchor):
@@ -135,14 +147,15 @@ def build(device, language, number):
                        for style, content, anchor in frame["callouts"])
     title, subtitle = TEXT[language][number]
     css = CSS % dict(
-        w=w, h=h, bg=frame["bg"], ink=frame["ink"], span=frame["span"], em=frame["em"], sub=frame["sub"],
-        pad_top=spec["pad"][0], pad_x=spec["pad"][1], gap=round(16 * k), h1=round(frame["h1"] * k), sub_size=round(20 * k),
+        w=w, h=h, offset_k=1 if k == 1 else 0.5,
+        pad_top=spec["pad"][0], pad_x=spec["pad"][1], gap=round(16 * k), h1=round(TITLE_SIZE * k), sub_size=round(20 * k),
         phone_left=spec["phone_left"], phone_top=phone_top, phone_width=spec["phone_width"], bezel=spec["bezel"],
         radius=spec["radius"], inner_radius=spec["inner_radius"], bezel_color=frame["bezel_color"], shadow=frame["shadow"],
     )
-    return f"""<!doctype html><html lang="{language}"><head><meta charset="utf-8"><style>{css}</style></head><body>
+    head = store_style.head(style or store_style.load(ROOT), frame["name"])
+    return f"""<!doctype html><html lang="{language}"><head><meta charset="utf-8">{head}<style>{css}</style></head><body>
 <header><h1>{title}</h1><p>{html.escape(subtitle)}</p></header>
-<div class="phone"><img src="{shot.as_uri()}"></div>
+<div class="phone"><img src="{image_src or shot.as_uri()}"></div>
 {callouts}{FIT}</body></html>"""
 
 

@@ -1,0 +1,15 @@
+{
+  "background": {"bottom": "#0A8AA5", "top": "#19BFCD"},
+  "title": {"accent": "#FFD3C6", "color": "#FFFFFF", "font": "sf-rounded", "size": 100, "weight": 900},
+  "subtitle": {"color": "#FFFFFF", "font": "sf-rounded", "opacity": 92, "size": 100, "weight": 700},
+  "phone": {"offset": -30},
+  "pieces": {
+    "01-classic": {"background": {"bottom": "#08788F", "top": "#16B4C4"}},
+    "02-daily": {"background": {"bottom": "#1F2257", "top": "#3B3F8C"}},
+    "03-friends": {"background": {"bottom": "#08788F", "top": "#16B4C4"}},
+    "04-rewards": {"background": {"bottom": "#1F2257", "top": "#3B3F8C"}},
+    "05-win": {"background": {"bottom": "#08788F", "top": "#16B4C4"}},
+    "header": {"subtitle": {"color": "#FFFFFF", "font": "sf-rounded", "opacity": 90, "size": 100, "weight": 800}},
+    "search": {"background": {"bottom": "#08788F", "top": "#16B4C4"}, "subtitle": {"color": "#FFFFFF", "font": "sf-rounded", "opacity": 86, "size": 100, "weight": 800}}
+  }
+}
